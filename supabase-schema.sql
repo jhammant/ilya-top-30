@@ -9,7 +9,7 @@ CREATE TABLE user_profiles (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   clerk_id TEXT UNIQUE NOT NULL,
   email TEXT NOT NULL,
-  stripe_customer_id TEXT,
+  lemonsqueezy_customer_id TEXT,
   subscription_status TEXT DEFAULT 'free' CHECK (subscription_status IN ('free', 'active', 'cancelled', 'past_due')),
   subscription_id TEXT,
   daily_question_limit INTEGER DEFAULT 5,
@@ -48,7 +48,7 @@ CREATE TABLE study_streaks (
 
 -- Indexes for performance
 CREATE INDEX idx_user_profiles_clerk_id ON user_profiles(clerk_id);
-CREATE INDEX idx_user_profiles_stripe_customer_id ON user_profiles(stripe_customer_id);
+CREATE INDEX idx_user_profiles_lemonsqueezy_customer_id ON user_profiles(lemonsqueezy_customer_id);
 CREATE INDEX idx_usage_records_user_date ON usage_records(user_id, date);
 CREATE INDEX idx_completed_papers_user ON completed_papers(user_id);
 

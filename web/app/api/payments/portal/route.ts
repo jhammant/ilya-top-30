@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createBillingPortalSession } from "@/lib/stripe";
+import { getCustomerPortalUrl } from "@/lib/lemonsqueezy";
 import { getUserProfile } from "@/lib/supabase";
 
 export async function POST() {
@@ -13,14 +13,21 @@ export async function POST() {
 
     const profile = await getUserProfile(userId);
 
-    if (!profile?.stripe_customer_id) {
+    if (!profile?.subscription_id) {
       return NextResponse.json(
         { error: "No subscription found" },
         { status: 400 }
       );
     }
 
-    const portalUrl = await createBillingPortalSession(profile.stripe_customer_id);
+    const portalUrl = await getCustomerPortalUrl(profile.subscription_id);
+
+    if (!portalUrl) {
+      return NextResponse.json(
+        { error: "Failed to get portal URL" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ url: portalUrl });
   } catch (error) {

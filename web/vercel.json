@@ -11,9 +11,10 @@
     "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
     "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
     "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
-    "STRIPE_SECRET_KEY": "@stripe_secret_key",
-    "STRIPE_WEBHOOK_SECRET": "@stripe_webhook_secret",
-    "STRIPE_PRICE_ID": "@stripe_price_id",
+    "LEMONSQUEEZY_API_KEY": "@lemonsqueezy_api_key",
+    "LEMONSQUEEZY_STORE_ID": "@lemonsqueezy_store_id",
+    "LEMONSQUEEZY_VARIANT_ID": "@lemonsqueezy_variant_id",
+    "LEMONSQUEEZY_WEBHOOK_SECRET": "@lemonsqueezy_webhook_secret",
     "NEXT_PUBLIC_APP_URL": "@app_url"
   },
   "headers": [

@@ -1,6 +1,6 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { createCheckoutSession, getOrCreateStripeCustomer } from "@/lib/stripe";
+import { createCheckoutUrl } from "@/lib/lemonsqueezy";
 import { getUserProfile, createUserProfile } from "@/lib/supabase";
 
 export async function POST() {
@@ -32,17 +32,14 @@ export async function POST() {
       return NextResponse.json({ error: "Already subscribed" }, { status: 400 });
     }
 
-    // Get or create Stripe customer
-    const customerId = profile.stripe_customer_id || await getOrCreateStripeCustomer(email, userId);
-
-    // Create checkout session
-    const checkoutUrl = await createCheckoutSession(customerId, email, profile.id);
+    // Create Lemon Squeezy checkout URL
+    const checkoutUrl = await createCheckoutUrl(userId, email);
 
     return NextResponse.json({ url: checkoutUrl });
   } catch (error) {
     console.error("Checkout error:", error);
     return NextResponse.json(
-      { error: "Failed to create checkout session" },
+      { error: "Failed to create checkout" },
       { status: 500 }
     );
   }
