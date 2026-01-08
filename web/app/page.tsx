@@ -1,426 +1,546 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  LayoutDashboard,
-  History,
-  ArrowRight,
-  FileText,
-  HelpCircle,
-  Search,
-  Clock,
-  ChevronRight,
-  Database,
-  BookOpen,
-  Book,
-  Calculator,
-  Microscope,
-  PenTool,
-  Plus,
-  Lightbulb,
-  LucideIcon,
-} from "lucide-react";
 import Link from "next/link";
-import ActivityDetail from "@/components/ActivityDetail";
-import SystemStatus from "@/components/SystemStatus";
-import { apiUrl } from "@/lib/api";
-import { getTranslation } from "@/lib/i18n";
-import { useGlobal } from "@/context/GlobalContext";
-
-// Icon mapping for data-driven UI
-const ICON_MAP: Record<string, LucideIcon> = {
-  HelpCircle,
-  FileText,
-  Search,
-  PenTool,
+import {
   BookOpen,
+  Brain,
+  Target,
+  Zap,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Flame,
+  Trophy,
+  Play,
+  Star,
+  ChevronRight,
+  Network,
   Lightbulb,
-  LayoutDashboard,
-};
+  GraduationCap,
+  Sparkles,
+  Award,
+  HelpCircle,
+  MessageSquare,
+} from "lucide-react";
+import Confetti from "@/components/Confetti";
 
-// Color mapping for Tailwind classes
-const COLOR_MAP: Record<string, string> = {
-  blue: "text-blue-500",
-  purple: "text-purple-500",
-  emerald: "text-emerald-500",
-  amber: "text-amber-500",
-  indigo: "text-indigo-500",
-  yellow: "text-yellow-500",
-  slate: "text-slate-500",
-};
+// Complete paper data with learning paths
+const PAPERS = [
+  { id: 1, title: "The First Law of Complexodynamics", category: "Complexity Theory", difficulty: 4, time: 30, path: "theory" },
+  { id: 2, title: "The Unreasonable Effectiveness of RNNs", category: "RNNs", difficulty: 2, time: 45, path: "foundations" },
+  { id: 3, title: "Understanding LSTM Networks", category: "RNNs", difficulty: 2, time: 30, path: "foundations" },
+  { id: 4, title: "Recurrent Neural Network Regularization", category: "RNNs", difficulty: 3, time: 60, path: "foundations" },
+  { id: 5, title: "Keeping Neural Networks Simple (MDL)", category: "Information Theory", difficulty: 4, time: 90, path: "theory" },
+  { id: 6, title: "Pointer Networks", category: "Sequence Models", difficulty: 3, time: 75, path: "transformers" },
+  { id: 7, title: "ImageNet Classification (AlexNet)", category: "CNNs", difficulty: 2, time: 60, path: "vision" },
+  { id: 8, title: "Order Matters: Seq2Seq for Sets", category: "Sequence Models", difficulty: 3, time: 60, path: "transformers" },
+  { id: 9, title: "GPipe: Pipeline Parallelism", category: "Scaling", difficulty: 3, time: 45, path: "transformers" },
+  { id: 10, title: "Deep Residual Learning (ResNet)", category: "CNNs", difficulty: 2, time: 60, path: "vision" },
+  { id: 11, title: "Dilated Convolutions", category: "CNNs", difficulty: 3, time: 45, path: "vision" },
+  { id: 12, title: "Neural Message Passing", category: "GNNs", difficulty: 4, time: 90, path: "vision" },
+  { id: 13, title: "Attention Is All You Need", category: "Transformers", difficulty: 3, time: 120, path: "transformers" },
+  { id: 14, title: "Neural Machine Translation (Attention)", category: "Attention", difficulty: 3, time: 90, path: "transformers" },
+  { id: 15, title: "Identity Mappings in ResNets", category: "CNNs", difficulty: 3, time: 45, path: "vision" },
+  { id: 16, title: "Relational Reasoning Networks", category: "Reasoning", difficulty: 3, time: 60, path: "theory" },
+  { id: 17, title: "Variational Lossy Autoencoder", category: "Generative", difficulty: 4, time: 90, path: "theory" },
+  { id: 18, title: "Relational Recurrent Neural Networks", category: "RNNs", difficulty: 4, time: 60, path: "foundations" },
+  { id: 19, title: "The Coffee Automaton", category: "Complexity Theory", difficulty: 5, time: 120, path: "theory" },
+  { id: 20, title: "Neural Turing Machines", category: "Memory Networks", difficulty: 4, time: 90, path: "theory" },
+  { id: 21, title: "Deep Speech 2", category: "Speech", difficulty: 3, time: 75, path: "foundations" },
+  { id: 22, title: "Scaling Laws for Neural LMs", category: "Scaling", difficulty: 3, time: 90, path: "transformers" },
+  { id: 23, title: "MDL Principle Tutorial", category: "Information Theory", difficulty: 4, time: 180, path: "theory" },
+  { id: 24, title: "Machine Super Intelligence", category: "AGI", difficulty: 4, time: 240, path: "theory" },
+  { id: 25, title: "Kolmogorov Complexity", category: "Information Theory", difficulty: 5, time: 600, path: "theory" },
+  { id: 26, title: "CS231n Course", category: "CNNs", difficulty: 2, time: 1200, path: "vision" },
+];
 
-// Fallback agent config (used if API fails)
-const FALLBACK_AGENT_CONFIG: Record<string, AgentConfig> = {
-  solve: { icon: "HelpCircle", color: "blue", label_key: "Problem Solved" },
-  question: {
-    icon: "FileText",
-    color: "purple",
-    label_key: "Question Generated",
+// Curated learning paths with specific paper order
+const LEARNING_PATHS = {
+  foundations: {
+    name: "Foundations",
+    icon: GraduationCap,
+    color: "blue",
+    papers: [3, 2, 4, 18, 21],
+    description: "Start here! Learn RNNs, LSTMs, and the basics",
   },
-  research: { icon: "Search", color: "emerald", label_key: "Research Report" },
-  co_writer: { icon: "PenTool", color: "amber", label_key: "Co-Writer" },
-  guide: { icon: "BookOpen", color: "indigo", label_key: "Guided Learning" },
-  ideagen: { icon: "Lightbulb", color: "yellow", label_key: "Idea Generated" },
+  transformers: {
+    name: "Transformers",
+    icon: Zap,
+    color: "purple",
+    papers: [14, 13, 6, 8, 9, 22],
+    description: "Master attention and the Transformer architecture",
+  },
+  vision: {
+    name: "Computer Vision",
+    icon: Target,
+    color: "emerald",
+    papers: [26, 7, 10, 15, 11, 12],
+    description: "Deep dive into CNNs and visual understanding",
+  },
+  theory: {
+    name: "Theory & AGI",
+    icon: Brain,
+    color: "amber",
+    papers: [1, 19, 5, 23, 25, 16, 17, 20, 24],
+    description: "Advanced theory, complexity, and AGI concepts",
+  },
 };
 
-interface AgentConfig {
-  icon: string;
-  color: string;
-  label_key: string;
+const COLOR_MAP: Record<string, { bg: string; text: string; gradient: string }> = {
+  blue: { bg: "bg-blue-500", text: "text-blue-500", gradient: "from-blue-500 to-blue-600" },
+  purple: { bg: "bg-purple-500", text: "text-purple-500", gradient: "from-purple-500 to-purple-600" },
+  emerald: { bg: "bg-emerald-500", text: "text-emerald-500", gradient: "from-emerald-500 to-emerald-600" },
+  amber: { bg: "bg-amber-500", text: "text-amber-500", gradient: "from-amber-500 to-amber-600" },
+};
+
+function formatTime(minutes: number): string {
+  if (minutes < 60) return `${minutes}m`;
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return mins > 0 ? `${hours}h ${mins}m` : `${hours}h`;
 }
 
-interface Activity {
-  id: string;
-  type: "solve" | "question" | "research";
-  title: string;
-  summary: string;
-  timestamp: number;
-  content: any;
-}
-
-interface NotebookSummary {
-  id: string;
-  name: string;
-  description: string;
-  record_count: number;
-  updated_at: number;
-  color: string;
-}
-
-interface NotebookStats {
-  total_notebooks: number;
-  total_records: number;
-  records_by_type: {
-    solve: number;
-    question: number;
-    research: number;
-    co_writer: number;
-  };
-  recent_notebooks: NotebookSummary[];
-}
-
-export default function DashboardPage() {
-  const { uiSettings } = useGlobal();
-  const t = (key: string) => getTranslation(uiSettings.language, key);
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
-    null,
-  );
-  const [notebookStats, setNotebookStats] = useState<NotebookStats | null>(
-    null,
-  );
-  const [agentConfig, setAgentConfig] = useState<Record<string, AgentConfig>>(
-    FALLBACK_AGENT_CONFIG,
-  );
+export default function LearningDashboard() {
+  const [completedPapers, setCompletedPapers] = useState<Set<number>>(new Set());
+  const [activePath, setActivePath] = useState<string>("foundations");
+  const [streak, setStreak] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [currentPaper, setCurrentPaper] = useState<number | null>(null);
 
   useEffect(() => {
-    // Fetch agent configuration
-    fetch(apiUrl("/api/v1/config/agents"))
-      .then((res) => res.json())
-      .then((data) => setAgentConfig(data))
-      .catch((err) => {
-        console.error("Failed to fetch agent config, using fallback:", err);
-      });
+    const saved = localStorage.getItem("completedPapers");
+    if (saved) {
+      const completed = new Set<number>(JSON.parse(saved));
+      setCompletedPapers(completed);
 
-    // Fetch activities
-    fetch(apiUrl("/api/v1/dashboard/recent?limit=10"))
-      .then((res) => res.json())
-      .then((data) => setActivities(data))
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => setLoading(false));
+      // Determine active path based on progress
+      const pathProgress = Object.entries(LEARNING_PATHS).map(([key, path]) => ({
+        key,
+        completed: path.papers.filter(id => completed.has(id)).length,
+        total: path.papers.length,
+      }));
 
-    // Fetch notebook statistics
-    fetch(apiUrl("/api/v1/notebook/statistics"))
-      .then((res) => res.json())
-      .then((data) => setNotebookStats(data))
-      .catch((err) => {
-        console.error("Failed to fetch notebook stats:", err);
-      });
+      // Find a path that's started but not complete, or the first incomplete path
+      const inProgress = pathProgress.find(p => p.completed > 0 && p.completed < p.total);
+      const notStarted = pathProgress.find(p => p.completed === 0);
+
+      if (inProgress) {
+        setActivePath(inProgress.key);
+      } else if (notStarted) {
+        setActivePath(notStarted.key);
+      }
+    }
+
+    const savedStreak = localStorage.getItem("studyStreak");
+    if (savedStreak) setStreak(parseInt(savedStreak));
+
+    const savedCurrent = localStorage.getItem("currentPaper");
+    if (savedCurrent) setCurrentPaper(parseInt(savedCurrent));
   }, []);
 
-  // Data-driven icon getter
-  const getIcon = (type: string) => {
-    const config = agentConfig[type];
-    const IconComponent = ICON_MAP[config?.icon] || LayoutDashboard;
-    const colorClass = COLOR_MAP[config?.color] || "text-slate-500";
-    return <IconComponent className={`w-5 h-5 ${colorClass}`} />;
+  const markComplete = (paperId: number) => {
+    const newCompleted = new Set(completedPapers);
+    newCompleted.add(paperId);
+    setCompletedPapers(newCompleted);
+    localStorage.setItem("completedPapers", JSON.stringify([...newCompleted]));
+
+    // Update streak
+    const today = new Date().toDateString();
+    const lastDate = localStorage.getItem("lastStudyDate");
+    if (lastDate !== today) {
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      localStorage.setItem("studyStreak", newStreak.toString());
+      localStorage.setItem("lastStudyDate", today);
+    }
+
+    // Show confetti
+    setShowConfetti(true);
+
+    // Clear current paper
+    setCurrentPaper(null);
+    localStorage.removeItem("currentPaper");
   };
 
-  // Data-driven label getter
-  const getLabel = (type: string) => {
-    const config = agentConfig[type];
-    return t(config?.label_key || "Activity");
+  const startPaper = (paperId: number) => {
+    setCurrentPaper(paperId);
+    localStorage.setItem("currentPaper", paperId.toString());
   };
+
+  const currentPathData = LEARNING_PATHS[activePath as keyof typeof LEARNING_PATHS];
+  const pathPapers = currentPathData.papers.map(id => PAPERS.find(p => p.id === id)!);
+  const pathCompleted = pathPapers.filter(p => completedPapers.has(p.id)).length;
+  const pathProgress = (pathCompleted / pathPapers.length) * 100;
+  const totalProgress = (completedPapers.size / PAPERS.length) * 100;
+
+  // Find next paper to read in current path
+  const nextInPath = pathPapers.find(p => !completedPapers.has(p.id));
+  const currentPaperData = currentPaper ? PAPERS.find(p => p.id === currentPaper) : null;
 
   return (
-    <div className="animate-fade-in space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-3">
-          <LayoutDashboard className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-          {t("Dashboard")}
-        </h1>
-        <p className="text-slate-500 dark:text-slate-400 mt-2">
-          {t("Overview of your recent learning activities")}
-        </p>
-      </div>
+    <div className="min-h-screen">
+      <Confetti active={showConfetti} onComplete={() => setShowConfetti(false)} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left: Recent Activity Feed */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <History className="w-5 h-5 text-slate-400 dark:text-slate-500" />
-              {t("Recent Activity")}
-            </h2>
-            <Link
-              href="#"
-              className="text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline flex items-center gap-1"
-            >
-              {t("View All")} <ChevronRight className="w-4 h-4" />
-            </Link>
+      {/* Hero Section */}
+      <div className="mb-8">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+              Your Learning Journey
+            </h1>
+            <p className="text-slate-500 dark:text-slate-400 mt-1">
+              Master the foundations of modern AI, one paper at a time
+            </p>
           </div>
-
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
-            {loading ? (
-              <div className="p-8 text-center text-slate-400 dark:text-slate-500">
-                {t("Loading activities...")}
-              </div>
-            ) : activities.length === 0 ? (
-              <div className="p-12 text-center">
-                <div className="w-16 h-16 bg-slate-50 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <History className="w-8 h-8 text-slate-300 dark:text-slate-500" />
-                </div>
-                <p className="text-slate-500 dark:text-slate-400">
-                  {t("No recent activity found")}
-                </p>
-                <p className="text-sm text-slate-400 dark:text-slate-500 mt-1">
-                  {t("Start solving problems or generating questions!")}
-                </p>
-              </div>
-            ) : (
-              activities.map((activity) => (
-                <div
-                  key={activity.id}
-                  onClick={() => setSelectedActivity(activity)}
-                  className="p-5 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group cursor-pointer"
-                >
-                  <div className="flex gap-4">
-                    <div className="mt-1">
-                      <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                        {getIcon(activity.type)}
-                      </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-start">
-                        <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
-                          {getLabel(activity.type)}
-                        </p>
-                        <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {new Date(
-                            activity.timestamp * 1000,
-                          ).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100 truncate pr-4">
-                        {activity.title}
-                      </h3>
-                      {activity.summary && (
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
-                          {activity.summary}
-                        </p>
-                      )}
-                      {activity.content?.kb_name && (
-                        <div className="mt-3 flex items-center gap-2">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
-                            <Database className="w-3 h-3 mr-1" />
-                            {activity.content.kb_name}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="self-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ArrowRight className="w-5 h-5 text-slate-400 dark:text-slate-500" />
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 px-4 py-2 bg-orange-100 dark:bg-orange-900/30 rounded-xl">
+              <Flame className="w-5 h-5 text-orange-500" />
+              <span className="font-bold text-orange-600 dark:text-orange-400">{streak} day streak</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
+              <Trophy className="w-5 h-5 text-emerald-500" />
+              <span className="font-bold text-emerald-600 dark:text-emerald-400">{Math.round(totalProgress)}% complete</span>
+            </div>
           </div>
         </div>
 
-        {/* Right: Quick Actions / Stats */}
-        <div className="space-y-6">
-          {/* Notebooks Overview */}
-          <div className="bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg flex items-center gap-2">
-                <Book className="w-5 h-5" />
-                {t("My Notebooks")}
-              </h3>
+        {/* Overall Progress Bar */}
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Overall Progress</span>
+            <span className="text-sm font-bold text-slate-900 dark:text-white">{completedPapers.size} / {PAPERS.length} papers</span>
+          </div>
+          <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-emerald-500 transition-all duration-500"
+              style={{ width: `${totalProgress}%` }}
+            />
+          </div>
+          <div className="flex justify-between mt-2 text-xs text-slate-400">
+            <span>Beginner</span>
+            <span>Intermediate</span>
+            <span>Advanced</span>
+            <span>Expert</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Currently Reading */}
+      {currentPaperData && (
+        <div className="mb-8">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <BookOpen className="w-5 h-5" />
+              <span className="font-medium">Currently Reading</span>
+            </div>
+            <h2 className="text-2xl font-bold mb-2">{currentPaperData.title}</h2>
+            <div className="flex items-center gap-4 text-blue-100 mb-4">
+              <span className="flex items-center gap-1">
+                <Clock className="w-4 h-4" />
+                {formatTime(currentPaperData.time)}
+              </span>
+              <span>{currentPaperData.category}</span>
+            </div>
+            <div className="flex gap-3">
               <Link
-                href="/notebook"
-                className="text-xs text-white/80 hover:text-white flex items-center gap-1"
+                href={`/learn?paper=${currentPaperData.id}`}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 rounded-xl font-semibold hover:bg-blue-50 transition-colors"
               >
-                {t("View All")} <ChevronRight className="w-3 h-3" />
+                <ArrowRight className="w-5 h-5" />
+                Continue Learning
               </Link>
+              <button
+                onClick={() => markComplete(currentPaperData.id)}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 text-white rounded-xl font-semibold hover:bg-white/30 transition-colors"
+              >
+                <CheckCircle2 className="w-5 h-5" />
+                Mark Complete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Learning Paths */}
+      <div className="mb-8">
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Learning Paths</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {Object.entries(LEARNING_PATHS).map(([key, path]) => {
+            const Icon = path.icon;
+            const colors = COLOR_MAP[path.color];
+            const completed = path.papers.filter(id => completedPapers.has(id)).length;
+            const progress = (completed / path.papers.length) * 100;
+            const isActive = activePath === key;
+
+            return (
+              <button
+                key={key}
+                onClick={() => setActivePath(key)}
+                className={`p-4 rounded-2xl border-2 transition-all text-left ${
+                  isActive
+                    ? `border-${path.color}-500 bg-${path.color}-50 dark:bg-${path.color}-900/20`
+                    : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-slate-300"
+                }`}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${colors.gradient} flex items-center justify-center`}>
+                    <Icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-900 dark:text-white">{path.name}</div>
+                    <div className="text-xs text-slate-500">{completed}/{path.papers.length} complete</div>
+                  </div>
+                </div>
+                <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                  <div
+                    className={`h-full bg-gradient-to-r ${colors.gradient} transition-all`}
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Active Path Papers */}
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-slate-200 dark:border-slate-700">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${COLOR_MAP[currentPathData.color].gradient} flex items-center justify-center`}>
+                    <currentPathData.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 dark:text-white">{currentPathData.name} Path</h3>
+                    <p className="text-sm text-slate-500">{currentPathData.description}</p>
+                  </div>
+                </div>
+                <span className="text-sm font-medium text-slate-500">
+                  {pathCompleted}/{pathPapers.length} completed
+                </span>
+              </div>
             </div>
 
-            {notebookStats ? (
-              <>
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="bg-white/10 rounded-xl p-3">
-                    <div className="text-2xl font-bold">
-                      {notebookStats.total_notebooks}
-                    </div>
-                    <div className="text-xs text-white/70">
-                      {t("Notebooks")}
-                    </div>
-                  </div>
-                  <div className="bg-white/10 rounded-xl p-3">
-                    <div className="text-2xl font-bold">
-                      {notebookStats.total_records}
-                    </div>
-                    <div className="text-xs text-white/70">{t("records")}</div>
-                  </div>
-                </div>
+            <div className="divide-y divide-slate-100 dark:divide-slate-700">
+              {pathPapers.map((paper, index) => {
+                const isCompleted = completedPapers.has(paper.id);
+                const isCurrent = currentPaper === paper.id;
+                const isRecommended = index === 0 || completedPapers.has(pathPapers[index - 1].id);
 
-                {/* Records by type */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-1.5 text-white/80">
-                      <Calculator className="w-3 h-3" /> {t("Solve")}
-                    </span>
-                    <span className="font-medium">
-                      {notebookStats.records_by_type.solve}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-1.5 text-white/80">
-                      <FileText className="w-3 h-3" /> {t("Question")}
-                    </span>
-                    <span className="font-medium">
-                      {notebookStats.records_by_type.question}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-1.5 text-white/80">
-                      <Microscope className="w-3 h-3" /> {t("Research")}
-                    </span>
-                    <span className="font-medium">
-                      {notebookStats.records_by_type.research}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="flex items-center gap-1.5 text-white/80">
-                      <PenTool className="w-3 h-3" /> {t("Co-Writer")}
-                    </span>
-                    <span className="font-medium">
-                      {notebookStats.records_by_type.co_writer}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Recent notebooks */}
-                {notebookStats.recent_notebooks.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-white/20">
-                    <div className="text-xs text-white/60 mb-2">Recent</div>
-                    <div className="space-y-2">
-                      {notebookStats.recent_notebooks.slice(0, 3).map((nb) => (
-                        <Link
-                          key={nb.id}
-                          href="/notebook"
-                          className="flex items-center gap-2 p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
-                        >
-                          <div
-                            className="w-6 h-6 rounded flex items-center justify-center"
-                            style={{ backgroundColor: nb.color }}
-                          >
-                            <BookOpen className="w-3 h-3 text-white" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm font-medium truncate">
-                              {nb.name}
-                            </div>
-                            <div className="text-[10px] text-white/60">
-                              {nb.record_count} records
-                            </div>
-                          </div>
-                        </Link>
-                      ))}
+                return (
+                  <Link
+                    key={paper.id}
+                    href={`/learn?paper=${paper.id}`}
+                    className={`p-4 flex items-center gap-4 transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer ${
+                      isCompleted ? "bg-emerald-50/50 dark:bg-emerald-900/10" :
+                      isCurrent ? "bg-blue-50/50 dark:bg-blue-900/10" : ""
+                    }`}
+                  >
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${
+                      isCompleted ? "bg-emerald-500" :
+                      isCurrent ? "bg-blue-500" :
+                      isRecommended ? "bg-blue-100 dark:bg-blue-900/50" :
+                      "bg-slate-200 dark:bg-slate-700"
+                    }`}>
+                      {isCompleted ? (
+                        <CheckCircle2 className="w-5 h-5 text-white" />
+                      ) : (
+                        <span className={`font-bold ${isRecommended ? "text-blue-600 dark:text-blue-400" : "text-slate-600 dark:text-slate-300"}`}>{index + 1}</span>
+                      )}
                     </div>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="text-center py-4">
-                <BookOpen className="w-8 h-8 mx-auto mb-2 text-white/40" />
-                <p className="text-sm text-white/60">{t("No notebooks yet")}</p>
-                <Link
-                  href="/notebook"
-                  className="mt-2 inline-flex items-center gap-1 text-xs text-white/80 hover:text-white"
-                >
-                  <Plus className="w-3 h-3" /> {t("Create your first notebook")}
-                </Link>
-              </div>
-            )}
+
+                    <div className="flex-1 min-w-0">
+                      <h4 className={`font-medium truncate ${
+                        isCompleted ? "text-emerald-700 dark:text-emerald-400" :
+                        isCurrent ? "text-blue-700 dark:text-blue-400" :
+                        "text-slate-900 dark:text-white"
+                      }`}>
+                        {paper.title}
+                      </h4>
+                      <div className="flex items-center gap-3 text-sm text-slate-500">
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {formatTime(paper.time)}
+                        </span>
+                        <span>{paper.category}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex-shrink-0">
+                      {isCompleted ? (
+                        <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+                          Review
+                        </span>
+                      ) : isCurrent ? (
+                        <span className="px-4 py-2 bg-emerald-500 text-white rounded-lg text-sm font-medium flex items-center gap-1">
+                          <BookOpen className="w-4 h-4" />
+                          Continue
+                        </span>
+                      ) : isRecommended ? (
+                        <span className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium flex items-center gap-1">
+                          <Play className="w-4 h-4" />
+                          Start
+                        </span>
+                      ) : (
+                        <span className="px-4 py-2 bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300 rounded-lg text-sm font-medium flex items-center gap-1">
+                          <Play className="w-4 h-4" />
+                          Study
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
+        </div>
 
-          {/* System Status */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-            <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-4">
-              {t("System Status")}
-            </h3>
-            <SystemStatus />
-          </div>
-
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
-            <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-4">
-              {t("Quick Actions")}
-            </h3>
-            <div className="space-y-3">
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* LEARN Section - AI-Powered Tools */}
+          <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles className="w-5 h-5 text-amber-300" />
+              <h3 className="font-bold text-lg">LEARN</h3>
+            </div>
+            <p className="text-blue-100 text-sm mb-4">AI-powered tools to accelerate your learning</p>
+            <div className="space-y-2">
               <Link
                 href="/solver"
-                className="block w-full p-3 rounded-xl bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors text-sm flex items-center gap-3"
+                className="flex items-center gap-3 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group"
               >
-                <div className="p-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm">
-                  <HelpCircle className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                  <Brain className="w-5 h-5" />
                 </div>
-                {t("Ask a Question")}
+                <div>
+                  <div className="font-semibold">Smart Solver</div>
+                  <div className="text-xs text-blue-200">Ask AI any question about the papers</div>
+                </div>
               </Link>
               <Link
                 href="/question"
-                className="block w-full p-3 rounded-xl bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 font-medium hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors text-sm flex items-center gap-3"
+                className="flex items-center gap-3 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group"
               >
-                <div className="p-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm">
-                  <FileText className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                  <HelpCircle className="w-5 h-5" />
                 </div>
-                {t("Generate Quiz")}
+                <div>
+                  <div className="font-semibold">Question Generator</div>
+                  <div className="text-xs text-blue-200">Generate study questions to test yourself</div>
+                </div>
               </Link>
               <Link
-                href="/research"
-                className="block w-full p-3 rounded-xl bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-medium hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition-colors text-sm flex items-center gap-3"
+                href="/guide"
+                className="flex items-center gap-3 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group"
               >
-                <div className="p-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm">
-                  <Search className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
+                  <GraduationCap className="w-5 h-5" />
                 </div>
-                {t("Start Research")}
+                <div>
+                  <div className="font-semibold">Guided Learning</div>
+                  <div className="text-xs text-blue-200">Step-by-step tutoring through concepts</div>
+                </div>
               </Link>
             </div>
           </div>
+
+          {/* Quick Navigation */}
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <h3 className="font-bold text-slate-900 dark:text-white mb-4">Explore</h3>
+            <div className="space-y-2">
+              <Link
+                href="/graph"
+                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors group"
+              >
+                <span className="flex items-center gap-3 text-slate-700 dark:text-slate-200">
+                  <Network className="w-5 h-5 text-blue-500" />
+                  Paper Connections
+                </span>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-500" />
+              </Link>
+              <Link
+                href="/papers"
+                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50 hover:bg-amber-50 dark:hover:bg-amber-900/20 transition-colors group"
+              >
+                <span className="flex items-center gap-3 text-slate-700 dark:text-slate-200">
+                  <BookOpen className="w-5 h-5 text-amber-500" />
+                  All Papers
+                </span>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-amber-500" />
+              </Link>
+              <Link
+                href="/share"
+                className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-700/50 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors group"
+              >
+                <span className="flex items-center gap-3 text-slate-700 dark:text-slate-200">
+                  <MessageSquare className="w-5 h-5 text-emerald-500" />
+                  Share Progress
+                </span>
+                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-500" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Achievements */}
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+              <Award className="w-5 h-5 text-amber-500" />
+              Achievements
+            </h3>
+            <div className="space-y-3">
+              <div className={`flex items-center gap-3 p-2 rounded-lg ${completedPapers.size >= 1 ? "bg-amber-50 dark:bg-amber-900/20" : "opacity-50"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${completedPapers.size >= 1 ? "bg-amber-500" : "bg-slate-300"}`}>
+                  <Star className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-slate-900 dark:text-white">First Steps</div>
+                  <div className="text-xs text-slate-500">Complete your first paper</div>
+                </div>
+              </div>
+              <div className={`flex items-center gap-3 p-2 rounded-lg ${completedPapers.size >= 5 ? "bg-blue-50 dark:bg-blue-900/20" : "opacity-50"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${completedPapers.size >= 5 ? "bg-blue-500" : "bg-slate-300"}`}>
+                  <Zap className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-slate-900 dark:text-white">Getting Started</div>
+                  <div className="text-xs text-slate-500">Complete 5 papers</div>
+                </div>
+              </div>
+              <div className={`flex items-center gap-3 p-2 rounded-lg ${streak >= 7 ? "bg-orange-50 dark:bg-orange-900/20" : "opacity-50"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${streak >= 7 ? "bg-orange-500" : "bg-slate-300"}`}>
+                  <Flame className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-slate-900 dark:text-white">Week Warrior</div>
+                  <div className="text-xs text-slate-500">7 day study streak</div>
+                </div>
+              </div>
+              <div className={`flex items-center gap-3 p-2 rounded-lg ${Object.values(LEARNING_PATHS).some(p => p.papers.every(id => completedPapers.has(id))) ? "bg-purple-50 dark:bg-purple-900/20" : "opacity-50"}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${Object.values(LEARNING_PATHS).some(p => p.papers.every(id => completedPapers.has(id))) ? "bg-purple-500" : "bg-slate-300"}`}>
+                  <Target className="w-4 h-4 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm font-medium text-slate-900 dark:text-white">Path Master</div>
+                  <div className="text-xs text-slate-500">Complete a learning path</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quote */}
+          <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 text-white">
+            <Sparkles className="w-6 h-6 text-amber-400 mb-3" />
+            <blockquote className="text-sm italic text-slate-300 mb-3">
+              "If you really learn all of these, you'll know 90% of what matters today."
+            </blockquote>
+            <p className="text-xs text-slate-400">— Ilya Sutskever</p>
+          </div>
         </div>
       </div>
-
-      {selectedActivity && (
-        <ActivityDetail
-          activity={selectedActivity}
-          onClose={() => setSelectedActivity(null)}
-        />
-      )}
     </div>
   );
 }

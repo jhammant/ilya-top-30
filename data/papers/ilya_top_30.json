@@ -1,0 +1,227 @@
+{
+  "title": "Ilya Sutskever's Top 30 Reading List",
+  "description": "If you really learn all of these, you'll know 90% of what matters today",
+  "source": "https://aman.ai/primers/ai/top-30-papers/",
+  "papers": [
+    {
+      "id": 1,
+      "title": "The First Law of Complexodynamics",
+      "url": "https://scottaaronson.blog/?p=762",
+      "type": "blog",
+      "category": "Complexity Theory"
+    },
+    {
+      "id": 2,
+      "title": "The Unreasonable Effectiveness of Recurrent Neural Networks",
+      "url": "https://karpathy.github.io/2015/05/21/rnn-effectiveness/",
+      "type": "blog",
+      "category": "RNNs"
+    },
+    {
+      "id": 3,
+      "title": "Understanding LSTM Networks",
+      "url": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/",
+      "type": "blog",
+      "category": "RNNs"
+    },
+    {
+      "id": 4,
+      "title": "Recurrent Neural Network Regularization",
+      "url": "https://arxiv.org/abs/1409.2329",
+      "arxiv_id": "1409.2329",
+      "type": "paper",
+      "category": "RNNs"
+    },
+    {
+      "id": 5,
+      "title": "Keeping Neural Networks Simple by Minimizing the Description Length of the Weights",
+      "url": "https://www.cs.toronto.edu/~hinton/absps/colt93.pdf",
+      "type": "paper",
+      "category": "Information Theory"
+    },
+    {
+      "id": 6,
+      "title": "Pointer Networks",
+      "url": "https://arxiv.org/abs/1506.03134",
+      "arxiv_id": "1506.03134",
+      "type": "paper",
+      "category": "Sequence Models"
+    },
+    {
+      "id": 7,
+      "title": "ImageNet Classification with Deep Convolutional Neural Networks",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf",
+      "type": "paper",
+      "category": "CNNs",
+      "note": "AlexNet paper"
+    },
+    {
+      "id": 8,
+      "title": "Order Matters: Sequence to Sequence for Sets",
+      "url": "https://arxiv.org/abs/1511.06391",
+      "arxiv_id": "1511.06391",
+      "type": "paper",
+      "category": "Sequence Models"
+    },
+    {
+      "id": 9,
+      "title": "GPipe: Easy Scaling with Micro-Batch Pipeline Parallelism",
+      "url": "https://arxiv.org/abs/1811.06965",
+      "arxiv_id": "1811.06965",
+      "type": "paper",
+      "category": "Scaling"
+    },
+    {
+      "id": 10,
+      "title": "Deep Residual Learning for Image Recognition",
+      "url": "https://arxiv.org/abs/1512.03385",
+      "arxiv_id": "1512.03385",
+      "type": "paper",
+      "category": "CNNs",
+      "note": "ResNet paper"
+    },
+    {
+      "id": 11,
+      "title": "Multi-Scale Context Aggregation by Dilated Convolutions",
+      "url": "https://arxiv.org/abs/1511.07122",
+      "arxiv_id": "1511.07122",
+      "type": "paper",
+      "category": "CNNs"
+    },
+    {
+      "id": 12,
+      "title": "Neural Message Passing for Quantum Chemistry",
+      "url": "https://arxiv.org/abs/1704.01212",
+      "arxiv_id": "1704.01212",
+      "type": "paper",
+      "category": "Graph Neural Networks"
+    },
+    {
+      "id": 13,
+      "title": "Attention Is All You Need",
+      "url": "https://arxiv.org/abs/1706.03762",
+      "arxiv_id": "1706.03762",
+      "type": "paper",
+      "category": "Transformers",
+      "note": "The Transformer paper"
+    },
+    {
+      "id": 14,
+      "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+      "url": "https://arxiv.org/abs/1409.0473",
+      "arxiv_id": "1409.0473",
+      "type": "paper",
+      "category": "Attention",
+      "note": "Bahdanau attention"
+    },
+    {
+      "id": 15,
+      "title": "Identity Mappings in Deep Residual Networks",
+      "url": "https://arxiv.org/abs/1603.05027",
+      "arxiv_id": "1603.05027",
+      "type": "paper",
+      "category": "CNNs"
+    },
+    {
+      "id": 16,
+      "title": "A Simple Neural Network Module for Relational Reasoning",
+      "url": "https://arxiv.org/abs/1706.01427",
+      "arxiv_id": "1706.01427",
+      "type": "paper",
+      "category": "Reasoning"
+    },
+    {
+      "id": 17,
+      "title": "Variational Lossy Autoencoder",
+      "url": "https://arxiv.org/abs/1611.02731",
+      "arxiv_id": "1611.02731",
+      "type": "paper",
+      "category": "Generative Models"
+    },
+    {
+      "id": 18,
+      "title": "Relational Recurrent Neural Networks",
+      "url": "https://arxiv.org/abs/1806.01822",
+      "arxiv_id": "1806.01822",
+      "type": "paper",
+      "category": "RNNs"
+    },
+    {
+      "id": 19,
+      "title": "Quantifying the Rise and Fall of Complexity in Closed Systems: The Coffee Automaton",
+      "url": "https://arxiv.org/abs/1405.6903",
+      "arxiv_id": "1405.6903",
+      "type": "paper",
+      "category": "Complexity Theory"
+    },
+    {
+      "id": 20,
+      "title": "Neural Turing Machines",
+      "url": "https://arxiv.org/abs/1410.5401",
+      "arxiv_id": "1410.5401",
+      "type": "paper",
+      "category": "Memory Networks"
+    },
+    {
+      "id": 21,
+      "title": "Deep Speech 2: End-to-End Speech Recognition in English and Mandarin",
+      "url": "https://arxiv.org/abs/1512.02595",
+      "arxiv_id": "1512.02595",
+      "type": "paper",
+      "category": "Speech"
+    },
+    {
+      "id": 22,
+      "title": "Scaling Laws for Neural Language Models",
+      "url": "https://arxiv.org/abs/2001.08361",
+      "arxiv_id": "2001.08361",
+      "type": "paper",
+      "category": "Scaling"
+    },
+    {
+      "id": 23,
+      "title": "A Tutorial Introduction to the Minimum Description Length Principle",
+      "url": "https://arxiv.org/abs/math/0406077",
+      "arxiv_id": "math/0406077",
+      "type": "paper",
+      "category": "Information Theory"
+    },
+    {
+      "id": 24,
+      "title": "Machine Super Intelligence",
+      "url": "https://www.vetta.org/documents/Machine_Super_Intelligence.pdf",
+      "type": "paper",
+      "category": "AGI"
+    },
+    {
+      "id": 25,
+      "title": "Kolmogorov Complexity and Algorithmic Randomness",
+      "url": "https://www.lirmm.fr/~ashen/kolmbook-eng-scan.pdf",
+      "type": "book",
+      "category": "Information Theory"
+    },
+    {
+      "id": 26,
+      "title": "Stanford's CS231n Convolutional Neural Networks for Visual Recognition",
+      "url": "https://cs231n.github.io/",
+      "type": "course",
+      "category": "CNNs"
+    }
+  ],
+  "categories": [
+    "Complexity Theory",
+    "RNNs",
+    "Information Theory",
+    "Sequence Models",
+    "CNNs",
+    "Scaling",
+    "Graph Neural Networks",
+    "Transformers",
+    "Attention",
+    "Reasoning",
+    "Generative Models",
+    "Memory Networks",
+    "Speech",
+    "AGI"
+  ]
+}

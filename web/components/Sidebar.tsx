@@ -15,6 +15,9 @@ import {
   GraduationCap,
   Lightbulb,
   Github,
+  Library,
+  Network,
+  Share2,
 } from "lucide-react";
 import { useGlobal } from "@/context/GlobalContext";
 import { getTranslation } from "@/lib/i18n";
@@ -30,7 +33,10 @@ export default function Sidebar() {
     {
       name: t("Start"),
       items: [
-        { name: t("Dashboard"), href: "/", icon: LayoutDashboard },
+        { name: "Learn", href: "/", icon: LayoutDashboard },
+        { name: "The Papers", href: "/papers", icon: Library },
+        { name: "Paper Graph", href: "/graph", icon: Network },
+        { name: "Share Progress", href: "/share", icon: Share2 },
         { name: t("Knowledge Bases"), href: "/knowledge", icon: BookOpen },
         { name: t("Notebooks"), href: "/notebook", icon: Book },
       ],
@@ -71,7 +77,7 @@ export default function Sidebar() {
                 />
               </div>
               <h1 className="font-bold text-slate-900 dark:text-slate-100 tracking-tight text-lg">
-                DeepTutor
+                Ilya's Top 30
               </h1>
             </div>
             <a
@@ -86,7 +92,7 @@ export default function Sidebar() {
           </div>
 
           <div className="text-[10px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100/50 dark:bg-slate-700/50 p-2 rounded-lg border border-slate-100 dark:border-slate-600">
-            ✨ Data Intelligence Lab @ HKU
+            Learn 90% of what matters in AI
           </div>
         </div>
       </div>

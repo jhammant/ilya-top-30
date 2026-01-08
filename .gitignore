@@ -8,6 +8,9 @@
 # User data directory (migrated to data/user/)
 data/user/
 data/knowledge_bases/
+
+# Downloaded papers (run scripts/download_papers.py to get them)
+data/papers/downloads/
 run_code_workspace/
 config/bench_config.yaml
 develop/

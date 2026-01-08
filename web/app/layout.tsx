@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
 import { GlobalProvider } from "@/context/GlobalContext";
 import ThemeScript from "@/components/ThemeScript";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 // Use Inter font with swap display for better loading
 const font = Inter({
@@ -13,8 +13,8 @@ const font = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DeepTutor Platform",
-  description: "Multi-Agent Teaching & Research Copilot",
+  title: "Ilya's Top 30 - AI Paper Learning Platform",
+  description: "Master the foundational AI papers from Ilya Sutskever's reading list",
 };
 
 export default function RootLayout({
@@ -29,12 +29,7 @@ export default function RootLayout({
       </head>
       <body className={font.className}>
         <GlobalProvider>
-          <div className="flex h-screen bg-slate-50 dark:bg-slate-900 overflow-hidden transition-colors duration-200">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-900">
-              <div className="w-full p-8">{children}</div>
-            </main>
-          </div>
+          <LayoutWrapper>{children}</LayoutWrapper>
         </GlobalProvider>
       </body>
     </html>
