@@ -89,13 +89,20 @@ Visualize how the 26 papers connect to each other. Understand prerequisites at a
 
 ## Screenshots
 
-| Landing Page | Learning Dashboard |
-|--------------|-------------------|
-| ![Landing](assets/figs/welcome.png) | ![Dashboard](assets/figs/dashboard.png) |
+### Landing Page
+![Hero](assets/figs/hero.png)
 
-| Paper Learning | Paper Graph |
-|----------------|-------------|
-| ![Learn](assets/figs/learn.png) | ![Graph](assets/figs/graph.png) |
+### AI-Powered Learning Tools
+![AI Tools](assets/figs/ai-tools.png)
+
+### Four Curated Learning Paths
+![Learning Paths](assets/figs/learning-paths.png)
+
+### Learning Dashboard
+![Dashboard](assets/figs/dashboard.png)
+
+### Papers List
+![Papers](assets/figs/papers-list.png)
 
 ---
 
