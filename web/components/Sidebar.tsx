@@ -18,9 +18,14 @@ import {
   Library,
   Network,
   Share2,
+  User,
+  LogIn,
+  Crown,
 } from "lucide-react";
 import { useGlobal } from "@/context/GlobalContext";
 import { getTranslation } from "@/lib/i18n";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import { useUsage } from "@/lib/useUsage";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -137,6 +142,20 @@ export default function Sidebar() {
 
       {/* Footer */}
       <div className="p-4 border-t border-slate-100 dark:border-slate-700 space-y-2 bg-slate-50/30 dark:bg-slate-800/30">
+        {/* User Auth Section */}
+        <SignedIn>
+          <UserProfile />
+        </SignedIn>
+        <SignedOut>
+          <Link
+            href="/sign-in"
+            className="w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-sm bg-blue-500 hover:bg-blue-600 text-white"
+          >
+            <LogIn className="w-4 h-4" />
+            <span>Sign In</span>
+          </Link>
+        </SignedOut>
+
         {/* Settings */}
         <Link
           href="/settings"
@@ -152,6 +171,68 @@ export default function Sidebar() {
           <span>{t("Settings")}</span>
         </Link>
       </div>
+    </div>
+  );
+}
+
+function UserProfile() {
+  const { user } = useUser();
+  const { isPro, remaining, limit } = useUsage();
+  const pathname = usePathname();
+
+  return (
+    <div className="space-y-2">
+      {/* Usage Display */}
+      <div className="px-4 py-2">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-xs text-slate-500 dark:text-slate-400">
+            Questions Today
+          </span>
+          {isPro && (
+            <span className="flex items-center gap-1 text-[10px] font-bold text-amber-500">
+              <Crown className="w-3 h-3" />
+              PRO
+            </span>
+          )}
+        </div>
+        <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+          <div
+            className={`h-full transition-all ${
+              remaining === 0
+                ? "bg-red-500"
+                : remaining <= 5
+                ? "bg-amber-500"
+                : "bg-emerald-500"
+            }`}
+            style={{ width: `${Math.min(100, (remaining / limit) * 100)}%` }}
+          />
+        </div>
+        <div className="flex justify-between mt-1 text-[10px] text-slate-500">
+          <span>{remaining} remaining</span>
+          <span>{limit}/day</span>
+        </div>
+      </div>
+
+      {/* Account Link */}
+      <Link
+        href="/account"
+        className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-all text-sm ${
+          pathname === "/account"
+            ? "bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm border border-slate-100 dark:border-slate-600"
+            : "text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-slate-100"
+        }`}
+      >
+        <div className="w-6 h-6 rounded-full overflow-hidden">
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: "w-6 h-6",
+              },
+            }}
+          />
+        </div>
+        <span className="truncate">{user?.firstName || "Account"}</span>
+      </Link>
     </div>
   );
 }

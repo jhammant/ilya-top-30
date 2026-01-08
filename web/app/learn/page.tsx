@@ -23,8 +23,12 @@ import {
   Zap,
   ArrowRight,
   RefreshCw,
+  Lock,
+  Crown,
 } from "lucide-react";
 import Confetti from "@/components/Confetti";
+import { useUser } from "@clerk/nextjs";
+import { useUsage } from "@/lib/useUsage";
 
 // Paper data (same as papers page)
 const PAPERS = [
@@ -539,6 +543,9 @@ function LearnPageContent() {
   const router = useRouter();
   const paperId = parseInt(searchParams.get("paper") || "3");
 
+  const { isSignedIn, isLoaded: userLoaded } = useUser();
+  const { canAsk, remaining, limit, isPro, recordUsage, fetchUsage } = useUsage();
+
   const [paper, setPaper] = useState(PAPERS.find(p => p.id === paperId) || PAPERS[2]);
   const [completedPapers, setCompletedPapers] = useState<Set<number>>(new Set());
   const [showConfetti, setShowConfetti] = useState(false);
@@ -548,6 +555,7 @@ function LearnPageContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [generatedQuestions, setGeneratedQuestions] = useState<string[]>([]);
   const [isGeneratingQuestions, setIsGeneratingQuestions] = useState(false);
+  const [usageError, setUsageError] = useState<string | null>(null);
 
   useEffect(() => {
     const foundPaper = PAPERS.find(p => p.id === paperId);
@@ -588,10 +596,36 @@ function LearnPageContent() {
 
   const askQuestion = async () => {
     if (!question.trim()) return;
+    setUsageError(null);
+
+    // Check if user is signed in
+    if (!isSignedIn) {
+      setUsageError("Please sign in to use AI features.");
+      return;
+    }
+
+    // Check if user has remaining usage
+    if (!canAsk) {
+      setUsageError(
+        isPro
+          ? "You've reached your daily limit. Come back tomorrow!"
+          : "You've reached your free limit. Upgrade to Pro for 100 questions/day!"
+      );
+      return;
+    }
+
     setIsLoading(true);
     setAnswer("");
 
     try {
+      // Record usage before making the request
+      const usageOk = await recordUsage();
+      if (!usageOk) {
+        setUsageError("Unable to process request. Please try again.");
+        setIsLoading(false);
+        return;
+      }
+
       const response = await fetch("http://localhost:8001/api/v1/agents/solve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -624,10 +658,36 @@ function LearnPageContent() {
   };
 
   const generateQuestions = async () => {
+    setUsageError(null);
+
+    // Check if user is signed in
+    if (!isSignedIn) {
+      setUsageError("Please sign in to use AI features.");
+      return;
+    }
+
+    // Check if user has remaining usage
+    if (!canAsk) {
+      setUsageError(
+        isPro
+          ? "You've reached your daily limit. Come back tomorrow!"
+          : "You've reached your free limit. Upgrade to Pro for 100 questions/day!"
+      );
+      return;
+    }
+
     setIsGeneratingQuestions(true);
     setGeneratedQuestions([]);
 
     try {
+      // Record usage before making the request
+      const usageOk = await recordUsage();
+      if (!usageOk) {
+        setUsageError("Unable to process request. Please try again.");
+        setIsGeneratingQuestions(false);
+        return;
+      }
+
       const response = await fetch("http://localhost:8001/api/v1/agents/solve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -817,7 +877,7 @@ function LearnPageContent() {
                     </div>
                     <button
                       onClick={generateQuestions}
-                      disabled={isGeneratingQuestions}
+                      disabled={isGeneratingQuestions || !isSignedIn || !canAsk}
                       className="flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
                     >
                       {isGeneratingQuestions ? (
@@ -828,6 +888,33 @@ function LearnPageContent() {
                       Generate New
                     </button>
                   </div>
+
+                  {/* Sign in prompt */}
+                  {!isSignedIn && userLoaded && (
+                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+                      <div className="flex items-center gap-3">
+                        <Lock className="w-5 h-5 text-amber-500" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                            Sign in to generate AI questions
+                          </p>
+                        </div>
+                        <Link
+                          href="/sign-in"
+                          className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium"
+                        >
+                          Sign In
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Usage error display */}
+                  {usageError && activeTab === "questions" && (
+                    <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-800">
+                      <p className="text-sm font-medium text-red-800 dark:text-red-200">{usageError}</p>
+                    </div>
+                  )}
 
                   {/* Sample/Generated Questions */}
                   <div className="space-y-3">
@@ -861,10 +948,64 @@ function LearnPageContent() {
 
               {activeTab === "solver" && (
                 <div className="space-y-4">
-                  <div>
-                    <h3 className="font-bold text-slate-900 dark:text-white mb-1">Smart Solver</h3>
-                    <p className="text-sm text-slate-500">Ask any question about this paper</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="font-bold text-slate-900 dark:text-white mb-1">Smart Solver</h3>
+                      <p className="text-sm text-slate-500">Ask any question about this paper</p>
+                    </div>
+                    {isSignedIn && (
+                      <div className="text-xs text-slate-500 flex items-center gap-1">
+                        {isPro && <Crown className="w-3 h-3 text-amber-500" />}
+                        {remaining}/{limit} questions
+                      </div>
+                    )}
                   </div>
+
+                  {/* Sign in prompt for non-authenticated users */}
+                  {!isSignedIn && userLoaded && (
+                    <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800">
+                      <div className="flex items-center gap-3">
+                        <Lock className="w-5 h-5 text-amber-500" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                            Sign in to use AI features
+                          </p>
+                          <p className="text-xs text-amber-600 dark:text-amber-300">
+                            Get 5 free questions/day or upgrade for 100/day
+                          </p>
+                        </div>
+                        <Link
+                          href="/sign-in"
+                          className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-sm font-medium"
+                        >
+                          Sign In
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Usage error display */}
+                  {usageError && (
+                    <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-xl border border-red-200 dark:border-red-800">
+                      <div className="flex items-center gap-3">
+                        <Lock className="w-5 h-5 text-red-500" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                            {usageError}
+                          </p>
+                        </div>
+                        {!isPro && isSignedIn && (
+                          <Link
+                            href="/account"
+                            className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium flex items-center gap-1"
+                          >
+                            <Crown className="w-3 h-3" />
+                            Upgrade
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   <div className="flex gap-2">
                     <input
@@ -874,10 +1015,11 @@ function LearnPageContent() {
                       onKeyDown={(e) => e.key === "Enter" && askQuestion()}
                       placeholder="Ask a question about this paper..."
                       className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                      disabled={!isSignedIn || !canAsk}
                     />
                     <button
                       onClick={askQuestion}
-                      disabled={isLoading || !question.trim()}
+                      disabled={isLoading || !question.trim() || !isSignedIn || !canAsk}
                       className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium transition-colors disabled:opacity-50 flex items-center gap-2"
                     >
                       {isLoading ? (
@@ -894,7 +1036,8 @@ function LearnPageContent() {
                       <button
                         key={i}
                         onClick={() => setQuestion(q)}
-                        className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                        disabled={!isSignedIn || !canAsk}
+                        className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors disabled:opacity-50"
                       >
                         {q.slice(0, 40)}...
                       </button>

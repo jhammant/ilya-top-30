@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.36.6",
+    "@stripe/stripe-js": "^8.6.1",
+    "@supabase/supabase-js": "^2.90.1",
     "clsx": "^2.1.1",
     "cytoscape": "^3.33.1",
     "framer-motion": "^12.24.0",
@@ -25,6 +28,7 @@
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
+    "stripe": "^20.1.2",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

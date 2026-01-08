@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 import { GlobalProvider } from "@/context/GlobalContext";
 import ThemeScript from "@/components/ThemeScript";
 import LayoutWrapper from "@/components/LayoutWrapper";
@@ -23,15 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <ThemeScript />
-      </head>
-      <body className={font.className}>
-        <GlobalProvider>
-          <LayoutWrapper>{children}</LayoutWrapper>
-        </GlobalProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <head>
+          <ThemeScript />
+        </head>
+        <body className={font.className}>
+          <GlobalProvider>
+            <LayoutWrapper>{children}</LayoutWrapper>
+          </GlobalProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
