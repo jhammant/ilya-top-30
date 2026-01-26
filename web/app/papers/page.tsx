@@ -833,9 +833,9 @@ export default function PapersPage() {
                           <ExternalLink className="w-4 h-4" />
                         </a>
                         <Link
-                          href={`/solver?paper=${encodeURIComponent(paper.title)}`}
+                          href={`/learn?paper=${paper.id}`}
                           className="p-2 rounded-lg text-slate-500 hover:bg-purple-100 dark:hover:bg-purple-900/30 hover:text-purple-600 transition-colors"
-                          title="Ask AI"
+                          title="Learn"
                         >
                           <FileText className="w-4 h-4" />
                         </Link>
@@ -920,7 +920,7 @@ export default function PapersPage() {
                         Read Paper
                       </a>
                       <Link
-                        href={`/guide?topic=${encodeURIComponent(paper.title)}`}
+                        href={`/learn?paper=${paper.id}`}
                         className="flex-1 flex items-center justify-center gap-2 py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors"
                       >
                         <BookOpen className="w-4 h-4" />

@@ -410,39 +410,39 @@ export default function LearningDashboard() {
             <p className="text-blue-100 text-sm mb-4">AI-powered tools to accelerate your learning</p>
             <div className="space-y-2">
               <Link
-                href="/solver"
+                href="/quiz"
                 className="flex items-center gap-3 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group"
               >
                 <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
                   <Brain className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-semibold">Smart Solver</div>
-                  <div className="text-xs text-blue-200">Ask AI any question about the papers</div>
+                  <div className="font-semibold">Quiz Mode</div>
+                  <div className="text-xs text-blue-200">Test yourself with AI-generated questions</div>
                 </div>
               </Link>
               <Link
-                href="/question"
+                href="/flashcards"
                 className="flex items-center gap-3 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group"
               >
                 <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
                   <HelpCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-semibold">Question Generator</div>
-                  <div className="text-xs text-blue-200">Generate study questions to test yourself</div>
+                  <div className="font-semibold">Flashcards</div>
+                  <div className="text-xs text-blue-200">Spaced repetition for long-term retention</div>
                 </div>
               </Link>
               <Link
-                href="/guide"
+                href="/concepts"
                 className="flex items-center gap-3 p-3 rounded-xl bg-white/10 hover:bg-white/20 transition-colors group"
               >
                 <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-semibold">Guided Learning</div>
-                  <div className="text-xs text-blue-200">Step-by-step tutoring through concepts</div>
+                  <div className="font-semibold">Concept Map</div>
+                  <div className="text-xs text-blue-200">Explore key concepts from each paper</div>
                 </div>
               </Link>
             </div>

@@ -224,37 +224,44 @@ export default function WelcomePage() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 mb-6">
                       <Brain className="w-8 h-8 text-purple-400" />
-                      <h3 className="text-xl font-bold">Smart Solver</h3>
+                      <h3 className="text-xl font-bold">Quiz Mode</h3>
                     </div>
-                    <div className="bg-slate-700/50 rounded-xl p-4">
-                      <p className="text-sm text-slate-400 mb-2">Your question:</p>
-                      <p className="text-white">"How does multi-head attention differ from single attention?"</p>
-                    </div>
-                    <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4">
-                      <p className="text-sm text-purple-400 mb-2">AI Response:</p>
-                      <p className="text-slate-300 text-sm">Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With single attention, averaging inhibits this...</p>
-                    </div>
+                    <p className="text-slate-400 text-sm mb-4">Test your understanding of "Attention Is All You Need":</p>
+                    {[
+                      { q: "What problem does self-attention solve?", difficulty: "Easy" },
+                      { q: "Why is positional encoding necessary?", difficulty: "Medium" },
+                      { q: "How does multi-head attention differ from single attention?", difficulty: "Hard" },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-3 bg-slate-700/50 rounded-lg p-3">
+                        <span className={`px-2 py-1 rounded text-xs font-bold ${
+                          item.difficulty === "Easy" ? "bg-emerald-500/20 text-emerald-400" :
+                          item.difficulty === "Medium" ? "bg-amber-500/20 text-amber-400" :
+                          "bg-red-500/20 text-red-400"
+                        }`}>
+                          {item.difficulty}
+                        </span>
+                        <span className="text-sm text-slate-200">{item.q}</span>
+                      </div>
+                    ))}
                   </div>
                 )}
                 {activeFeature === 1 && (
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 mb-6">
                       <HelpCircle className="w-8 h-8 text-emerald-400" />
-                      <h3 className="text-xl font-bold">Question Generator</h3>
+                      <h3 className="text-xl font-bold">Flashcards</h3>
                     </div>
-                    <p className="text-slate-400 text-sm mb-4">Generated questions for "Attention Is All You Need":</p>
-                    {[
-                      "What problem does self-attention solve?",
-                      "Why do we need positional encoding?",
-                      "What are the benefits of multi-head attention?",
-                    ].map((q, i) => (
-                      <div key={i} className="flex items-center gap-3 bg-slate-700/50 rounded-lg p-3">
-                        <span className="w-6 h-6 rounded-full bg-emerald-500 text-white text-xs flex items-center justify-center font-bold">
-                          {i + 1}
-                        </span>
-                        <span className="text-sm text-slate-200">{q}</span>
+                    <p className="text-slate-400 text-sm mb-4">Review key concepts with spaced repetition:</p>
+                    <div className="bg-slate-700/50 rounded-xl p-6 text-center">
+                      <p className="text-lg text-white mb-4">"What is the key insight of the Transformer architecture?"</p>
+                      <div className="flex gap-2 justify-center">
+                        <button className="px-4 py-2 bg-red-500/20 text-red-400 rounded-lg text-sm">Again</button>
+                        <button className="px-4 py-2 bg-amber-500/20 text-amber-400 rounded-lg text-sm">Hard</button>
+                        <button className="px-4 py-2 bg-emerald-500/20 text-emerald-400 rounded-lg text-sm">Good</button>
+                        <button className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg text-sm">Easy</button>
                       </div>
-                    ))}
+                    </div>
+                    <p className="text-xs text-slate-500 text-center">Cards due today: 12 | Learned: 45</p>
                   </div>
                 )}
                 {activeFeature === 2 && (
