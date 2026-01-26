@@ -50,25 +50,25 @@ const LEARNING_PATHS = [
 
 const FEATURES = [
   {
-    title: "Smart Solver",
-    description: "Ask any question about the papers and get AI-powered answers backed by the actual content. Like having a tutor who's read everything.",
+    title: "Quiz Mode",
+    description: "Test your understanding with AI-generated questions at easy, medium, and hard difficulty levels.",
     icon: Brain,
     color: "purple",
-    href: "/solver",
+    href: "/quiz",
   },
   {
-    title: "Question Generator",
-    description: "Generate study questions to test your understanding. Perfect for self-assessment and exam prep.",
+    title: "Flashcards",
+    description: "Review key concepts with spaced repetition flashcards. Perfect for long-term retention.",
     icon: HelpCircle,
     color: "emerald",
-    href: "/question",
+    href: "/flashcards",
   },
   {
     title: "Guided Learning",
     description: "Step-by-step guidance through each paper. Break down complex concepts into digestible pieces.",
     icon: GraduationCap,
     color: "blue",
-    href: "/guide",
+    href: "/learn",
   },
   {
     title: "Paper Graph",
@@ -562,7 +562,7 @@ export default function WelcomePage() {
             <div className="flex items-center gap-6 text-sm text-slate-500">
               <Link href="/papers" className="hover:text-white transition-colors">Papers</Link>
               <Link href="/graph" className="hover:text-white transition-colors">Graph</Link>
-              <Link href="/solver" className="hover:text-white transition-colors">AI Solver</Link>
+              <Link href="/quiz" className="hover:text-white transition-colors">Quiz</Link>
               <Link href="/share" className="hover:text-white transition-colors">Share</Link>
             </div>
             <div className="text-sm text-slate-500">
