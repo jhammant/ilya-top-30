@@ -1,0 +1,257 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the main contribution of the AlexNet paper?",
+      "answer": "The main contribution of the AlexNet paper is demonstrating that deep convolutional neural networks (CNNs) can achieve state-of-the-art performance on large-scale image classification tasks like ImageNet. The authors trained a large CNN with 60 million parameters and 650,000 neurons using GPUs, introduced ReLU activation functions to speed up training, employed dropout for regularization, and achieved significantly lower top-1 (37.5%) and top-5 (17.0%) error rates than previous methods, setting a new benchmark for deep learning in computer vision.",
+      "related_concepts": [
+        "Convolutional Neural Networks",
+        "ImageNet",
+        "Deep Learning"
+      ],
+      "follow_up": "How did AlexNet differ from earlier CNN architectures like LeNet?"
+    },
+    {
+      "id": "faq2",
+      "category": "implementation",
+      "question": "Why did AlexNet use ReLU activation instead of sigmoid or tanh?",
+      "answer": "AlexNet used Rectified Linear Units (ReLUs) because they are non-saturating and computationally simpler than sigmoid or tanh functions. ReLUs avoid the vanishing gradient problem during backpropagation, allowing faster convergence during training. The paper showed that ReLU-based networks trained up to six times faster than equivalent networks with saturating activations like tanh, making large-scale training feasible on available hardware.",
+      "related_concepts": [
+        "ReLU",
+        "Vanishing Gradients",
+        "Activation Functions"
+      ],
+      "follow_up": "What are the disadvantages of ReLU, and how were they addressed in later models?"
+    },
+    {
+      "id": "faq3",
+      "category": "implementation",
+      "question": "How did AlexNet handle the computational demands of training on large images?",
+      "answer": "AlexNet used highly optimized GPU implementations of 2D convolution and other operations to handle the computational load. The network was trained on two NVIDIA GTX 580 GPUs with 3GB of memory each. The authors parallelized the training across two GPUs by splitting layers between them, enabling efficient use of memory and computation for large-scale CNN training.",
+      "related_concepts": [
+        "GPU Computing",
+        "Parallelization",
+        "Convolution Operations"
+      ],
+      "follow_up": "How has GPU acceleration evolved since AlexNet's training in 2012?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "What is dropout, and how did AlexNet use it?",
+      "answer": "Dropout is a regularization technique where, during training, neurons are randomly 'dropped out' (set to zero) with a certain probability. This prevents co-adaptation of neurons and reduces overfitting. AlexNet applied dropout to the first two fully-connected layers, which helped improve generalization on the large but still limited ImageNet dataset. This was one of the first successful applications of dropout in deep CNNs.",
+      "related_concepts": [
+        "Regularization",
+        "Overfitting",
+        "Neural Network Regularization Techniques"
+      ],
+      "follow_up": "What alternatives to dropout exist for preventing overfitting in CNNs?"
+    },
+    {
+      "id": "faq5",
+      "category": "understanding",
+      "question": "Why is ImageNet important for evaluating CNNs?",
+      "answer": "ImageNet provides a large-scale, diverse dataset with over 14 million labeled images across 22,000 categories. Its scale and variability make it a realistic benchmark for object recognition. The ILSVRC subset with 1000 classes and 1.2 million training images became the standard for evaluating deep learning models because it requires systems to generalize well across many object categories, unlike smaller datasets like MNIST or CIFAR.",
+      "related_concepts": [
+        "ImageNet",
+        "ILSVRC",
+        "Benchmark Datasets"
+      ],
+      "follow_up": "How has ImageNet evolved since the 2010 and 2012 competitions?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "How did AlexNet compare to previous image classification methods?",
+      "answer": "Before AlexNet, state-of-the-art image classifiers relied on handcrafted features (e.g., SIFT, HOG) combined with SVMs or shallow models. AlexNet outperformed these by a large margin, reducing top-5 error from 26.2% to 15.3% in ILSVRC-2012. This demonstrated that end-to-end learned deep features could dramatically outperform traditional computer vision techniques, sparking the deep learning revolution in computer vision.",
+      "related_concepts": [
+        "SIFT",
+        "HOG",
+        "Support Vector Machines",
+        "Deep Learning Revolution"
+      ],
+      "follow_up": "What models came after AlexNet that improved upon its performance?"
+    },
+    {
+      "id": "faq7",
+      "category": "comparison",
+      "question": "How does AlexNet differ from LeNet?",
+      "answer": "AlexNet is much deeper and larger than LeNet. While LeNet (1998) had 2 convolutional layers and was designed for small grayscale images like MNIST, AlexNet has 5 convolutional layers, 3 fully-connected layers, and processes full-color RGB images at 256x256 resolution. AlexNet also uses ReLU, dropout, and GPU acceleration—techniques not present in LeNet—and was trained on a dataset orders of magnitude larger.",
+      "related_concepts": [
+        "LeNet",
+        "Deep Learning Evolution",
+        "CNN Architecture"
+      ],
+      "follow_up": "What architectural innovations in AlexNet became standard in later CNNs?"
+    },
+    {
+      "id": "faq8",
+      "category": "implementation",
+      "question": "Why did AlexNet use two GPUs for training?",
+      "answer": "AlexNet used two GPUs because the model was too large to fit into a single GPU's memory. The authors split the network across two GPUs: one handled odd-numbered layers, and the other even-numbered layers. This allowed them to train a much larger network than was possible with one GPU, while still enabling communication between layers through shared fully-connected layers.",
+      "related_concepts": [
+        "GPU Memory Limits",
+        "Model Parallelism",
+        "Distributed Training"
+      ],
+      "follow_up": "How do modern systems handle models too large for a single GPU?"
+    },
+    {
+      "id": "faq9",
+      "category": "application",
+      "question": "Can AlexNet be used for tasks other than ImageNet classification?",
+      "answer": "Yes, AlexNet's learned features can be transferred to other computer vision tasks via transfer learning. For example, its convolutional layers have been used as feature extractors for object detection, medical image analysis, and satellite imagery. Although AlexNet is outdated in performance today, its architecture demonstrated the viability of using pre-trained CNNs as feature extractors—a practice now standard in deep learning.",
+      "related_concepts": [
+        "Transfer Learning",
+        "Feature Extraction",
+        "Fine-tuning"
+      ],
+      "follow_up": "What are some modern alternatives to AlexNet for transfer learning?"
+    },
+    {
+      "id": "faq10",
+      "category": "limitations",
+      "question": "What are the main limitations of AlexNet?",
+      "answer": "AlexNet has several limitations: it is computationally expensive to train and deploy, lacks modern normalization techniques (like BatchNorm), uses large fully-connected layers that are prone to overfitting even with dropout, and has a fixed input size requiring cropping. Additionally, its architecture is less parameter-efficient than later designs like VGG or ResNet, and it does not use skip connections or depthwise convolutions.",
+      "related_concepts": [
+        "Overfitting",
+        "Computational Efficiency",
+        "Model Architecture"
+      ],
+      "follow_up": "How did VGG and ResNet address AlexNet's limitations?"
+    },
+    {
+      "id": "faq11",
+      "category": "understanding",
+      "question": "What is the significance of top-1 vs. top-5 error rates in ImageNet?",
+      "answer": "Top-1 error rate measures the percentage of test images where the model's most confident prediction is incorrect. Top-5 error rate measures the percentage where the correct label is not among the model's five most confident predictions. Top-5 is more forgiving and better reflects real-world usability (e.g., a user might accept any of the top 5 results), while top-1 is stricter and measures precise classification accuracy.",
+      "related_concepts": [
+        "Top-k Accuracy",
+        "Classification Metrics",
+        "Evaluation Metrics"
+      ],
+      "follow_up": "Why do modern papers still report both top-1 and top-5 errors?"
+    },
+    {
+      "id": "faq12",
+      "category": "implementation",
+      "question": "How did AlexNet preprocess the input images?",
+      "answer": "AlexNet preprocessed images by resizing them so that the shorter side was 256 pixels, then cropping a central 256x256 patch. No other preprocessing (like data augmentation or normalization) was applied except subtracting the mean pixel value over the training set from each RGB channel. This ensured consistent input dimensions and reduced bias due to lighting or contrast variations.",
+      "related_concepts": [
+        "Image Preprocessing",
+        "Mean Subtraction",
+        "Data Augmentation"
+      ],
+      "follow_up": "What modern preprocessing techniques have replaced AlexNet's approach?"
+    },
+    {
+      "id": "faq13",
+      "category": "comparison",
+      "question": "How did AlexNet influence the development of later CNN architectures?",
+      "answer": "AlexNet proved that deep CNNs could outperform traditional methods on large-scale datasets, catalyzing the deep learning revolution. Its architecture—deep convolutional layers, ReLU activations, dropout, and GPU training—became foundational. Later models like VGG (deeper), GoogLeNet (inception modules), and ResNet (skip connections) built directly on AlexNet’s innovations, expanding depth, efficiency, and performance.",
+      "related_concepts": [
+        "CNN Evolution",
+        "VGG",
+        "ResNet",
+        "Deep Learning History"
+      ],
+      "follow_up": "What key innovations did VGG introduce compared to AlexNet?"
+    },
+    {
+      "id": "faq14",
+      "category": "application",
+      "question": "Is AlexNet still used in industry today?",
+      "answer": "AlexNet is rarely used in production systems today due to its high computational cost and inferior performance compared to modern architectures like MobileNet, EfficientNet, or Vision Transformers. However, it remains widely used in education and research as a foundational example of deep CNNs due to its historical significance and clear, interpretable structure.",
+      "related_concepts": [
+        "Production ML",
+        "Model Efficiency",
+        "Educational Models"
+      ],
+      "follow_up": "What models are preferred in mobile or edge applications today?"
+    },
+    {
+      "id": "faq15",
+      "category": "implementation",
+      "question": "Why did AlexNet use local response normalization (LRN)?",
+      "answer": "AlexNet used Local Response Normalization (LRN) to enhance generalization by encouraging competition among neighboring neurons. LRN normalized neuron outputs based on local activity in the same spatial location across nearby channels, mimicking biological lateral inhibition. However, subsequent research showed LRN provided little benefit and was largely abandoned in favor of Batch Normalization.",
+      "related_concepts": [
+        "Local Response Normalization",
+        "Batch Normalization",
+        "Normalization Techniques"
+      ],
+      "follow_up": "Why was Batch Normalization preferred over LRN in later models?"
+    },
+    {
+      "id": "faq16",
+      "category": "limitations",
+      "question": "What role did data augmentation play in AlexNet’s success?",
+      "answer": "AlexNet used minimal data augmentation—mainly horizontal flipping and color jittering—to increase training set diversity. While not as extensive as modern methods (e.g., RandAugment or Cutout), this helped reduce overfitting on the 1.2 million-image dataset. The paper showed that even basic augmentation improved performance, but later models adopted far more sophisticated and effective augmentation strategies.",
+      "related_concepts": [
+        "Data Augmentation",
+        "Overfitting",
+        "Image Transformations"
+      ],
+      "follow_up": "What are some advanced data augmentation techniques developed after AlexNet?"
+    },
+    {
+      "id": "faq17",
+      "category": "understanding",
+      "question": "Why is depth important in AlexNet’s architecture?",
+      "answer": "AlexNet demonstrated that deeper networks (5 convolutional layers) significantly outperformed shallower variants. Removing any single convolutional layer—each contributing less than 1% of parameters—reduced performance, proving that depth enabled the network to learn hierarchical features (edges → textures → parts → objects), which are essential for complex visual recognition.",
+      "related_concepts": [
+        "Deep Learning",
+        "Hierarchical Features",
+        "Model Depth"
+      ],
+      "follow_up": "How do modern networks determine the optimal depth for a CNN?"
+    },
+    {
+      "id": "faq18",
+      "category": "implementation",
+      "question": "How did AlexNet handle variable-resolution images from ImageNet?",
+      "answer": "AlexNet standardized all input images to 256x256 pixels by first rescaling the image so that its shorter side was 256 pixels, then extracting a central crop. This ensured consistent input dimensions for the network while preserving aspect ratio and retaining central object information, avoiding distortion from naive resizing.",
+      "related_concepts": [
+        "Image Resizing",
+        "Central Cropping",
+        "Input Preprocessing"
+      ],
+      "follow_up": "What are better methods today for handling variable image sizes?"
+    },
+    {
+      "id": "faq19",
+      "category": "comparison",
+      "question": "How did AlexNet’s performance compare to human performance on ImageNet?",
+      "answer": "Human performance on the ILSVRC-2012 dataset is estimated to be around 5% top-5 error. AlexNet’s 15.3% top-5 error was significantly worse than human performance but still far superior to previous machine learning methods. This gap highlighted the challenge of achieving human-level vision and spurred further research into deeper, more efficient architectures.",
+      "related_concepts": [
+        "Human Performance",
+        "Computer Vision Benchmarks",
+        "Error Rate Analysis"
+      ],
+      "follow_up": "What models have since approached or surpassed human performance on ImageNet?"
+    },
+    {
+      "id": "faq20",
+      "category": "application",
+      "question": "Can AlexNet be trained on modern hardware today?",
+      "answer": "Yes, AlexNet can easily be trained on modern GPUs (e.g., NVIDIA A100 or H100) in minutes rather than days. Modern deep learning frameworks like PyTorch and TensorFlow provide built-in support for its architecture, making it trivial to reproduce. However, due to its outdated design and poor efficiency compared to modern models, it is rarely trained from scratch today—it’s mainly used for educational purposes.",
+      "related_concepts": [
+        "Modern GPUs",
+        "PyTorch",
+        "TensorFlow",
+        "Educational Models"
+      ],
+      "follow_up": "What are some modern alternatives to AlexNet that are more efficient?"
+    }
+  ],
+  "paper_id": 7,
+  "title": "ImageNet Classification (AlexNet)",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 4,
+    "implementation": 7,
+    "comparison": 4,
+    "application": 3,
+    "limitations": 2
+  }
+}

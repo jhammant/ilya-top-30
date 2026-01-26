@@ -1,0 +1,27 @@
+{
+  "one_liner": "Deep Speech 2 demonstrates that an end-to-end deep learning system can match or exceed human transcription accuracy in both English and Mandarin, using scalable neural architectures trained on massive datasets with high-performance computing.",
+  "paragraphs": [
+    "Traditional speech recognition systems relied on complex, hand-engineered pipelines with separate components for feature extraction, acoustic modeling, and language processing—making them difficult to adapt across languages or noisy environments. The motivation behind Deep Speech 2 was to create a unified, human-like speech recognizer that could learn directly from audio to text without relying on domain-specific engineering, enabling robust performance across accents, languages, and noisy conditions—mirroring how humans naturally learn to understand speech.",
+    "The system uses end-to-end deep learning with recurrent neural networks (RNNs) trained using Connectionist Temporal Classification (CTC) loss to map raw audio directly to transcriptions. Key innovations include deep architectures with convolutional and recurrent layers, Batch Normalization for RNNs, and massive-scale training on 11,940 hours of English and 9,400 hours of Mandarin speech. To handle the computational demands, Baidu developed a highly optimized training system using synchronous SGD across 8–16 GPUs with custom optimizations like fast CTC implementations, memory allocators, and all-reduce communication—achieving 50 teraFLOP/s across the cluster.",
+    "Deep Speech 2 achieves human-level or better transcription accuracy on standard benchmarks in both English and Mandarin, reducing error rates by up to 43% compared to its predecessor. The system’s efficiency allows training in just 3–5 days instead of weeks, enabling rapid iteration. Furthermore, the model can be deployed in real-time production environments using GPU batching techniques, making it scalable and cost-effective for large-scale applications like voice assistants and transcription services."
+  ],
+  "key_takeaways": [
+    "End-to-end deep learning eliminates the need for hand-crafted speech recognition components, enabling a single model to handle multiple languages and noisy environments.",
+    "Massive training datasets (over 9,000+ hours) and large neural networks are crucial for achieving high accuracy in speech recognition.",
+    "High-performance computing techniques—like synchronous SGD, optimized CTC loss, and inter-GPU communication—are essential for training large models efficiently.",
+    "Deep Speech 2 matches or exceeds human transcription accuracy on multiple benchmarks, proving deep learning can surpass traditional ASR systems.",
+    "The system is deployable in real-time, low-latency production environments using GPU batching, making it practical for scalable voice applications."
+  ],
+  "eli5": "Imagine you’re teaching a robot to understand spoken words by just playing it lots of audio and telling it what people said—no complicated rules, just practice. After hearing thousands of hours of talk in different languages and noises, the robot gets so good it can write down what people say as well as or even better than humans!",
+  "prerequisites": [
+    "Basic understanding of neural networks and deep learning",
+    "Familiarity with recurrent neural networks (RNNs) and sequence modeling"
+  ],
+  "applications": [
+    "Voice assistants like Siri or Alexa that understand multiple languages and accents",
+    "Real-time transcription services for meetings, customer service calls, or subtitles in videos"
+  ],
+  "paper_id": 21,
+  "title": "Deep Speech 2",
+  "category": "Speech"
+}

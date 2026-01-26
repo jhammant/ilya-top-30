@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the main problem with applying standard dropout to RNNs and LSTMs, according to Zaremba et al.?",
+      "answer": "Standard dropout corrupts recurrent connections, which amplifies noise over time and disrupts the LSTM's ability to maintain long-term memory.",
+      "explanation": "The paper explains that dropout applied to recurrent connections causes noise to accumulate across timesteps, making it difficult for the network to learn and retain information over long sequences. This is why standard dropout fails in RNNs despite being effective for feedforward networks.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Dropout is too computationally expensive for RNNs.",
+        "LSTMs do not have enough parameters to benefit from dropout.",
+        "Dropout removes too many weights, causing underfitting."
+      ],
+      "hint": "Think about how recurrent connections propagate information across time steps and what happens when noise is added at each step."
+    },
+    {
+      "id": "q2",
+      "question": "What is the key innovation in Zaremba et al.'s dropout method for LSTMs?",
+      "answer": "Applying dropout only to non-recurrent connections (input and output layers), while preserving recurrent connections unchanged.",
+      "explanation": "The paper introduces a modified dropout strategy where noise is applied only to non-recurrent connections (e.g., inputs and outputs of LSTM cells), allowing the recurrent state to preserve long-term dependencies without being corrupted by noise.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Using dropout only on the forget gate.",
+        "Applying dropout to all layers including recurrent states.",
+        "Reducing the dropout rate for recurrent connections."
+      ],
+      "hint": "Look at Figure 2 in the paper — dashed arrows show where dropout is applied, and solid arrows show which connections are left untouched."
+    },
+    {
+      "id": "q3",
+      "question": "Which of the following tasks did Zaremba et al. use to evaluate their RNN regularization technique?",
+      "answer": "Language modeling, speech recognition, and machine translation.",
+      "explanation": "The paper explicitly states in Section 2 that they evaluated their method on three tasks: language modeling, speech recognition, and machine translation, demonstrating its broad applicability.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Image classification, object detection, and clustering.",
+        "Reinforcement learning, robotics, and game AI.",
+        "Time series forecasting and anomaly detection."
+      ],
+      "hint": "The introduction and related work sections list the applications where RNNs have been successful, which are the same tasks used for evaluation."
+    },
+    {
+      "id": "q4",
+      "question": "Why do traditional RNNs struggle with overfitting when scaled up?",
+      "answer": "Because they lack effective regularization techniques like dropout, leading practitioners to use smaller models to avoid overfitting.",
+      "explanation": "The paper notes that dropout, the most successful regularization method for feedforward networks, did not work well with RNNs, so practitioners resorted to using smaller models to prevent overfitting.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "RNNs have too few parameters and cannot learn complex patterns.",
+        "Training RNNs is too slow to allow large models.",
+        "RNNs are inherently unstable and collapse during training."
+      ],
+      "hint": "The introduction mentions that 'practical applications of RNNs often use models that are too small because large RNNs tend to overfit.'"
+    },
+    {
+      "id": "q5",
+      "question": "What is the role of memory cells (c_t) in LSTM units?",
+      "answer": "Memory cells store long-term information and allow the network to decide when to update, forget, or retain past states via input, forget, and output gates.",
+      "explanation": "LSTMs use memory cells to explicitly maintain information over many timesteps. The gates (input, forget, output) control how information flows into, out of, and is retained in these cells.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Memory cells are used to store weights for backpropagation.",
+        "They store the final prediction output for each timestep.",
+        "Memory cells are only used during inference, not training."
+      ],
+      "hint": "Refer to Section 3.1: 'The long term memory is stored in a vector of memory cells.'"
+    },
+    {
+      "id": "q6",
+      "question": "What does the dropout operator D do in Zaremba et al.'s formulation?",
+      "answer": "It randomly sets a subset of the input values to zero, corrupting information without removing connections.",
+      "explanation": "Dropout randomly disables units during training by setting their outputs to zero, forcing the network to learn robust representations. In this paper, it is applied only to non-recurrent connections.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It removes entire layers from the network.",
+        "It reduces learning rate dynamically based on performance.",
+        "It adds Gaussian noise to weights."
+      ],
+      "hint": "Dropout is defined as an operator that 'sets a random subset of its argument to zero.'"
+    },
+    {
+      "id": "q7",
+      "question": "How does Zaremba et al.'s dropout method differ from Bayer et al. (2013)’s approach?",
+      "answer": "Zaremba et al. use standard dropout on non-recurrent connections, while Bayer et al. used marginalized dropout — a deterministic approximation.",
+      "explanation": "The paper distinguishes its method from Bayer et al., who proposed a noiseless, deterministic version of dropout. Zaremba et al. demonstrate that standard (stochastic) dropout can work if applied correctly to non-recurrent connections.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Bayer et al. applied dropout to recurrent connections; Zaremba did not.",
+        "Zaremba used L2 regularization instead of dropout.",
+        "Bayer et al. only applied dropout to output layers."
+      ],
+      "hint": "Look at Section 2: 'The only paper on this topic is by Bayer et al., who focuses on marginalized dropout...'"
+    },
+    {
+      "id": "q8",
+      "question": "Why is it important that dropout does not affect recurrent connections in LSTMs?",
+      "answer": "Because recurrent connections carry long-term memory signals across timesteps; corrupting them would disrupt the network's ability to retain information over time.",
+      "explanation": "The paper argues that if dropout were applied to recurrent connections, the noise would accumulate over time and destroy long-range dependencies — a core strength of LSTMs.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Recurrent connections are too small to be affected by dropout.",
+        "Dropout on recurrent connections improves generalization in all cases.",
+        "Recurrent connections are not used during inference."
+      ],
+      "hint": "Consider what happens to information from timestep t-2 when it travels through recurrent connections — how would noise affect its integrity at timestep t+2?"
+    },
+    {
+      "id": "q9",
+      "question": "According to the paper, how many times is information affected by dropout along a typical path from t-2 to t+2 in their method?",
+      "answer": "L + 1 times, where L is the depth of the network.",
+      "explanation": "Figure 3 shows that information passes through L layers and is corrupted once per layer (via non-recurrent dropout), plus one final time at the output — totaling L+1 times.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Only once, regardless of network depth.",
+        "T times, where T is the number of timesteps.",
+        "2L times — once for input and once for output per layer."
+      ],
+      "hint": "Look at Figure 3 and the caption: 'the information is affected by dropout L+1 times, where L is depth of network.'"
+    },
+    {
+      "id": "q10",
+      "question": "What does Figure 2 illustrate in Zaremba et al.'s paper?",
+      "answer": "Which connections in a multi-layer RNN receive dropout (dashed arrows) and which do not (solid lines).",
+      "explanation": "Figure 2 visually depicts the proposed dropout scheme: dashed arrows indicate non-recurrent connections where dropout is applied, while solid lines represent recurrent connections left untouched.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "The architecture of the LSTM cell itself.",
+        "Training loss curves over time for different models.",
+        "The effect of dropout on word perplexity in language modeling."
+      ],
+      "hint": "Figure 2 is titled 'Regularized multilayer RNN' and shows arrows with different styles — what do those styles represent?"
+    },
+    {
+      "id": "q11",
+      "question": "Why did prior work claim that standard dropout doesn't work with RNNs?",
+      "answer": "Because recurrence amplifies noise, which disrupts the learning of long-term dependencies.",
+      "explanation": "Bayer et al. (2013) and others argued that dropout introduces noise that gets propagated through recurrent connections, causing the signal to degrade over time and making learning unstable.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNNs use sigmoid activations that are incompatible with dropout.",
+        "Dropout causes vanishing gradients in recurrent networks.",
+        "RNNs have too few parameters for dropout to be useful."
+      ],
+      "hint": "Check Section 2: 'Bayer et al. (2013) claim that conventional dropout does not work well with RNNs because the recurrence amplifies noise.'"
+    },
+    {
+      "id": "q12",
+      "question": "How does Zaremba et al. demonstrate the effectiveness of their method beyond theory?",
+      "answer": "They show strong empirical results on multiple tasks: language modeling, speech recognition, and machine translation.",
+      "explanation": "The paper doesn't just propose a method — it validates it with real experiments across different domains, showing reduced overfitting and improved performance.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "They provide a theoretical proof of convergence.",
+        "They compare dropout to batch normalization in RNNs.",
+        "They release a new LSTM variant with different gating mechanisms."
+      ],
+      "hint": "Look at the abstract and Section 2 — they mention evaluation on 'a variety of tasks' including language modeling and machine translation."
+    },
+    {
+      "id": "q13",
+      "question": "What is the significance of Figure 4 in the paper?",
+      "answer": "It shows that a regularized LSTM model can generate coherent and meaningful text samples, indicating successful regularization and reduced overfitting.",
+      "explanation": "Figure 4 displays text samples generated by the model conditioned on 'The meaning of life is...' — showing that regularization allows large models to generate plausible, contextually relevant outputs instead of memorizing noise.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It compares the performance of different optimizers.",
+        "It visualizes the LSTM cell architecture.",
+        "It shows training loss curves for various dropout rates."
+      ],
+      "hint": "Figure 4 is labeled 'Some interesting samples drawn from a large regularized model' — what does this imply about the model’s behavior?"
+    },
+    {
+      "id": "q14",
+      "question": "What does the paper suggest about applying this dropout method to other RNN architectures?",
+      "answer": "The proposed method is likely effective for other RNN variants because it targets the core issue of recurrent noise, not specific LSTM mechanics.",
+      "explanation": "Section 2 states that the method is designed for LSTMs but 'is likely to work well with other RNN architectures as well,' since the problem is general to recurrence.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It only works with LSTMs due to their unique gating structure.",
+        "Other RNNs require different dropout strategies because they lack memory cells.",
+        "The method is too complex to adapt to simpler RNNs."
+      ],
+      "hint": "Look at the last paragraph of Section 2: 'this way of applying dropout is likely to work well with other RNN architectures as well.'"
+    },
+    {
+      "id": "q15",
+      "question": "Why might applying dropout to the output layer (h_t) be beneficial in Zaremba et al.'s method?",
+      "answer": "It forces the output to be robust and not rely on any single hidden unit, improving generalization without disrupting memory flow.",
+      "explanation": "Dropout on the output layer prevents over-reliance on specific hidden units, encouraging distributed representations — while recurrent memory paths remain intact to preserve temporal dependencies.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It reduces the number of parameters in the output layer.",
+        "It speeds up inference by reducing computation.",
+        "It prevents the model from learning any output patterns."
+      ],
+      "hint": "Consider what happens if the output layer always receives the same hidden state — how does dropout help avoid overfitting there?"
+    },
+    {
+      "id": "q16",
+      "question": "What is the main limitation of dropout in feedforward networks that RNNs exacerbate?",
+      "answer": "Dropout introduces stochasticity during training, but in RNNs this noise is propagated and amplified across time steps.",
+      "explanation": "While dropout works well in feedforward networks because information flows once, RNNs reuse the same weights across time — so noise from dropout compounds over multiple timesteps.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Feedforward networks have too much data to need dropout.",
+        "RNNs are more accurate, so they don't need regularization.",
+        "Dropout was never designed for any neural network type."
+      ],
+      "hint": "Compare how dropout affects a single-layer feedforward net vs. an RNN with 10 timesteps — what happens to noise in each?"
+    },
+    {
+      "id": "q17",
+      "question": "How does Zaremba et al.'s method address the trade-off between regularization and information retention in LSTMs?",
+      "answer": "By preserving recurrent connections to maintain long-term memory while applying dropout to non-recurrent paths to reduce overfitting.",
+      "explanation": "The method carefully isolates where noise is introduced: non-recurrent layers are regularized to prevent co-adaptation, but recurrent links remain untouched so memory can persist across long sequences.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It uses dropout only during inference to reduce uncertainty.",
+        "It replaces dropout with L2 regularization on recurrent weights.",
+        "It increases the size of memory cells to compensate for dropout."
+      ],
+      "hint": "Think about what needs to be preserved (memory across time) vs. what can be corrupted (intermediate representations)."
+    },
+    {
+      "id": "q18",
+      "question": "What evidence does the paper provide that their method reduces overfitting?",
+      "answer": "Improved performance on held-out test sets and generation of coherent text samples from large models that would otherwise overfit.",
+      "explanation": "The paper shows empirical gains on multiple tasks and includes Figure 4 — samples from a large regularized model that produce meaningful output, indicating the model generalized rather than memorized training data.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "They show faster training convergence.",
+        "They compare training loss curves and find no difference.",
+        "The model size was reduced to avoid overfitting."
+      ],
+      "hint": "Look at results sections and Figure 4 — what does the ability to generate coherent text imply about model generalization?"
+    },
+    {
+      "id": "q19",
+      "question": "Why might Zaremba et al.'s dropout method be preferable to using smaller RNN models?",
+      "answer": "It allows training larger, more powerful models without overfitting, unlocking greater capacity and performance.",
+      "explanation": "Before this method, practitioners used smaller RNNs to avoid overfitting. Zaremba’s approach enables larger models — which can capture more complex patterns — to be trained effectively.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Smaller models are faster to train and always preferred.",
+        "Larger RNNs have better interpretability than smaller ones.",
+        "Dropout increases model size by adding parameters."
+      ],
+      "hint": "The introduction says: 'practical applications of RNNs often use models that are too small because large RNNs tend to overfit.' How does their method change this?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim that 'this method is likely to work well with other RNN architectures.' Is this a strong or weak claim? Justify your answer based on the paper.",
+      "answer": "It is a strong claim because it targets a fundamental architectural flaw (noise in recurrence) rather than LSTM-specific mechanics, and the core issue of recurrent noise is common across RNN variants.",
+      "explanation": "The paper argues that the problem lies in recurrence amplifying noise — a property shared by all RNNs. Since their solution isolates and preserves recurrent connections, it is architecture-agnostic in design, making the claim well-founded.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "Weak, because the method relies on LSTM gates and won’t work without them.",
+        "Strong, but only for models with memory cells — not basic RNNs.",
+        "Weak, because the paper provides no experimental evidence on non-LSTM RNNs."
+      ],
+      "hint": "Consider whether the problem they solve is unique to LSTMs or inherent in all recurrent networks. Does their solution depend on LSTM-specific components?"
+    }
+  ],
+  "paper_id": 4,
+  "title": "Recurrent Neural Network Regularization",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 9,
+    "hard": 5
+  }
+}

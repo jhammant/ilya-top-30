@@ -1,0 +1,27 @@
+{
+  "one_liner": "CS231n is a comprehensive course that teaches how to build, train, and deploy convolutional neural networks (CNNs) for visual recognition tasks using deep learning.",
+  "paragraphs": [
+    "The course addresses the challenge of enabling machines to understand and interpret visual data, such as images and videos, which is fundamental for applications like self-driving cars, medical imaging, and robotics. Traditional computer vision techniques relied on hand-crafted features, but these struggled with complexity and variability in real-world data. The motivation behind CS231n is to transition from rule-based systems to data-driven models that can automatically learn hierarchical representations of visual patterns using deep learning.",
+    "The course introduces convolutional neural networks (CNNs) as the core architecture for image analysis, explaining how layers of convolutions, pooling, and non-linear activations enable automatic feature extraction. It covers modern techniques like residual connections, batch normalization, data augmentation, and transfer learning, while emphasizing practical implementation using frameworks like TensorFlow and PyTorch. The curriculum also includes training strategies such as optimization with Adam, learning rate scheduling, and regularization to prevent overfitting.",
+    "Students gain hands-on experience by building CNNs that achieve state-of-the-art performance on benchmarks like ImageNet, with real-world projects including object detection and image classification. The practical implications extend beyond academia—industry leaders use these techniques to power products like facial recognition, automated quality control in manufacturing, and AI-powered diagnostics. The course bridges theory with deployment, teaching how to optimize models for speed and efficiency on mobile or embedded devices."
+  ],
+  "key_takeaways": [
+    "CNNs automatically learn spatial hierarchies of features from images, eliminating the need for manual feature engineering.",
+    "Deep learning models require large datasets and careful hyperparameter tuning to generalize well in practice.",
+    "Transfer learning allows leveraging pre-trained models to solve new vision tasks with limited data.",
+    "Understanding backpropagation and gradient flow is essential for debugging and improving neural network performance.",
+    "Real-world deployment demands optimization for speed, memory, and robustness under varying conditions."
+  ],
+  "eli5": "Imagine you're teaching a kid to recognize cats by showing them lots of pictures—first they notice big shapes like ears and tails, then smaller details like fur texture. CNNs work the same way: they look at tiny parts of a picture, then combine them step by step until they know what the whole image is—like a super-smart detective for pictures!",
+  "prerequisites": [
+    "Basic knowledge of linear algebra and calculus",
+    "Familiarity with Python programming"
+  ],
+  "applications": [
+    "Self-driving cars detecting pedestrians and traffic signs",
+    "Medical imaging systems identifying tumors in X-rays or MRIs"
+  ],
+  "paper_id": 26,
+  "title": "CS231n Course",
+  "category": "CNNs"
+}

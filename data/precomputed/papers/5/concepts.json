@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Minimum Description Length (MDL) Principle",
+      "definition": "A formalization of Occam's Razor stating that the best model for data is the one that minimizes the total cost of describing the model plus the cost of describing the data given the model.",
+      "intuition": "Like choosing the shortest recipe that still makes a perfect cake—simplest instructions that still reproduce the result exactly.",
+      "importance": "Provides a theoretical foundation for model selection by balancing complexity and accuracy, preventing overfitting.",
+      "related_concepts": [
+        "Overfitting",
+        "Model Complexity"
+      ],
+      "example": "Choosing a linear model over a 100-parameter neural net if both fit training data equally well but the linear model requires fewer bits to describe.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Model Complexity",
+      "definition": "The richness or intricacy of a model, often measured by the number of parameters, connections, or degrees of freedom it contains.",
+      "intuition": "Think of a model as a machine with dials—more dials mean more ways to tweak it, but also more chance of tuning it to noise.",
+      "importance": "High complexity can lead to overfitting; MDL penalizes it to ensure generalization.",
+      "related_concepts": [
+        "MDL Principle",
+        "Overfitting"
+      ],
+      "example": "A neural network with 10,000 weights is more complex than one with 100 weights.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Overfitting",
+      "definition": "When a model learns training data too well, including noise and outliers, resulting in poor performance on unseen data.",
+      "intuition": "Memorizing answers for a test instead of learning the underlying concepts—you’ll fail when questions change.",
+      "importance": "A primary problem in machine learning; MDL directly combats it by limiting information in weights.",
+      "related_concepts": [
+        "MDL Principle",
+        "Generalization"
+      ],
+      "example": "A neural net memorizes every training image’s pixel noise and fails on new images with slight variations.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Generalization",
+      "definition": "The ability of a model to perform well on unseen data after being trained on a finite dataset.",
+      "intuition": "A student who understands math principles can solve new problems, not just ones they’ve seen before.",
+      "importance": "The ultimate goal of supervised learning; MDL promotes it by favoring simpler models.",
+      "related_concepts": [
+        "Overfitting",
+        "MDL Principle"
+      ],
+      "example": "A speech recognizer that works on new accents and backgrounds, not just the voices it was trained on.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Information in Weights",
+      "definition": "The amount of data (in bits) required to describe the values of a neural network’s parameters.",
+      "intuition": "Each weight is like a memory cell—more precise weights need more bits to store, increasing the model’s 'memory footprint'.",
+      "importance": "MDL treats weight information as a cost; reducing it encourages simpler, more generalizable models.",
+      "related_concepts": [
+        "MDL Principle",
+        "Weight Quantization"
+      ],
+      "example": "Storing a weight as 32-bit float uses more bits than storing it as an 8-bit integer.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Weight Quantization",
+      "definition": "The process of reducing the precision of neural network weights by mapping them to a discrete set of values.",
+      "intuition": "Rounding all your money to the nearest dollar—you lose some precision but save space in your wallet.",
+      "importance": "Reduces information content of weights, aiding MDL; however, it creates non-differentiable cost functions.",
+      "related_concepts": [
+        "Information in Weights",
+        "MDL Principle"
+      ],
+      "example": "Converting weights like 0.473, 1.289 to nearest multiples of 0.5: {0.5, 1.0}.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Information Theory",
+      "definition": "A mathematical framework for quantifying information, entropy, and communication efficiency.",
+      "intuition": "Like measuring how much 'surprise' is in a message—rare events carry more information.",
+      "importance": "Provides the foundation for MDL via Shannon entropy, enabling bit-based cost measurement of models and errors.",
+      "related_concepts": [
+        "MDL Principle",
+        "Entropy"
+      ],
+      "example": "A coin flip has 1 bit of information; a 6-sided die roll has ~2.58 bits.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Entropy",
+      "definition": "A measure of uncertainty or randomness in a probability distribution, quantified in bits.",
+      "intuition": "How unpredictable an outcome is—rolling a fair die has higher entropy than a weighted one.",
+      "importance": "Used to compute the minimum number of bits needed to encode outcomes, central to MDL’s cost function.",
+      "related_concepts": [
+        "Information Theory",
+        "MDL Principle"
+      ],
+      "example": "If a weight’s value is Gaussian-distributed, its entropy depends on variance—higher variance = more bits needed.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Description Cost",
+      "definition": "The total number of bits required to encode both the model parameters and the residuals (errors) between predictions and true outputs.",
+      "intuition": "The total 'notebook size' needed to explain your model and all its mistakes.",
+      "importance": "MDL’s core metric—minimizing it ensures models are both simple and accurate.",
+      "related_concepts": [
+        "MDL Principle",
+        "Data Misfit"
+      ],
+      "example": "Describing a 100-weight neural net (500 bits) + its 100 prediction errors (300 bits) = total cost of 800 bits.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Data Misfit",
+      "definition": "The discrepancy between a model’s predicted output and the true target output for each training example.",
+      "intuition": "How wrong your model is on average—like the total distance between your guesses and the right answers.",
+      "importance": "Part of MDL cost; too large a misfit means poor accuracy, but reducing it by adding complexity hurts generalization.",
+      "related_concepts": [
+        "MDL Principle",
+        "Description Cost"
+      ],
+      "example": "If true label is 5.0 and model predicts 4.2, misfit = 0.8; encoded as a quantized error value.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Gaussian Noise Addition",
+      "definition": "Injecting zero-mean Gaussian noise into neural network weights during training to regularize and control information content.",
+      "intuition": "Blurring your model’s weights slightly so they don’t memorize exact values—like wearing foggy glasses to avoid over-focusing.",
+      "importance": "Enables differentiable approximation of information cost, allowing gradient-based optimization under MDL.",
+      "related_concepts": [
+        "Information in Weights",
+        "MDL Principle"
+      ],
+      "example": "Adding N(0, σ²) noise to each weight before forward pass; higher σ increases uncertainty and reduces information.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Information Bottleneck",
+      "definition": "The principle that optimal representations balance compression of input (simplicity) with preservation of relevant information (accuracy).",
+      "intuition": "Like summarizing a book—you want the shortest summary that still captures the plot’s essence.",
+      "importance": "MDL is a specific instance of this; both seek to compress model parameters while preserving predictive power.",
+      "related_concepts": [
+        "MDL Principle",
+        "Generalization"
+      ],
+      "example": "A neural net learns to represent faces using only 50 key features instead of 10,000 pixels.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Bit Cost of Encoding",
+      "definition": "The number of bits required to transmit or store a value, determined by its probability under a given codebook.",
+      "intuition": "Common words in English are short (e.g., 'the'), rare ones are long—efficient encoding exploits predictability.",
+      "importance": "MDL uses this to quantify model and error costs—lower bit cost = better model.",
+      "related_concepts": [
+        "Entropy",
+        "Description Cost"
+      ],
+      "example": "If a weight value occurs with probability 0.125, it takes log₂(1/0.125) = 3 bits to encode.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Trade-off between Accuracy and Complexity",
+      "definition": "The balance between minimizing prediction error (accuracy) and minimizing model size/complexity.",
+      "intuition": "You can memorize every detail of a map, but carrying it is heavy—better to carry a simplified sketch that gets you there.",
+      "importance": "Core idea behind MDL; without this trade-off, models become overfitting machines.",
+      "related_concepts": [
+        "MDL Principle",
+        "Generalization"
+      ],
+      "example": "A model with 95% train accuracy but 60% test accuracy has poor trade-off; MDL seeks to improve the latter.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Differentiable MDL Optimization",
+      "definition": "A method to compute gradients of the total description cost (model + data misfit) with respect to weights, enabling gradient descent under MDL.",
+      "intuition": "Turning the abstract idea of 'simpler is better' into a math function you can optimize with backpropagation.",
+      "importance": "Enables practical implementation of MDL in neural networks without discrete approximations like quantization.",
+      "related_concepts": [
+        "Gaussian Noise Addition",
+        "MDL Principle"
+      ],
+      "example": "Adding Gaussian noise to weights allows computing ∂(bit cost)/∂weight using analytical formulas instead of Monte Carlo.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 5,
+  "title": "Keeping Neural Networks Simple (MDL)"
+}

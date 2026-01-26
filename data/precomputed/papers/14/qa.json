@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary limitation of the basic encoder-decoder model in neural machine translation as described in this paper?",
+      "answer": "The basic encoder-decoder model compresses the entire source sentence into a single fixed-length vector, which becomes a bottleneck for handling long sentences and can lead to deterioration in translation performance.",
+      "explanation": "The paper explicitly states that encoding the whole source sentence into a fixed-length vector makes it difficult for the neural network to retain all necessary information, especially as sentence length increases. This is identified as a key limitation that the proposed attention mechanism aims to solve.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "The model cannot handle multiple languages.",
+        "The decoder is too slow to generate translations.",
+        "The encoder uses convolutional neural networks instead of RNNs."
+      ],
+      "hint": "Think about what happens to information from long sentences in the basic model—does it all fit into one vector?"
+    },
+    {
+      "id": "q2",
+      "question": "What is the main contribution of the paper regarding neural machine translation?",
+      "answer": "The paper introduces an attention mechanism that allows the model to softly align and focus on relevant parts of the source sentence when generating each target word, eliminating the need for a fixed-length context vector.",
+      "explanation": "The core contribution is the proposal of an attention-based extension to the encoder-decoder framework that dynamically selects relevant source positions during decoding, improving performance on long sentences and enabling joint learning of alignment and translation.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "The paper introduces a new type of RNN called AttentionRNN.",
+        "The authors proposed using transformers instead of RNNs.",
+        "They developed a new language model for monolingual text generation."
+      ],
+      "hint": "The title of the paper gives a big clue: 'Jointly Learning to Align and Translate'."
+    },
+    {
+      "id": "q3",
+      "question": "In the context of this paper, what does 'soft-alignment' mean?",
+      "answer": "Soft-alignment refers to a weighted combination of source hidden states, where each weight reflects the relevance of that source position to the current target word being generated.",
+      "explanation": "Unlike hard alignment (assigning each target word to exactly one source word), soft-alignment computes a probability distribution over all source positions, allowing the model to attend to multiple parts of the input with varying degrees of focus.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It means translating word-by-word in exact order.",
+        "It refers to using a dictionary for direct word mapping.",
+        "It is the process of deleting irrelevant words from the source sentence."
+      ],
+      "hint": "Think of it as a weighted average—not all words matter equally for each target word."
+    },
+    {
+      "id": "q4",
+      "question": "Which components are used in the RNN Encoder-Decoder framework described in Section 2.1?",
+      "answer": "An encoder RNN that converts the source sentence into a context vector, and a decoder RNN that generates the target sentence from that vector.",
+      "explanation": "The paper describes the encoder as an RNN that computes hidden states for each input token and compresses them into a single vector c, while the decoder uses another RNN to generate target words based on c and previous outputs.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "A CNN encoder and a transformer decoder.",
+        "Two separate language models trained independently.",
+        "A rule-based system with hand-crafted grammar rules."
+      ],
+      "hint": "The paper mentions 'two recurrent neural networks'—one for encoding, one for decoding."
+    },
+    {
+      "id": "q5",
+      "question": "Why is the fixed-length vector considered a bottleneck in the basic encoder-decoder model?",
+      "answer": "Because it forces all information from arbitrarily long source sentences into a single vector, which limits the model’s capacity to retain detailed contextual information for longer inputs.",
+      "explanation": "The paper argues that as sentence length increases, the fixed vector becomes overloaded and loses critical information. This leads to performance degradation, especially for sentences longer than those in the training set.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It increases computational cost exponentially.",
+        "It prevents the use of parallel processing.",
+        "It requires more memory for storing word embeddings."
+      ],
+      "hint": "Imagine trying to summarize a whole book into one sentence—what information might you lose?"
+    },
+    {
+      "id": "q6",
+      "question": "What is the role of the context vector c in the basic encoder-decoder model?",
+      "answer": "The context vector c is a fixed-length representation of the entire source sentence, used by the decoder to generate each target word.",
+      "explanation": "As described in Section 2.1, the encoder produces a sequence of hidden states and then compresses them into one vector c, which serves as the sole input to the decoder for generating translations.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It stores the translation dictionary between languages.",
+        "It is used to compute word embeddings for the target language.",
+        "It represents the probability distribution over target words."
+      ],
+      "hint": "The context vector is generated by the encoder and fed into the decoder—what does it contain?"
+    },
+    {
+      "id": "q7",
+      "question": "How does the proposed attention mechanism improve translation performance on long sentences compared to the basic encoder-decoder?",
+      "answer": "It dynamically computes a context vector for each target word by focusing on relevant parts of the source sentence, rather than relying on a single fixed vector for the entire input.",
+      "explanation": "By allowing the decoder to selectively attend to different source positions for each target word, the model avoids information overload and better preserves long-range dependencies, leading to improved performance on longer sentences.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It increases the size of the training corpus automatically.",
+        "It replaces RNNs with CNNs to process longer sequences faster.",
+        "It uses a rule-based system to segment long sentences before translation."
+      ],
+      "hint": "Instead of one summary vector, the attention model creates a new context for every word it translates."
+    },
+    {
+      "id": "q8",
+      "question": "What does the paper claim about the soft-alignments learned by the attention model?",
+      "answer": "The learned alignments are linguistically plausible and correspond well to human intuition about word correspondence between source and target sentences.",
+      "explanation": "The paper includes qualitative analysis showing that the attention weights align with expected word-to-word mappings (e.g., subject-verb-object correspondences), suggesting the model learns meaningful linguistic relationships.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They are manually annotated by human translators.",
+        "They match exact word positions in the source sentence with no variation.",
+        "They are only useful for short sentences and degrade on longer ones."
+      ],
+      "hint": "Look at the qualitative analysis section—what do they say about how well the alignments match human expectations?"
+    },
+    {
+      "id": "q9",
+      "question": "In the attention mechanism, how is the context vector c_t computed for each target word y_t?",
+      "answer": "c_t is computed as a weighted sum of the source hidden states h_j, where weights are determined by an alignment model based on the previous decoder state s_{t-1} and h_j.",
+      "explanation": "The attention mechanism calculates alignment scores between each source hidden state and the previous decoder state, then applies softmax to create a probability distribution over source positions. The context vector is the weighted sum of h_j using these scores.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It is the average of all source hidden states regardless of relevance.",
+        "It is taken directly from the final encoder state h_T.",
+        "It is computed using a separate attention dictionary pre-trained on parallel corpora."
+      ],
+      "hint": "The context vector for each target word is not fixed—it depends on what the decoder is trying to generate next."
+    },
+    {
+      "id": "q10",
+      "question": "How does the proposed attention-based model differ from traditional phrase-based machine translation systems?",
+      "answer": "The attention-based neural model learns to translate and align jointly in a single end-to-end neural network, whereas traditional systems rely on multiple separately tuned components like phrase tables and language models.",
+      "explanation": "The paper contrasts neural machine translation's unified model with phrase-based systems that combine sub-components (e.g., alignment models, translation tables, reordering models) trained independently. The attention model unifies these functions into one trainable architecture.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Traditional systems use neural networks for alignment but not translation.",
+        "Phrase-based systems never use probabilistic models.",
+        "Attention models require manual rule creation for alignment."
+      ],
+      "hint": "The introduction says neural MT avoids 'many small sub-components that are tuned separately'."
+    },
+    {
+      "id": "q11",
+      "question": "Why is the joint learning of alignment and translation considered an advantage in this paper?",
+      "answer": "Because it allows the model to optimize both alignment and translation objectives simultaneously, leading to more accurate and context-aware translations without requiring explicit alignment annotations.",
+      "explanation": "Traditional systems often require pre-aligned corpora. The attention model learns alignment implicitly during translation training, making the system more flexible and scalable without manual annotation.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces the need for training data.",
+        "It eliminates the need for a decoder network.",
+        "It makes translation faster by pre-computing alignments."
+      ],
+      "hint": "The paper says the model 'automatically (soft-)searches' for relevant source parts—no explicit alignment needed."
+    },
+    {
+      "id": "q12",
+      "question": "What evidence does the paper provide to support that attention improves performance on long sentences?",
+      "answer": "The paper shows that the basic encoder-decoder’s performance deteriorates rapidly with increasing sentence length, while the attention model maintains consistent performance across different lengths.",
+      "explanation": "Section 1 explicitly states that the basic model's performance drops with longer sentences, and the attention mechanism alleviates this issue. Experimental results in later sections confirm improved performance on longer inputs.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "They show attention reduces training time for long sentences.",
+        "They compare it to human translation speed.",
+        "They use synthetic short sentences for testing."
+      ],
+      "hint": "Look for a comparison between the basic model and attention model performance as sentence length increases."
+    },
+    {
+      "id": "q13",
+      "question": "How does the attention mechanism address the problem of information loss in fixed-length vectors?",
+      "answer": "By encoding the source sentence as a sequence of hidden states and retrieving relevant ones dynamically during decoding, rather than compressing everything into one vector.",
+      "explanation": "The attention mechanism preserves the sequence of hidden states from the encoder and allows the decoder to selectively access them as needed, avoiding the bottleneck of fixed-size encoding.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It compresses the source sentence into a longer vector.",
+        "It discards early words to reduce information load.",
+        "It uses external memory banks separate from the RNN."
+      ],
+      "hint": "The paper says it 'encodes the input sentence into a sequence of vectors'—what does that enable?"
+    },
+    {
+      "id": "q14",
+      "question": "What is the significance of using a recurrent neural network (RNN) for both encoder and decoder in this paper?",
+      "answer": "RNNs are capable of processing variable-length sequences and maintaining hidden states over time, making them suitable for modeling sequential dependencies in translation.",
+      "explanation": "RNNs naturally handle sequences of varying lengths by processing one element at a time and updating hidden states. This property makes them ideal for encoding source sentences and generating target sequences step-by-step.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "RNNs are faster than CNNs for translation tasks.",
+        "They require less training data compared to other architectures.",
+        "RNNs are the only neural network type that can handle text."
+      ],
+      "hint": "Why do RNNs work well for sequences? Think about how they maintain state over time."
+    },
+    {
+      "id": "q15",
+      "question": "What does the paper suggest about the relationship between alignment and translation in neural machine translation?",
+      "answer": "Alignment is not a separate preprocessing step but an integral part of the translation process that can be learned jointly with translation through attention.",
+      "explanation": "The paper argues that alignment should not be treated as a separate module (as in traditional MT) but instead learned end-to-end alongside translation, with attention providing a mechanism for this joint learning.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Alignment must be precomputed using statistical methods before translation.",
+        "Translation and alignment are independent tasks that cannot be combined.",
+        "Attention is used only for translation, not alignment."
+      ],
+      "hint": "The title says 'jointly learning to align and translate'—what does 'jointly' imply?"
+    },
+    {
+      "id": "q16",
+      "question": "How does the attention mechanism enable the model to handle variable-length source sentences more effectively than fixed-length encoding?",
+      "answer": "It allows the decoder to access any part of the source sequence dynamically, regardless of sentence length, by computing a context vector from relevant hidden states at each decoding step.",
+      "explanation": "Since attention uses a weighted combination of all source hidden states for each target word, the model is not constrained by vector size. This makes it scalable to long sentences without performance degradation.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It compresses long sentences into smaller vectors using dimensionality reduction.",
+        "It truncates source sentences to a fixed maximum length.",
+        "It uses parallel processing to handle multiple sentences at once."
+      ],
+      "hint": "Think about what happens when the source sentence gets longer—does the attention model need to change its structure?"
+    },
+    {
+      "id": "q17",
+      "question": "What is the implication of the paper's finding that attention-based NMT achieves performance comparable to phrase-based systems?",
+      "answer": "It demonstrates that a single, end-to-end neural model can rival traditional, complex systems built from many hand-engineered components.",
+      "explanation": "This was a significant milestone—showing that neural approaches could match the performance of decades-old phrase-based systems without needing separate alignment, translation, and reordering models.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It proves that phrase-based systems are obsolete and should be abandoned.",
+        "It shows attention is only useful for English-to-French translation.",
+        "It means neural models require less training data than phrase-based systems."
+      ],
+      "hint": "Why was this result groundbreaking at the time? Think about what phrase-based systems required before this."
+    },
+    {
+      "id": "q18",
+      "question": "Why might the attention mechanism lead to more interpretable translations compared to basic encoder-decoder models?",
+      "answer": "Because the attention weights reveal which source words influenced each generated target word, providing a visualizable alignment map that reflects linguistic structure.",
+      "explanation": "The paper highlights qualitative analysis where attention weights visually correspond to expected word alignments (e.g., verb-verb, noun-noun), offering insight into the model’s decision-making process.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It generates human-readable rules for translation.",
+        "The model outputs explanations in natural language.",
+        "Attention reduces the number of unknown words."
+      ],
+      "hint": "What can you look at in the attention weights? Can you see which source word was 'paid attention to' for each target word?"
+    },
+    {
+      "id": "q19",
+      "question": "What would happen to translation quality if the attention mechanism were replaced with fixed-length encoding in this model?",
+      "answer": "Translation quality would likely degrade, especially for longer sentences, because the decoder would lose access to detailed contextual information from earlier parts of the source sentence.",
+      "explanation": "The paper demonstrates that fixed-length encoding is a bottleneck. Removing attention would revert the model to the basic encoder-decoder, which suffers from performance decay on long inputs due to information loss.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Translation quality would improve due to reduced computational complexity.",
+        "It would have no effect since attention is just an optimization trick.",
+        "The model would generate translations faster but with more errors."
+      ],
+      "hint": "Recall the paper's claim: fixed-length vectors are a bottleneck. What happens when you remove attention?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim that attention enables 'joint learning of alignment and translation'—what does this mean in practice, and why is it an improvement over traditional methods?",
+      "answer": "Joint learning means alignment and translation are optimized together within a single neural network, without requiring separate alignment data or rules. This is an improvement because traditional methods rely on pre-aligned corpora and independent modules, making them less scalable and harder to train end-to-end.",
+      "explanation": "Traditional phrase-based systems require explicit alignment (e.g., from GIZA++) and train components separately. The attention mechanism learns alignment implicitly by adjusting weights during translation training, enabling a unified, end-to-end trainable system that adapts alignment to translation goals.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It means the model learns alignment using supervised labels for every word pair.",
+        "Joint learning refers to training multiple language models simultaneously.",
+        "Alignment is fixed during training and only translation is updated."
+      ],
+      "hint": "Think about how traditional MT systems are built: separate components, manual steps. How does attention change that?"
+    }
+  ],
+  "paper_id": 14,
+  "title": "Neural Machine Translation (Attention)",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

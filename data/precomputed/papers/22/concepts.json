@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Scaling Laws",
+      "definition": "Empirical relationships showing how model performance (e.g., cross-entropy loss) changes predictably as scale factors like model size, dataset size, or compute increase, following a power-law function.",
+      "intuition": "Like turning up the volume on a speaker—each time you double the size, performance improves by a predictable amount, not randomly.",
+      "importance": "They enable prediction and optimization of AI performance without exhaustive experimentation, guiding efficient resource allocation.",
+      "related_concepts": [
+        "Power Law",
+        "Compute Budget"
+      ],
+      "example": "Doubling model parameters reduces loss by 20% consistently across scales from 1M to 1B parameters.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Power Law",
+      "definition": "A mathematical relationship where one quantity varies as a power of another, expressed as Y = k * X^a, where k and a are constants.",
+      "intuition": "Think of it like compound interest—each increase in scale multiplies performance gains by a fixed factor, not adds a fixed amount.",
+      "importance": "Enables extrapolation of model performance far beyond observed data, forming the foundation for predictive scaling in AI.",
+      "related_concepts": [
+        "Scaling Laws",
+        "Model Size"
+      ],
+      "example": "Loss decreases as N^(-0.07) where N is model size—small changes in scale lead to predictable loss improvements.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Model Size (N)",
+      "definition": "The number of non-embedding parameters in a neural language model, determining its capacity to learn patterns.",
+      "intuition": "Like the number of brain cells—a bigger model can store more knowledge and make finer distinctions.",
+      "importance": "Larger models are significantly more sample-efficient and drive the majority of performance gains under fixed compute.",
+      "related_concepts": [
+        "Scaling Laws",
+        "Sample Efficiency"
+      ],
+      "example": "A 1B-parameter model outperforms a 10M-parameter model on the same dataset with far fewer training steps.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Dataset Size (D)",
+      "definition": "The total number of tokens or data points used to train the language model.",
+      "intuition": "More books read = smarter student. More data gives the model more examples to learn from.",
+      "importance": "Limits how much a model can generalize; insufficient data causes overfitting even with large models.",
+      "related_concepts": [
+        "Overfitting",
+        "Sample Efficiency"
+      ],
+      "example": "Training a 10B-parameter model on only 1GB of text leads to poor generalization compared to training it on 100GB.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Compute Budget (C)",
+      "definition": "The total amount of computational resources (measured in FLOPs or PF-days) allocated for training a model.",
+      "intuition": "Think of it as the total time and electricity you’re willing to spend—more compute lets you train longer, bigger, or both.",
+      "importance": "Determines the trade-off between model size, data volume, and training duration for optimal performance.",
+      "related_concepts": [
+        "Scaling Laws",
+        "Optimal Allocation"
+      ],
+      "example": "With 100 PF-days, you can train a small model to convergence or a huge model for a few steps—latter often performs better.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Sample Efficiency",
+      "definition": "The ability of a model to achieve high performance using fewer training samples or optimization steps.",
+      "intuition": "A smart student learns from one example where others need ten—large models extract more knowledge per data point.",
+      "importance": "Enables cost-effective training by reducing data and compute needs, critical for scaling to real-world datasets.",
+      "related_concepts": [
+        "Model Size",
+        "Convergence"
+      ],
+      "example": "A 1B-parameter model reaches the same loss as a 10M-parameter model using only 1/10th of the training data.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Overfitting",
+      "definition": "When a model performs well on training data but poorly on unseen data due to memorizing noise instead of learning patterns.",
+      "intuition": "Like a student who memorizes answers for a test but can’t answer new questions—too big for the data.",
+      "importance": "Scaling laws show overfitting is predictable: it happens when model size grows faster than data size.",
+      "related_concepts": [
+        "Model Size",
+        "Dataset Size"
+      ],
+      "example": "A 10B-parameter model trained on 1GB of text overfits; increasing data to 5GB fixes it without changing model size.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Compute-Efficient Training",
+      "definition": "Training strategy that maximizes performance per unit of computational cost by prioritizing model size over training time or data.",
+      "intuition": "Instead of running a small car for 10 hours, drive a racecar for 2 hours—bigger models extract more value from limited compute.",
+      "importance": "Reveals that large models trained briefly outperform small ones trained to convergence under fixed compute.",
+      "related_concepts": [
+        "Optimal Allocation",
+        "Convergence"
+      ],
+      "example": "Using 10 PF-days to train a 10B-parameter model for 1% of its convergence time yields better results than training a 1M-model to full convergence.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Optimal Allocation",
+      "definition": "The strategy of distributing a fixed compute budget across model size, dataset size, and training time to maximize performance.",
+      "intuition": "Like budgeting for a road trip—you can spend on gas, food, or time; the best trip balances all three optimally.",
+      "importance": "Guides practical AI development by showing where to invest compute for maximum return.",
+      "related_concepts": [
+        "Compute Budget",
+        "Scaling Laws"
+      ],
+      "example": "With 100 PF-days, allocate 70% to model size, 25% to data, and 5% to extended training steps for best results.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Training Curve",
+      "definition": "A plot showing how model loss decreases over training time (steps or compute), revealing learning dynamics.",
+      "intuition": "Like a student’s grades over the semester—initial steep improvement, then gradual plateau.",
+      "importance": "Power laws in training curves allow early prediction of final performance, saving time and resources.",
+      "related_concepts": [
+        "Convergence",
+        "Scaling Laws"
+      ],
+      "example": "After 10% of training steps, loss trend predicts final loss within 5%, even if training continues for 10x longer.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Convergence",
+      "definition": "The point in training where model loss stops decreasing significantly, indicating full learning under current conditions.",
+      "intuition": "Like a ball rolling downhill—it eventually stops at the bottom. But sometimes, stopping early is better.",
+      "importance": "Contrary to intuition, optimal training often stops well before convergence when scaling models.",
+      "related_concepts": [
+        "Compute-Efficient Training",
+        "Sample Efficiency"
+      ],
+      "example": "A 10B-parameter model reaches peak performance at 5% of convergence steps—training further wastes compute.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Model Shape",
+      "definition": "Architectural details like depth (layers) vs. width (neurons per layer), which have minimal impact on performance compared to scale.",
+      "intuition": "It’s not about the shape of your toolbox, but how many tools you have—scale matters more than structure.",
+      "importance": "Allows simplification of hyperparameter tuning; focus on size, not architecture tweaks.",
+      "related_concepts": [
+        "Model Size",
+        "Scaling Laws"
+      ],
+      "example": "Two models with 100M parameters—one deep, one wide—perform nearly identically on language tasks.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Transfer Performance",
+      "definition": "Model performance on data from a different distribution than the training set, indicating generalization ability.",
+      "intuition": "A student who does well on math tests also does well on physics—same skill, different context.",
+      "importance": "Shows that gains in training performance transfer predictably to new domains with a constant penalty.",
+      "related_concepts": [
+        "Overfitting",
+        "Sample Efficiency"
+      ],
+      "example": "A model trained on Wikipedia but tested on medical journals still improves proportionally to its training loss, with a fixed 0.2 loss penalty.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Gradient Noise Scale",
+      "definition": "A measure of the variability in gradients during training, used to determine optimal batch size.",
+      "intuition": "Like measuring how noisy a radio signal is—higher noise means you need to listen longer (larger batch) to get clear signals.",
+      "importance": "Enables automatic tuning of batch size for optimal training efficiency without manual experimentation.",
+      "related_concepts": [
+        "Optimal Batch Size",
+        "Compute Budget"
+      ],
+      "example": "For a 10B-parameter model, optimal batch size is ~1.5M tokens because gradient noise stabilizes at that scale.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Infinite Data Limit",
+      "definition": "The theoretical performance ceiling of a model when trained on an infinitely large dataset, isolating the effect of model size.",
+      "intuition": "If you had every book ever written, how good could your model get? This is the theoretical best with perfect data.",
+      "importance": "Helps separate limits of model capacity from limits of data availability, guiding future scaling goals.",
+      "related_concepts": [
+        "Scaling Laws",
+        "Model Size"
+      ],
+      "example": "Even with infinite data, a 1B-parameter model has higher loss than a 10B one—model size still caps performance.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 22,
+  "title": "Scaling Laws for Neural LMs"
+}

@@ -1,0 +1,27 @@
+{
+  "one_liner": "This paper introduces dilated convolutions to aggregate multi-scale contextual information in semantic segmentation without losing spatial resolution or requiring image pyramids.",
+  "paragraphs": [
+    "Semantic segmentation requires assigning a class label to every pixel in an image, which demands both high spatial precision and rich contextual understanding across multiple scales. Traditional convolutional networks designed for image classification rely on pooling and subsampling to capture global context, but this reduces resolution—making them poorly suited for dense prediction tasks. The authors argue that these adaptations are unnecessarily complex and that the loss of resolution hinders accuracy, prompting a need for a more direct method to capture multi-scale context while preserving full-resolution outputs.",
+    "The paper proposes dilated convolutions as a solution: by inserting gaps (dilation) between filter elements, the receptive field expands exponentially with each layer without reducing resolution or increasing the number of parameters. For example, stacking 3x3 filters with dilation factors of 1, 2, 4, 8... creates receptive fields of size 3x3, 7x7, 15x15, 31x31..., respectively. This allows the network to capture context at multiple scales in a single, resolution-preserving pass—eliminating the need for upsampling or multi-input pyramids. The authors design a simple, plug-and-play 'context module' using this principle that can be integrated into existing architectures.",
+    "Experiments on the Pascal VOC 2012 dataset show that adding this dilated convolution context module significantly improves segmentation accuracy over existing state-of-the-art models. The authors also find that simplifying complex, over-engineered adaptations of classification networks (e.g., removing redundant components) leads to better performance. The result is a more efficient, accurate, and scalable approach to dense prediction that has since become foundational in modern semantic segmentation systems like DeepLab."
+  ],
+  "key_takeaways": [
+    "Dilated convolutions expand the receptive field exponentially without downsampling or increasing parameters.",
+    "They enable multi-scale context aggregation while preserving full-resolution feature maps—critical for dense prediction tasks.",
+    "Simplifying over-complicated adaptations of classification networks improves accuracy in semantic segmentation.",
+    "The proposed context module is modular and can be easily integrated into existing CNN architectures.",
+    "This approach eliminates the need for image pyramids or complex upsampling networks, leading to more efficient models."
+  ],
+  "eli5": "Imagine you're coloring a picture, and you want to see not just the tiny spot you're working on, but also what’s nearby, far away, and even farther—without moving your hand. Dilated convolutions are like using a magic brush that skips spots in a smart way: it looks at nearby pixels, then farther ones, then even farther—getting the big picture without losing any detail.",
+  "prerequisites": [
+    "Basic understanding of convolutional neural networks (CNNs)",
+    "Familiarity with receptive fields and spatial resolution in image processing"
+  ],
+  "applications": [
+    "High-precision medical image segmentation (e.g., tumor detection in MRI scans)",
+    "Autonomous driving systems for pixel-level road and object segmentation"
+  ],
+  "paper_id": 11,
+  "title": "Dilated Convolutions",
+  "category": "CNNs"
+}

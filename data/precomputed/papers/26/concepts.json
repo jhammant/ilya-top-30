@@ -1,0 +1,201 @@
+{
+  "concepts": [
+    {
+      "name": "Convolutional Neural Network (CNN)",
+      "definition": "A class of deep neural networks designed to process data with a grid-like topology, such as images, using convolutional layers that apply filters to local regions of the input.",
+      "intuition": "Think of a CNN like a detective scanning a crime scene with a magnifying glass—instead of looking at the whole image at once, it examines small patches repeatedly to spot patterns like edges or textures.",
+      "importance": "CNNs are the backbone of modern computer vision, enabling breakthroughs in image classification, object detection, and medical imaging.",
+      "related_concepts": [
+        "Convolution",
+        "Pooling",
+        "Feature Map"
+      ],
+      "example": "Classifying images of cats vs. dogs using a CNN that learns to detect ears, tails, and fur patterns.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Convolution",
+      "definition": "A mathematical operation that applies a filter (or kernel) to an input image by sliding it across the spatial dimensions and computing element-wise products and sums.",
+      "intuition": "Imagine dragging a stencil over a painting—each time you place it, you note which colors match the stencil’s pattern; this reveals edges or shapes.",
+      "importance": "Enables local feature detection while reducing parameters compared to fully connected layers, making CNNs efficient and scalable.",
+      "related_concepts": [
+        "Filter",
+        "Feature Map",
+        "Stride"
+      ],
+      "example": "Applying a 3x3 edge-detection filter to an image to highlight regions of high contrast.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Filter (Kernel)",
+      "definition": "A small matrix of weights that slides over the input to detect specific features like edges, textures, or shapes in convolutional layers.",
+      "intuition": "A filter is like a recipe for spotting something—e.g., a vertical edge detector looks for dark-to-light transitions in columns.",
+      "importance": "Filters learn to detect hierarchical features during training, forming the basis of feature extraction in CNNs.",
+      "related_concepts": [
+        "Convolution",
+        "Feature Map",
+        "Learnable Parameters"
+      ],
+      "example": "A 5x5 filter with weights that activate strongly when it encounters horizontal lines in an image.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Feature Map",
+      "definition": "The output of applying a convolutional filter to an input, representing the presence and location of specific features detected in the image.",
+      "intuition": "Each feature map is like a heatmap showing where in the image a particular pattern (e.g., corners or eyes) appears most strongly.",
+      "importance": "Feature maps allow the network to build increasingly abstract representations of input data across layers.",
+      "related_concepts": [
+        "Convolution",
+        "Filter",
+        "Depth"
+      ],
+      "example": "After applying 64 filters, you get 64 feature maps—each highlighting a different visual pattern learned by the network.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Pooling",
+      "definition": "A downsampling operation that reduces the spatial dimensions of feature maps while retaining dominant features, commonly using max or average operations.",
+      "intuition": "Like summarizing a long article by only keeping the most important sentence from each paragraph—pooling keeps the strongest signal and discards noise.",
+      "importance": "Reduces computational load, controls overfitting, and provides slight translation invariance.",
+      "related_concepts": [
+        "Downsampling",
+        "Max Pooling",
+        "Feature Map"
+      ],
+      "example": "Applying 2x2 max pooling to a feature map reduces its size by half while preserving the brightest (highest-value) pixels.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Max Pooling",
+      "definition": "A type of pooling that selects the maximum value from each local region (e.g., 2x2 window) in a feature map to form a downsampled output.",
+      "intuition": "It’s like choosing the loudest voice in a crowd—max pooling keeps only the most activated neuron, ignoring weaker responses.",
+      "importance": "Provides robustness to small spatial shifts and helps retain the most salient features for classification.",
+      "related_concepts": [
+        "Pooling",
+        "Downsampling",
+        "Feature Map"
+      ],
+      "example": "In a 2x2 region with values [1, 3; 2, 4], max pooling outputs 4 as the representative value.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Stride",
+      "definition": "The step size by which a filter moves across the input during convolution, controlling the spatial resolution of the output feature map.",
+      "intuition": "If you’re walking across a tiled floor and take steps of 2 tiles at a time instead of 1, you’ll cover less ground but faster.",
+      "importance": "Larger strides reduce output size and computational cost; smaller strides preserve detail but increase computation.",
+      "related_concepts": [
+        "Convolution",
+        "Feature Map",
+        "Padding"
+      ],
+      "example": "A 5x5 filter with stride=2 on a 32x32 image produces an output of size ~14x14 instead of 28x28 with stride=1.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Padding",
+      "definition": "The process of adding extra pixels (usually zeros) around the borders of an input to control the spatial dimensions of the output feature map.",
+      "intuition": "Like adding a border around a photo before cropping—it prevents losing edge information and keeps the output size predictable.",
+      "importance": "Enables spatial dimension control, allows deeper networks without rapid size reduction, and preserves edge information.",
+      "related_concepts": [
+        "Convolution",
+        "Stride",
+        "Feature Map"
+      ],
+      "example": "Applying 'same' padding to a 3x3 filter with stride=1 ensures the output has the same height and width as the input.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Depth (Channel) in CNN",
+      "definition": "The number of filters applied in a convolutional layer, corresponding to the number of feature maps produced and representing different learned features.",
+      "intuition": "Each depth slice is like a different lens viewing the same scene—some see edges, others textures, and some shapes.",
+      "importance": "Depth allows the network to capture multiple complementary features from the same input region simultaneously.",
+      "related_concepts": [
+        "Feature Map",
+        "Filter",
+        "Convolution"
+      ],
+      "example": "A layer with 128 filters produces a feature map of shape H x W x 128, capturing 128 distinct visual patterns.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Fully Connected Layer",
+      "definition": "A layer where every neuron is connected to every neuron in the previous layer, typically used at the end of CNNs for classification.",
+      "intuition": "Think of it as a final jury that hears all the evidence (features) from earlier layers and makes a single verdict—like 'cat' or 'dog'.",
+      "importance": "Converts high-level features into class probabilities, enabling final decision-making in classification tasks.",
+      "related_concepts": [
+        "Flattening",
+        "Softmax",
+        "Classifier"
+      ],
+      "example": "After CNN layers extract features from an image, a fully connected layer with 10 neurons predicts which of 10 digit classes (0–9) the image belongs to.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Flattening",
+      "definition": "The process of reshaping a multi-dimensional feature map (e.g., H x W x D) into a one-dimensional vector to feed into fully connected layers.",
+      "intuition": "Like rolling up a map into a scroll before sending it to a reader who only understands linear text.",
+      "importance": "Necessary because fully connected layers require 1D input; bridges spatial feature extraction with classification.",
+      "related_concepts": [
+        "Feature Map",
+        "Fully Connected Layer",
+        "Output Vector"
+      ],
+      "example": "A 7x7x64 feature map becomes a vector of length 3136 before being fed into the first fully connected layer.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "ReLU Activation Function",
+      "definition": "A non-linear activation function defined as f(x) = max(0, x), which outputs zero for negative inputs and the input value otherwise.",
+      "intuition": "Like a light switch that turns off for negative signals—only positive activations pass through, making the network sparse and efficient.",
+      "importance": "Introduces non-linearity without vanishing gradients, speeds up training, and improves generalization compared to sigmoid/tanh.",
+      "related_concepts": [
+        "Non-linearity",
+        "Activation Function",
+        "Gradient Flow"
+      ],
+      "example": "Input [-2, 1, -1, 3] → ReLU output [0, 1, 0, 3].",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Backpropagation",
+      "definition": "An algorithm for efficiently computing gradients of the loss function with respect to each parameter in a neural network using the chain rule.",
+      "intuition": "Like tracing blame backward through a team project—each member’s contribution to the final failure is calculated to improve next time.",
+      "importance": "Enables supervised learning in deep networks by updating weights to minimize prediction error.",
+      "related_concepts": [
+        "Gradient Descent",
+        "Loss Function",
+        "Parameter Update"
+      ],
+      "example": "After predicting 'cat' instead of 'dog', backpropagation calculates how much each weight contributed to the error and adjusts them accordingly.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Loss Function",
+      "definition": "A mathematical function that quantifies the difference between predicted outputs and true labels, guiding model optimization.",
+      "intuition": "It’s the scorecard that tells the model how badly it did—lower scores mean better performance.",
+      "importance": "Provides a target for optimization; without it, the network has no way to learn from mistakes.",
+      "related_concepts": [
+        "Backpropagation",
+        "Gradient Descent",
+        "Cross-Entropy"
+      ],
+      "example": "For image classification, cross-entropy loss penalizes confident wrong predictions more than uncertain ones.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Transfer Learning",
+      "definition": "The practice of using a pre-trained CNN (e.g., on ImageNet) as a starting point for a new task, typically by fine-tuning the last few layers.",
+      "intuition": "Like using a trained chef’s knife to chop vegetables—you don’t need to learn how to forge the blade, just how to use it well.",
+      "importance": "Dramatically reduces training time and data requirements, especially useful when labeled data is scarce.",
+      "related_concepts": [
+        "Pre-trained Model",
+        "Fine-tuning",
+        "Feature Extraction"
+      ],
+      "example": "Using ResNet-50 trained on ImageNet to classify medical X-rays by freezing early layers and retraining only the final classifier.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 26,
+  "title": "CS231n Course"
+}

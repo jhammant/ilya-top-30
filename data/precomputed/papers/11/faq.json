@@ -1,0 +1,245 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is a dilated convolution and how does it differ from a standard convolution?",
+      "answer": "A dilated convolution is a modified version of the standard convolution where the filter elements are spaced apart by a dilation factor (l). Instead of applying the filter to adjacent pixels, it skips l-1 pixels between each element. This expands the receptive field exponentially without increasing the number of parameters or reducing spatial resolution, unlike standard convolutions which have contiguous filters and linearly growing receptive fields.",
+      "related_concepts": [
+        "receptive field",
+        "convolutional neural networks",
+        "spatial resolution"
+      ],
+      "follow_up": "How does dilation affect the coverage of the input image compared to pooling?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "Why is preserving spatial resolution important in semantic segmentation?",
+      "answer": "Semantic segmentation requires predicting a class label for every pixel, so maintaining full spatial resolution ensures precise boundary localization. Traditional CNNs used pooling layers to reduce resolution for classification, but this loses fine-grained spatial information critical for pixel-level prediction tasks.",
+      "related_concepts": [
+        "semantic segmentation",
+        "dense prediction",
+        "pooling"
+      ],
+      "follow_up": "What happens if you apply pooling layers in a segmentation network?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "How does dilation enable exponential growth of the receptive field?",
+      "answer": "With each layer using exponentially increasing dilation factors (e.g., 1, 2, 4, 8...), the effective field of view grows as (2^(i+2) - 1) for layer i. This means each subsequent layer captures context from a much larger area without needing more parameters or down-sampling, enabling multi-scale contextual understanding in a single feed-forward pass.",
+      "related_concepts": [
+        "receptive field",
+        "multi-scale context",
+        "parameter efficiency"
+      ],
+      "follow_up": "Can you achieve the same receptive field with standard convolutions?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "How do you implement a dilated convolution in practice?",
+      "answer": "In practice, dilated convolutions are implemented by inserting gaps (zeros) between the filter weights before applying convolution. For example, with dilation factor 2, a 3x3 kernel applies to pixels spaced two apart. Most deep learning frameworks (e.g., PyTorch, TensorFlow) support dilation via a 'dilation' parameter in convolution layers.",
+      "related_concepts": [
+        "convolutional layer",
+        "filter spacing",
+        "framework implementation"
+      ],
+      "follow_up": "Does dilation affect computational cost compared to standard convolution?"
+    },
+    {
+      "id": "faq5",
+      "category": "implementation",
+      "question": "Can dilated convolutions be used in any CNN architecture?",
+      "answer": "Yes, dilated convolutions can be plugged into existing CNN architectures at any resolution without requiring structural changes. The paper demonstrates this by integrating them into repurposed image classification networks like VGG, replacing downsampling layers with dilated convolutions to maintain resolution.",
+      "related_concepts": [
+        "architecture modularization",
+        "transfer learning",
+        "VGG"
+      ],
+      "follow_up": "What modifications are needed to replace pooling layers with dilated convolutions?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "How does this approach compare to using multi-scale inputs or up-convolutions for dense prediction?",
+      "answer": "Unlike methods that feed multiple rescaled image versions to the network (multi-scale inputs) or use transposed convolutions to upsample feature maps, dilated convolutions aggregate multi-scale context in a single resolution pass. This avoids computational overhead from repeated inference and reduces artifacts from interpolation-based upsampling.",
+      "related_concepts": [
+        "up-convolution",
+        "multi-scale input",
+        "feature upsampling"
+      ],
+      "follow_up": "What are the trade-offs between dilated convolutions and deconvolution-based upsampling?"
+    },
+    {
+      "id": "faq7",
+      "category": "comparison",
+      "question": "How does this work relate to the 'atrous algorithm' in wavelet decomposition?",
+      "answer": "The dilated convolution operator is mathematically similar to the 'algorithme à trous' used in wavelet analysis, where filters are applied at multiple scales. However, the paper clarifies that dilated convolutions in CNNs do not construct dilated filters or perform multi-scale decomposition—they directly modify the convolution operation to expand receptive fields.",
+      "related_concepts": [
+        "algorithme à trous",
+        "wavelet decomposition",
+        "filter interpolation"
+      ],
+      "follow_up": "Is there a risk of confusing dilated convolutions with multi-scale filtering?"
+    },
+    {
+      "id": "faq8",
+      "category": "comparison",
+      "question": "How does this method improve upon Long et al.'s FCN architecture?",
+      "answer": "Long et al. (2015) repurposed classification networks for segmentation but relied on upsampling after aggressive downsampling, losing fine details. This paper replaces those down-sampling layers with dilated convolutions to preserve resolution, while also simplifying the architecture by removing unnecessary components like structured prediction or multi-column designs.",
+      "related_concepts": [
+        "FCN",
+        "semantic segmentation baseline",
+        "architectural simplification"
+      ],
+      "follow_up": "What specific components did the authors remove to simplify FCN?"
+    },
+    {
+      "id": "faq9",
+      "category": "application",
+      "question": "Where can dilated convolutions be applied beyond semantic segmentation?",
+      "answer": "Dilated convolutions are useful in any dense prediction task requiring multi-scale context at full resolution, including depth estimation, surface normal prediction, image inpainting, speech synthesis (e.g., WaveNet), and time-series analysis where temporal context at multiple scales is needed.",
+      "related_concepts": [
+        "dense prediction",
+        "image inpainting",
+        "WaveNet"
+      ],
+      "follow_up": "Can dilated convolutions be used in 1D applications like audio processing?"
+    },
+    {
+      "id": "faq10",
+      "category": "application",
+      "question": "How do you choose dilation factors in practice?",
+      "answer": "Dilation factors are typically chosen to grow exponentially (e.g., 1, 2, 4, 8) to maximize coverage efficiently. The choice depends on the desired receptive field size and input resolution. In practice, researchers often use a sequence that covers the full image without overlap gaps or excessive redundancy.",
+      "related_concepts": [
+        "receptive field design",
+        "dilation scheduling"
+      ],
+      "follow_up": "What happens if dilation factors are too large?"
+    },
+    {
+      "id": "faq11",
+      "category": "limitations",
+      "question": "What are the main limitations of using dilated convolutions?",
+      "answer": "Dilated convolutions can lead to 'gridding artifacts' due to sparse sampling, where some pixels are never covered or inconsistently sampled. They also require careful tuning of dilation rates to avoid large gaps in coverage, and may struggle with very high-resolution inputs due to memory or computational constraints.",
+      "related_concepts": [
+        "gridding artifacts",
+        "coverage gaps",
+        "memory efficiency"
+      ],
+      "follow_up": "How do researchers mitigate gridding artifacts in practice?"
+    },
+    {
+      "id": "faq12",
+      "category": "limitations",
+      "question": "Do dilated convolutions work well with small input images?",
+      "answer": "Dilated convolutions are less effective on very small inputs because large dilation factors may cause the receptive field to exceed the image dimensions, leading to redundant or useless computations. The method is optimized for moderate-to-large inputs where multi-scale context is meaningful.",
+      "related_concepts": [
+        "input resolution",
+        "receptive field size"
+      ],
+      "follow_up": "Is there a minimum input size recommended for using dilated convolutions?"
+    },
+    {
+      "id": "faq13",
+      "category": "implementation",
+      "question": "Does using dilated convolutions increase training time?",
+      "answer": "Training time per iteration is similar to standard convolutions since the number of parameters remains unchanged. However, due to larger effective receptive fields and potential memory overhead from large feature maps (no downsampling), training can become more memory-intensive, requiring larger GPUs or gradient checkpointing.",
+      "related_concepts": [
+        "computational efficiency",
+        "memory footprint"
+      ],
+      "follow_up": "How does memory usage compare between dilated convolutions and pooling-based networks?"
+    },
+    {
+      "id": "faq14",
+      "category": "comparison",
+      "question": "How do dilated convolutions compare to self-attention mechanisms for capturing context?",
+      "answer": "Dilated convolutions capture local multi-scale context efficiently with fixed, structured filters and low computational cost. Self-attention captures global dependencies but has O(N²) complexity, making it expensive for high-resolution images. Dilated convolutions are more parameter-efficient and faster; attention is more flexible but less scalable.",
+      "related_concepts": [
+        "self-attention",
+        "global context",
+        "computational complexity"
+      ],
+      "follow_up": "Can dilated convolutions and attention be combined?"
+    },
+    {
+      "id": "faq15",
+      "category": "understanding",
+      "question": "Why doesn't dilation reduce resolution like pooling does?",
+      "answer": "Dilation modifies the spacing between filter elements but applies them to every pixel in the input. Pooling reduces resolution by downsampling (e.g., max-pooling 2x2 to 1x1), while dilation preserves the spatial grid and only changes how neighbors are sampled. The output feature map has the same dimensions as the input.",
+      "related_concepts": [
+        "downsampling",
+        "spatial preservation"
+      ],
+      "follow_up": "Can you combine dilation and pooling in the same network?"
+    },
+    {
+      "id": "faq16",
+      "category": "application",
+      "question": "Can dilated convolutions be used in real-time segmentation systems?",
+      "answer": "Yes, but with caution. Dilated convolutions maintain resolution and avoid expensive upsampling, which helps speed. However, large dilation rates increase the number of computations per pixel and memory usage. For real-time use, small dilation factors or spatial downsampling in early layers are recommended.",
+      "related_concepts": [
+        "real-time inference",
+        "latency optimization"
+      ],
+      "follow_up": "What are some real-time architectures that use dilated convolutions?"
+    },
+    {
+      "id": "faq17",
+      "category": "implementation",
+      "question": "How do you handle boundary effects with dilated convolutions?",
+      "answer": "Boundary handling is similar to standard convolution: zero-padding or reflection padding are typically used. However, with high dilation factors, the effective filter may extend beyond the image boundaries more frequently, so padding must be adjusted accordingly to maintain consistent receptive field coverage.",
+      "related_concepts": [
+        "padding",
+        "boundary artifacts"
+      ],
+      "follow_up": "Does dilation affect the choice of padding strategy?"
+    },
+    {
+      "id": "faq18",
+      "category": "limitations",
+      "question": "Are dilated convolutions sensitive to input scale variations?",
+      "answer": "Yes. Since dilation factors are fixed during training, the receptive field size is static. If test-time input scales differ significantly from training, the model may not capture context optimally. This contrasts with multi-scale input methods that explicitly handle scale variation.",
+      "related_concepts": [
+        "scale invariance",
+        "input normalization"
+      ],
+      "follow_up": "How do you make dilated convolutions robust to scale changes?"
+    },
+    {
+      "id": "faq19",
+      "category": "comparison",
+      "question": "How does this method compare to Atrous Spatial Pyramid Pooling (ASPP)?",
+      "answer": "ASPP, introduced later by Chen et al. (2017), builds upon dilated convolutions by applying multiple dilation rates in parallel within a single layer (e.g., 6, 12, 18, 24) and concatenating results. This paper introduced the core concept; ASPP is a direct extension that aggregates multi-scale context in one layer rather than sequentially.",
+      "related_concepts": [
+        "ASPP",
+        "spatial pyramid pooling"
+      ],
+      "follow_up": "Is ASPP always better than sequential dilated convolutions?"
+    },
+    {
+      "id": "faq20",
+      "category": "understanding",
+      "question": "Why is the context module called a 'rectangular prism'?",
+      "answer": "The term 'rectangular prism' refers to the 3D structure of stacked convolutional layers with fixed spatial dimensions (height × width) but increasing depth (number of channels). Each layer preserves resolution, forming a cuboid-like structure—unlike pyramid architectures that shrink spatial dimensions. It emphasizes the architectural design focused on dense prediction.",
+      "related_concepts": [
+        "architectural design",
+        "layer stacking"
+      ],
+      "follow_up": "What other architectural metaphors are used in CNN design?"
+    }
+  ],
+  "paper_id": 11,
+  "title": "Dilated Convolutions",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 5,
+    "implementation": 4,
+    "comparison": 5,
+    "application": 3,
+    "limitations": 3
+  }
+}

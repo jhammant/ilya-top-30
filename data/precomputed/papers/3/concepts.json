@@ -1,0 +1,203 @@
+{
+  "concepts": [
+    {
+      "name": "Recurrent Neural Network (RNN)",
+      "definition": "A type of neural network designed to process sequential data by maintaining a hidden state that captures information from previous time steps.",
+      "intuition": "Think of an RNN like a person reading a sentence word by word—each new word influences their understanding of the sentence so far.",
+      "importance": "RNNs enable modeling of temporal dependencies in sequences, forming the foundation for sequence-based tasks like language and time series prediction.",
+      "related_concepts": [
+        "LSTM",
+        "Vanishing Gradient Problem",
+        "Sequence Modeling"
+      ],
+      "example": "Predicting the next word in a sentence like 'The cat is on the...' → 'mat'.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Hidden State",
+      "definition": "The internal memory of an RNN at each time step, which carries information from previous inputs to influence future outputs.",
+      "intuition": "Like a person’s short-term memory—what they remember from earlier in the conversation affects how they respond now.",
+      "importance": "It allows RNNs to have memory, enabling them to use context from past inputs rather than treating each input in isolation.",
+      "related_concepts": [
+        "RNN",
+        "LSTM",
+        "Temporal Dependencies"
+      ],
+      "example": "In a movie review, the hidden state remembers 'great acting' when evaluating the final sentence 'but poor plot'.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Vanishing Gradient Problem",
+      "definition": "A challenge in training RNNs where gradients become exponentially small during backpropagation through time, making it hard to learn long-range dependencies.",
+      "intuition": "Imagine trying to correct a mistake made 100 pages ago in a book—you keep passing notes, but the message gets fainter with each pass.",
+      "importance": "This problem limits RNNs' ability to learn from distant past inputs, motivating the development of architectures like LSTM and GRU.",
+      "related_concepts": [
+        "RNN",
+        "LSTM",
+        "Backpropagation Through Time"
+      ],
+      "example": "An RNN fails to learn that 'once upon a time' at the start of a story relates to 'happily ever after' at the end.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Backpropagation Through Time (BPTT)",
+      "definition": "An extension of backpropagation used to train RNNs by unrolling the network over time and applying standard gradient descent.",
+      "intuition": "Imagine unwinding a spring into a straight line—each time step becomes a layer, and gradients flow backward through all layers.",
+      "importance": "Enables training of RNNs by computing gradients across time steps, but suffers from vanishing/exploding gradients in long sequences.",
+      "related_concepts": [
+        "RNN",
+        "Vanishing Gradient Problem",
+        "LSTM"
+      ],
+      "example": "Training a model to predict stock prices by unrolling 50 days of data and computing gradients from day 50 back to day 1.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Long Short-Term Memory (LSTM)",
+      "definition": "A specialized RNN architecture designed to overcome the vanishing gradient problem by using gated mechanisms to control information flow.",
+      "intuition": "Think of an LSTM as a smart notebook with three controls: a delete button (forget gate), a write button (input gate), and a read button (output gate).",
+      "importance": "LSTMs enable learning of long-term dependencies in sequences, making them pivotal for tasks like speech recognition and machine translation.",
+      "related_concepts": [
+        "RNN",
+        "Vanishing Gradient Problem",
+        "Gates"
+      ],
+      "example": "An LSTM remembers the subject of a sentence ('the dog') over several clauses to correctly predict 'barked' at the end.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Gates",
+      "definition": "Mechanisms within LSTM that regulate the flow of information using sigmoid and element-wise multiplication to allow or block data.",
+      "intuition": "Like three doors in a warehouse: one opens to delete old inventory (forget gate), one lets new stock in (input gate), and one controls what gets shipped out (output gate).",
+      "importance": "Gates allow LSTMs to selectively remember or forget information, solving the long-term dependency problem of basic RNNs.",
+      "related_concepts": [
+        "LSTM",
+        "Forget Gate",
+        "Input Gate",
+        "Output Gate"
+      ],
+      "example": "In a chatbot, the forget gate removes irrelevant past messages like 'good morning' when the user asks about today's weather.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Forget Gate",
+      "definition": "A component in LSTM that decides which parts of the cell state to discard using a sigmoid layer and element-wise multiplication.",
+      "intuition": "Like an editor deciding which old notes to toss before writing new ones—some are irrelevant, others are essential.",
+      "importance": "Enables LSTMs to remove outdated or irrelevant information, preventing memory overload and improving efficiency.",
+      "related_concepts": [
+        "LSTM",
+        "Gates",
+        "Cell State"
+      ],
+      "example": "When transitioning from 'I ate breakfast' to 'Now I’m at work', the forget gate removes details about food from memory.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Input Gate",
+      "definition": "An LSTM component that determines which new information to store in the cell state by combining a sigmoid layer and a tanh activation.",
+      "intuition": "Like a bouncer at a club—decides who gets in based on two criteria: are they allowed? (sigmoid) and what do they bring? (tanh).",
+      "importance": "Allows LSTMs to learn which new inputs are important and should be remembered, enhancing adaptability to context.",
+      "related_concepts": [
+        "LSTM",
+        "Gates",
+        "Cell State"
+      ],
+      "example": "In a translation model, the input gate lets 'Paris' enter memory only when it's part of 'I visited Paris last summer'.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Cell State",
+      "definition": "The internal memory of an LSTM that runs through the entire sequence, carrying information with minimal modification via gate operations.",
+      "intuition": "Think of it as a conveyor belt—information moves along with few changes, and gates add or remove items without disrupting the flow.",
+      "importance": "The cell state enables LSTMs to preserve information over long sequences, directly addressing the vanishing gradient problem.",
+      "related_concepts": [
+        "LSTM",
+        "Forget Gate",
+        "Input Gate"
+      ],
+      "example": "In a legal document, the cell state retains the defendant’s name across multiple paragraphs to ensure consistent reference.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Output Gate",
+      "definition": "An LSTM gate that controls what part of the cell state is exposed as output, using a sigmoid layer and tanh transformation.",
+      "intuition": "Like a speaker deciding what to say based on their notes—they look at the cell state, filter it, and then speak only what’s relevant.",
+      "importance": "Decouples internal memory from output, allowing LSTMs to produce contextually appropriate outputs without exposing all stored data.",
+      "related_concepts": [
+        "LSTM",
+        "Gates",
+        "Cell State"
+      ],
+      "example": "In a sentiment analyzer, the output gate reveals 'positive' only if the cell state contains strong positive words like 'amazing' or 'brilliant'.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Cell State Update",
+      "definition": "The process of modifying the cell state by combining the output of the forget gate (removal) and input gate (addition).",
+      "intuition": "Like editing a document: you delete some lines, then add new ones—what remains is the updated version.",
+      "importance": "This mechanism allows LSTMs to retain, modify, and accumulate information over time in a stable manner.",
+      "related_concepts": [
+        "Cell State",
+        "Forget Gate",
+        "Input Gate"
+      ],
+      "example": "In a weather prediction model, old temperature data is partially erased and new sensor readings are added to update the forecast.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Sigmoid Function in LSTMs",
+      "definition": "A non-linear activation function (ranging from 0 to 1) used in LSTM gates to produce values that act as binary-like filters for information flow.",
+      "intuition": "Like a dimmer switch: 0 = off (block), 1 = full on (allow), and values in between = partial flow.",
+      "importance": "Enables fine-grained control over information retention and propagation, making gates adaptable and differentiable.",
+      "related_concepts": [
+        "Gates",
+        "Forget Gate",
+        "Input Gate",
+        "Output Gate"
+      ],
+      "example": "A sigmoid output of 0.8 on the forget gate means 80% of the old cell state is kept, 20% is discarded.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Tanh Function in LSTMs",
+      "definition": "A hyperbolic tangent activation function used to constrain cell state values between -1 and 1, ensuring stable gradients.",
+      "intuition": "Like a volume limiter—it prevents memory from getting too loud or too quiet, keeping values in a manageable range.",
+      "importance": "Prevents explosion of cell state values and ensures numerical stability during training, crucial for long sequences.",
+      "related_concepts": [
+        "Cell State",
+        "Input Gate",
+        "Output Gate"
+      ],
+      "example": "When encoding a new word like 'exhilarating', tanh ensures its emotional intensity is scaled to fit within [-1, 1].",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Long-Term Dependencies",
+      "definition": "Relationships between elements in a sequence that are separated by many time steps, which traditional RNNs struggle to capture.",
+      "intuition": "Remembering the name of a character introduced in Chapter 1 to understand their role in Chapter 50.",
+      "importance": "Critical for complex sequence tasks like document summarization, music generation, and protein folding where context spans long distances.",
+      "related_concepts": [
+        "LSTM",
+        "Vanishing Gradient Problem",
+        "RNN"
+      ],
+      "example": "In a legal contract, the term 'indemnification' must be understood in context of definitions given 20 pages earlier.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Gradient Flow in LSTMs",
+      "definition": "The path and stability of gradient signals during backpropagation through the LSTM's cell state, which remains nearly constant due to additive updates.",
+      "intuition": "Imagine a river flowing through a channel with gates—water (gradients) can flow freely even if gates open or close, unlike a narrow pipe that dries up.",
+      "importance": "Enables stable training over long sequences, making LSTMs effective where RNNs fail due to vanishing gradients.",
+      "related_concepts": [
+        "Vanishing Gradient Problem",
+        "Backpropagation Through Time",
+        "Cell State"
+      ],
+      "example": "An LSTM can learn that 'the patient had allergies' (step 10) affects the diagnosis at step 500 in a medical timeline.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 3,
+  "title": "Understanding LSTM Networks"
+}

@@ -1,0 +1,27 @@
+{
+  "one_liner": "AlexNet revolutionized image classification by demonstrating that deep convolutional neural networks trained on massive datasets like ImageNet using GPUs and ReLU activations could drastically outperform previous methods.",
+  "paragraphs": [
+    "Before AlexNet, image recognition systems were limited by small datasets and shallow models, struggling to capture the complexity of real-world objects. Researchers recognized that overcoming this required larger labeled datasets and more powerful models, but computational constraints made training deep networks on high-resolution images prohibitively expensive. The emergence of ImageNet—a dataset with over a million labeled images across 1,000 categories—provided the necessary scale, but only if paired with an efficient architecture capable of learning from such data.",
+    "AlexNet introduced a deep convolutional neural network with five convolutional layers and three fully-connected layers, using ReLU activation functions to speed up training, dropout for regularization, and a highly optimized GPU implementation of 2D convolution. By leveraging the spatial structure of images through local connectivity and weight sharing, it reduced parameter count while maintaining high expressive power. The model processed raw RGB pixel values without complex preprocessing, and its depth was critical—removing even a single layer degraded performance.",
+    "AlexNet achieved a top-1 error rate of 37.5% and top-5 error rate of 17.0% on ImageNet LSVRC-2010, far surpassing the previous state-of-the-art. In 2012, a variant achieved an even lower top-5 error of 15.3%, nearly halving the previous best result. These results proved that deep CNNs could scale effectively with data and hardware, sparking the modern AI boom. The practical implications were profound: GPUs became essential for deep learning, ReLUs replaced sigmoid/tanh activations in most architectures, and dropout became standard practice for preventing overfitting."
+  ],
+  "key_takeaways": [
+    "Deep convolutional neural networks can be trained effectively on massive image datasets using GPUs and ReLU activations.",
+    "AlexNet demonstrated that depth matters—removing even a small layer degraded performance significantly.",
+    "ReLU activation functions dramatically speed up training compared to traditional saturating activations like tanh or sigmoid.",
+    "Dropout is a highly effective regularization technique for preventing overfitting in large neural networks.",
+    "The success of AlexNet proved that scaling data, model size, and compute power together leads to breakthrough performance in computer vision."
+  ],
+  "eli5": "Imagine you’re learning to recognize cats by looking at thousands of pictures—first you notice big shapes like ears and tails, then smaller details like whiskers. AlexNet is like a super-smart robot that looks at pictures the same way, starting with simple shapes and building up to understand whole cats or dogs. It got better the more pictures it saw, and used special tricks to learn faster and not get confused by mistakes.",
+  "prerequisites": [
+    "Basic understanding of neural networks",
+    "Familiarity with convolution operations in image processing"
+  ],
+  "applications": [
+    "Image classification in photo apps (e.g., Google Photos)",
+    "Autonomous vehicle object detection"
+  ],
+  "paper_id": 7,
+  "title": "ImageNet Classification (AlexNet)",
+  "category": "CNNs"
+}

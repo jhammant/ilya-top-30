@@ -1,0 +1,254 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is relational reasoning in the context of this paper?",
+      "answer": "Relational reasoning refers to the ability to understand and reason about how entities (e.g., memories, events, or objects) are connected or related to one another, rather than treating them in isolation. In this paper, it specifically means enabling recurrent neural networks to compare and contrast information across time steps by modeling relationships between stored memory states, not just storing or retrieving them.",
+      "related_concepts": [
+        "relational reasoning",
+        "memory interactions",
+        "temporal relationships"
+      ],
+      "follow_up": "How does this differ from standard RNNs like LSTMs in handling relationships between memories?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "What is the Relational Memory Core (RMC) and how does it work?",
+      "answer": "The Relational Memory Core (RMC) is a new memory module that replaces traditional RNN hidden states with a set of fixed memory slots. It uses multi-head dot-product attention to allow each memory slot to interact with all others at every time step. This enables the model to dynamically update memories based on their relationships, rather than relying solely on sequential updates like in LSTMs.",
+      "related_concepts": [
+        "multi-head attention",
+        "memory slots",
+        "temporal dynamics"
+      ],
+      "follow_up": "Why is using attention between memory slots at a single timestep important?"
+    },
+    {
+      "id": "faq3",
+      "category": "implementation",
+      "question": "How are queries, keys, and values computed in the RMC?",
+      "answer": "In the RMC, each memory slot (row of matrix M) is projected into three vectors—queries (Q = M × Wq), keys (K = M × Wk), and values (V = M × Wv)—using shared linear transformations. These projections enable each memory to compute attention weights over all other memories, and then update its state via a weighted sum of values based on those attention scores.",
+      "related_concepts": [
+        "dot-product attention",
+        "linear projections",
+        "self-attention"
+      ],
+      "follow_up": "Are the weight matrices Wq, Wk, and Wv shared across all memory slots?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "Does the RMC process memories across time steps or only within a single timestep?",
+      "answer": "The RMC processes memory interactions within a single time step using attention among all current memory slots. However, the updated memory matrix from one timestep becomes the input memory for the next timestep, allowing relational reasoning to accumulate over time without explicitly attending to all past representations.",
+      "related_concepts": [
+        "time steps",
+        "memory state propagation",
+        "sequential processing"
+      ],
+      "follow_up": "How does this differ from Transformer models that attend across all past tokens?"
+    },
+    {
+      "id": "faq5",
+      "category": "comparison",
+      "question": "How does RMC compare to LSTMs in terms of relational reasoning?",
+      "answer": "LSTMs compress all memory into a single hidden vector, making it difficult to distinguish or reason about individual memory elements. In contrast, RMC maintains a structured set of memory slots and explicitly models pairwise relationships between them using attention, enabling richer relational reasoning about how different pieces of information relate over time.",
+      "related_concepts": [
+        "LSTM",
+        "hidden state",
+        "memory compartmentalization"
+      ],
+      "follow_up": "Can RMC be seen as a generalization of LSTM?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "How does RMC differ from the Transformer's self-attention mechanism?",
+      "answer": "While both use multi-head attention, Transformers apply self-attention across all input tokens in a sequence (e.g., words), whereas RMC applies attention among memory slots *within* a single time step. The RMC’s attention operates on internal memory representations, not input tokens, and is designed for recurrent temporal modeling rather than sequence-to-sequence transformation.",
+      "related_concepts": [
+        "Transformer",
+        "self-attention",
+        "recurrent architectures"
+      ],
+      "follow_up": "Can RMC be used within a Transformer architecture?"
+    },
+    {
+      "id": "faq7",
+      "category": "comparison",
+      "question": "How does RMC compare to other memory-augmented neural networks (e.g., DNC)?",
+      "answer": "Unlike the Differentiable Neural Computer (DNC), which uses external memory matrices with read/write heads and address-based retrieval, RMC uses a fixed set of internal memory slots updated via attention. This avoids complex addressing mechanisms and focuses on relational interactions among memories using content-based attention, making it simpler and more scalable.",
+      "related_concepts": [
+        "DNC",
+        "external memory",
+        "addressing mechanisms"
+      ],
+      "follow_up": "What are the trade-offs between address-based and attention-based memory systems?"
+    },
+    {
+      "id": "faq8",
+      "category": "application",
+      "question": "What types of tasks did the paper show RMC excelling at?",
+      "answer": "The paper demonstrates RMC’s superiority in tasks requiring relational reasoning over time: partially observed reinforcement learning (e.g., MiniPacMan), program evaluation (reasoning about code execution steps), and language modeling on large corpora like WikiText-103, Project Gutenberg, and GigaWord—all achieving state-of-the-art results.",
+      "related_concepts": [
+        "reinforcement learning",
+        "language modeling",
+        "program synthesis"
+      ],
+      "follow_up": "Why is relational reasoning particularly useful in language modeling?"
+    },
+    {
+      "id": "faq9",
+      "category": "application",
+      "question": "Can RMC be applied to non-sequential data like images or graphs?",
+      "answer": "While designed for sequential data, the core idea—using attention to enable memory interactions—can be adapted. For images or graphs, RMC-like modules could model relationships between spatial regions or nodes over time (e.g., in video frames or dynamic graphs), but this would require redesigning the input encoding and memory initialization mechanisms.",
+      "related_concepts": [
+        "graph neural networks",
+        "spatial attention",
+        "dynamic graphs"
+      ],
+      "follow_up": "Has any follow-up work applied RMC to non-temporal data?"
+    },
+    {
+      "id": "faq10",
+      "category": "application",
+      "question": "How would you use RMC in a real-world chatbot or dialogue system?",
+      "answer": "In a chatbot, RMC could maintain structured memory slots for entities (e.g., user preferences, past topics), and use attention to dynamically update how these memories relate as the conversation progresses. This allows the model to remember that 'user likes Italian food' and later infer that 'they’d enjoy this new pasta restaurant'—enabling coherent, context-aware responses across long dialogues.",
+      "related_concepts": [
+        "dialogue systems",
+        "contextual memory",
+        "long-term coherence"
+      ],
+      "follow_up": "What challenges arise when scaling RMC to very long conversations?"
+    },
+    {
+      "id": "faq11",
+      "category": "limitations",
+      "question": "What are the computational costs of RMC compared to LSTMs?",
+      "answer": "RMC has higher computational cost due to O(n²) attention computations among n memory slots at each timestep, whereas LSTMs are O(n). For large memory sizes (e.g., >64 slots), RMC becomes significantly slower and more memory-intensive, limiting scalability in resource-constrained environments.",
+      "related_concepts": [
+        "computational complexity",
+        "O(n²) operations",
+        "memory efficiency"
+      ],
+      "follow_up": "Are there approximations or sparsifications that can reduce RMC's cost?"
+    },
+    {
+      "id": "faq12",
+      "category": "limitations",
+      "question": "Does RMC struggle with very long sequences?",
+      "answer": "Yes. Although RMC avoids the vanishing gradient problem, its attention mechanism operates only within a single timestep over fixed slots. It doesn’t explicitly attend to memories from many timesteps ago, so long-term dependencies must be encoded in the current memory state—making it less effective than Transformer-based models for extremely long-range dependencies.",
+      "related_concepts": [
+        "long-term dependency",
+        "temporal horizon",
+        "attention span"
+      ],
+      "follow_up": "Could RMC be combined with hierarchical memory to handle longer sequences?"
+    },
+    {
+      "id": "faq13",
+      "category": "limitations",
+      "question": "What happens if the number of memory slots is too small or too large?",
+      "answer": "Too few slots limit representational capacity and prevent sufficient compartmentalization of information. Too many slots increase computational cost and may lead to overfitting or redundant representations, especially if training data is limited. The paper uses 8–16 slots empirically; optimal size depends on task complexity.",
+      "related_concepts": [
+        "memory capacity",
+        "overfitting",
+        "hyperparameter tuning"
+      ],
+      "follow_up": "Is there a way to dynamically adjust the number of memory slots?"
+    },
+    {
+      "id": "faq14",
+      "category": "implementation",
+      "question": "How is the MLP used in the RMC architecture?",
+      "answer": "After multi-head attention updates each memory slot, a row-wise MLP (multi-layer perceptron) is applied to each slot independently. This allows nonlinear transformations of the attended information, enabling complex feature combinations and improving representational power before gating.",
+      "related_concepts": [
+        "MLP",
+        "nonlinear transformations",
+        "feature composition"
+      ],
+      "follow_up": "Why use row-wise MLP instead of a global one?"
+    },
+    {
+      "id": "faq15",
+      "category": "implementation",
+      "question": "How does gating work in the RMC?",
+      "answer": "After MLP processing, a gate (similar to LSTM’s forget/input gates) is applied element-wise to the updated memory. This allows the model to control how much of the new attention-updated information is retained versus preserved from the previous memory state, providing stability and selective updating.",
+      "related_concepts": [
+        "gating mechanism",
+        "LSTM gates",
+        "information flow control"
+      ],
+      "follow_up": "Is the gating function learned or fixed?"
+    },
+    {
+      "id": "faq16",
+      "category": "understanding",
+      "question": "Why is the RMC considered to have an 'inductive bias' toward relational reasoning?",
+      "answer": "RMC enforces a structural bias by design: it explicitly separates information into slots and mandates that memory updates occur through pairwise interactions via attention. This contrasts with LSTMs, where relationships emerge implicitly from a single vector. The architecture encourages the model to learn how memories relate rather than just what they contain.",
+      "related_concepts": [
+        "inductive bias",
+        "structural priors",
+        "memory structure"
+      ],
+      "follow_up": "Can other architectures be modified to have similar inductive biases?"
+    },
+    {
+      "id": "faq17",
+      "category": "comparison",
+      "question": "How does RMC handle memory initialization?",
+      "answer": "Memory slots are initialized as learnable parameters (e.g., zero vectors or small random values) before the first timestep. These slots are updated over time via attention and gating, so no external input is needed to seed them—unlike DNCs that require explicit writes.",
+      "related_concepts": [
+        "learnable initialization",
+        "memory state",
+        "parameterized memory"
+      ],
+      "follow_up": "Does initializing with different values affect performance?"
+    },
+    {
+      "id": "faq18",
+      "category": "application",
+      "question": "Can RMC be used for real-time applications like robotics or speech recognition?",
+      "answer": "Potentially, but with caution. RMC’s O(n²) attention makes it slower than LSTMs or GRUs, which may be problematic for high-frequency real-time systems. However, with small memory sizes and hardware acceleration (e.g., TPUs), it could be viable for low-latency tasks requiring relational reasoning, such as dialogue-aware robotic control.",
+      "related_concepts": [
+        "real-time systems",
+        "latency",
+        "hardware acceleration"
+      ],
+      "follow_up": "What are the latency benchmarks for RMC on embedded devices?"
+    },
+    {
+      "id": "faq19",
+      "category": "limitations",
+      "question": "Does RMC suffer from the same attention limitations as Transformers (e.g., quadratic complexity)?",
+      "answer": "Yes, RMC inherits the O(n²) computational complexity of dot-product attention over n memory slots. While this is beneficial for relational reasoning, it limits scalability to large memory sizes. Unlike Transformers that attend over sequence positions, RMC’s attention is confined within a timestep—so it doesn’t scale to long sequences but still scales poorly with memory size.",
+      "related_concepts": [
+        "attention complexity",
+        "scalability",
+        "quadratic bottleneck"
+      ],
+      "follow_up": "Are there sparse attention variants proposed for RMC in follow-up work?"
+    },
+    {
+      "id": "faq20",
+      "category": "understanding",
+      "question": "Why is the RMC’s attention applied within a timestep rather than across timesteps?",
+      "answer": "Applying attention within a timestep allows the model to reason about relationships among current memory states before updating them—enabling structured, relational updates. Attending across timesteps would resemble a Transformer and blur the distinction between memory storage (accumulated over time) and relational reasoning (within each step). This design choice isolates and enhances relational reasoning as a distinct function.",
+      "related_concepts": [
+        "temporal separation",
+        "memory state update",
+        "attention scope"
+      ],
+      "follow_up": "Could cross-timestep attention be added to RMC as an extension?"
+    }
+  ],
+  "paper_id": 18,
+  "title": "Relational Recurrent Neural Networks",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 4,
+    "implementation": 4,
+    "comparison": 4,
+    "application": 4,
+    "limitations": 4
+  }
+}

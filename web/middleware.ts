@@ -1,37 +1,17 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+// Minimal middleware for static PWA - no auth required
+// This file is kept for potential future use
 
-// Define public routes that don't require authentication
-const isPublicRoute = createRouteMatcher([
-  "/",
-  "/welcome",
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/api/webhooks(.*)",
-]);
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-// Define routes that require a subscription
-const isSubscriptionRoute = createRouteMatcher([
-  "/solver(.*)",
-  "/question(.*)",
-  "/guide(.*)",
-  "/api/v1/agents(.*)",
-]);
-
-export default clerkMiddleware(async (auth, req) => {
-  // Allow public routes
-  if (isPublicRoute(req)) {
-    return;
-  }
-
-  // Protect all other routes - require sign in
-  await auth.protect();
-});
+export function middleware(request: NextRequest) {
+  // Pass through all requests - no auth needed for PWA
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and static files
+    // Skip all static files and Next.js internals
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
   ],
 };

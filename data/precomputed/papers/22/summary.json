@@ -1,0 +1,27 @@
+{
+  "one_liner": "This paper discovers that neural language model performance follows predictable power-law scaling with model size, dataset size, and compute, enabling optimal resource allocation for maximum efficiency.",
+  "paragraphs": [
+    "Language modeling has become a cornerstone of modern AI, with performance heavily influenced by the scale of models, data, and computational resources. The authors were motivated by the need to understand how these three factors interact systematically, especially as models grow from millions to billions of parameters. Previous work had hinted at scaling trends, but this study systematically measures performance across seven orders of magnitude in scale to uncover universal patterns that hold regardless of minor architectural changes.",
+    "The researchers trained Transformer models with varying sizes (from 10^3 to 10^9 non-embedding parameters), on datasets ranging from small to billions of tokens, and with varying compute budgets (measured in PF-days). They measured cross-entropy loss as the performance metric and fitted power-law relationships between loss and each of model size (N), dataset size (D), and compute (C). They also analyzed overfitting behavior, training dynamics, and sample efficiency by tracking loss curves across different scales and using early stopping to predict final performance.",
+    "The main results show that loss decreases as a power law with each factor when others are held constant, and that larger models are far more sample-efficient—reaching the same performance with fewer data points and training steps. Crucially, under a fixed compute budget, optimal performance is achieved by using the largest possible model and stopping training well before convergence. They also found that data needs grow only slowly with compute (D ∝ C^0.27), and that transfer performance to new domains scales predictably with training performance. These insights allow practitioners to allocate compute efficiently: prioritize model size over data, train large models briefly, and use massive batch sizes."
+  ],
+  "key_takeaways": [
+    "Model performance follows predictable power-law scaling with model size, data, and compute—allowing accurate predictions of loss across vast scales.",
+    "Larger models are significantly more sample-efficient, achieving the same performance with less data and fewer training steps.",
+    "Optimal compute allocation involves using the largest possible model and stopping training early, rather than training small models to full convergence.",
+    "Data requirements grow very slowly with compute (D ∝ C^0.27), meaning you don’t need to proportionally increase data when scaling compute.",
+    "Overfitting is predictable and depends on the ratio N^0.74/D, so increasing model size by 8x only requires ~5x more data to maintain efficiency."
+  ],
+  "eli5": "Imagine you're baking cookies: if you make a bigger oven (bigger model), you can bake more cookies at once and need fewer batches (less data) to get the same taste. Even if you don’t bake forever, your big oven still makes better cookies faster than a tiny one. This paper found that for AI language models, bigger is smarter—and you don’t need to bake forever to get the best results.",
+  "prerequisites": [
+    "Basic understanding of neural networks and language models",
+    "Familiarity with the Transformer architecture"
+  ],
+  "applications": [
+    "Optimizing training budgets for large AI models like GPT by prioritizing model size over data collection",
+    "Guiding the design of next-generation AI systems with predictable scaling behavior"
+  ],
+  "paper_id": 22,
+  "title": "Scaling Laws for Neural LMs",
+  "category": "Scaling"
+}

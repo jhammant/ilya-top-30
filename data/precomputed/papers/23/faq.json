@@ -1,0 +1,254 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the Minimum Description Length (MDL) Principle in simple terms?",
+      "answer": "The MDL Principle states that the best model for a set of data is the one that allows you to compress the data the most — by combining a concise description of the model itself with a concise encoding of the data given that model. Essentially, learning is seen as finding patterns (regularities) in data that let you describe it more efficiently than just listing it raw.",
+      "related_concepts": [
+        "Data Compression",
+        "Occam's Razor",
+        "Model Selection"
+      ],
+      "follow_up": "How does compressing data relate to learning?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "Why is MDL considered a form of Occam’s Razor?",
+      "answer": "MDL embodies Occam’s Razor by favoring models that achieve a good balance between simplicity (short model description) and fit to the data (short encoding of data given the model). Simpler models that still explain the data well are preferred because they result in shorter total descriptions — aligning with the principle that the simplest explanation is often the best.",
+      "related_concepts": [
+        "Occam's Razor",
+        "Model Complexity",
+        "Trade-off"
+      ],
+      "follow_up": "Can overly simple models underfit according to MDL?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "How does MDL relate to data compression?",
+      "answer": "MDL treats learning as data compression: any regularity in the data can be exploited to represent it more compactly. A good model captures patterns so that, instead of storing the raw data, you store a short program (the model) and a short encoding of the residuals. The shorter the total description, the more regularity was found — and thus the better the learning.",
+      "related_concepts": [
+        "Kolmogorov Complexity",
+        "Prefix Codes",
+        "Information Theory"
+      ],
+      "follow_up": "Is every compressed representation a valid model under MDL?"
+    },
+    {
+      "id": "faq4",
+      "category": "understanding",
+      "question": "Does MDL assume there is a true underlying model?",
+      "answer": "No. Unlike traditional statistical methods that often assume data comes from a true underlying distribution, MDL is model-agnostic. It evaluates models based purely on their ability to compress the observed data, regardless of whether any model is 'true' in a philosophical sense. This makes MDL robust in real-world scenarios where models are approximations.",
+      "related_concepts": [
+        "Model Misspecification",
+        "Non-Bayesian Inference",
+        "Predictive Performance"
+      ],
+      "follow_up": "How does MDL handle situations where all models are clearly wrong?"
+    },
+    {
+      "id": "faq5",
+      "category": "comparison",
+      "question": "How does MDL differ from Bayesian model selection?",
+      "answer": "While both MDL and Bayesian methods use priors and penalize complexity, MDL avoids interpreting probabilities as degrees of belief. Instead, it uses codelengths from information theory to measure model goodness. MDL does not require assuming a true data-generating process and is often more robust to prior misspecification, especially when no model is true.",
+      "related_concepts": [
+        "Bayesian Inference",
+        "Prior Distributions",
+        "Codelength"
+      ],
+      "follow_up": "Can MDL be interpreted as a Bayesian method under certain conditions?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "What is the relationship between MDL and Kolmogorov Complexity?",
+      "answer": "Kolmogorov Complexity defines the shortest possible program to generate a dataset — an ideal but uncomputable benchmark. MDL is a practical approximation: instead of finding the absolute shortest program, it uses computable models and codes (like two-part codes or NML) to approximate this ideal. MDL can be seen as the 'practical version' of Kolmogorov Complexity.",
+      "related_concepts": [
+        "Ideal MDL",
+        "Universal Coding",
+        "Uncomputable"
+      ],
+      "follow_up": "Why can't Kolmogorov Complexity be used directly in practice?"
+    },
+    {
+      "id": "faq7",
+      "category": "implementation",
+      "question": "What is a two-part code in MDL, and how is it used?",
+      "answer": "A two-part code splits the description of data into two parts: (1) encoding the model parameters (hypothesis), and (2) encoding the data given that model. The total description length is the sum of both parts. MDL selects the model minimizing this total. For example, in linear regression, you encode the slope/intercept first, then the residuals.",
+      "related_concepts": [
+        "Two-part Code",
+        "Model Parameters",
+        "Codelength"
+      ],
+      "follow_up": "Are there alternatives to two-part codes in MDL?"
+    },
+    {
+      "id": "faq8",
+      "category": "implementation",
+      "question": "How do you compute the description length of a model in MDL?",
+      "answer": "The description length of a model is computed using a prefix code, which ensures uniquely decodable codes. For parametric models, this often involves encoding parameters with a prior (e.g., using Fisher information to approximate codelength via the Jeffreys prior). For discrete models, you can use Shannon coding. The goal is to minimize the total bits needed to describe both model and data.",
+      "related_concepts": [
+        "Prefix Code",
+        "Kraft Inequality",
+        "Jeffreys Prior"
+      ],
+      "follow_up": "What role does the Kraft inequality play in MDL?"
+    },
+    {
+      "id": "faq9",
+      "category": "implementation",
+      "question": "What is NML (Normalized Maximum Likelihood) and why is it important in MDL?",
+      "answer": "NML is a universal code that minimizes the worst-case regret over all possible data sequences. It provides an optimal way to encode data given a model class by normalizing the maximum likelihood over all possible observations. NML is crucial in refined MDL because it ensures fair comparison between models of different complexities without ad hoc priors.",
+      "related_concepts": [
+        "Universal Code",
+        "Minimax Regret",
+        "Model Selection"
+      ],
+      "follow_up": "How does NML compare to Bayesian marginal likelihood?"
+    },
+    {
+      "id": "faq10",
+      "category": "application",
+      "question": "Can MDL be used for model selection in machine learning?",
+      "answer": "Yes. MDL is widely applicable in ML for selecting model structures — e.g., choosing the number of clusters in K-means, deciding tree depth in decision trees, or selecting features in regression. It automatically balances fit and complexity without cross-validation or holdout sets, making it useful for small datasets where traditional methods overfit.",
+      "related_concepts": [
+        "Model Selection",
+        "Regularization",
+        "Cross-Validation"
+      ],
+      "follow_up": "How does MDL perform compared to AIC or BIC?"
+    },
+    {
+      "id": "faq11",
+      "category": "application",
+      "question": "How is MDL applied in practice when dealing with continuous data?",
+      "answer": "For continuous data, codelengths are computed using probability densities via the Fisher information matrix. The NML code length for a parametric model approximates to (k/2) log n, where k is the number of parameters and n is sample size — similar to BIC. More accurate estimates use the prequential code or Bayesian mixture codes.",
+      "related_concepts": [
+        "Fisher Information",
+        "NML",
+        "BIC"
+      ],
+      "follow_up": "Why does the BIC approximation work in MDL?"
+    },
+    {
+      "id": "faq12",
+      "category": "application",
+      "question": "What are real-world applications of the MDL Principle?",
+      "answer": "MDL has been applied in bioinformatics (gene sequence analysis), signal processing, speech recognition, neural network pruning, and anomaly detection. For example, in genomics, MDL helps choose the best segmentation model for DNA sequences by balancing motif complexity and fit.",
+      "related_concepts": [
+        "Bioinformatics",
+        "Signal Processing",
+        "Anomaly Detection"
+      ],
+      "follow_up": "Can MDL be used for unsupervised learning?"
+    },
+    {
+      "id": "faq13",
+      "category": "comparison",
+      "question": "How does MDL compare to cross-validation?",
+      "answer": "Both aim to avoid overfitting and assess generalization. MDL uses information-theoretic codelengths as a proxy for predictive performance, while cross-validation estimates it empirically via data splitting. MDL is more efficient (no data split needed) and provides a theoretical guarantee under the universal code framework, whereas cross-validation is more flexible but computationally heavier.",
+      "related_concepts": [
+        "Cross-Validation",
+        "Generalization Error",
+        "Prequential"
+      ],
+      "follow_up": "Is MDL more reliable than cross-validation on small datasets?"
+    },
+    {
+      "id": "faq14",
+      "category": "limitations",
+      "question": "What are the conceptual limitations of MDL’s version of Occam’s Razor?",
+      "answer": "MDL's Occam’s Razor is not about simplicity per se, but about description length. A model with many parameters might still be preferred if it compresses data far better — so MDL doesn't always pick the 'simplest' model in intuitive terms, but the most compressive one. This can lead to counterintuitive choices if the encoding is poorly designed.",
+      "related_concepts": [
+        "Occam's Razor",
+        "Model Encoding",
+        "Description Length"
+      ],
+      "follow_up": "Can MDL favor complex models if they're easy to describe?"
+    },
+    {
+      "id": "faq15",
+      "category": "limitations",
+      "question": "What practical problems arise when implementing MDL?",
+      "answer": "Practical issues include: choosing an appropriate code (two-part vs NML), computing NML for complex models (often intractable), sensitivity to encoding choices, and lack of standard tools. NML requires summing over all possible data sequences — computationally prohibitive for large models.",
+      "related_concepts": [
+        "NML Computation",
+        "Code Design",
+        "Computational Complexity"
+      ],
+      "follow_up": "Are there approximation methods for NML?"
+    },
+    {
+      "id": "faq16",
+      "category": "implementation",
+      "question": "How do prefix codes ensure uniquely decodable descriptions in MDL?",
+      "answer": "Prefix codes are designed so that no codeword is a prefix of another, ensuring unambiguous decoding. This property allows MDL to assign codelengths based on probabilities via the Kraft inequality, which guarantees that a set of code lengths can correspond to a valid probability distribution — essential for consistent model comparison.",
+      "related_concepts": [
+        "Prefix Code",
+        "Kraft Inequality",
+        "Uniquely Decodable"
+      ],
+      "follow_up": "What happens if you use non-prefix codes in MDL?"
+    },
+    {
+      "id": "faq17",
+      "category": "understanding",
+      "question": "What is the prequential interpretation of MDL?",
+      "answer": "The prequential interpretation views model evaluation as a sequential prediction process: at each step, you predict the next data point using your current model and encode it with a code based on that prediction. The total codelength accumulates over time, and the model with minimal cumulative codelength is chosen. This connects MDL directly to predictive performance.",
+      "related_concepts": [
+        "Prequential Coding",
+        "Sequential Prediction",
+        "Online Learning"
+      ],
+      "follow_up": "How does prequential MDL relate to online learning algorithms?"
+    },
+    {
+      "id": "faq18",
+      "category": "comparison",
+      "question": "How does MDL relate to information criteria like AIC and BIC?",
+      "answer": "AIC and BIC are approximations of MDL under specific conditions. BIC is derived from the NML codelength approximation for large samples, while AIC approximates expected KL divergence. MDL provides a principled information-theoretic foundation for these criteria and extends them to non-parametric and structured models.",
+      "related_concepts": [
+        "AIC",
+        "BIC",
+        "NML"
+      ],
+      "follow_up": "When should you prefer MDL over BIC?"
+    },
+    {
+      "id": "faq19",
+      "category": "application",
+      "question": "Can MDL be used for feature selection or variable importance?",
+      "answer": "Yes. By encoding each subset of features and selecting the one minimizing total description length, MDL naturally performs feature selection. A model with fewer features that still compresses the data well is preferred — making it a principled alternative to stepwise regression or LASSO in some contexts.",
+      "related_concepts": [
+        "Feature Selection",
+        "Regularization",
+        "Model Structure"
+      ],
+      "follow_up": "How does MDL compare to LASSO for feature selection?"
+    },
+    {
+      "id": "faq20",
+      "category": "limitations",
+      "question": "Does MDL work well with very small sample sizes?",
+      "answer": "MDL can struggle with tiny samples because codelength approximations (like NML) assume asymptotic behavior. However, refined MDL using universal codes or Bayesian mixtures can still be applied by carefully designing priors. In practice, exact NML is often intractable for small n, so approximations or alternatives like Bayesian MDL are preferred.",
+      "related_concepts": [
+        "Small Sample Size",
+        "NML Approximation",
+        "Bayesian MDL"
+      ],
+      "follow_up": "What are good alternatives to NML for small datasets?"
+    }
+  ],
+  "paper_id": 23,
+  "title": "MDL Principle Tutorial",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 5,
+    "comparison": 4,
+    "implementation": 4,
+    "application": 4,
+    "limitations": 3
+  }
+}

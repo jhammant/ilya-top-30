@@ -1,0 +1,187 @@
+{
+  "concepts": [
+    {
+      "name": "Deep Neural Networks",
+      "definition": "Neural networks with multiple hidden layers that can learn hierarchical representations of data.",
+      "intuition": "Like a factory assembly line where each station refines the product further—deeper networks extract more abstract features from raw pixels.",
+      "importance": "Depth enables richer feature extraction, crucial for complex tasks like image recognition.",
+      "related_concepts": [
+        "Convolutional Neural Networks",
+        "Feature Hierarchy"
+      ],
+      "example": "VGGNet with 16 layers extracting edges → shapes → objects in image classification.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Vanishing/Exploding Gradients",
+      "definition": "Problems in training deep networks where gradients become too small (vanish) or too large (explode) during backpropagation, hindering learning.",
+      "intuition": "Like trying to correct a recipe by whispering instructions from the back of a long line—by the time it reaches the first person, the message is lost or distorted.",
+      "importance": "Prevents effective training of deep networks, limiting model depth and performance.",
+      "related_concepts": [
+        "Backpropagation",
+        "Weight Initialization"
+      ],
+      "example": "In a 50-layer network, gradients from the output layer barely affect the first layer’s weights.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Weight Initialization",
+      "definition": "The method of setting initial values for neural network weights before training begins.",
+      "intuition": "Like starting a race with runners already slightly ahead—good initialization helps the model start near a good solution.",
+      "importance": "Enables stable convergence in deep networks by preventing gradient issues early in training.",
+      "related_concepts": [
+        "Vanishing/Exploding Gradients",
+        "Batch Normalization"
+      ],
+      "example": "Xavier initialization sets weights proportional to the square root of layer size to maintain signal variance.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Batch Normalization",
+      "definition": "A technique that normalizes layer inputs during training to stabilize and accelerate learning.",
+      "intuition": "Like adjusting the thermostat in a house—keeps internal conditions stable so the system doesn’t overheat or freeze.",
+      "importance": "Reduces internal covariate shift, allowing deeper networks to train faster and more reliably.",
+      "related_concepts": [
+        "Vanishing/Exploding Gradients",
+        "Deep Neural Networks"
+      ],
+      "example": "Normalizing activations in each mini-batch to zero mean and unit variance before applying ReLU.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Degradation Problem",
+      "definition": "The phenomenon where increasing network depth leads to higher training error, despite sufficient capacity.",
+      "intuition": "Adding more workers to a team doesn’t always make them more productive—if they can't coordinate, they get in each other’s way.",
+      "importance": "Challenged the assumption that deeper networks always perform better, motivating new architectures.",
+      "related_concepts": [
+        "Deep Neural Networks",
+        "Residual Learning"
+      ],
+      "example": "A 56-layer plain network performed worse than a 20-layer one on CIFAR-10 training data.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Residual Learning",
+      "definition": "A learning paradigm where layers learn to predict the difference (residual) between input and desired output, rather than the full mapping.",
+      "intuition": "Instead of learning to ride a bike from scratch, you learn how to adjust your balance—small corrections are easier than full relearning.",
+      "importance": "Enables training of extremely deep networks by simplifying optimization through identity skip connections.",
+      "related_concepts": [
+        "Shortcut Connections",
+        "Identity Mapping"
+      ],
+      "example": "If the ideal output is 5 and input is 3, learn to predict +2 (residual) instead of learning 5 directly.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Identity Mapping",
+      "definition": "A function that outputs the exact same value as its input: f(x) = x.",
+      "intuition": "Like a mirror—what goes in comes out unchanged. No transformation, just preservation.",
+      "importance": "Provides a baseline solution in deep networks; residual learning leverages this to make optimization easier.",
+      "related_concepts": [
+        "Residual Learning",
+        "Shortcut Connections"
+      ],
+      "example": "In ResNet, if a layer’s input is [1,2,3], its identity output is also [1,2,3].",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Shortcut Connections",
+      "definition": "Connections in a neural network that bypass one or more layers, directly linking earlier and later layers.",
+      "intuition": "Like a shortcut path in a maze—instead of walking through every corridor, you jump straight to the goal.",
+      "importance": "Enables gradient flow across many layers, mitigating degradation and facilitating training of deep networks.",
+      "related_concepts": [
+        "Residual Learning",
+        "Backpropagation"
+      ],
+      "example": "In ResNet, the input to a block is added directly to its output via a skip connection.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Residual Block",
+      "definition": "A building block in ResNet that applies a learned transformation F(x) to input x and adds it back via identity mapping: H(x) = F(x) + x.",
+      "intuition": "Think of it as a smart add-on: you keep your original skills (x) and only learn improvements (F(x)).",
+      "importance": "Core innovation of ResNet—enables training networks with 100+ layers without degradation.",
+      "related_concepts": [
+        "Residual Learning",
+        "Identity Mapping"
+      ],
+      "example": "A 2-layer convolutional block adds its output to the input before ReLU activation: output = ReLU(conv2(conv1(x)) + x).",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Feature Hierarchy",
+      "definition": "The progressive abstraction of features in deep networks—from low-level (edges) to high-level (objects).",
+      "intuition": "Like learning a language: first letters, then words, then sentences—each level builds on the last.",
+      "importance": "Enables complex pattern recognition; depth allows networks to form richer, more abstract representations.",
+      "related_concepts": [
+        "Deep Neural Networks",
+        "Convolutional Neural Networks"
+      ],
+      "example": "In image classification: edges → textures → parts (eyes, wheels) → whole objects (cat, car).",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Backpropagation",
+      "definition": "Algorithm to compute gradients of loss with respect to network parameters by applying the chain rule backwards through layers.",
+      "intuition": "Like a detective tracing clues backward from a crime scene to find the culprit—each layer passes error signals back.",
+      "importance": "Fundamental for training neural networks; enables gradient-based optimization of parameters.",
+      "related_concepts": [
+        "Vanishing/Exploding Gradients",
+        "Gradient Descent"
+      ],
+      "example": "In ResNet, gradients flow through both the main path and shortcut connections during backprop.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "ImageNet Dataset",
+      "definition": "A large-scale visual recognition dataset containing over 14 million labeled images across 1000 object categories.",
+      "intuition": "A massive photo album with every type of animal, vehicle, and object labeled—used as the standard test for AI vision.",
+      "importance": "Benchmark for evaluating deep learning models; breakthroughs here often generalize to real-world tasks.",
+      "related_concepts": [
+        "Deep Neural Networks",
+        "ILSVRC"
+      ],
+      "example": "ResNet-152 achieved 3.57% top-5 error on ImageNet test set in 2015, setting a new state-of-the-art.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "ILSVRC",
+      "definition": "ImageNet Large Scale Visual Recognition Challenge, an annual competition evaluating algorithms on image classification, detection, and localization tasks.",
+      "intuition": "The Olympics of computer vision—teams compete to build the best image-recognizing AI.",
+      "importance": "Driving force behind CNN innovation; ResNet’s victory here proved its real-world impact.",
+      "related_concepts": [
+        "ImageNet Dataset",
+        "Residual Learning"
+      ],
+      "example": "ResNet won 1st place in ILSVRC 2015 classification, detection, and localization tasks.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Optimization in Deep Learning",
+      "definition": "The process of adjusting network parameters to minimize a loss function using iterative methods like SGD.",
+      "intuition": "Like navigating a foggy mountain—optimization is the process of finding the lowest valley by feeling your way down.",
+      "importance": "Residual learning simplifies optimization, making it feasible to train networks with unprecedented depth.",
+      "related_concepts": [
+        "Gradient Descent",
+        "Residual Learning"
+      ],
+      "example": "SGD with momentum updates weights based on gradients from ResNet blocks to reduce classification loss.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "ResNet Architecture",
+      "definition": "A convolutional neural network architecture based on residual blocks, enabling training of networks with hundreds to thousands of layers.",
+      "intuition": "A Swiss Army knife for deep learning—each layer adds a small improvement without forgetting the original input.",
+      "importance": "Revolutionized deep learning by solving degradation, enabling deeper models that dominate computer vision tasks.",
+      "related_concepts": [
+        "Residual Learning",
+        "Shortcut Connections",
+        "ImageNet"
+      ],
+      "example": "ResNet-50, ResNet-101, and ResNet-152 are standard models used in production vision systems today.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 10,
+  "title": "Deep Residual Learning (ResNet)"
+}

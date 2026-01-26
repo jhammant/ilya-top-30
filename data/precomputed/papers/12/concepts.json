@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Message Passing Neural Network (MPNN)",
+      "definition": "A neural network framework for graph-structured data where nodes iteratively exchange and update information via message passing between neighbors.",
+      "intuition": "Think of it like a group of people in a room passing notes to their immediate neighbors; each person updates their understanding based on what they hear from others, until everyone reaches a consensus.",
+      "importance": "Provides a unified framework for many GNNs, enabling systematic analysis and improvement of graph-based models.",
+      "related_concepts": [
+        "Graph Neural Network",
+        "Node Embedding"
+      ],
+      "example": "In a molecule, each atom sends its electronic properties to bonded atoms, and all update their representations iteratively.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Graph Isomorphism Invariance",
+      "definition": "A property of a model where its output remains unchanged under any relabeling or rearrangement of nodes that preserves the graph structure.",
+      "intuition": "Like recognizing a face regardless of whether you see it from the left or right — the structure matters, not the order of pixels or labels.",
+      "importance": "Essential for molecular modeling since atoms can be relabeled without changing chemical properties.",
+      "related_concepts": [
+        "MPNN",
+        "Symmetry Invariance"
+      ],
+      "example": "Two drawings of benzene with atom labels swapped still produce the same predicted energy in an MPNN.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Node Embedding",
+      "definition": "A dense vector representation of a node in a graph that encodes its structural and feature information within the graph context.",
+      "intuition": "Like summarizing a person’s social circle and interests into a short profile — the vector captures who they know and what they care about.",
+      "importance": "Enables machine learning models to operate on graphs by converting discrete structures into continuous, differentiable representations.",
+      "related_concepts": [
+        "MPNN",
+        "Message Passing"
+      ],
+      "example": "In QM9, each carbon atom is represented by a 64-dimensional vector after message passing that encodes its bonding environment.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Message Passing",
+      "definition": "A procedure in GNNs where each node sends a computed message to its neighbors, aggregates incoming messages, and updates its own state.",
+      "intuition": "Like a game of telephone — each node whispers its current state to neighbors, listens to what they say, then updates its own belief.",
+      "importance": "Core mechanism enabling GNNs to propagate information across graph structures and capture global dependencies.",
+      "related_concepts": [
+        "MPNN",
+        "Node Embedding"
+      ],
+      "example": "In a molecule, nitrogen sends its electronegativity to adjacent carbons; each carbon updates its state based on received messages.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Aggregation Function",
+      "definition": "A function that combines incoming messages from a node’s neighbors into a single representation for update.",
+      "intuition": "Like averaging opinions in a group vote — multiple inputs are collapsed into one coherent update for the next step.",
+      "importance": "Determines how information from neighbors is summarized; critical for preserving structural information and scalability.",
+      "related_concepts": [
+        "Message Passing",
+        "MPNN"
+      ],
+      "example": "Sum, mean, or max pooling of neighbor messages to update a node’s hidden state in MPNNs.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Quantum Chemistry",
+      "definition": "The branch of chemistry that applies quantum mechanics to study molecular structure, properties, and reactions.",
+      "intuition": "Like simulating how tiny particles (electrons) behave in a molecule using physics equations — it’s the foundation of chemical behavior.",
+      "importance": "Provides high-accuracy ground truth for molecular properties, making it a key target for ML models like MPNNs.",
+      "related_concepts": [
+        "DFT",
+        "QM9 Dataset"
+      ],
+      "example": "Predicting the energy required to break a bond in a water molecule using quantum mechanical simulations.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Density Functional Theory (DFT)",
+      "definition": "A computational quantum mechanical modeling method used to investigate electronic structure of molecules and materials.",
+      "intuition": "Like estimating the weather by looking at air pressure and temperature maps instead of tracking every single molecule.",
+      "importance": "Used as a proxy for expensive quantum simulations; MPNNs aim to approximate DFT results faster and more scalably.",
+      "related_concepts": [
+        "Quantum Chemistry",
+        "QM9 Dataset"
+      ],
+      "example": "DFT calculates the dipole moment of a molecule by modeling electron density — MPNNs learn to predict this without running DFT.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "QM9 Dataset",
+      "definition": "A benchmark dataset of 134k small organic molecules with 13 quantum mechanical properties computed via DFT and full spatial coordinates.",
+      "intuition": "A labeled library of 134,000 molecular 'snapshots' with known physical properties — like a chemistry textbook with answers.",
+      "importance": "Standard benchmark for evaluating graph-based models in quantum chemistry; enables fair comparison across methods.",
+      "related_concepts": [
+        "DFT",
+        "MPNN"
+      ],
+      "example": "An MPNN takes a molecule’s atom-bond graph from QM9 and predicts its heat of formation without spatial coordinates.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Chemical Accuracy",
+      "definition": "The level of prediction error (typically ~1 kcal/mol) considered acceptable for practical chemical applications.",
+      "intuition": "Like measuring a recipe’s sugar with ±1 teaspoon — small enough that the cake still turns out right.",
+      "importance": "Defines success criteria in molecular property prediction — models achieving this are deemed useful for real-world chemistry.",
+      "related_concepts": [
+        "DFT",
+        "QM9 Dataset"
+      ],
+      "example": "An MPNN predicts a molecule’s energy with 0.8 kcal/mol error — within chemical accuracy, making it useful for drug design.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Inductive Bias",
+      "definition": "Assumptions built into a model’s architecture to guide learning toward desirable solutions, especially with limited data.",
+      "intuition": "Like teaching a student to look for patterns in math problems before memorizing formulas — it’s structured intuition.",
+      "importance": "MPNNs have inductive biases like graph isomorphism invariance, making them suitable for molecules without needing massive datasets.",
+      "related_concepts": [
+        "MPNN",
+        "Graph Isomorphism Invariance"
+      ],
+      "example": "Using message passing instead of fully connected layers because molecules are naturally structured as graphs.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Graph Topology",
+      "definition": "The structural arrangement of nodes and edges in a graph, independent of spatial position or geometry.",
+      "intuition": "The wiring diagram of a city’s subway system — it doesn’t matter where stations are on a map, only which lines connect.",
+      "importance": "MPNNs can predict molecular properties using topology alone, reducing reliance on expensive 3D geometry data.",
+      "related_concepts": [
+        "MPNN",
+        "Node Embedding"
+      ],
+      "example": "Predicting boiling point of a molecule using only atom types and bonds, ignoring 3D coordinates.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Supervised Learning on Graphs",
+      "definition": "Training a model to predict labels (e.g., energy, dipole) for entire graphs or nodes using labeled graph examples.",
+      "intuition": "Like teaching a student to recognize animals from sketches — you show them labeled drawings and they learn patterns.",
+      "importance": "Enables automated prediction of molecular properties without manual feature engineering — a key innovation in this paper.",
+      "related_concepts": [
+        "MPNN",
+        "QM9 Dataset"
+      ],
+      "example": "Given 100,000 molecules with known DFT-calculated energies, train an MPNN to predict energy for new unseen molecules.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Feature Engineering",
+      "definition": "The manual design of input features to improve model performance, often domain-specific and labor-intensive.",
+      "intuition": "Like hand-picking which questions to ask in a job interview instead of letting the candidate tell their whole story.",
+      "importance": "MPNNs reduce reliance on feature engineering by learning representations directly from graph structure.",
+      "related_concepts": [
+        "Supervised Learning on Graphs",
+        "MPNN"
+      ],
+      "example": "Before MPNNs, chemists manually encoded bond angles and electronegativity differences as input features.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "High-Dimensional Node Representations",
+      "definition": "Node embeddings with large vector dimensions that capture complex structural and chemical context.",
+      "intuition": "Like giving each atom a detailed diary of its bonding history — the longer the diary, the more nuanced its understanding.",
+      "importance": "Enables richer representations without proportional increases in computational cost — a key efficiency contribution of the paper.",
+      "related_concepts": [
+        "Node Embedding",
+        "MPNN"
+      ],
+      "example": "Representing each atom with a 128-dim vector instead of 32, capturing subtle electronic effects from distant neighbors.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Symmetry Invariance",
+      "definition": "A model’s output remains unchanged under transformations that preserve the underlying physical or structural properties.",
+      "intuition": "Rotating a snowflake doesn’t change its beauty — similarly, rotating a molecule shouldn’t change its predicted properties.",
+      "importance": "Critical for chemical applications where molecules are invariant to rotation, translation, and permutation of identical atoms.",
+      "related_concepts": [
+        "Graph Isomorphism Invariance",
+        "MPNN"
+      ],
+      "example": "An MPNN predicts identical energy for two versions of ethanol where the hydrogen atoms are swapped.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 12,
+  "title": "Neural Message Passing"
+}

@@ -1,0 +1,24 @@
+{
+  "run_at": "2026-01-26T22:11:23.969186",
+  "papers_processed": 2,
+  "successful": 2,
+  "failed": 0,
+  "results": [
+    {
+      "paper_id": 12,
+      "success": true,
+      "generated": [
+        "summary"
+      ],
+      "errors": []
+    },
+    {
+      "paper_id": 17,
+      "success": true,
+      "generated": [
+        "summary"
+      ],
+      "errors": []
+    }
+  ]
+}

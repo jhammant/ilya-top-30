@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the fundamental idea behind the Minimum Description Length (MDL) Principle as introduced in Section 1.2?",
+      "answer": "The fundamental idea is that learning is equivalent to data compression: any regularity in the data can be exploited to describe it more succinctly than by listing it literally, and the better the model captures regularities, the greater the compression.",
+      "explanation": "The paper explicitly states that MDL is based on the insight that regularities in data allow for compression. The more a model captures patterns (regularities), the fewer bits are needed to describe the data, which equates to learning.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Learning is about maximizing the likelihood of observed data.",
+        "MDL prioritizes models with the most parameters to fit data perfectly.",
+        "Compression is irrelevant to learning; only statistical significance matters."
+      ],
+      "hint": "Think about how a pattern like '0001' repeated many times can be described more efficiently than writing it out 2500 times."
+    },
+    {
+      "id": "q2",
+      "question": "According to the paper, how does MDL automatically protect against overfitting?",
+      "answer": "MDL protects against overfitting by balancing model complexity and goodness-of-fit: simpler models with shorter descriptions are preferred unless a more complex model significantly improves compression.",
+      "explanation": "As stated in Section 1.2, MDL avoids overfitting by inherently trading off model fit against complexity—unlike maximum likelihood which requires ad hoc adjustments to prevent overfitting.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "MDL uses cross-validation to detect overfitting.",
+        "Overfitting is prevented by restricting all models to have the same number of parameters.",
+        "MDL only uses Bayesian priors to avoid overfitting."
+      ],
+      "hint": "Recall the trade-off between how well a model fits data and how complex it is—this balance prevents overly complicated models."
+    },
+    {
+      "id": "q3",
+      "question": "What is the relationship between MDL and Occam’s Razor as described in Section 1.6?",
+      "answer": "MDL formalizes Occam’s Razor by preferring the simplest model that still provides a good description of the data, where simplicity is measured by description length.",
+      "explanation": "The paper explicitly links MDL to Occam’s Razor by stating that MDL chooses models that trade off goodness-of-fit with model complexity—exactly the essence of preferring simpler explanations when they suffice.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Occam’s Razor is incompatible with MDL because it favors complex models.",
+        "MDL ignores simplicity and only cares about predictive accuracy.",
+        "Occam’s Razor is a Bayesian concept unrelated to MDL."
+      ],
+      "hint": "Think of the classic saying: 'Entities should not be multiplied beyond necessity.' How does MDL measure 'necessity'?"
+    },
+    {
+      "id": "q4",
+      "question": "What is the key distinction between Ideal MDL and Practical MDL as introduced in Section 1.2?",
+      "answer": "Ideal MDL is based on Kolmogorov complexity—the shortest possible program to generate the data—while Practical MDL uses real-world coding schemes like two-part codes that are computable and implementable.",
+      "explanation": "The paper distinguishes Ideal MDL (theoretically optimal but uncomputable) from Practical MDL, which uses practical coding methods such as two-part codes to approximate the ideal in real applications.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Ideal MDL uses Bayesian priors, while Practical MDL uses maximum likelihood.",
+        "Ideal MDL is for large datasets; Practical MDL is for small ones.",
+        "There is no difference—they are the same thing."
+      ],
+      "hint": "One version is theoretical and uncomputable; the other is what we actually use in practice."
+    },
+    {
+      "id": "q5",
+      "question": "Why does the paper state that MDL does not require an underlying true model?",
+      "answer": "MDL evaluates models based on their ability to compress data, not on whether they represent a true underlying data-generating process—making it interpretationally robust even when all models are misspecified.",
+      "explanation": "As noted in Section 1.2, MDL's interpretation is independent of the existence of a true model. It focuses on description length as a measure of learned regularity, not truth.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "MDL assumes all models are true by design.",
+        "It requires prior knowledge of the true model to work properly.",
+        "MDL only works when data is generated by a known parametric process."
+      ],
+      "hint": "MDL doesn’t care if the model is 'true'—it cares how well it compresses what you see."
+    },
+    {
+      "id": "q6",
+      "question": "What is the role of prefix codes in MDL, as explained in Section 2.2.1?",
+      "answer": "Prefix codes ensure that no codeword is a prefix of another, allowing unambiguous decoding and enabling the Kraft inequality to link probabilities with codelengths—a foundational step for MDL.",
+      "explanation": "Prefix codes are crucial because they allow the Kraft inequality to hold, which establishes that any set of codelengths satisfying the inequality can be associated with a probability distribution—linking information theory to MDL.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Prefix codes are used to encrypt data for privacy in MDL.",
+        "They allow models to be ranked by computational speed, not description length.",
+        "Prefix codes are only used in Bayesian model selection."
+      ],
+      "hint": "Think about how you’d decode a sequence without needing separators between codes."
+    },
+    {
+      "id": "q7",
+      "question": "In the context of crude MDL (Section 2.4), how is the total description length calculated?",
+      "answer": "Total description length = codelength of the hypothesis (model) + codelength of the data given the hypothesis.",
+      "explanation": "Crude MDL splits the description into two parts: encoding the model (hypothesis) and then encoding the data given that model. The total is minimized to select the best model.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Total description length = likelihood of data × model complexity.",
+        "It is the sum of AIC and BIC scores for each model.",
+        "Only the data codelength matters; the hypothesis is ignored."
+      ],
+      "hint": "Think of it as: 'How long is it to describe the model, plus how long to describe the data using that model?'"
+    },
+    {
+      "id": "q8",
+      "question": "How does the Kraft inequality relate probabilities to codelengths in MDL (Section 2.2.2)?",
+      "answer": "The Kraft inequality states that for any prefix code, the sum of 2^(-l_i) over all codewords i must be ≤ 1, which allows us to interpret codelengths l_i as -log₂ of probabilities.",
+      "explanation": "This inequality is the mathematical bridge between probability distributions and codelengths: if you have a valid prefix code, then the lengths l_i satisfy Σ 2^(-l_i) ≤ 1, and vice versa, any such set of lengths defines a probability distribution via p_i = 2^(-l_i).",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Kraft inequality ensures that longer codes have higher probabilities.",
+        "It guarantees that all codelengths must be integers.",
+        "Kraft inequality measures model fit using likelihood ratios."
+      ],
+      "hint": "Remember: in MDL, codelength = -log₂(probability). How does Kraft make this mathematically valid?"
+    },
+    {
+      "id": "q9",
+      "question": "What is the main limitation of crude MDL that necessitates refined MDL, as discussed in Section 1.4 and 2.5?",
+      "answer": "Crude MDL fails to handle small sample sizes and models with the same number of parameters but different complexities, because it uses arbitrary coding schemes that don’t account for universal coding optimality.",
+      "explanation": "Crude MDL uses simple two-part codes, but these are not optimal for small samples or when comparing models with identical parameter counts but different structures. Refined MDL introduces universal codes like NML to fix this.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Crude MDL is too slow computationally.",
+        "It cannot handle continuous data.",
+        "Crude MDL requires Bayesian priors to work."
+      ],
+      "hint": "Think about why two models with the same number of parameters might still need different codelengths—and how crude MDL misses this."
+    },
+    {
+      "id": "q10",
+      "question": "How does the NML (Normalized Maximum Likelihood) code make refined MDL optimal compared to crude MDL?",
+      "answer": "NML is an optimal universal code that minimizes the worst-case regret, ensuring that its codelength is as close as possible to the ideal Kolmogorov complexity for any data sequence under a model class.",
+      "explanation": "NML provides the minimax optimal codelength by normalizing the maximum likelihood over all possible data sequences, making it the most efficient universal code for a given model class—unlike crude two-part codes.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "NML maximizes likelihood without penalizing complexity.",
+        "It uses Bayesian marginal likelihood as its core formula.",
+        "NML is only useful for discrete data and not applicable to continuous models."
+      ],
+      "hint": "NML is optimal because it minimizes the maximum possible extra bits you’d need compared to the best model in hindsight."
+    },
+    {
+      "id": "q11",
+      "question": "What are the four interpretations of refined MDL listed in Section 2.6?",
+      "answer": "Compression, Counting, Bayesian, and Prequential interpretations—each offering a different perspective on why minimizing description length is valid.",
+      "explanation": "The paper explicitly lists these four interpretations: Compression (data compression = learning), Counting (fewer models fit the data well), Bayesian (equivalent to marginal likelihood with uniform priors over parameters), and Prequential (sequential prediction performance).",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "Frequentist, Likelihoodist, Informational, and Structural interpretations.",
+        "Statistical, Computational, Philosophical, and Practical interpretations.",
+        "Predictive, Entropic, Parametric, and Hypothesis-based interpretations."
+      ],
+      "hint": "One interpretation is about compression; another is about how many models could have generated the data."
+    },
+    {
+      "id": "q12",
+      "question": "How does the Bayesian interpretation of MDL differ from traditional Bayesian inference, according to Section 2.6.3?",
+      "answer": "MDL’s Bayesian interpretation uses the normalized maximum likelihood (NML) as a prior-free model selector, avoiding subjective priors and instead relying on the data to define model weights via codelengths.",
+      "explanation": "Traditional Bayesians require prior distributions over parameters; MDL’s Bayesian interpretation uses NML to define a 'universal' prior that depends only on the model class and data—not subjective beliefs.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "MDL ignores Bayesian inference entirely.",
+        "Bayesian MDL requires informative priors to work properly.",
+        "MDL and Bayesian inference are identical in all respects."
+      ],
+      "hint": "Think about how MDL avoids specifying subjective priors—how does NML replace them?"
+    },
+    {
+      "id": "q13",
+      "question": "What is the 'infinity problem' in model selection with infinitely many models, as discussed in Section 2.7.2?",
+      "answer": "The infinity problem is that with infinitely many models, the total codelength for hypotheses becomes infinite under crude MDL, making model selection impossible without a proper universal code like NML.",
+      "explanation": "In crude MDL, assigning a codelength to each hypothesis in an infinite set leads to infinite total description length. Refined MDL solves this by using universal codes that assign finite codelengths even to infinite model classes.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "The infinity problem occurs when data size approaches infinity.",
+        "It refers to the computational cost of evaluating infinite models.",
+        "It means models must be finite-dimensional by definition."
+      ],
+      "hint": "If you have infinitely many models, how do you assign a finite code length to each without the total becoming infinite?"
+    },
+    {
+      "id": "q14",
+      "question": "Why is the prequential interpretation of MDL important for prediction, as per Section 2.6.4?",
+      "answer": "The prequential interpretation shows that MDL’s codelength minimization is equivalent to maximizing sequential predictive performance—each new data point is predicted using the model learned from previous data.",
+      "explanation": "In prequential MDL, we predict each data point using the model selected based on prior data. The total codelength equals the sum of negative log predictive likelihoods, linking MDL directly to sequential prediction accuracy.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Prequential MDL is only useful for offline batch learning.",
+        "It emphasizes model complexity over predictive accuracy.",
+        "Prequential interpretation is unrelated to prediction—it’s purely about compression."
+      ],
+      "hint": "Think of MDL as a predictor: each new data point is predicted using the best model so far—how does that relate to total codelength?"
+    },
+    {
+      "id": "q15",
+      "question": "How does MDL’s predictive interpretation (Section 1.5) connect data compression to future predictions?",
+      "answer": "Because compressing data implies identifying patterns that generalize, MDL’s optimal compressor also yields the best predictor for unseen data—compression and prediction are formally equivalent.",
+      "explanation": "The paper states that compression is formally equivalent to probabilistic prediction: a good compressor assigns high probability to observed data and will assign high probability to future similar data.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "MDL predicts by averaging all models with equal weights.",
+        "Prediction is a separate goal from compression in MDL.",
+        "Compression only helps with describing past data, not predicting future data."
+      ],
+      "hint": "If you can compress a sequence well, it means you’ve learned its patterns—so what does that tell you about future sequences?"
+    },
+    {
+      "id": "q16",
+      "question": "Compare MDL and Bayesian inference: what is a key conceptual advantage of MDL mentioned in Section 2.9.2?",
+      "answer": "MDL does not require assuming a 'true model' or subjective priors—it selects models based purely on description length, making it robust even when all candidate models are misspecified.",
+      "explanation": "While Bayesian inference relies on priors and assumes one model may be true, MDL treats models as tools for compression. This avoids interpretational issues when no model is truly correct—a major advantage in real-world applications.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Bayesian methods are always superior because they incorporate prior knowledge.",
+        "MDL and Bayesian inference are mathematically identical in all cases.",
+        "Bayesian methods avoid overfitting better than MDL."
+      ],
+      "hint": "What if none of your models are true? Can Bayesian inference still give meaningful results? How does MDL handle that?"
+    },
+    {
+      "id": "q17",
+      "question": "Explain how Kolmogorov complexity relates to Ideal MDL and why it is not practically usable, as per Section 1.2.1 and 2.9.4.",
+      "answer": "Kolmogorov complexity is the length of the shortest program that generates a given string—it defines Ideal MDL—but it’s uncomputable because there is no algorithm to find the shortest program for arbitrary data.",
+      "explanation": "Ideal MDL is theoretically optimal but uncomputable due to Kolmogorov complexity’s undecidability. Practical MDL approximates it with computable codes like NML or two-part codes.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Kolmogorov complexity is easy to compute with modern algorithms.",
+        "It measures only the entropy of data, not its structure.",
+        "Kolmogorov complexity is used in Bayesian model selection as a prior."
+      ],
+      "hint": "Think about the halting problem—why can’t we write a program to find the shortest possible program?"
+    },
+    {
+      "id": "q18",
+      "question": "Why does the paper argue that MDL is superior to traditional model selection methods like AIC or BIC in Section 2.9?",
+      "answer": "MDL provides a unified framework based on data compression that naturally handles model complexity, avoids ad hoc adjustments, and works even when no true model exists—unlike AIC/BIC which are asymptotic approximations with implicit assumptions.",
+      "explanation": "AIC and BIC are derived under specific asymptotic assumptions. MDL, rooted in information theory, provides a more general, distribution-free foundation grounded in compression, making it applicable even with small samples or misspecified models.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "AIC and BIC are more accurate because they use maximum likelihood directly.",
+        "MDL is just a rebranding of BIC with different notation.",
+        "Traditional methods like AIC are preferred because they’re faster to compute."
+      ],
+      "hint": "AIC and BIC are approximations—what makes MDL more fundamental?"
+    },
+    {
+      "id": "q19",
+      "question": "Evaluate the claim that MDL is 'a form of Occam’s Razor': what does this mean in practical terms for model selection, according to Section 1.6?",
+      "answer": "In practice, MDL implements Occam’s Razor by automatically penalizing model complexity: a simpler model with slightly worse fit is preferred over a complex one unless the improvement in compression justifies the added complexity.",
+      "explanation": "Occam’s Razor favors simplicity. MDL operationalizes this by minimizing total description length—where model complexity adds to the cost. This forces a trade-off that avoids overfitting without manual tuning.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "Occam’s Razor in MDL means always choosing the simplest model regardless of fit.",
+        "MDL ignores simplicity and focuses only on predictive accuracy.",
+        "Occam’s Razor is not related to MDL—it's a philosophical idea with no mathematical basis."
+      ],
+      "hint": "How does MDL turn the vague idea of 'simpler is better' into a measurable, actionable rule?"
+    },
+    {
+      "id": "q20",
+      "question": "Synthesize the key contributions of MDL as presented in this tutorial: how does it unify model selection, prediction, and learning under one principle?",
+      "answer": "MDL unifies these by treating all as forms of data compression: model selection chooses the best compressor (model), prediction is what the compressor does next, and learning is discovering regularities that enable compression—all formalized via codelength minimization.",
+      "explanation": "The tutorial shows that MDL provides a single, coherent framework: minimizing codelength simultaneously selects models (Section 1.3), predicts unseen data (Section 1.5), and defines learning as compression (Section 1.2)—unlike other methods that treat these separately.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "MDL is only useful for model selection and has no predictive power.",
+        "It separates learning, prediction, and model selection into distinct methods.",
+        "MDL is a Bayesian method that doesn't address learning or prediction."
+      ],
+      "hint": "Think of one core idea—compression—that explains model selection, prediction, and learning simultaneously."
+    }
+  ],
+  "paper_id": 23,
+  "title": "MDL Principle Tutorial",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

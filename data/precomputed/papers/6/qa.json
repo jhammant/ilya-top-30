@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary limitation of standard sequence-to-sequence models that Pointer Networks aim to solve?",
+      "answer": "Standard sequence-to-sequence models require a fixed-size output dictionary, which prevents them from handling problems where the number of possible output tokens depends on the input sequence length.",
+      "explanation": "In traditional seq2seq models, the output vocabulary is fixed during training and cannot adapt to variable-length inputs. This makes them unsuitable for combinatorial problems like TSP or convex hull computation, where the output size (e.g., number of points to order) varies with input size.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "They cannot process sequential data.",
+        "They do not use RNNs or LSTMs.",
+        "They are too slow to train on large datasets."
+      ],
+      "hint": "Think about why you can't use a standard seq2seq model to output a permutation of input elements when the number of inputs changes."
+    },
+    {
+      "id": "q2",
+      "question": "In Pointer Networks, what role does the attention mechanism play compared to traditional sequence-to-sequence models?",
+      "answer": "In Pointer Networks, attention is used as a pointer to select an element from the input sequence as output, rather than blending encoder hidden states into a context vector.",
+      "explanation": "Traditional seq2seq models use attention to create a weighted sum of encoder states (context vector) for decoding. Pointer Networks repurpose attention to produce a probability distribution over input positions, directly pointing to which input element should be output next.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It is used to compress the input sequence into a fixed-size vector.",
+        "It replaces the decoder RNN entirely.",
+        "It is used only during training to improve convergence."
+      ],
+      "hint": "Focus on how attention output is interpreted—does it generate a new token or select from existing input elements?"
+    },
+    {
+      "id": "q3",
+      "question": "What type of problems are Pointer Networks specifically designed to address?",
+      "answer": "Combinatorial optimization problems where the output dictionary size depends on the input sequence length.",
+      "explanation": "Pointer Networks were introduced to solve problems like TSP, convex hulls, and Delaunay triangulation—where the number of outputs (e.g., point indices) scales with input size, making fixed-vocabulary models inapplicable.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Image classification tasks with variable-sized images.",
+        "Natural language translation with fixed vocabularies.",
+        "Time-series forecasting with fixed time steps."
+      ],
+      "hint": "The paper mentions geometric and algorithmic problems—what do these have in common with output size?"
+    },
+    {
+      "id": "q4",
+      "question": "What is the key architectural difference between a standard sequence-to-sequence model and a Pointer Network?",
+      "answer": "Pointer Networks use attention to directly select input elements as outputs, while sequence-to-sequence models generate outputs from a fixed vocabulary.",
+      "explanation": "In seq2seq, the decoder generates tokens from a predefined dictionary. In Ptr-Nets, the attention mechanism outputs a probability distribution over input positions—each output is an index pointing to one of the input elements.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Ptr-Nets use CNNs instead of RNNs.",
+        "Sequence-to-sequence models do not use attention.",
+        "Ptr-Nets require external memory like Neural Turing Machines."
+      ],
+      "hint": "Compare Figure 1(a) and (b)—what does the output of attention represent in each?"
+    },
+    {
+      "id": "q5",
+      "question": "Why can't standard sequence-to-sequence models handle the Travelling Salesman Problem (TSP) directly?",
+      "answer": "Because TSP requires outputting a permutation of input points, and the output dictionary size must grow with the number of cities, which is variable.",
+      "explanation": "TSP output is a sequence of point indices whose length equals the number of input points. A fixed-size vocabulary cannot represent all possible permutations for variable n, making standard seq2seq inapplicable without retraining for each n.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "TSP is too computationally expensive to train on.",
+        "RNNs cannot process geometric data.",
+        "The TSP requires continuous outputs, not discrete sequences."
+      ],
+      "hint": "Think about how many possible outputs exist when n=5 vs. n=10—can a fixed dictionary handle both?"
+    },
+    {
+      "id": "q6",
+      "question": "What does the softmax function produce in a Pointer Network at each decoding step?",
+      "answer": "A probability distribution over the input sequence elements, indicating which element to point to next.",
+      "explanation": "At each step, the decoder computes attention scores over all input elements and applies softmax to generate a distribution. This distribution represents the probability of selecting each input element as the next output token.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "A probability distribution over all possible output sequences.",
+        "A fixed-size embedding of the input sequence.",
+        "A confidence score for the entire output sequence."
+      ],
+      "hint": "The softmax is applied over the encoder hidden states—what do those represent?"
+    },
+    {
+      "id": "q7",
+      "question": "How does the Pointer Network architecture enable generalization to input sequences longer than those seen during training?",
+      "answer": "Because the output is selected from input elements using attention, not generated from a fixed vocabulary, the model can handle variable-length inputs without retraining.",
+      "explanation": "Unlike seq2seq, which needs a new model for each input length n due to fixed vocabulary size, Ptr-Nets use attention over inputs—so the same model can point to any of the n elements regardless of n’s value.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It uses a larger RNN hidden state to encode longer sequences.",
+        "It pre-trains on multiple fixed-length datasets and combines them.",
+        "It uses external memory to store input elements."
+      ],
+      "hint": "Think about what determines the size of the softmax distribution—does it depend on n?"
+    },
+    {
+      "id": "q8",
+      "question": "In the Pointer Network model, what is the role of the encoder RNN?",
+      "answer": "To encode the input sequence into a sequence of hidden states that attention can reference during decoding.",
+      "explanation": "The encoder RNN (e.g., LSTM) processes each input element and produces hidden states {e₁, ..., eₙ}. These are used by the attention mechanism at each decoder step to compute relevance scores for selecting outputs.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "To directly generate the output sequence.",
+        "To compute the final loss function for training.",
+        "To store the entire output sequence in memory."
+      ],
+      "hint": "The encoder's hidden states are used as keys in the attention mechanism—what is their purpose?"
+    },
+    {
+      "id": "q9",
+      "question": "What is the computational complexity of the Pointer Network during inference for an input of length n?",
+      "answer": "O(n²) due to attention computation over all inputs at each of the n decoding steps.",
+      "explanation": "At each of the n output steps, the attention mechanism computes scores over all n input elements. Thus, total complexity is O(n × n) = O(n²), which is higher than the linear complexity of basic seq2seq but still feasible for moderate n.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "O(n) because attention is applied once per input.",
+        "O(n log n) due to sorting-like operations.",
+        "O(1) because attention is precomputed."
+      ],
+      "hint": "How many input elements are considered at each output step? Multiply that by the number of outputs."
+    },
+    {
+      "id": "q10",
+      "question": "Why is the use of attention in Pointer Networks considered a 'pointer' rather than a context vector?",
+      "answer": "Because it directly selects an input element by assigning probability to its index, rather than creating a blended representation of all inputs.",
+      "explanation": "In standard attention, the context vector is a weighted sum of encoder states. In Ptr-Nets, attention outputs a distribution over input indices—each output is literally pointing to one of the inputs, making it a discrete selection mechanism.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Because it only works on input indices, not vectors.",
+        "Because it ignores the content of inputs and only uses positions.",
+        "Because attention weights are not learnable."
+      ],
+      "hint": "What does the output of attention represent? Is it a new vector or an index?"
+    },
+    {
+      "id": "q11",
+      "question": "How does the Pointer Network differ from Neural Turing Machines in handling variable-length outputs?",
+      "answer": "Pointer Networks use attention to point directly to input elements, while Neural Turing Machines use external memory with read/write heads.",
+      "explanation": "Neural Turing Machines extend RNNs with external memory tapes and read/write operations. Ptr-Nets avoid complex memory structures by using attention over input to directly select output elements, making the architecture simpler and more focused.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Ptr-Nets use external memory; Neural Turing Machines do not.",
+        "Both models are identical in architecture and differ only in name.",
+        "Neural Turing Machines cannot handle variable-length outputs."
+      ],
+      "hint": "Both use attention-like mechanisms—but where do they read from?"
+    },
+    {
+      "id": "q12",
+      "question": "What evidence does the paper provide that Pointer Networks learn algorithmic behavior rather than memorizing training examples?",
+      "answer": "The models generalize to input sequences longer than those seen during training, producing valid solutions for unseen problem sizes.",
+      "explanation": "The paper shows Ptr-Nets trained on n=5–20 points successfully solve TSP for n=50, indicating they learned a general algorithmic strategy—not just memorized input-output pairs.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They achieve 100% accuracy on training data.",
+        "They were tested only on synthetic data with no real-world application.",
+        "The models have fewer parameters than traditional algorithms."
+      ],
+      "hint": "If the model only memorized, would it work on inputs larger than those in training?"
+    },
+    {
+      "id": "q13",
+      "question": "What is the significance of using softmax over input positions in Pointer Networks?",
+      "answer": "It allows differentiable selection of output elements from a variable-sized dictionary, enabling end-to-end training with gradient descent.",
+      "explanation": "By applying softmax to attention scores over input indices, the model produces a probability distribution that is differentiable. This enables gradient-based optimization even though outputs are discrete selections.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces the number of parameters in the model.",
+        "It ensures all input elements are selected exactly once.",
+        "It replaces the need for an RNN decoder."
+      ],
+      "hint": "How can you backpropagate through a discrete choice? The softmax makes it continuous."
+    },
+    {
+      "id": "q14",
+      "question": "How does the Pointer Network avoid the need to train a separate model for each input size n?",
+      "answer": "By using attention to dynamically select from the input sequence, making output dictionary size dependent on n rather than fixed.",
+      "explanation": "Traditional seq2seq models fix the output vocabulary size. Ptr-Nets bypass this by using attention to reference input elements directly—so for any n, the output vocabulary is {1, ..., n}, learned implicitly via attention weights.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "They use a universal embedding that works for all n.",
+        "They pre-train on multiple sizes and fine-tune for each test case.",
+        "The model uses a fixed-size embedding that can represent any n."
+      ],
+      "hint": "What changes when n increases? The vocabulary or the attention mechanism?"
+    },
+    {
+      "id": "q15",
+      "question": "What is the main advantage of Pointer Networks over traditional algorithms for solving TSP?",
+      "answer": "Pointer Networks learn approximate solutions from data without requiring explicit algorithmic rules or heuristics.",
+      "explanation": "Traditional TSP solvers rely on hand-crafted algorithms (e.g., Christofides). Ptr-Nets learn to approximate solutions purely from input-output examples, demonstrating data-driven algorithm discovery.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "They guarantee optimal solutions.",
+        "They run faster than exact algorithms for all n.",
+        "They require less training data than other neural methods."
+      ],
+      "hint": "The paper calls this a 'purely data-driven approach'—what does that contrast with?"
+    },
+    {
+      "id": "q16",
+      "question": "Why is the ability to generalize beyond training sequence lengths a key contribution of Pointer Networks?",
+      "answer": "It demonstrates that the model learns underlying algorithmic structure, not just input-output mappings, enabling practical deployment on variable-sized inputs.",
+      "explanation": "Generalization to unseen n (e.g., training on n=5–20, testing on n=50) proves the model captures a generalizable algorithm—critical for real-world applications where input sizes are unknown in advance.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It reduces training time significantly.",
+        "It proves the model is more accurate than classical algorithms.",
+        "It allows training with fewer examples."
+      ],
+      "hint": "If a model only memorizes, can it handle new input sizes? What does generalization imply?"
+    },
+    {
+      "id": "q17",
+      "question": "What does the paper suggest about the potential of neural networks for solving combinatorial optimization problems?",
+      "answer": "Neural networks can learn approximate, data-driven solutions to computationally intractable problems without explicit algorithmic design.",
+      "explanation": "The paper demonstrates that Ptr-Nets can approximate solutions to NP-hard problems like TSP and convex hulls using only examples—suggesting neural networks can serve as algorithm learners, not just pattern recognizers.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Neural networks can always find optimal solutions to NP-hard problems.",
+        "Traditional algorithms are obsolete because of neural approaches.",
+        "Neural networks require less data than classical methods for all problems."
+      ],
+      "hint": "The abstract says 'purely data-driven approach can learn approximate solutions to problems that are computationally intractable'—what does 'intractable' mean here?"
+    },
+    {
+      "id": "q18",
+      "question": "How does the Pointer Network architecture address the issue of variable output dictionary size?",
+      "answer": "It uses attention to produce a probability distribution over input elements, making the output dictionary size equal to the input sequence length at inference time.",
+      "explanation": "Rather than having a fixed vocabulary, Ptr-Nets define the output space dynamically as the set of input elements. Attention scores determine which element is selected, enabling variable-sized outputs without architectural changes.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It uses a lookup table that expands with input size.",
+        "It encodes output indices in a fixed-size embedding and decodes them later.",
+        "It generates outputs as text strings instead of indices."
+      ],
+      "hint": "The output is an index into the input—how does that make dictionary size variable?"
+    },
+    {
+      "id": "q19",
+      "question": "What is the main limitation of Pointer Networks that the paper does not address?",
+      "answer": "The model's quadratic computational complexity (O(n²)) limits scalability to very large inputs compared to classical algorithms with O(n log n) complexity.",
+      "explanation": "While Ptr-Nets generalize well, their attention mechanism requires computing n attention scores at each of the n output steps—making them O(n²). Classical algorithms like Graham scan for convex hulls are O(n log n), suggesting Ptr-Nets may not scale efficiently.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "They cannot be trained with backpropagation.",
+        "They require labeled data in the form of optimal solutions.",
+        "They only work on geometric problems."
+      ],
+      "hint": "The paper mentions exact algorithms have complexity O(n log n)—how does Ptr-Net's complexity compare?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim that Pointer Networks represent a 'fundamental' advancement in neural sequence modeling. Justify your answer using the paper’s contributions.",
+      "answer": "Yes, because Ptr-Nets solve a core limitation of seq2seq models—fixed output dictionaries—by introducing attention as a discrete selection mechanism, enabling neural networks to handle combinatorial problems with variable output sizes for the first time.",
+      "explanation": "The paper identifies a fundamental architectural constraint in seq2seq (fixed vocabulary) and proposes a novel use of attention to overcome it. This enables neural networks to learn algorithmic tasks like TSP without hand-coded rules—opening a new class of problems for neural modeling.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "No, because attention was already used in seq2seq models before.",
+        "No, because the performance is worse than classical algorithms on all metrics.",
+        "Yes, but only for geometric problems—so it’s not broadly fundamental."
+      ],
+      "hint": "Think about what problem this solves that no other model could handle before—why is it 'fundamental'?"
+    }
+  ],
+  "paper_id": 6,
+  "title": "Pointer Networks",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

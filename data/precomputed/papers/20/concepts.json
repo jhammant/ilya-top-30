@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Neural Turing Machine (NTM)",
+      "definition": "A differentiable neural network architecture coupled with an external memory matrix, enabling it to read from and write to memory using attentional mechanisms, thereby simulating algorithmic behavior.",
+      "intuition": "Think of it as a brain with a notepad: instead of hard-coding steps, it learns where to write and read information like a person jotting down notes while solving a math problem.",
+      "importance": "It bridges the gap between traditional neural networks and symbolic computation, enabling learning of algorithms rather than just pattern recognition.",
+      "related_concepts": [
+        "External Memory",
+        "Differentiable Architecture"
+      ],
+      "example": "An NTM learns to copy a sequence of numbers by reading them, writing to memory, then reading back in order — without being explicitly programmed to do so.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "External Memory",
+      "definition": "A separate, addressable memory storage unit that a neural network can read from and write to during computation, extending its capacity beyond fixed hidden states.",
+      "intuition": "Like a computer’s RAM that a program can access dynamically, the external memory lets the NTM store intermediate results instead of relying only on its limited internal state.",
+      "importance": "Enables handling long-term dependencies and complex algorithms that standard RNNs struggle with due to vanishing gradients or fixed capacity.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "Attentional Mechanism"
+      ],
+      "example": "When sorting a list, the NTM writes numbers to memory slots and later reads them back in sorted order — storing intermediate steps like a human using scratch paper.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Attentional Mechanism",
+      "definition": "A method by which the controller selectively focuses on specific memory locations to read from or write to, using weighted distributions over memory addresses.",
+      "intuition": "Like a spotlight in a dark room — the controller doesn’t look at everything, just where it needs to; it decides which memory slot is most relevant right now.",
+      "importance": "Allows the NTM to perform precise, context-dependent memory operations without needing fixed program structures.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "External Memory"
+      ],
+      "example": "While copying a sequence, the controller attends to each element in order — focusing on position 1, then 2, etc., using weights that sum to one.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Differentiable Architecture",
+      "definition": "A system where all components, including memory read/write operations and attention mechanisms, are differentiable, allowing end-to-end training via gradient descent.",
+      "intuition": "Like teaching a student by giving feedback after every small step — even if they use a notepad, you can still tell how much each note helped or hurt the final answer.",
+      "importance": "Makes it possible to train complex memory-augmented systems without manual programming of rules — gradients flow through memory operations.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "Gradient Descent"
+      ],
+      "example": "The NTM learns to sort by adjusting attention weights and memory write strengths via backpropagation, even though sorting is a discrete algorithm.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Gradient Descent",
+      "definition": "An optimization algorithm that iteratively adjusts model parameters to minimize a loss function by following the negative gradient of the error surface.",
+      "intuition": "Imagine walking downhill in fog — you feel the slope under your feet and take steps in the steepest downward direction until you reach the bottom.",
+      "importance": "Enables automatic learning of algorithms in NTMs without explicit rule encoding — the system discovers how to use memory through trial and error.",
+      "related_concepts": [
+        "Differentiable Architecture",
+        "Neural Turing Machine"
+      ],
+      "example": "The NTM starts guessing how to copy a sequence, gets feedback on mistakes, and slowly improves attention and memory writing until it copies perfectly.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Turing Completeness",
+      "definition": "The property of a system that can simulate any Turing machine, meaning it can compute any algorithm given enough time and resources.",
+      "intuition": "If a system is Turing complete, it’s as powerful as any general-purpose computer — even if it looks like a simple brain or calculator.",
+      "importance": "NTMs inherit this property from RNNs, proving they can theoretically solve any computable problem — but now with learnable memory and control.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "Recurrent Neural Network"
+      ],
+      "example": "An NTM can learn to reverse a string, add two numbers, or sort — all tasks that require algorithmic steps beyond simple pattern matching.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Recurrent Neural Network (RNN)",
+      "definition": "A neural network with feedback connections, allowing information to persist over time by maintaining a hidden state that evolves sequentially.",
+      "intuition": "Like a person remembering the last few words in a sentence to understand the current one — RNNs carry context forward step-by-step.",
+      "importance": "NTMs are built on RNNs because they provide the temporal processing backbone needed to sequence memory operations over time.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "Turing Completeness"
+      ],
+      "example": "An RNN processes each word in 'The cat sat on the mat' one at a time, keeping track of what came before to predict the next word.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Variable Binding",
+      "definition": "The ability to associate a value with a symbolic slot or variable, such as assigning 'Mary' to the subject role in a sentence.",
+      "intuition": "Like putting a name tag on a chair — you can say 'John sits in the red chair' and later recall that 'red chair = John', even if chairs move around.",
+      "importance": "Essential for handling structured data in language and logic; NTMs solve this by using memory addresses as variables to bind values.",
+      "related_concepts": [
+        "Attentional Mechanism",
+        "Symbolic Computation"
+      ],
+      "example": "In 'Mary spoke to John', NTM binds Mary → subject, John → object, spoke → verb — using memory locations as variable slots.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Working Memory",
+      "definition": "A cognitive system for temporary storage and manipulation of information, enabling reasoning and decision-making over short time scales.",
+      "intuition": "Like holding a phone number in your head while dialing — you don’t write it down, but you keep it active and can manipulate it (e.g., reverse the digits).",
+      "importance": "NTMs are designed to mimic this human cognitive function, allowing machines to perform rule-based reasoning without hardcoded programs.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "Attentional Mechanism"
+      ],
+      "example": "When solving 5 + 3 × 2, working memory holds intermediate results like '3×2=6' before adding to 5 — NTMs replicate this with memory writes.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Memory Addressing",
+      "definition": "The process by which a controller selects specific locations in external memory for read/write operations using content-based and location-based addressing.",
+      "intuition": "Like searching a filing cabinet — you can find files by their label (content) or by their position in the drawer (location).",
+      "importance": "Enables flexible, scalable memory access — critical for NTMs to generalize beyond fixed-size inputs and handle arbitrary algorithms.",
+      "related_concepts": [
+        "External Memory",
+        "Attentional Mechanism"
+      ],
+      "example": "NTM reads from memory by looking for a pattern like 'start of list' (content) or moves to the next slot after reading (location).",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Content-Based Addressing",
+      "definition": "A method of memory access where the controller reads/writes to locations whose content matches a query vector via similarity (e.g., cosine similarity).",
+      "intuition": "You remember where you left your keys because they look like your keys — not because you remember the exact shelf number.",
+      "importance": "Allows NTMs to retrieve information based on meaning or pattern, not just position — crucial for generalization and robustness.",
+      "related_concepts": [
+        "Memory Addressing",
+        "Attentional Mechanism"
+      ],
+      "example": "To recall a number, NTM generates a query vector resembling 'number 7' and finds the memory slot with closest values.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Location-Based Addressing",
+      "definition": "A method of memory access where the controller shifts attention to adjacent or specified memory locations based on learned shift operations.",
+      "intuition": "Like moving one page forward or backward in a book — you don’t search for content, just go to the next/previous spot.",
+      "importance": "Enables sequential operations like copying or sorting, where order matters and memory must be traversed systematically.",
+      "related_concepts": [
+        "Memory Addressing",
+        "Attentional Mechanism"
+      ],
+      "example": "After reading the first number, NTM shifts attention to the next memory slot to read the second — mimicking a tape head moving right.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Algorithmic Learning",
+      "definition": "The ability of a model to infer and execute step-by-step procedures from input-output examples, rather than memorizing mappings.",
+      "intuition": "Instead of memorizing that '2+3=5', the model learns the rule 'addition' and applies it to 7+8, 100+200, etc.",
+      "importance": "NTMs represent a leap toward AI that can learn programs — not just classify images or predict words, but understand how to compute.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "Working Memory"
+      ],
+      "example": "Given input-output pairs like '1,2,3 → 3,2,1' and 'a,b,c,d → d,c,b,a', NTM learns the reverse algorithm without being told to reverse.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Symbolic Computation",
+      "definition": "Computation based on manipulation of abstract symbols and rules, as opposed to statistical pattern matching — typical in traditional AI and programming.",
+      "intuition": "Like using algebra: x=5, y=3, then compute z=x+y. You’re manipulating symbols with rules, not guessing from examples.",
+      "importance": "NTMs combine symbolic computation’s precision with neural networks’ learning ability — bridging two AI paradigms.",
+      "related_concepts": [
+        "Variable Binding",
+        "Algorithmic Learning"
+      ],
+      "example": "NTM uses memory slots as variables, attention as pointers, and read/write as operations — mimicking how a program uses registers.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "End-to-End Differentiability",
+      "definition": "The property that allows gradients to flow through all components of a system — including memory reads/writes and attention weights — enabling unified training.",
+      "intuition": "Imagine a Rube Goldberg machine where every gear, lever, and pulley is made of clay — you can tweak any part to make the whole machine work better.",
+      "importance": "Without this, memory operations would be discrete and untrainable; end-to-end differentiability makes NTMs practically learnable with gradient descent.",
+      "related_concepts": [
+        "Differentiable Architecture",
+        "Neural Turing Machine"
+      ],
+      "example": "Backpropagation computes how changing a memory write weight affects final output — even if the operation was 'write 5 to slot 3'.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 20,
+  "title": "Neural Turing Machines"
+}

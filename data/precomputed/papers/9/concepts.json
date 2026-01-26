@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Model Parallelism",
+      "definition": "A technique to distribute a single neural network model across multiple accelerators (e.g., GPUs or TPUs) to overcome memory limitations.",
+      "intuition": "Imagine a large puzzle that’s too big for one person to assemble alone—model parallelism is like giving different people different puzzle pieces to work on simultaneously.",
+      "importance": "Enables training of models too large to fit in a single accelerator’s memory, unlocking larger and more accurate neural networks.",
+      "related_concepts": [
+        "Pipeline Parallelism",
+        "Data Parallelism"
+      ],
+      "example": "Splitting a 128-layer Transformer model across 4 GPUs so each handles 32 layers.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Pipeline Parallelism",
+      "definition": "A form of model parallelism where layers of a neural network are divided into stages, and each stage is processed on a different device in sequence.",
+      "intuition": "Like an assembly line in a car factory—each worker (accelerator) does one step, and cars (micro-batches) move down the line while workers operate in parallel.",
+      "importance": "Reduces idle time between layers by overlapping computation across micro-batches, improving hardware utilization.",
+      "related_concepts": [
+        "Model Parallelism",
+        "Micro-Batch"
+      ],
+      "example": "Four GPUs process four micro-batches in sequence: GPU1 processes micro-batch 1, then GPU2 takes over as GPU1 moves to micro-batch 2.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Micro-Batch",
+      "definition": "A small subset of a mini-batch used in pipeline parallelism to enable overlapping forward and backward passes across different device stages.",
+      "intuition": "Think of a conveyor belt with small packages—instead of waiting for the whole box to finish moving before starting the next, you send smaller boxes continuously.",
+      "importance": "Enables pipelining by breaking large batches into smaller units that can be processed in sequence without blocking.",
+      "related_concepts": [
+        "Pipeline Parallelism",
+        "Mini-Batch"
+      ],
+      "example": "A mini-batch of 128 samples is split into 4 micro-batches of 32 samples each for pipeline processing.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Mini-Batch",
+      "definition": "A subset of training data used in one iteration of gradient descent to compute gradients and update model parameters.",
+      "intuition": "Instead of feeding the entire dataset at once (too slow), you feed small groups—like tasting a soup with a spoon instead of drinking the whole pot.",
+      "importance": "Balances memory usage and gradient quality; foundational for stochastic optimization in deep learning.",
+      "related_concepts": [
+        "Micro-Batch",
+        "Gradient Descent"
+      ],
+      "example": "Training on 10,000 images using mini-batches of 32 images per step.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Gradient Accumulation",
+      "definition": "The process of accumulating gradients from multiple micro-batches before applying a single parameter update.",
+      "intuition": "Like saving up coins in a jar—you don’t spend each coin right away, but wait until you have enough to buy something big.",
+      "importance": "Ensures that the effective batch size remains unchanged even when splitting into micro-batches, preserving training stability.",
+      "related_concepts": [
+        "Micro-Batch",
+        "Synchronous Gradient Descent"
+      ],
+      "example": "Accumulating gradients from 4 micro-batches to compute one update equivalent to a batch size of 128.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Synchronous Mini-Batch Gradient Descent",
+      "definition": "A training method where gradients from all micro-batches in a mini-batch are computed and then averaged before updating model parameters simultaneously.",
+      "intuition": "All runners in a relay race must finish their leg before the team’s total time is recorded—no one gets to update until everyone finishes.",
+      "importance": "Ensures consistent and deterministic updates regardless of pipeline depth, critical for reproducibility and scalability.",
+      "related_concepts": [
+        "Gradient Accumulation",
+        "Pipeline Parallelism"
+      ],
+      "example": "After processing 8 micro-batches, gradients are averaged and used to update weights in a single step.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Layer Partitioning",
+      "definition": "The process of dividing a neural network’s sequence of layers into disjoint groups (cells) assigned to different accelerators.",
+      "intuition": "Splitting a long recipe into steps—each chef handles one set of instructions, passing the dish to the next.",
+      "importance": "Enables model scaling beyond memory limits and forms the structural basis for pipeline parallelism.",
+      "related_concepts": [
+        "Model Parallelism",
+        "Cell"
+      ],
+      "example": "A 10-layer CNN split into 3 cells: Cell1 = layers 1-4, Cell2 = layers 5-7, Cell3 = layers 8-10.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Cell",
+      "definition": "A group of consecutive layers in a neural network assigned to a single accelerator as a unit for pipeline parallelism.",
+      "intuition": "Each cell is like a ‘mini-model’—a self-contained module that receives input, processes it, and passes output to the next cell.",
+      "importance": "Provides modular abstraction for pipeline execution and enables load balancing across devices.",
+      "related_concepts": [
+        "Layer Partitioning",
+        "Pipeline Parallelism"
+      ],
+      "example": "In GPipe, a cell might contain 32 layers of an AmoebaNet model running on one TPU core.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Re-materialization",
+      "definition": "The technique of recomputing intermediate activations during backpropagation instead of storing them to save memory.",
+      "intuition": "Instead of keeping every sketch you made while drawing a portrait, you re-draw the previous steps when needed to save paper.",
+      "importance": "Reduces memory footprint during training, enabling larger models without requiring more hardware memory.",
+      "related_concepts": [
+        "Memory Optimization",
+        "Pipeline Parallelism"
+      ],
+      "example": "During backpropagation, GPipe recomputes activations from earlier layers instead of storing them in memory.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Computation Cost Estimation",
+      "definition": "A function that predicts the computational workload (e.g., FLOPs or time) of each layer or cell to optimize partitioning.",
+      "intuition": "Like estimating how long each step of a recipe will take so you can assign tasks evenly among chefs.",
+      "importance": "Enables balanced workload distribution across accelerators to prevent bottlenecks in pipeline execution.",
+      "related_concepts": [
+        "Layer Partitioning",
+        "Pipeline Efficiency"
+      ],
+      "example": "GPipe estimates that layer 5 takes twice as long as layer 4, so it groups layers to balance total cost per cell.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Pipeline Efficiency",
+      "definition": "The degree to which pipeline parallelism minimizes idle time and maximizes accelerator utilization during training.",
+      "intuition": "A well-designed pipeline is like a busy kitchen where every chef is always cooking something—no one stands around waiting.",
+      "importance": "Directly impacts training speed; poor efficiency leads to underutilized hardware and longer training times.",
+      "related_concepts": [
+        "Micro-Batch",
+        "Layer Partitioning"
+      ],
+      "example": "GPipe achieves near-linear speedup across 8 accelerators because pipeline stalls are minimized via micro-batching.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Hardware Memory Limitation",
+      "definition": "The constraint imposed by the finite memory capacity of accelerators (GPUs/TPUs) that limits model size during training.",
+      "intuition": "Your phone can’t run a full PC game because it doesn’t have enough RAM—same idea for large neural nets on GPUs.",
+      "importance": "The primary driver for model parallelism; without solving this, models cannot scale beyond a few billion parameters.",
+      "related_concepts": [
+        "Model Parallelism",
+        "Re-materialization"
+      ],
+      "example": "A 6B-parameter Transformer model exceeds the memory of a single TPUv3, requiring partitioning across multiple devices.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Task-Independent Model Scaling",
+      "definition": "The ability to scale neural network models across different architectures and tasks using a single, generic framework.",
+      "intuition": "A universal adapter that works with any plug—whether it’s a phone, laptop, or toaster—you don’t need different tools for each.",
+      "importance": "Reduces development overhead and enables rapid experimentation across diverse domains like vision, NLP, etc.",
+      "related_concepts": [
+        "GPipe",
+        "Model Parallelism"
+      ],
+      "example": "GPipe scales both AmoebaNet (vision) and 128-layer Transformer (translation) using the same pipeline library.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "GPipe Library",
+      "definition": "An open-source pipeline parallelism library that enables scalable training of arbitrary neural networks by partitioning layers and using micro-batch pipelining.",
+      "intuition": "A plug-and-play pipeline engine—you just feed it your network layers, and it handles the complex parallel execution for you.",
+      "importance": "Democratizes large model training by abstracting away complex parallelism logic, making it accessible to researchers.",
+      "related_concepts": [
+        "Pipeline Parallelism",
+        "Micro-Batch"
+      ],
+      "example": "Researchers use GPipe to train a 6B-parameter multilingual Transformer without rewriting their model code.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Near-Linear Speedup",
+      "definition": "The phenomenon where adding more accelerators reduces training time proportionally, almost matching the ideal speedup (e.g., 8x faster with 8 accelerators).",
+      "intuition": "If one worker takes 8 hours to paint a house, eight workers (with perfect coordination) take about 1 hour.",
+      "importance": "Validates the efficiency of GPipe’s design—proving pipeline parallelism can scale without significant overhead.",
+      "related_concepts": [
+        "Pipeline Efficiency",
+        "Model Parallelism"
+      ],
+      "example": "Training a 557M-parameter AmoebaNet on 8 accelerators completes in nearly 1/8th the time of using one.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 9,
+  "title": "GPipe: Pipeline Parallelism"
+}

@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Residual Network (ResNet)",
+      "definition": "A deep convolutional neural network architecture that uses skip connections to learn residual functions instead of direct mappings.",
+      "intuition": "Think of it like walking up a staircase with handrails — instead of lifting your whole body each step, you just add a small push (residual) to the existing height.",
+      "importance": "Enabled training of networks with over 100 layers, solving the vanishing gradient problem and enabling breakthroughs in image recognition.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Skip Connection"
+      ],
+      "example": "ResNet-50 used in ImageNet competitions to achieve state-of-the-art accuracy in 2015.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Skip Connection",
+      "definition": "A direct connection between non-adjacent layers in a neural network that bypasses one or more intermediate layers.",
+      "intuition": "Like taking an elevator between floors in a building instead of climbing every stair — it saves effort and avoids getting tired (vanishing gradients).",
+      "importance": "Allows gradients to flow backward and signals to propagate forward without degradation, enabling deeper networks.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Residual Network"
+      ],
+      "example": "In ResNet, a skip connection connects the input of a residual block directly to its output.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Identity Mapping",
+      "definition": "A function that outputs the exact same value as its input: f(x) = x.",
+      "intuition": "Like a mirror — what goes in comes out unchanged. In neural nets, it preserves the original signal without transformation.",
+      "importance": "Ensures that information flows unaltered through skip connections, preventing signal degradation and aiding optimization.",
+      "related_concepts": [
+        "Skip Connection",
+        "Residual Function"
+      ],
+      "example": "In ResNet, h(x_l) = x_l is an identity mapping that adds the input directly to the residual output.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Residual Function",
+      "definition": "A function F(x_l, W_l) that learns the difference (residual) between the desired output and the input, instead of learning the full mapping.",
+      "intuition": "Instead of painting a whole picture from scratch, you just paint the changes needed on top of what’s already there.",
+      "importance": "Simplifies learning by focusing only on deviations from the identity, making optimization easier in deep networks.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Residual Network"
+      ],
+      "example": "In ResNet, F(x_l) is a stack of convolutional layers that predict small adjustments to the input x_l.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Forward Propagation",
+      "definition": "The process of passing input data through the network layer by layer to compute an output.",
+      "intuition": "Like water flowing downhill — data moves from input to output, getting transformed at each layer.",
+      "importance": "Understanding how signals propagate helps design architectures that preserve information across many layers.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Backward Propagation"
+      ],
+      "example": "In ResNet, input x_0 flows through residual blocks and accumulates residuals via identity skip connections to produce x_L.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Backward Propagation",
+      "definition": "The process of computing gradients of the loss with respect to parameters by applying the chain rule from output back to input.",
+      "intuition": "Like tracing footprints backward after a walk — you see how each step contributed to the final outcome.",
+      "importance": "Enables gradient-based optimization; identity mappings ensure gradients don’t vanish even in very deep networks.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Gradient Vanishing"
+      ],
+      "example": "In ResNet, gradients flow directly from output to input via identity skip connections, bypassing weight layers.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Gradient Vanishing",
+      "definition": "A phenomenon where gradients become exponentially small as they propagate backward through many layers, hindering learning.",
+      "intuition": "Like whispering across a large room — the message gets softer and harder to hear with each person it passes through.",
+      "importance": "A major barrier to training deep networks; ResNets were designed specifically to overcome this.",
+      "related_concepts": [
+        "Backward Propagation",
+        "Identity Mapping"
+      ],
+      "example": "In plain CNNs with 50+ layers, gradients often vanish near the input layer, making early layers untrainable.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Pre-Activation",
+      "definition": "Applying normalization and activation functions before the weight layers, rather than after.",
+      "intuition": "Like warming up your muscles before lifting weights — you prepare the signal before applying transformation.",
+      "importance": "Enables cleaner gradient flow and improves training stability by ensuring the activation function doesn’t distort the identity path.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Batch Normalization"
+      ],
+      "example": "In the proposed ResNet unit, BN and ReLU are applied before convolutional layers instead of after.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Batch Normalization (BN)",
+      "definition": "A technique that normalizes the output of a layer across a mini-batch to stabilize and accelerate training.",
+      "intuition": "Like adjusting the volume on a speaker so no sound is too loud or too quiet — it keeps signals in an optimal range.",
+      "importance": "Reduces internal covariate shift and improves convergence; used in ResNet but repositioned to pre-activation for better identity flow.",
+      "related_concepts": [
+        "Pre-Activation",
+        "Residual Function"
+      ],
+      "example": "In original ResNet, BN is applied after ReLU; in the proposed version, it’s moved before convolution to preserve identity paths.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Post-Activation",
+      "definition": "The conventional practice of applying activation functions (e.g., ReLU) and normalization after weight layers.",
+      "intuition": "Like painting a wall first, then deciding if it needs a coat of varnish — the paint (activation) is applied after the structure.",
+      "importance": "Disrupts identity mappings because activation functions alter the signal before it can be added directly to the skip connection.",
+      "related_concepts": [
+        "Pre-Activation",
+        "Identity Mapping"
+      ],
+      "example": "Original ResNet used ReLU after addition, which broke the clean identity path needed for direct signal propagation.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Signal Propagation",
+      "definition": "The ability of information (features or gradients) to travel through a network without significant degradation.",
+      "intuition": "Like sending a message through a series of relay runners — if each runner holds the baton firmly, it reaches the finish line intact.",
+      "importance": "Critical for training deep networks; identity mappings and pre-activation ensure signals remain strong across hundreds of layers.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Gradient Vanishing"
+      ],
+      "example": "In ResNet-1001, signals propagate cleanly from layer 1 to layer 1001 due to identity skip connections and pre-activation.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Ablation Study",
+      "definition": "An experimental method where components of a system are systematically removed or altered to measure their individual impact.",
+      "intuition": "Like removing one ingredient from a recipe to see how it affects the final dish — helps identify what really matters.",
+      "importance": "Used in the paper to prove that identity mappings and pre-activation are key to ResNet’s performance.",
+      "related_concepts": [
+        "Residual Network",
+        "Identity Mapping"
+      ],
+      "example": "The paper tested skip connections with scaling, gating, and 1x1 convolutions — all performed worse than identity mapping.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Deep Network Optimization",
+      "definition": "The challenge of training neural networks with many layers, where issues like vanishing gradients and poor convergence arise.",
+      "intuition": "Building a skyscraper — the deeper it gets, the harder it is to keep each floor stable without proper support structures.",
+      "importance": "ResNets revolutionized this field by providing a scalable architecture that trains stably even at extreme depths.",
+      "related_concepts": [
+        "Residual Network",
+        "Gradient Vanishing"
+      ],
+      "example": "Training a 1001-layer ResNet on CIFAR-10 was previously impossible; identity mappings made it feasible.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Additive Residual Formulation",
+      "definition": "The mathematical structure where the output is expressed as input plus a learned residual function: x_{l+1} = x_l + F(x_l, W_l).",
+      "intuition": "Like adding a small tweak to your current state instead of rebuilding it from zero — efficient and stable.",
+      "importance": "Enables direct signal flow and simplifies learning; the core innovation enabling deep ResNets.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Residual Function"
+      ],
+      "example": "Eqn. (3) in the paper: x_{l+1} = x_l + F(x_l, W_l) — the foundation of all ResNet architectures.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Clean Information Path",
+      "definition": "A direct, unobstructed route for signal or gradient flow with no nonlinearities or transformations between layers.",
+      "intuition": "A straight highway without toll booths or detours — the message travels fast and unchanged.",
+      "importance": "Critical for training very deep networks; ensures gradients don’t vanish and signals remain intact.",
+      "related_concepts": [
+        "Identity Mapping",
+        "Signal Propagation"
+      ],
+      "example": "Grey arrows in Figure 1 represent clean paths where identity mappings allow direct flow without ReLU or BN interference.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 15,
+  "title": "Identity Mappings in ResNets"
+}

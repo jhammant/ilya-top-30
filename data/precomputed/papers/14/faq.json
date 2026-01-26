@@ -1,0 +1,254 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the main problem with the basic encoder-decoder model in neural machine translation?",
+      "answer": "The basic encoder-decoder model compresses the entire source sentence into a single fixed-length context vector, which becomes a bottleneck when translating long sentences. This forces the model to encode all information—regardless of sentence length—into a vector of fixed size, leading to performance degradation as sentence length increases.",
+      "related_concepts": [
+        "encoder-decoder architecture",
+        "fixed-length vector",
+        "information bottleneck"
+      ],
+      "follow_up": "How does the proposed attention mechanism solve this problem?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "What is the key innovation introduced in this paper?",
+      "answer": "The paper introduces an attention mechanism that allows the decoder to dynamically (soft-)align with relevant parts of the source sentence when generating each target word, instead of relying on a single fixed-length context vector. This enables the model to focus on different parts of the input depending on the current decoding step.",
+      "related_concepts": [
+        "soft alignment",
+        "attention mechanism",
+        "context vector"
+      ],
+      "follow_up": "How does soft alignment differ from hard alignment in machine translation?"
+    },
+    {
+      "id": "faq3",
+      "category": "implementation",
+      "question": "How does the attention mechanism compute context vectors in this model?",
+      "answer": "The attention mechanism computes a weighted sum of all encoder hidden states, where weights (attention scores) are determined by comparing the current decoder state with each source hidden state using a learned alignment function. These weights are normalized via softmax to form a probability distribution over source positions, which is then used to compute a context vector as the weighted sum.",
+      "related_concepts": [
+        "context vector",
+        "softmax normalization",
+        "alignment function"
+      ],
+      "follow_up": "What kind of function is typically used for the alignment score in this model?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "What neural network architecture is used for the encoder and decoder in this paper?",
+      "answer": "The paper uses recurrent neural networks (RNNs), specifically LSTM units, for both the encoder and decoder. The encoder processes the source sentence sequentially to produce a sequence of hidden states, while the decoder generates the target sentence one word at a time, conditioned on attention-weighted context vectors and previous target words.",
+      "related_concepts": [
+        "LSTM",
+        "RNN encoder-decoder",
+        "sequence modeling"
+      ],
+      "follow_up": "Why were LSTMs chosen over other RNN variants?"
+    },
+    {
+      "id": "faq5",
+      "category": "comparison",
+      "question": "How does this attention-based approach compare to traditional phrase-based machine translation?",
+      "answer": "Traditional phrase-based systems rely on hand-crafted features, separate components (e.g., translation tables, language models), and heuristics for alignment. This attention-based neural approach unifies alignment and translation into a single end-to-end trainable model, achieving performance comparable to phrase-based systems on English-French translation without requiring explicit feature engineering.",
+      "related_concepts": [
+        "phrase-based MT",
+        "end-to-end learning",
+        "feature engineering"
+      ],
+      "follow_up": "What are the trade-offs between neural and phrase-based approaches?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "How does this work relate to Sutskever et al. (2014) and Cho et al. (2014a)?",
+      "answer": "This paper builds directly on the RNN encoder-decoder framework introduced by Sutskever et al. and Cho et al., which encoded sentences into fixed-length vectors. The key advancement here is the introduction of attention to overcome the fixed-vector bottleneck, allowing the model to retain and access detailed source information throughout decoding.",
+      "related_concepts": [
+        "RNN encoder-decoder",
+        "fixed-length encoding",
+        "sequence-to-sequence learning"
+      ],
+      "follow_up": "What limitations of the prior work did this paper explicitly aim to fix?"
+    },
+    {
+      "id": "faq7",
+      "category": "implementation",
+      "question": "How is the alignment score calculated between source and target states?",
+      "answer": "The alignment score is computed using a learned feedforward neural network that takes as input the current decoder hidden state and an encoder hidden state, then outputs a scalar score. This score measures how relevant each source word is to the current decoding step before being normalized via softmax.",
+      "related_concepts": [
+        "alignment function",
+        "feedforward network",
+        "softmax"
+      ],
+      "follow_up": "Can other functions besides a feedforward net be used for alignment scoring?"
+    },
+    {
+      "id": "faq8",
+      "category": "application",
+      "question": "Can this attention mechanism be applied to tasks other than machine translation?",
+      "answer": "Yes, the attention mechanism introduced here is general-purpose and has since been widely adopted in other sequence-to-sequence tasks such as speech recognition, text summarization, image captioning, and question answering, where aligning input elements with output predictions is crucial.",
+      "related_concepts": [
+        "sequence-to-sequence",
+        "attention in vision",
+        "text summarization"
+      ],
+      "follow_up": "What are some early examples of attention beyond machine translation?"
+    },
+    {
+      "id": "faq9",
+      "category": "limitations",
+      "question": "What are the computational costs of using attention compared to basic encoder-decoder models?",
+      "answer": "Attention increases computational complexity because the decoder must compute an alignment score with every source hidden state at each decoding step, resulting in O(Tx * Ty) operations instead of O(Tx + Ty). This makes training and inference slower, especially for long sequences.",
+      "related_concepts": [
+        "computational complexity",
+        "time complexity",
+        "sequence length"
+      ],
+      "follow_up": "How have later models like Transformers reduced this cost?"
+    },
+    {
+      "id": "faq10",
+      "category": "understanding",
+      "question": "What does 'soft alignment' mean in the context of this paper?",
+      "answer": "Soft alignment refers to a continuous, differentiable weighting over all source positions rather than selecting one hard-aligned word. Each target word is influenced by all source words, but with varying degrees of importance determined by the attention weights, enabling smoother and more flexible alignments.",
+      "related_concepts": [
+        "soft alignment",
+        "differentiable attention",
+        "weighted context"
+      ],
+      "follow_up": "Why is soft alignment preferable to hard alignment in neural translation?"
+    },
+    {
+      "id": "faq11",
+      "category": "implementation",
+      "question": "How does the decoder use context vectors during generation?",
+      "answer": "At each decoding step t, the decoder computes a context vector by applying attention weights to all encoder hidden states. This context vector is then combined with the previous decoder state and the previously generated target word to predict the next target word via a nonlinear function g.",
+      "related_concepts": [
+        "context vector",
+        "conditional probability",
+        "RNN decoder"
+      ],
+      "follow_up": "Is the context vector concatenated, added, or otherwise combined with other inputs?"
+    },
+    {
+      "id": "faq12",
+      "category": "comparison",
+      "question": "How does this model differ from earlier neural translation models that used fixed vectors?",
+      "answer": "Earlier models encoded the entire source sentence into a single fixed-size vector, making it difficult to retain details from long sentences. This model replaces the fixed vector with a sequence of encoder states and dynamically selects relevant parts via attention, enabling better handling of variable-length inputs.",
+      "related_concepts": [
+        "fixed vector encoding",
+        "context representation",
+        "sequence modeling"
+      ],
+      "follow_up": "What evidence does the paper provide that attention improves long-sentence translation?"
+    },
+    {
+      "id": "faq13",
+      "category": "application",
+      "question": "Is this attention mechanism suitable for real-time translation systems?",
+      "answer": "While effective, the original attention mechanism is computationally expensive due to its O(Tx * Ty) complexity. For real-time systems, optimizations such as approximate attention, caching, or later architectures like Transformers are preferred. However, the model’s high quality makes it suitable for offline or batch translation scenarios.",
+      "related_concepts": [
+        "real-time NLP",
+        "latency",
+        "Transformer"
+      ],
+      "follow_up": "What techniques can reduce attention’s latency in production systems?"
+    },
+    {
+      "id": "faq14",
+      "category": "limitations",
+      "question": "Does this model handle out-of-vocabulary (OOV) words well?",
+      "answer": "The paper does not explicitly address OOV handling, but the attention mechanism can indirectly help by aligning rare or unseen words to their context in the source sentence. However, like most RNN-based models of its time, it still relies on subword units or character-level modeling for better OOV handling, which was not detailed here.",
+      "related_concepts": [
+        "out-of-vocabulary",
+        "subword tokenization",
+        "vocabulary size"
+      ],
+      "follow_up": "How do modern systems handle OOV words compared to this model?"
+    },
+    {
+      "id": "faq15",
+      "category": "understanding",
+      "question": "Why is joint learning of alignment and translation important?",
+      "answer": "Joint learning allows the model to optimize both alignment and translation simultaneously, rather than using precomputed or heuristic alignments. This enables the attention mechanism to learn task-specific alignments that maximize translation quality, leading to more accurate and context-aware translations.",
+      "related_concepts": [
+        "joint optimization",
+        "end-to-end training",
+        "alignment learning"
+      ],
+      "follow_up": "What are the risks of precomputing alignments instead of learning them?"
+    },
+    {
+      "id": "faq16",
+      "category": "implementation",
+      "question": "How is the attention weight distribution computed mathematically?",
+      "answer": "For each decoder step t, alignment scores e_{t,i} are computed for each source position i using a function like a_t,i = v^T tanh(W h_i + U s_{t-1}). These scores are normalized via softmax: alpha_{t,i} = exp(e_{t,i}) / sum_j(exp(e_{t,j})). The context vector is then c_t = sum_i(alpha_{t,i} * h_i).",
+      "related_concepts": [
+        "softmax",
+        "attention weights",
+        "context vector computation"
+      ],
+      "follow_up": "What alternatives to softmax exist for computing attention weights?"
+    },
+    {
+      "id": "faq17",
+      "category": "comparison",
+      "question": "How does this attention model compare to later Transformer models?",
+      "answer": "This paper introduced the foundational idea of content-based attention in sequence-to-sequence models. Transformers later replaced RNNs with self-attention and parallel processing, achieving higher efficiency and scalability. However, this work laid the conceptual groundwork for attention mechanisms that became central to Transformers.",
+      "related_concepts": [
+        "Transformer",
+        "self-attention",
+        "RNN vs Transformer"
+      ],
+      "follow_up": "What key improvements did Transformers make over this attention model?"
+    },
+    {
+      "id": "faq18",
+      "category": "application",
+      "question": "Can this model be used for languages with very different word orders?",
+      "answer": "Yes, the attention mechanism is particularly effective for languages with divergent word orders (e.g., English to Japanese) because it learns soft, non-local alignments without requiring rigid reordering rules. The model dynamically focuses on relevant source words regardless of their position.",
+      "related_concepts": [
+        "word order divergence",
+        "non-local alignment",
+        "cross-lingual translation"
+      ],
+      "follow_up": "Does attention eliminate the need for reordering rules entirely?"
+    },
+    {
+      "id": "faq19",
+      "category": "limitations",
+      "question": "What happens if the source sentence is much longer than any in the training data?",
+      "answer": "While attention improves performance on long sentences, the model still struggles if source sentences significantly exceed training lengths. This is due to attention weight dilution—too many positions can cause each to receive negligible weights—and insufficient exposure during training. Later models use relative positional encodings or hierarchical attention to mitigate this.",
+      "related_concepts": [
+        "long-range dependency",
+        "attention dilution",
+        "training data distribution"
+      ],
+      "follow_up": "How do modern models handle extremely long sequences?"
+    },
+    {
+      "id": "faq20",
+      "category": "understanding",
+      "question": "How does the paper demonstrate that attention alignments are linguistically meaningful?",
+      "answer": "The authors provide qualitative analysis by visualizing attention weight distributions across source-target word pairs. They show that attention weights align with intuitive linguistic correspondences—such as verbs to verbs, nouns to nouns—and often reflect word reordering patterns, suggesting the model learns interpretable alignments.",
+      "related_concepts": [
+        "qualitative analysis",
+        "alignment visualization",
+        "linguistic plausibility"
+      ],
+      "follow_up": "What tools or techniques are used to visualize attention weights?"
+    }
+  ],
+  "paper_id": 14,
+  "title": "Neural Machine Translation (Attention)",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 5,
+    "implementation": 5,
+    "comparison": 4,
+    "application": 3,
+    "limitations": 3
+  }
+}

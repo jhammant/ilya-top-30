@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary purpose of Relation Networks (RNs) as described in the paper?",
+      "answer": "Relation Networks (RNs) are designed to enable neural networks to perform relational reasoning by explicitly computing relationships between pairs of objects, without requiring prior knowledge of which relations exist.",
+      "explanation": "The paper emphasizes that RNs are built to capture the core properties of relational reasoning by design, not through learning. They compute relations between all object pairs using a shared function g, making them inherently suited for tasks requiring understanding of interactions between entities.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To replace convolutional neural networks in image classification tasks",
+        "To improve the speed of training deep neural networks",
+        "To generate synthetic datasets for visual question answering"
+      ],
+      "hint": "Think about what kind of reasoning the paper says traditional neural networks struggle with—relationships between objects, not just individual object properties."
+    },
+    {
+      "id": "q2",
+      "question": "Which of the following best describes how an RN processes input data?",
+      "answer": "An RN takes a set of objects and computes pairwise relations between all possible pairs using a shared function g, then aggregates these relations with another function f.",
+      "explanation": "According to Equation 1 in the paper, RN(O) = f(Σg(o_i, o_j)) for all i,j. This means every object pair is evaluated by the same relation function g, and their outputs are summed and processed by f. This structure is order-invariant and designed for relational reasoning.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It processes objects sequentially using an LSTM to track dependencies.",
+        "It uses a CNN to extract features before comparing object locations.",
+        "It requires labeled relations as input to function g."
+      ],
+      "hint": "The RN operates on a set of objects and considers every pair—no sequence or order is assumed."
+    },
+    {
+      "id": "q3",
+      "question": "What key limitation of traditional neural networks does the paper highlight in relation to relational reasoning?",
+      "answer": "Traditional architectures like CNNs and MLPs struggle with sparse, complex relational structures because they lack built-in mechanisms to reason about relationships between entities.",
+      "explanation": "The paper argues that while CNNs excel at spatial feature detection and MLPs at function approximation, neither is designed to infer relationships between multiple entities—especially when those relations are sparse or abstract, as shown in the CLEVR and bAbI tasks.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "They are too slow to train on large datasets.",
+        "They cannot process image inputs effectively.",
+        "They require too much labeled data for all types of tasks."
+      ],
+      "hint": "The paper contrasts RNs with CNNs on the Sort-of-CLEVR dataset to show that even powerful networks fail at relational questions without explicit relational modules."
+    },
+    {
+      "id": "q4",
+      "question": "What is the significance of the Sort-of-CLEVR dataset in this paper?",
+      "answer": "Sort-of-CLEVR demonstrates that powerful CNNs alone cannot solve relational questions, but when augmented with RNs, they gain the ability to reason relationally.",
+      "explanation": "The Sort-of-CLEVR dataset was curated to isolate relational reasoning. CNNs performed poorly on relational questions despite excelling on non-relational ones, proving that their architecture lacks inherent relational reasoning. Adding RNs enabled them to solve these tasks, validating the RN’s role as a general relational reasoning module.",
+      "difficulty": "easy",
+      "type": "applied",
+      "distractors": [
+        "It is a larger version of CLEVR with more objects per image.",
+        "It was designed to test object detection accuracy in cluttered scenes.",
+        "It contains only text-based questions for comparison with bAbI."
+      ],
+      "hint": "The paper uses Sort-of-CLEVR to prove that CNNs aren't naturally good at relational reasoning—until you add an RN."
+    },
+    {
+      "id": "q5",
+      "question": "How does the paper define a 'relational question' versus a 'non-relational question'?",
+      "answer": "A relational question requires reasoning about the relationship between two or more objects (e.g., comparing sizes of different objects), while a non-relational question asks about the property of a single object (e.g., 'What color is this ball?').",
+      "explanation": "Figure 1 explicitly contrasts a non-relational question ('What is the size of the brown sphere?') with a relational one ('Are there any rubber things that have the same size as the yellow metallic cylinder?'). The latter requires comparing attributes across entities, which is the core challenge RNs are designed to solve.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Relational questions involve only text, while non-relational ones are visual.",
+        "Non-relational questions require more data to answer accurately.",
+        "Relational questions must be answered using symbolic logic."
+      ],
+      "hint": "Look at Figure 1: one question is about a single object, the other compares two objects."
+    },
+    {
+      "id": "q6",
+      "question": "Why are Relation Networks considered 'plug-and-play' modules?",
+      "answer": "RNs can be added to existing architectures like CNNs or LSTMs without altering their core structure, and they improve relational reasoning performance while remaining end-to-end differentiable.",
+      "explanation": "The paper highlights that RNs are modular and can be inserted into any system processing object sets. For example, they were added to CNNs for CLEVR and LSTMs for bAbI without redesigning the entire network, demonstrating their flexibility and ease of integration.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "They require no training and work with pre-trained weights.",
+        "They only function in visual tasks, not text-based ones.",
+        "They replace the need for any other neural network module."
+      ],
+      "hint": "The paper says RNs can be added to CNNs and LSTMs—so they're not standalone systems."
+    },
+    {
+      "id": "q7",
+      "question": "How does the RN architecture promote data efficiency in relational reasoning?",
+      "answer": "By using a single shared function g to compute relations between all object pairs, RNs generalize across pairs and avoid overfitting to specific instances.",
+      "explanation": "Instead of learning a separate function for each object pair (which would require n² parameters), RNs use one function g applied to all pairs. This parameter sharing encourages the model to learn generalizable relational patterns rather than memorizing specific examples.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNs use large datasets to memorize all possible relations.",
+        "They reduce data needs by ignoring non-relational features.",
+        "They rely on external symbolic knowledge bases to reduce training data."
+      ],
+      "hint": "Think about how one function g is reused across all object pairs—what does that do to the number of parameters and generalization?"
+    },
+    {
+      "id": "q8",
+      "question": "What does the paper suggest about symbolic AI approaches in comparison to RNs?",
+      "answer": "Symbolic AI is inherently relational but suffers from the symbol grounding problem, whereas RNs learn relations directly from data without requiring predefined symbols.",
+      "explanation": "The paper acknowledges symbolic AI's strength in relational reasoning via logic and math but points out its weakness: symbols must be manually defined (symbol grounding problem). RNs avoid this by learning relations from raw data, making them more robust to variations.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Symbolic AI is more data-efficient than RNs.",
+        "RNs are a type of symbolic system that uses logic rules.",
+        "Symbolic AI outperforms RNs in all relational reasoning tasks."
+      ],
+      "hint": "The paper says symbolic AI is good at relations but not robust—why? Because of how symbols are defined."
+    },
+    {
+      "id": "q9",
+      "question": "What does the RN’s order-invariant property mean, and why is it important?",
+      "answer": "The RN's output does not depend on the order of input objects, which makes it suitable for reasoning about sets where object ordering is arbitrary or unknown.",
+      "explanation": "Equation 1 sums over all pairs (i,j), regardless of order. This ensures the model treats the input as a set, not a sequence—critical for real-world scenarios where object order isn't specified (e.g., images, scenes). This contrasts with RNNs that depend on sequence order.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "It means RNs process objects in a fixed sequence for consistency.",
+        "Order-invariance allows RNs to ignore object attributes entirely.",
+        "It refers to the ability to reorder outputs after computation."
+      ],
+      "hint": "In an image, does it matter if you list the objects from left to right or right to left? RNs don’t care."
+    },
+    {
+      "id": "q10",
+      "question": "Why did the authors choose CLEVR as a benchmark for evaluating RNs?",
+      "answer": "CLEVR requires rich relational reasoning to answer visual questions, and prior models struggled with it despite high performance on simpler tasks.",
+      "explanation": "CLEVR was designed to test relational reasoning in VQA by embedding questions that require comparing object properties, counting relations, or tracking spatial dependencies. The paper notes state-of-the-art models failed here—making it an ideal testbed for RNs’ relational capabilities.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "CLEVR is the largest visual dataset available.",
+        "It contains only non-relational questions to test baseline performance.",
+        "CLEVR was developed specifically for RNs and no other models can use it."
+      ],
+      "hint": "The paper says state-of-the-art VQA models struggled on CLEVR—why? Because of relational reasoning demands."
+    },
+    {
+      "id": "q11",
+      "question": "How does the RN module influence upstream representations in CNNs or LSTMs?",
+      "answer": "Through joint training, RNs encourage upstream networks to learn implicit object-like representations that are useful for relational reasoning.",
+      "explanation": "RNs don’t just process pre-defined objects; they can shape how upstream layers (like CNNs) encode inputs into object-like entities. For example, a CNN might learn to segment and represent distinct objects in an image so the RN can reason about their relations.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNs replace upstream networks entirely with symbolic rules.",
+        "Upstream networks are frozen during RN training to prevent interference.",
+        "RNs force upstream layers to output only numerical coordinates."
+      ],
+      "hint": "Think about how the RN needs objects as input—what must the CNN learn to do before it can give useful inputs to the RN?"
+    },
+    {
+      "id": "q12",
+      "question": "What is the role of function 'g' in a Relation Network?",
+      "answer": "Function g computes pairwise relations between two objects, capturing how they are related or whether a relation exists at all.",
+      "explanation": "In Equation 1, g takes two objects (o_i, o_j) and outputs a relation vector. This function must learn what 'relation' means in context—e.g., size comparison, spatial position, material similarity—without being told explicitly.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "g aggregates all relations into a final answer.",
+        "g is used to encode individual object features before relational processing.",
+        "g determines the number of objects in the input set."
+      ],
+      "hint": "The paper says g infers 'the ways in which two objects are related'—so it's about pairwise interaction."
+    },
+    {
+      "id": "q13",
+      "question": "What does the success of RNs on bAbI tasks reveal about their generalizability?",
+      "answer": "RNs can perform relational reasoning in text-based domains, proving their applicability beyond vision tasks and demonstrating cross-domain versatility.",
+      "explanation": "Solving 18/20 bAbI tasks—which involve logical reasoning over text—shows RNs aren't limited to visual inputs. This demonstrates that the relational reasoning mechanism is general and can operate on any structured set of entities, whether visual or textual.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNs only work on bAbI because the tasks are simple and rule-based.",
+        "The success was due to pre-trained language models, not RNs themselves.",
+        "RNs failed on bAbI and were only effective in visual tasks."
+      ],
+      "hint": "RNs were tested on images, text, and physics—what does that suggest about their scope?"
+    },
+    {
+      "id": "q14",
+      "question": "How does the RN architecture differ from Graph Neural Networks (GNNs) as mentioned in the paper?",
+      "answer": "RNs are simpler, plug-and-play modules focused exclusively on relational reasoning with a fixed all-to-all pairwise structure, whereas GNNs often require explicit graph structures and more complex message-passing schemes.",
+      "explanation": "While both RNs and GNNs reason over relations, RNs are designed as minimal, general-purpose modules that work on any set of objects with all-pair relations. GNNs often rely on predefined graph edges or complex propagation rules, making RNs more flexible and easier to integrate.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNs are a type of GNN with fewer layers.",
+        "GNNs cannot handle set inputs, while RNs can.",
+        "RNs use explicit graph structures; GNNs do not."
+      ],
+      "hint": "The paper says RNs are 'simple, plug-and-play' and 'exclusively focused on relational reasoning'—what does that imply about their structure?"
+    },
+    {
+      "id": "q15",
+      "question": "Why is the ability of RNs to operate on 'raw' inputs significant?",
+      "answer": "RNs can learn relational reasoning directly from raw data (like pixels or text tokens) without requiring hand-engineered object annotations, making them more scalable and robust.",
+      "explanation": "Unlike symbolic systems that need manually defined symbols, RNs can be combined with CNNs or LSTMs to process raw inputs and implicitly extract object-like representations—enabling relational reasoning without manual feature engineering.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "RNs require no training and work with unprocessed data directly.",
+        "Raw inputs are always easier for RNs than structured inputs.",
+        "RNs only work with raw pixels, not text or other modalities."
+      ],
+      "hint": "Think about how RNs are used with CNNs on CLEVR images—what does the CNN do before feeding to RN?"
+    },
+    {
+      "id": "q16",
+      "question": "What evidence does the paper provide that RNs learn implicit object representations?",
+      "answer": "RNs improve performance when added to CNNs on CLEVR, even though the CNNs were not explicitly trained to detect objects—suggesting RNs drive the emergence of object-like features in upstream layers.",
+      "explanation": "The paper demonstrates that RNs don't just process pre-segmented objects; they induce the CNN to learn representations that behave like discrete entities. This is shown by performance gains even when object boundaries aren't given.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "The paper uses manual object segmentation to prove RNs work.",
+        "RNs rely on pre-defined object labels from the dataset.",
+        "Implicit representations were proven using symbolic logic rules."
+      ],
+      "hint": "If the CNN didn't know what objects were, how could it help RNs reason about them? The answer must be that the RN made the CNN learn object-like features."
+    },
+    {
+      "id": "q17",
+      "question": "What does the RN’s performance on dynamic physical systems reveal about its generalization capacity?",
+      "answer": "RNs can generalize to complex, time-varying physical systems by reasoning about object interactions over time without explicit physics models.",
+      "explanation": "The paper shows RNs can predict motion and interactions in physical systems from motion capture data—demonstrating that relational reasoning applies beyond static images to dynamic, real-world scenarios without relying on physics equations.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "RNs were trained using physics simulation software to predict motion.",
+        "Physical systems were too noisy for RNs to make accurate predictions.",
+        "RNs require human-labeled physical laws as input."
+      ],
+      "hint": "The paper tested RNs on motion data—what does that say about whether they need explicit physics knowledge?"
+    },
+    {
+      "id": "q18",
+      "question": "Why is the all-to-all pairwise computation in RNs both a strength and potential limitation?",
+      "answer": "It ensures comprehensive relation exploration but scales quadratically with object count, making it computationally expensive for large sets.",
+      "explanation": "The paper states that RNs consider every object pair, which guarantees no relation is missed—but for n objects, this requires n² computations. This is powerful for small sets (like CLEVR’s 10 objects) but may not scale to scenes with hundreds of entities.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "All-to-all computation is computationally cheap and scales linearly.",
+        "It allows RNs to ignore irrelevant objects, improving efficiency.",
+        "RNs use sampling to reduce pairwise computations for scalability."
+      ],
+      "hint": "If you double the number of objects, how many more pairs does the RN need to evaluate?"
+    },
+    {
+      "id": "q19",
+      "question": "Evaluate the claim that RNs enable 'super-human performance' on CLEVR. What evidence supports this?",
+      "answer": "RNs outperformed all prior general-purpose VQA models on CLEVR, achieving higher accuracy than human baselines reported in the paper, indicating superior relational reasoning capability.",
+      "explanation": "The abstract explicitly claims 'super-human performance' on CLEVR. This is supported by experimental results showing RN-augmented models achieved higher accuracy than previous state-of-the-art systems and even human performance benchmarks, underscoring their advantage in relational reasoning.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "Human performance was not measured on CLEVR, so the claim is unsupported.",
+        "RNs performed worse than humans but were faster.",
+        "Super-human performance was only claimed for text tasks, not visual ones."
+      ],
+      "hint": "Look at the abstract: it says 'super-human performance'—what does that mean compared to humans? Find where the paper compares human and model scores."
+    },
+    {
+      "id": "q20",
+      "question": "Synthesize: How does the RN architecture address the core challenges of relational reasoning in neural networks as identified in the paper?",
+      "answer": "RNs address relational reasoning challenges by embedding a structured, order-invariant mechanism for pairwise relation computation, enabling data-efficient learning of implicit object relations across domains—overcoming the limitations of CNNs/MLPs and symbolic AI.",
+      "explanation": "RNs tackle relational reasoning by: (1) forcing pairwise comparison via g, (2) ensuring order invariance for set inputs, (3) enabling data efficiency via shared function g, (4) learning implicit representations from raw inputs, and (5) generalizing across vision, text, and physics. This combines the robustness of statistical learning with the structure of symbolic reasoning.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "RNs solve relational reasoning by using pre-programmed logical rules.",
+        "They improve performance only by increasing model size and data usage.",
+        "RNs eliminate the need for any upstream feature extraction."
+      ],
+      "hint": "Think of the three main problems: 1) CNNs can't reason relationally, 2) symbolic AI needs manual symbols, 3) traditional models aren’t data-efficient. How does RN fix all three?"
+    }
+  ],
+  "paper_id": 16,
+  "title": "Relational Reasoning Networks",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 9,
+    "hard": 5
+  }
+}

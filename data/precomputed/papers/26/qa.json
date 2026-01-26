@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary purpose of a convolutional layer in a CNN?",
+      "answer": "To automatically detect local patterns such as edges, textures, and shapes in input images by applying learnable filters (kernels) through sliding windows.",
+      "explanation": "Convolutional layers use shared weights and local connectivity to extract spatial features hierarchically, making them ideal for image data. This is a foundational concept in CS231n's explanation of CNN architecture.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To reduce the dimensionality of the input for faster computation",
+        "To normalize pixel values across images",
+        "To classify entire images without feature extraction"
+      ],
+      "hint": "Think about how a filter moves across the image and what kind of patterns it can detect locally."
+    },
+    {
+      "id": "q2",
+      "question": "What does the term 'spatial invariance' mean in the context of CNNs?",
+      "answer": "The ability of a CNN to recognize patterns regardless of their position in the input image, due to convolution and pooling operations.",
+      "explanation": "Convolutional layers apply the same filter everywhere, allowing detection of a feature like an edge whether it appears on the left or right side. Pooling further enhances this by reducing spatial resolution while preserving salient features.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "The ability to rotate objects without affecting classification accuracy",
+        "The property that all pixels in an image have the same value",
+        "The use of identical weights across different layers"
+      ],
+      "hint": "This is why a CNN can recognize a cat whether it's in the center or corner of the image."
+    },
+    {
+      "id": "q3",
+      "question": "Which operation is typically applied after a convolutional layer to reduce spatial dimensions and computational load?",
+      "answer": "Pooling (e.g., max pooling)",
+      "explanation": "Pooling layers, especially max pooling, downsample feature maps by taking the maximum value in local regions. This reduces dimensionality and provides translational invariance, as emphasized in CS231n lectures.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Batch normalization",
+        "Dropout",
+        "Activation function (e.g., ReLU)"
+      ],
+      "hint": "This operation doesn't change the number of channels but shrinks height and width."
+    },
+    {
+      "id": "q4",
+      "question": "What is the role of ReLU in a CNN?",
+      "answer": "To introduce non-linearity by setting negative values to zero, enabling the network to learn complex patterns while maintaining computational efficiency.",
+      "explanation": "ReLU (Rectified Linear Unit) is the most common activation function in CNNs because it avoids vanishing gradients and speeds up training compared to sigmoid or tanh, as discussed in CS231n’s optimization section.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To normalize the input data to zero mean and unit variance",
+        "To reduce overfitting by randomly dropping neurons",
+        "To increase the spatial dimensions of feature maps"
+      ],
+      "hint": "It’s a simple function: if input is negative, output 0; otherwise, keep the value."
+    },
+    {
+      "id": "q5",
+      "question": "What is the main advantage of using small 3x3 convolutional filters over large 5x5 or 7x7 filters in deep networks?",
+      "answer": "Smaller filters reduce parameters, allow deeper networks with the same receptive field, and increase non-linearity through additional layers.",
+      "explanation": "CS231n explains that stacking multiple 3x3 convolutions achieves the same receptive field as a single larger filter but with fewer parameters and more non-linear transformations due to extra ReLU layers.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "They are faster to compute on CPUs but slower on GPUs",
+        "They require less memory for activation maps",
+        "They always produce better accuracy regardless of depth"
+      ],
+      "hint": "Think about how two 3x3 convolutions can simulate a 5x5 filter with more non-linearities."
+    },
+    {
+      "id": "q6",
+      "question": "What is the purpose of padding in convolutional layers?",
+      "answer": "To control the spatial size of output feature maps by adding zeros around the input, preserving spatial dimensions or enabling consistent downsampling.",
+      "explanation": "Padding allows convolutional layers to maintain spatial resolution (e.g., 'same' padding) or reduce it predictably ('valid' padding), which is crucial for designing deep architectures like VGG and ResNet.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To increase the number of channels in the feature map",
+        "To reduce overfitting by adding noise to inputs",
+        "To speed up the forward pass computation"
+      ],
+      "hint": "Without padding, the image shrinks after each convolution — what helps prevent that?"
+    },
+    {
+      "id": "q7",
+      "question": "If a CNN has 3 convolutional layers with 64, 128, and 256 filters respectively, what is the likely trend in feature abstraction across these layers?",
+      "answer": "The first layer detects low-level features like edges and corners, the second detects textures and simple shapes, and the third captures high-level semantic features like object parts.",
+      "explanation": "CS231n describes hierarchical feature learning: early layers capture simple visual patterns, while deeper layers combine them into complex structures — analogous to how the human visual cortex processes information.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Each layer detects the same type of features but with higher confidence",
+        "The number of filters increases to handle more classes directly",
+        "The features become less abstract as depth increases"
+      ],
+      "hint": "Think of it like building blocks: edges → textures → parts → whole objects."
+    },
+    {
+      "id": "q8",
+      "question": "Why is weight initialization important in CNNs, and what technique does CS231n recommend for ReLU networks?",
+      "answer": "Proper initialization prevents vanishing or exploding gradients; CS231n recommends He initialization (random normal scaled by sqrt(2/n)) for ReLU activations.",
+      "explanation": "He initialization accounts for the fact that ReLU zeros out half the activations. By scaling weights by sqrt(2/n), it maintains variance across layers, enabling stable training in deep networks.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Xavier initialization is always better because it works for all activation functions",
+        "Initialize weights to zero to ensure symmetry and uniform learning",
+        "Use large random values to speed up convergence"
+      ],
+      "hint": "He initialization is a variant of Xavier, but adjusted for ReLU's non-symmetric output."
+    },
+    {
+      "id": "q9",
+      "question": "In a CNN with 3x3 convolutions, stride=1, and no padding, what is the output size if input is 32x32x3?",
+      "answer": "30x30xchannels",
+      "explanation": "Output size = (input_size - filter_size) / stride + 1. So: (32 - 3)/1 + 1 = 30. Channels remain unchanged unless specified otherwise by number of filters.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "32x32x3",
+        "29x29x3",
+        "31x31x3"
+      ],
+      "hint": "Each convolution reduces spatial dimensions by filter_size - 1 when stride=1 and no padding."
+    },
+    {
+      "id": "q10",
+      "question": "How does batch normalization help CNN training, and what is its effect on the distribution of activations?",
+      "answer": "Batch normalization normalizes layer inputs across the batch, reducing internal covariate shift and allowing higher learning rates. It stabilizes training by keeping activation distributions consistent.",
+      "explanation": "As explained in CS231n, batch norm standardizes activations to zero mean and unit variance per batch, then applies learnable scale and shift. This reduces dependence on initialization and accelerates convergence.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces the number of parameters in the network",
+        "It replaces dropout as a regularization method",
+        "It increases the computational cost of inference by 10x"
+      ],
+      "hint": "Think about how the mean and variance of activations change during training — batch norm fixes that."
+    },
+    {
+      "id": "q11",
+      "question": "Why might a CNN with many convolutional layers perform worse than a shallow one, even with batch normalization and ReLU?",
+      "answer": "Poor gradient flow due to deep architectures can cause vanishing gradients, especially if residual connections are missing.",
+      "explanation": "CS231n discusses how deep networks suffer from vanishing gradients, making it hard to train. Without skip connections (like in ResNet), gradients may not propagate effectively back through many layers.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "The model is too small to learn complex features",
+        "ReLU always causes dead neurons regardless of depth",
+        "Convolutional layers are inherently unstable with large inputs"
+      ],
+      "hint": "What structural innovation did ResNet introduce to solve deep training problems?"
+    },
+    {
+      "id": "q12",
+      "question": "You are given a CNN that uses 7x7 convolutions in the first layer. What potential drawbacks might this design have compared to using 3x3 convolutions?",
+      "answer": "It increases computational cost and parameters significantly, reduces depth due to parameter limits, and captures less hierarchical structure.",
+      "explanation": "CS231n shows that large filters (e.g., 7x7) have more parameters and dominate early layers, limiting network depth. Stacking small filters allows deeper architectures with better feature hierarchy and fewer parameters.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces the receptive field too much",
+        "It makes pooling unnecessary",
+        "It always improves accuracy on small datasets"
+      ],
+      "hint": "Think about parameter count: 7x7 has 49 weights per channel; three 3x3 layers have 27 total — which is more efficient?"
+    },
+    {
+      "id": "q13",
+      "question": "What is the key insight behind using 1x1 convolutions in CNN architectures like GoogLeNet?",
+      "answer": "To reduce or expand the number of channels (feature maps) efficiently without changing spatial dimensions, enabling dimensionality reduction and feature mixing.",
+      "explanation": "1x1 convolutions act as pointwise filters that combine channels. They’re used in Inception modules to reduce computational load before larger convolutions, as explained in CS231n’s architecture analysis.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "To increase the spatial resolution of feature maps",
+        "To replace fully connected layers entirely",
+        "To apply non-linear transformations only"
+      ],
+      "hint": "They’re like linear combinations of channels — they don’t look at spatial neighbors."
+    },
+    {
+      "id": "q14",
+      "question": "How does the receptive field of a neuron in a deep CNN change as you go deeper into the network?",
+      "answer": "The receptive field increases exponentially with depth, allowing neurons in deeper layers to 'see' larger portions of the input image.",
+      "explanation": "Each convolutional layer expands the spatial context a neuron can respond to. For example, two 3x3 convolutions with stride=1 give a receptive field of 5x5; three give 7x7. This enables high-level features to depend on large image regions.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It stays constant because filters are small",
+        "It decreases as layers get deeper due to pooling",
+        "It depends only on the first layer’s filter size"
+      ],
+      "hint": "Imagine each neuron in layer 2 sees a small patch from layer 1 — how big an area does a neuron in layer 3 see?"
+    },
+    {
+      "id": "q15",
+      "question": "Why are CNNs more parameter-efficient than fully connected networks for image data?",
+      "answer": "CNNs use weight sharing (same filter applied everywhere) and local connectivity, drastically reducing parameters compared to fully connected layers that connect every pixel to every neuron.",
+      "explanation": "In a 28x28 image, a fully connected layer to 100 neurons requires ~78k parameters. A CNN with one 5x5 filter over 1 channel has only 25 weights — and these are reused across the image.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "Because CNNs use fewer layers",
+        "Because they rely on unsupervised learning",
+        "Because they only process color channels"
+      ],
+      "hint": "Think about how one filter scans the whole image — that’s weight sharing."
+    },
+    {
+      "id": "q16",
+      "question": "In the context of CS231n, why is it problematic to use a large learning rate without batch normalization in deep CNNs?",
+      "answer": "Large learning rates can cause unstable training due to unnormalized feature distributions, leading to exploding gradients or failure to converge.",
+      "explanation": "CS231n shows that internal covariate shift — changing distributions of layer inputs — makes optimization unstable. Batch norm mitigates this, allowing higher learning rates; without it, large steps disrupt training.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Because it increases computational cost exponentially",
+        "Because the optimizer cannot compute gradients without batch norm",
+        "Because CNNs are inherently unstable with any learning rate"
+      ],
+      "hint": "What happens to the distribution of activations as training progresses? How does that affect gradient updates?"
+    },
+    {
+      "id": "q17",
+      "question": "Compare max pooling and average pooling: in what scenarios would you prefer one over the other?",
+      "answer": "Use max pooling when preserving sharp features (e.g., edges, corners) is critical; use average pooling when you want smoother representations and noise reduction.",
+      "explanation": "CS231n notes that max pooling retains the most prominent activations, making it robust to small translations and better for object detection. Average pooling is more conservative and useful in contexts requiring smoother feature maps.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Max pooling is always better because it reduces dimensionality more",
+        "Average pooling is preferred for classification tasks due to higher accuracy",
+        "They are interchangeable with no performance difference"
+      ],
+      "hint": "Max pooling picks the brightest pixel in a patch — average pooling blends them. Which one preserves edges better?"
+    },
+    {
+      "id": "q18",
+      "question": "You are designing a CNN for medical imaging where small anomalies matter. Which architectural choice would you prioritize and why?",
+      "answer": "Use smaller filters (3x3), deeper networks, and skip connections to preserve fine-grained spatial information while maintaining deep feature abstraction.",
+      "explanation": "CS231n emphasizes that small filters and depth allow fine detail retention. Skip connections (ResNet) help gradients flow back to early layers, crucial for detecting subtle anomalies in high-resolution medical images.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Use large 7x7 filters to capture global context",
+        "Avoid pooling layers entirely to preserve all pixel information",
+        "Use fully connected layers after convolution for better sensitivity"
+      ],
+      "hint": "Think about how to retain small-scale details while still extracting high-level features — what architecture balances this?"
+    },
+    {
+      "id": "q19",
+      "question": "Explain why VGG networks were influential despite their high parameter count, and what design principle they exemplified.",
+      "answer": "VGG demonstrated that deepening networks with small 3x3 convolutions improves performance significantly, establishing depth as a key factor over filter size or architecture complexity.",
+      "explanation": "CS231n highlights VGG as a milestone: it showed that stacking many simple layers (all 3x3) outperforms fewer large-filter networks. This principle underlies modern architectures like ResNet and DenseNet.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It was the first network to use ReLU and batch normalization",
+        "Its low parameter count made it ideal for mobile deployment",
+        "It used 1x1 convolutions to achieve state-of-the-art results"
+      ],
+      "hint": "Think about what VGG proved: more layers with small filters = better performance, even if parameters increase."
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim: 'CNNs are inherently translation-invariant because of convolution and pooling.' Is this accurate? Justify your answer.",
+      "answer": "Partially true: CNNs are translation-*equivariant* in convolutional layers and become more translation-*invariant* with pooling, but not fully invariant without additional mechanisms like data augmentation or spatial transformers.",
+      "explanation": "CS231n distinguishes equivariance (output moves when input shifts) from invariance (output unchanged). Convolution is equivariant; pooling introduces partial invariance. Full invariance requires deeper networks, global pooling, or augmentation — not inherent to CNNs alone.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "True — CNNs are fully translation-invariant by design",
+        "False — CNNs have no ability to handle translations at all",
+        "True — pooling makes the entire network invariant regardless of depth"
+      ],
+      "hint": "If you shift an image, does the activation map shift too? What does pooling do to that?"
+    }
+  ],
+  "paper_id": 26,
+  "title": "CS231n Course",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 10,
+    "hard": 4
+  }
+}

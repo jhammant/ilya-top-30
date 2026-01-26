@@ -1,0 +1,252 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is GPipe and what problem does it solve?",
+      "answer": "GPipe is a pipeline parallelism library designed to scale deep neural networks beyond the memory limits of a single accelerator (e.g., GPU or TPU). It addresses the challenge that increasing model capacity for better performance often exceeds hardware memory constraints. Traditional methods require architecture-specific optimizations, but GPipe provides a task-agnostic solution by partitioning any sequence-of-layers model across multiple accelerators and using micro-batch pipelining to improve utilization and training efficiency.",
+      "related_concepts": [
+        "model parallelism",
+        "pipeline parallelism",
+        "memory constraints"
+      ],
+      "follow_up": "How does GPipe differ from data parallelism?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "What is pipeline parallelism in the context of GPipe?",
+      "answer": "Pipeline parallelism in GPipe divides a neural network into sequential segments (cells), each assigned to a different accelerator. Instead of waiting for one layer to finish processing the entire batch before passing it forward, GPipe splits each mini-batch into smaller micro-batches and pipelines their execution across accelerators. This allows overlapping computation and communication, reducing idle time and improving hardware utilization.",
+      "related_concepts": [
+        "pipeline scheduling",
+        "forward pass",
+        "backward pass"
+      ],
+      "follow_up": "Why is micro-batching essential for pipeline parallelism?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "Why is micro-batching used in GPipe instead of processing full batches?",
+      "answer": "Micro-batching enables pipelining by breaking a large mini-batch into smaller chunks that can be processed in an overlapping, pipeline fashion. Without micro-batching, each accelerator would have to wait for the previous one to finish processing the entire batch before starting—leading to severe under-utilization. Micro-batches allow concurrent processing across layers, significantly improving throughput and reducing the bubble overhead in pipelines.",
+      "related_concepts": [
+        "micro-batch",
+        "pipeline bubble",
+        "throughput"
+      ],
+      "follow_up": "How does the number of micro-batches affect training efficiency?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "How does GPipe handle memory constraints during training?",
+      "answer": "GPipe uses model partitioning to distribute layers across accelerators, reducing per-device memory usage. Additionally, it supports re-materialization (i.e., recomputing activations during backpropagation instead of storing them), which trades computation for memory. This allows training very large models without requiring massive GPU/TPU memory.",
+      "related_concepts": [
+        "activation checkpointing",
+        "re-materialization",
+        "memory-bandwidth tradeoff"
+      ],
+      "follow_up": "What are the performance costs of re-materialization?"
+    },
+    {
+      "id": "faq5",
+      "category": "implementation",
+      "question": "How does GPipe partition a neural network across accelerators?",
+      "answer": "GPipe partitions the model by grouping consecutive layers into 'cells' based on a cost estimation function that predicts computational load. The partitioning algorithm minimizes variance in estimated computation times across cells to balance workload and maximize pipeline efficiency. Each cell, with its parameters and forward/backward functions, is assigned to a separate accelerator.",
+      "related_concepts": [
+        "layer partitioning",
+        "cost estimation",
+        "workload balancing"
+      ],
+      "follow_up": "Can users manually define partitions, or is it fully automated?"
+    },
+    {
+      "id": "faq6",
+      "category": "implementation",
+      "question": "What interfaces does GPipe provide for users?",
+      "answer": "GPipe provides a simple interface where users define: (1) the number of model partitions (K), (2) the number of micro-batches (M), and (3) a sequence of layers with their forward functions, parameters, and optional cost estimates. The library automatically handles partitioning, communication between accelerators, micro-batch scheduling, and gradient accumulation.",
+      "related_concepts": [
+        "Lingvo framework",
+        "automatic differentiation",
+        "layer sequencing"
+      ],
+      "follow_up": "Can GPipe be used with frameworks other than Lingvo?"
+    },
+    {
+      "id": "faq7",
+      "category": "implementation",
+      "question": "How are gradients computed and applied in GPipe?",
+      "answer": "Gradients for each micro-batch are computed during the backward pass using the same model parameters as in the forward pass. At the end of each full mini-batch, gradients from all micro-batches are accumulated (summed) before applying a single synchronous gradient update. This ensures that the training behavior is identical to standard mini-batch SGD, regardless of the number of partitions.",
+      "related_concepts": [
+        "gradient accumulation",
+        "synchronous training",
+        "backpropagation"
+      ],
+      "follow_up": "Does gradient accumulation affect convergence or stability?"
+    },
+    {
+      "id": "faq8",
+      "category": "comparison",
+      "question": "How does GPipe compare to data parallelism?",
+      "answer": "Data parallelism replicates the entire model across accelerators and splits data batches, while GPipe partitions the model itself and pipelines micro-batches. GPipe scales model size beyond memory limits, whereas data parallelism cannot exceed per-device memory. GPipe is ideal for large models; data parallelism suits smaller models with high batch throughput. They can be combined—GPipe for model parallelism, data parallelism within each pipeline stage.",
+      "related_concepts": [
+        "data parallelism",
+        "model parallelism",
+        "hybrid parallelism"
+      ],
+      "follow_up": "Can GPipe and data parallelism be used together?"
+    },
+    {
+      "id": "faq9",
+      "category": "comparison",
+      "question": "How does GPipe differ from Tensorflow’s Model Parallelism or PyTorch’s FSDP?",
+      "answer": "GPipe introduces micro-batch pipeline parallelism with automatic partitioning and re-materialization, providing a task-agnostic interface. TensorFlow’s early model parallelism required manual layer placement and lacked micro-batching. PyTorch’s FSDP focuses on sharding optimizer states and parameters (ZeRO-style) but doesn't inherently pipeline layers. GPipe’s key innovation is combining micro-batching with synchronous gradient updates to achieve near-linear scaling without architecture-specific code.",
+      "related_concepts": [
+        "FSDP",
+        "ZeRO",
+        "TensorFlow model parallelism"
+      ],
+      "follow_up": "Is GPipe still relevant with the rise of ZeRO-based optimizers?"
+    },
+    {
+      "id": "faq10",
+      "category": "comparison",
+      "question": "What makes GPipe’s pipeline algorithm novel compared to earlier pipeline methods?",
+      "answer": "GPipe's novelty lies in its combination of micro-batch pipelining with synchronous gradient accumulation across all micro-batches within a mini-batch. Earlier pipeline methods often required asynchronous updates or suffered from high bubble overhead. GPipe minimizes idle time via balanced partitioning and ensures gradient consistency regardless of the number of partitions, making it both efficient and easy to use.",
+      "related_concepts": [
+        "pipeline bubble",
+        "synchronous training",
+        "gradient consistency"
+      ],
+      "follow_up": "How does GPipe reduce pipeline bubbles compared to prior work?"
+    },
+    {
+      "id": "faq11",
+      "category": "application",
+      "question": "What types of models can GPipe scale?",
+      "answer": "GPipe can scale any deep neural network expressible as a sequence of layers. This includes CNNs (like AmoebaNet), Transformers, RNNs, and hybrid architectures. The key requirement is that layers are sequential; it does not support arbitrary graph structures with branches or loops unless they can be flattened into a sequence.",
+      "related_concepts": [
+        "Transformer",
+        "AmoebaNet",
+        "sequential layers"
+      ],
+      "follow_up": "Can GPipe handle models with skip connections or residual blocks?"
+    },
+    {
+      "id": "faq12",
+      "category": "application",
+      "question": "What were the key results demonstrated in the paper using GPipe?",
+      "answer": "GPipe was used to train a 557M-parameter AmoebaNet achieving 84.4% top-1 accuracy on ImageNet, and a 6B-parameter, 128-layer multilingual Transformer trained across 103 languages that outperformed individual bilingual models. These results demonstrate GPipe’s ability to scale models beyond memory limits while maintaining or improving model quality.",
+      "related_concepts": [
+        "ImageNet",
+        "multilingual translation",
+        "model scaling"
+      ],
+      "follow_up": "How does GPipe’s performance compare to non-pipeline methods on the same tasks?"
+    },
+    {
+      "id": "faq13",
+      "category": "application",
+      "question": "Can GPipe be used for inference or only training?",
+      "answer": "GPipe is designed specifically for training. While the partitioned model structure could theoretically be used for inference, GPipe’s pipeline scheduling and micro-batching are optimized for gradient computation and accumulation during backpropagation. Inference typically uses simpler, non-pipelined execution due to lower memory pressure and no need for gradient updates.",
+      "related_concepts": [
+        "inference optimization",
+        "training pipeline"
+      ],
+      "follow_up": "Are there extensions of GPipe for inference?"
+    },
+    {
+      "id": "faq14",
+      "category": "limitations",
+      "question": "What are the main limitations of GPipe?",
+      "answer": "GPipe requires models to be sequential and does not support arbitrary computational graphs. It introduces pipeline bubbles due to sequential dependencies, which can reduce efficiency with too few micro-batches or imbalanced partitions. It also requires significant inter-accelerator communication bandwidth and assumes homogeneous accelerators for optimal load balancing.",
+      "related_concepts": [
+        "pipeline bubble",
+        "communication overhead",
+        "homogeneous hardware"
+      ],
+      "follow_up": "How does communication bandwidth affect GPipe’s scalability?"
+    },
+    {
+      "id": "faq15",
+      "category": "limitations",
+      "question": "Does GPipe work with heterogeneous accelerators (e.g., mixing GPUs and TPUs)?",
+      "answer": "GPipe assumes homogeneous accelerators for optimal performance. The partitioning algorithm balances computational load based on estimated costs, which assumes uniform hardware. Mixing GPUs and TPUs would lead to imbalance and under-utilization due to differing compute speeds and memory bandwidths. While possible with manual tuning, it’s not supported out-of-the-box.",
+      "related_concepts": [
+        "heterogeneous computing",
+        "load balancing"
+      ],
+      "follow_up": "Can the cost estimation function be adapted for heterogeneous devices?"
+    },
+    {
+      "id": "faq16",
+      "category": "limitations",
+      "question": "What happens if one layer in the pipeline is much slower than others?",
+      "answer": "If a cell has significantly higher computational cost, it becomes a bottleneck that increases pipeline bubbles and reduces overall throughput. GPipe’s partitioning algorithm minimizes variance in estimated costs to avoid this, but if a layer is unexpectedly slow (e.g., due to data dependency or operator inefficiency), it can severely degrade performance. Manual layer grouping or cost function tuning may be needed.",
+      "related_concepts": [
+        "bottleneck",
+        "load imbalance",
+        "cost estimation"
+      ],
+      "follow_up": "How does GPipe detect or adapt to unexpected layer slowdowns?"
+    },
+    {
+      "id": "faq17",
+      "category": "implementation",
+      "question": "How does GPipe handle activation storage during backpropagation?",
+      "answer": "GPipe uses re-materialization: instead of storing all activations from the forward pass, it recomputes them during backpropagation when needed. This reduces memory usage at the cost of additional computation, enabling training of larger models without requiring massive GPU/TPU memory.",
+      "related_concepts": [
+        "activation checkpointing",
+        "memory efficiency",
+        "compute-memory tradeoff"
+      ],
+      "follow_up": "Is re-materialization slower than storing activations?"
+    },
+    {
+      "id": "faq18",
+      "category": "understanding",
+      "question": "Why is synchronous gradient update important in GPipe?",
+      "answer": "Synchronous gradient updates ensure that each parameter update is computed using gradients from the entire mini-batch, regardless of how many partitions or micro-batches are used. This guarantees training consistency with standard mini-batch SGD, allowing users to scale model size without changing hyperparameters or losing convergence guarantees.",
+      "related_concepts": [
+        "synchronous SGD",
+        "gradient accumulation",
+        "training consistency"
+      ],
+      "follow_up": "What are the alternatives to synchronous updates in model parallelism?"
+    },
+    {
+      "id": "faq19",
+      "category": "comparison",
+      "question": "How does GPipe compare to Megatron-LM’s pipeline parallelism?",
+      "answer": "Both use micro-batch pipelining, but GPipe emphasizes simplicity and task-agnosticism with automatic partitioning and cost-based balancing. Megatron-LM is optimized for Transformers, requires manual layer partitioning, and often uses asynchronous gradient updates. GPipe’s synchronous approach ensures exact equivalence to standard training, while Megatron may require adjustments for convergence.",
+      "related_concepts": [
+        "Megatron-LM",
+        "Transformer optimization",
+        "asynchronous updates"
+      ],
+      "follow_up": "Which is better for non-Transformer models?"
+    },
+    {
+      "id": "faq20",
+      "category": "application",
+      "question": "Can GPipe be used to train models larger than available total GPU memory?",
+      "answer": "Yes. GPipe enables training models larger than the combined memory of all accelerators by combining model partitioning (distributing parameters) and re-materialization (recomputing activations). Only the current micro-batch’s intermediate values need to be stored per device, not the full activation tensor for the entire batch.",
+      "related_concepts": [
+        "memory scaling",
+        "activation recomputation",
+        "parameter sharding"
+      ],
+      "follow_up": "What’s the theoretical maximum model size GPipe can handle?"
+    }
+  ],
+  "paper_id": 9,
+  "title": "GPipe: Pipeline Parallelism",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 4,
+    "implementation": 5,
+    "comparison": 4,
+    "application": 4,
+    "limitations": 3
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Variational Autoencoder (VAE)",
+      "definition": "A generative model that learns a probabilistic latent representation of data by optimizing a variational lower bound on the log-likelihood, combining an encoder (q(z|x)) and a decoder (p(x|z)).",
+      "intuition": "Think of it like summarizing a book into a short summary (latent code) and then trying to reconstruct the book from that summary — the goal is to keep the core story but not every word.",
+      "importance": "VAEs provide a principled way to learn latent representations and generate new data, forming the foundation of modern generative models.",
+      "related_concepts": [
+        "Latent Variable Model",
+        "Variational Inference"
+      ],
+      "example": "A VAE trained on faces learns latent codes representing pose, expression, and identity, enabling face generation by sampling from the latent space.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Latent Variable",
+      "definition": "An unobserved random variable that captures hidden structure or causal factors underlying observed data.",
+      "intuition": "Like the invisible ingredients in a recipe — you can't see them directly, but they determine the flavor and texture of the final dish.",
+      "importance": "Latent variables enable models to uncover abstract features (e.g., object identity) that are not directly observable but essential for representation learning.",
+      "related_concepts": [
+        "Variational Autoencoder",
+        "Representation Learning"
+      ],
+      "example": "In image data, a latent variable might encode 'animal type' while ignoring pixel-level noise or texture.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Representation Learning",
+      "definition": "The process of discovering meaningful, structured, and task-relevant features from raw data to improve downstream tasks like classification or generation.",
+      "intuition": "Instead of memorizing every pixel, the model learns to recognize 'what something is' — like recognizing a cat by its ears and whiskers, not every hair.",
+      "importance": "Enables machines to generalize better by focusing on relevant features and ignoring noise, crucial for efficient learning in complex domains like vision.",
+      "related_concepts": [
+        "Latent Variable",
+        "Generative Model"
+      ],
+      "example": "Learning that all images of dogs share a common structure (four legs, tail) regardless of breed or background.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Global Representation",
+      "definition": "A compact latent encoding that captures high-level, abstract properties of data (e.g., object identity) while discarding low-level details like texture or noise.",
+      "intuition": "Like describing a painting by its style and subject (e.g., 'a sunset over mountains') rather than every brushstroke.",
+      "importance": "Enables models to generalize across variations (e.g., lighting, texture) and focus on semantically meaningful features for downstream tasks.",
+      "related_concepts": [
+        "Latent Variable",
+        "Lossy Autoencoding"
+      ],
+      "example": "A global representation of a car image encodes 'car' and 'color', but ignores scratches or dirt on the surface.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Lossy Autoencoding",
+      "definition": "An autoencoding process where the reconstruction intentionally omits certain details (e.g., texture) to focus on high-level features, sacrificing fidelity for abstraction.",
+      "intuition": "Like summarizing a long article — you keep the main points but leave out minor details; the summary is 'lossy' because it's not exact.",
+      "importance": "Allows models to learn task-relevant representations by design, avoiding overfitting to irrelevant noise or details.",
+      "related_concepts": [
+        "Global Representation",
+        "Variational Autoencoder"
+      ],
+      "example": "A VAE trained to ignore texture in images learns to reconstruct the shape of an object even if the surface pattern is different.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "KL Divergence Regularization",
+      "definition": "A term in the VAE loss function that penalizes the difference between the encoder's output distribution and a prior distribution, encouraging latent codes to follow a simple structure.",
+      "intuition": "Like a teacher forcing students to write summaries that look like standard templates — too creative and you get penalized.",
+      "importance": "Prevents the latent space from becoming chaotic; ensures it remains interpretable and useful for sampling and generation.",
+      "related_concepts": [
+        "Variational Autoencoder",
+        "Regularization"
+      ],
+      "example": "KL term forces latent codes to resemble standard normal distribution, making it easier to sample new data points.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Autoregressive Model",
+      "definition": "A model that generates data sequentially by predicting each element conditioned on all previous elements, often using RNNs or CNNs.",
+      "intuition": "Like writing a sentence word-by-word, where each new word depends on all the words before it.",
+      "importance": "Highly expressive models capable of capturing complex dependencies in data, often used for high-quality generation.",
+      "related_concepts": [
+        "Decoder",
+        "Generative Model"
+      ],
+      "example": "PixelRNN generates an image pixel by pixel, predicting each new pixel based on pixels already generated.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Bits-Back Coding",
+      "definition": "An information-theoretic interpretation of VAEs where the latent code acts as a compressed representation that saves bits when encoding data, with 'bits back' referring to the entropy savings.",
+      "intuition": "Like sending a package with a reusable shipping label — you pay to encode the data, but reuse the label (latent code) to save cost later.",
+      "importance": "Explains why powerful decoders can dominate the model, making latent variables redundant unless constrained.",
+      "related_concepts": [
+        "Variational Autoencoder",
+        "Information Theory"
+      ],
+      "example": "If the decoder can perfectly reconstruct data without latent codes, the latent code becomes unnecessary — bits-back shows why this happens.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Information Preference",
+      "definition": "The principle that a model should be designed to prefer encoding certain types of information (e.g., global structure) into latent variables while discarding others (e.g., texture).",
+      "intuition": "Like training a photographer to focus on the subject’s face and blur the background — you're teaching the model what to pay attention to.",
+      "importance": "Enables control over what features are learned, making representations task-specific and semantically meaningful.",
+      "related_concepts": [
+        "Lossy Autoencoding",
+        "Global Representation"
+      ],
+      "example": "By using a weak decoder, the model is forced to store object identity in latent codes rather than relying on pixel-level details.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Decoder Architecture",
+      "definition": "The neural network component of a VAE that reconstructs the input data from the latent code; its capacity determines how much information must be encoded in the latent space.",
+      "intuition": "Think of it as a chef who can turn any recipe into a dish — if the chef is too skilled, they don’t need the recipe (latent code) to make a good meal.",
+      "importance": "A powerful decoder can bypass the latent code, making it useless unless regularized or constrained.",
+      "related_concepts": [
+        "Variational Autoencoder",
+        "Autoregressive Model"
+      ],
+      "example": "Using a PixelCNN as decoder allows perfect reconstruction of images, forcing the latent code to be ignored unless penalized.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Model Capacity Mismatch",
+      "definition": "A situation where the decoder is too powerful relative to the encoder, causing the latent variables to become unused because the decoder can reconstruct data without them.",
+      "intuition": "If a student has access to the answer key, they won’t bother studying — same with a powerful decoder bypassing latent variables.",
+      "importance": "Explains why early VAEs in sequence modeling failed: the RNN decoder was too strong, making latent codes irrelevant.",
+      "related_concepts": [
+        "Bits-Back Coding",
+        "Lossy Autoencoding"
+      ],
+      "example": "In Bowman et al. (2015), RNN decoders ignored latent codes unless dropout was applied to reduce their capacity.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Variational Lower Bound (ELBO)",
+      "definition": "A tractable lower bound on the log-likelihood of data used in VAEs, consisting of reconstruction loss and KL divergence.",
+      "intuition": "It’s like estimating the value of a house by checking its foundation and walls — you can’t measure everything, but you get a good enough estimate.",
+      "importance": "Enables optimization of intractable likelihoods via reparameterization, forming the core objective of VAE training.",
+      "related_concepts": [
+        "Variational Autoencoder",
+        "KL Divergence"
+      ],
+      "example": "ELBO = -reconstruction_error + KL_divergence — trade-off between accuracy and latent code simplicity.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Reparameterization Trick",
+      "definition": "A technique to make sampling from a distribution differentiable by expressing samples as deterministic functions of parameters and noise.",
+      "intuition": "Instead of rolling dice to get a random number, you pre-roll the dice and feed the result into a formula — now you can backpropagate through randomness.",
+      "importance": "Enables gradient-based optimization of stochastic models like VAEs, making them trainable with standard deep learning tools.",
+      "related_concepts": [
+        "Variational Autoencoder",
+        "ELBO"
+      ],
+      "example": "To sample z ~ N(μ,σ²), use z = μ + σ * ε where ε ~ N(0,1) — now gradients flow through z to μ and σ.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Density Estimation",
+      "definition": "The task of learning a probability distribution that best explains observed data, measured by log-likelihood or other metrics.",
+      "intuition": "Like fitting a curve to scattered data points — you want the curve that makes the observed points most likely under your model.",
+      "importance": "A key evaluation metric for generative models; high density estimation performance indicates the model captures data structure well.",
+      "related_concepts": [
+        "Generative Model",
+        "Variational Autoencoder"
+      ],
+      "example": "VAE achieves high log-likelihood on MNIST, meaning it assigns high probability to real handwritten digits and low probability to noise.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Variational Lossy Autoencoder (VLAE)",
+      "definition": "A VAE variant that uses autoregressive models for both prior and decoder, combined with architectural design to force latent variables to encode only global structure by discarding local details.",
+      "intuition": "A camera that takes a picture but only saves the outline and main object — it throws away colors, textures, and noise to focus on 'what is there'.",
+      "importance": "Unifies powerful generative modeling with controllable representation learning, achieving state-of-the-art results while enabling interpretable latent codes.",
+      "related_concepts": [
+        "Lossy Autoencoding",
+        "Autoregressive Model"
+      ],
+      "example": "VLAE on CIFAR-10 learns to encode object class and pose in latent code, ignoring pixel-level noise or background patterns.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 17,
+  "title": "Variational Lossy Autoencoder"
+}

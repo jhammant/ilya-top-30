@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Convolution",
+      "definition": "A mathematical operation that applies a filter (kernel) to an input signal to extract local features by computing weighted sums of neighboring values.",
+      "intuition": "Think of it like scanning a photo with a magnifying glass that looks at small patches and computes an average or pattern — like recognizing edges or textures.",
+      "importance": "Fundamental building block of CNNs; enables feature detection in images without requiring manual feature engineering.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Filter"
+      ],
+      "example": "Applying a 3x3 filter to detect vertical edges in an image by multiplying pixel values with the filter weights and summing them.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Filter (Kernel)",
+      "definition": "A small matrix of weights that slides over the input to compute local convolutions and extract specific patterns such as edges, textures, or shapes.",
+      "intuition": "Like a stencil that highlights certain patterns — for example, a filter might be designed to 'see' diagonal lines when moved across an image.",
+      "importance": "Determines what features the network learns; different filters detect different patterns, forming the basis of hierarchical feature learning.",
+      "related_concepts": [
+        "Convolution",
+        "Receptive Field"
+      ],
+      "example": "A 3x3 filter with values [[-1,0,1],[-1,0,1],[-1,0,1]] detects vertical edges by emphasizing differences between left and right pixels.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Receptive Field",
+      "definition": "The region in the input space that a particular feature map element is sensitive to — i.e., the area of the original image that influences its value.",
+      "intuition": "Imagine each neuron in a deep network has a window of vision; the receptive field is how big that window grows as you go deeper in the network.",
+      "importance": "Larger receptive fields allow models to understand context beyond local pixels, crucial for tasks like semantic segmentation.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Pooling"
+      ],
+      "example": "In a 3-layer CNN with 3x3 filters and stride 1, the output neuron’s receptive field is 7x7 pixels — it ‘sees’ a 7x7 patch of the input image.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Semantic Segmentation",
+      "definition": "A dense prediction task in computer vision where each pixel in an image is classified into a predefined category (e.g., person, car, sky).",
+      "intuition": "Like coloring a photo where every pixel gets a label — not just one label for the whole image, but a detailed map of what’s where.",
+      "importance": "Enables fine-grained understanding of scenes, essential for autonomous driving, medical imaging, and robotics.",
+      "related_concepts": [
+        "Dense Prediction",
+        "Convolutional Networks"
+      ],
+      "example": "Labeling each pixel in a street scene as 'road', 'car', 'pedestrian', or 'building' to help a self-driving car understand its environment.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Dense Prediction",
+      "definition": "A class of computer vision tasks that require predicting a label for every pixel or location in an input image, as opposed to a single output.",
+      "intuition": "Instead of saying 'this is a cat' (classification), you say 'this pixel is fur, this one is ear, that one is background' — a detailed map.",
+      "importance": "Contrasts with image classification; enables precise spatial understanding needed for segmentation, depth estimation, and pose detection.",
+      "related_concepts": [
+        "Semantic Segmentation",
+        "Convolutional Networks"
+      ],
+      "example": "Predicting depth values for every pixel in a stereo image to create a 3D map of the scene.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Pooling",
+      "definition": "A downsampling operation that reduces spatial dimensions of feature maps by aggregating values (e.g., max or average) within local regions.",
+      "intuition": "Like summarizing a paragraph by picking the most important sentence — you lose detail but keep the big picture.",
+      "importance": "Reduces computational load and increases invariance to small translations, but can hurt dense prediction by losing spatial resolution.",
+      "related_concepts": [
+        "Downsampling",
+        "Receptive Field"
+      ],
+      "example": "Applying max pooling with a 2x2 window reduces a 100x100 image to 50x50 by taking the brightest pixel in each 2x2 block.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Dilated Convolution",
+      "definition": "A variant of convolution where the filter is applied with gaps (dilation) between its elements, expanding the receptive field without increasing filter size or reducing resolution.",
+      "intuition": "Imagine a stencil with holes — instead of touching every pixel, it skips some to look farther away while still covering the same area.",
+      "importance": "Enables large receptive fields without downsampling, preserving spatial resolution critical for dense prediction tasks.",
+      "related_concepts": [
+        "Convolution",
+        "Receptive Field"
+      ],
+      "example": "A 3x3 filter with dilation factor 2 acts like a 7x7 filter but only uses 9 parameters — it skips every other pixel to cover more area.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Dilation Factor",
+      "definition": "An integer parameter that controls the spacing between elements in a dilated convolution filter — determines how far apart the filter samples input pixels.",
+      "intuition": "Like stepping further between each step while walking — a dilation factor of 2 means you skip one pixel between each filter application.",
+      "importance": "Controls the scale of context aggregation; higher dilation factors capture broader spatial relationships without adding parameters.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Receptive Field"
+      ],
+      "example": "With dilation factor 3, a 3x3 filter samples pixels spaced 3 apart — its effective field becomes 7x7 instead of 3x3.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Receptive Field Expansion",
+      "definition": "The process of increasing the spatial extent over which a neuron in a CNN can 'see' or influence its output, typically through stacking layers or using dilated convolutions.",
+      "intuition": "Like zooming out with a camera lens — you see more of the scene without changing how many pixels you have.",
+      "importance": "Critical for understanding context in dense tasks; allows models to reason about relationships between distant pixels.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Convolutional Networks"
+      ],
+      "example": "Three dilated convolutions with dilation factors 1, 2, and 4 produce receptive fields of 3x3, 7x7, and 15x15 pixels respectively.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Exponential Receptive Field Growth",
+      "definition": "A property of dilated convolutions where the receptive field size grows exponentially with depth, despite linear increases in parameters.",
+      "intuition": "Each layer doubles the reach of the previous one — like a chain reaction where each step covers twice as much ground.",
+      "importance": "Enables deep networks to capture large-scale context efficiently — key for dense prediction without resolution loss.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Receptive Field"
+      ],
+      "example": "After 4 dilated layers with dilation factors [1,2,4,8], the receptive field grows from 3 to 51 pixels — exponential growth with only 4 layers.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Context Module",
+      "definition": "A specialized CNN module designed to aggregate multi-scale contextual information using dilated convolutions without downsampling.",
+      "intuition": "A smart attention system that looks at the image at multiple scales simultaneously — near, far, and everywhere in between.",
+      "importance": "Enables dense prediction models to understand both fine details and global structure simultaneously, improving segmentation accuracy.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Semantic Segmentation"
+      ],
+      "example": "A rectangular stack of dilated convolutions with dilation factors [1,2,4,8] applied to feature maps to capture local textures and distant scene context.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Multi-Scale Context Aggregation",
+      "definition": "The process of combining contextual information from multiple spatial scales to improve prediction accuracy in dense tasks.",
+      "intuition": "Like reading a map with different zoom levels — you need close-up details (buildings) and wide views (city layout) to understand the whole scene.",
+      "importance": "Essential for semantic segmentation where objects appear in varying sizes and contexts — e.g., a car can be small or large depending on distance.",
+      "related_concepts": [
+        "Context Module",
+        "Dilated Convolution"
+      ],
+      "example": "Using dilated convolutions with factors 1, 3, and 5 to capture small, medium, and large contextual patterns in a single layer stack.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Resolution Preservation",
+      "definition": "Maintaining the original spatial dimensions of feature maps throughout a network, avoiding downsampling operations like pooling or strided convolutions.",
+      "intuition": "Keeping the image at full resolution from start to finish — like editing a high-res photo without shrinking it down.",
+      "importance": "Critical for dense prediction tasks where output must match input resolution (e.g., pixel-wise labels); avoids blurring or misalignment.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Semantic Segmentation"
+      ],
+      "example": "Using dilated convolutions instead of max pooling to expand receptive fields while keeping a 512x512 feature map at 512x512.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Parameter Efficiency",
+      "definition": "The ability to increase model capacity or receptive field size without proportionally increasing the number of trainable parameters.",
+      "intuition": "Getting more 'vision' without needing more 'eyes' — smarter use of existing parameters to see farther.",
+      "importance": "Reduces computational cost and overfitting; enables deeper, more powerful models on limited hardware.",
+      "related_concepts": [
+        "Dilated Convolution",
+        "Receptive Field"
+      ],
+      "example": "A dilated 3x3 filter with dilation=4 covers a 9x9 area but still has only 9 parameters — same as a normal 3x3 filter.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Architectural Simplification",
+      "definition": "The process of removing unnecessary or redundant components from a neural network to improve performance and interpretability.",
+      "intuition": "Cleaning up a cluttered toolbox — removing tools you don’t need so the ones you do use work better.",
+      "importance": "Reduces complexity, improves training stability, and often boosts accuracy by eliminating noise or conflicting signals.",
+      "related_concepts": [
+        "Context Module",
+        "Semantic Segmentation"
+      ],
+      "example": "Removing multi-column architectures and structured prediction layers from a segmentation model to focus only on dilated convolutions — resulting in higher accuracy.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 11,
+  "title": "Dilated Convolutions"
+}

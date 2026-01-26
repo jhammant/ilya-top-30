@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary role of identity skip connections in ResNets according to the paper?",
+      "answer": "Identity skip connections enable direct propagation of signals (both forward and backward) through the network, allowing gradients to flow without degradation and simplifying optimization.",
+      "explanation": "The paper argues that identity mappings (h(x_l) = x_l) create a clean path for information to pass directly from one residual unit to another, preventing gradient vanishing and making deep networks easier to train.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To increase the number of parameters in the network",
+        "To reduce computational cost by skipping layers",
+        "To replace convolutional layers entirely"
+      ],
+      "hint": "Think about how skip connections help with gradient flow in very deep networks."
+    },
+    {
+      "id": "q2",
+      "question": "In the original Residual Unit (Fig. 1a), what activation function is used after the addition operation?",
+      "answer": "ReLU",
+      "explanation": "The original ResNet design applies ReLU after the element-wise addition of the identity skip and the residual function F, as shown in Eqn. (2) and Figure 1(a).",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Sigmoid",
+        "Tanh",
+        "Leaky ReLU"
+      ],
+      "hint": "Look at Figure 1(a) and note the order of operations: convolution → batch norm → ReLU → addition."
+    },
+    {
+      "id": "q3",
+      "question": "What does the paper claim is the main advantage of using identity mappings over scaling or gating skip connections?",
+      "answer": "Identity mappings preserve clean signal paths, leading to faster error reduction and lower training loss compared to scaled or gated connections.",
+      "explanation": "The paper empirically shows that identity skip connections achieve the fastest error reduction and lowest training loss, while scaling or gating introduces unnecessary modulation that hinders optimization.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "They reduce the number of parameters significantly",
+        "They allow for larger batch sizes",
+        "They improve inference speed"
+      ],
+      "hint": "The paper compares identity mappings with scaling/gating in Section 2 and shows their superiority in training dynamics."
+    },
+    {
+      "id": "q4",
+      "question": "According to the paper, why is it beneficial for f(y_l) to be an identity mapping?",
+      "answer": "It allows backward gradients to propagate directly without being modified by activation functions, preserving gradient magnitude and aiding optimization.",
+      "explanation": "When f(y_l) = y_l (identity), the gradient backpropagation in Eqn. (5) includes a direct path from deeper to shallower layers, preventing gradient vanishing.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It reduces the number of layers needed",
+        "It makes forward propagation faster",
+        "It eliminates the need for batch normalization"
+      ],
+      "hint": "Consider how activation functions like ReLU can block gradient flow if applied after addition."
+    },
+    {
+      "id": "q5",
+      "question": "What is the key difference between the original Residual Unit and the proposed Residual Unit in Figure 1?",
+      "answer": "The proposed unit moves batch normalization and ReLU to before the weight layers (pre-activation), while the original uses them after (post-activation).",
+      "explanation": "The paper proposes pre-activation: BN and ReLU are applied before the weight layers, allowing f(y_l) to be identity and enabling cleaner signal propagation.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "The proposed unit removes batch normalization entirely",
+        "The original unit uses 1x1 convolutions for skip connections",
+        "The proposed unit increases the number of parameters"
+      ],
+      "hint": "Look at Figure 1(a) vs (b): notice where BN and ReLU are placed relative to the weight layers."
+    },
+    {
+      "id": "q6",
+      "question": "What does Eqn. (4) in the paper demonstrate about feature propagation in ResNets?",
+      "answer": "The output of any deeper unit L can be expressed as the input of a shallower unit l plus the sum of all residual functions between them.",
+      "explanation": "Eqn. (4): x_L = x_l + Σ F(x_i, W_i) shows that features are built additively from residual functions, enabling direct information flow across layers.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Features are multiplied across layers like in plain networks",
+        "Each layer's output is independent of previous layers",
+        "Residual functions are applied only to the final layer"
+      ],
+      "hint": "Eqn. (4) shows that deeper features are a sum of the initial input and all residual functions along the path."
+    },
+    {
+      "id": "q7",
+      "question": "How does the paper demonstrate that identity mappings improve training in deep networks?",
+      "answer": "Through ablation experiments showing lower training loss and faster convergence with identity skip connections compared to scaling or 1x1 convolutions.",
+      "explanation": "The paper compares multiple skip connection types and finds identity mappings yield the lowest training loss and fastest error reduction, especially in 1001-layer ResNets.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "By measuring inference time on ImageNet",
+        "Through theoretical proofs of global optimality",
+        "By comparing with transformer architectures"
+      ],
+      "hint": "Look at the training curves in Figure 1 right — they show clear differences between identity and other skip types."
+    },
+    {
+      "id": "q8",
+      "question": "What does Eqn. (5) reveal about gradient propagation in ResNets with identity mappings?",
+      "answer": "The gradient at layer l consists of a direct path from the loss (via identity) and an indirect path through residual functions, preventing gradient vanishing.",
+      "explanation": "Eqn. (5): ∂E/∂x_l = ∂E/∂x_L * [1 + Σ ∂F(x_i, W_i)/∂x_l] shows that even if residual functions are small, the identity term ensures gradients still flow back.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Gradients are multiplied across layers, causing exponential decay",
+        "The gradient only flows through the residual function F",
+        "Identity mappings cause gradients to explode"
+      ],
+      "hint": "The paper says the additive term '1' ensures information is directly propagated back — what does that mean for gradients?"
+    },
+    {
+      "id": "q9",
+      "question": "Why does the paper argue that post-activation (original ResNet) is suboptimal compared to pre-activation (proposed ResNet)?",
+      "answer": "Post-activation applies ReLU and BN after addition, which disrupts the identity path; pre-activation preserves it by placing them before weight layers.",
+      "explanation": "In post-activation, ReLU modifies the identity skip before addition, breaking the clean path. Pre-activation applies activation functions to F only, preserving h(x_l)=x_l.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Post-activation is computationally more expensive",
+        "Pre-activation requires more memory",
+        "ReLU cannot be used in post-activation"
+      ],
+      "hint": "Think about where ReLU is applied: if it’s after addition, does the identity path remain unchanged?"
+    },
+    {
+      "id": "q10",
+      "question": "What does the paper suggest about the scalability of ResNets with identity mappings?",
+      "answer": "Identity mappings enable training much deeper networks (e.g., 1001-layer on CIFAR, 200-layer on ImageNet) with improved generalization and reduced overfitting.",
+      "explanation": "The paper reports state-of-the-art results on 1001-layer and 200-layer ResNets, showing that identity mappings allow scaling depth without degradation in performance.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Identity mappings reduce the need for data augmentation",
+        "They allow smaller batch sizes to be used effectively",
+        "They improve performance only on small datasets"
+      ],
+      "hint": "The paper’s results include 1001-layer ResNets on CIFAR — what does this imply about scalability?"
+    },
+    {
+      "id": "q11",
+      "question": "How does the paper’s analysis challenge conventional wisdom about activation functions in deep networks?",
+      "answer": "It challenges the notion that activation functions should be applied after weight layers, proposing instead that they should precede them to preserve identity paths.",
+      "explanation": "Traditional CNNs apply ReLU after convolutions; this paper argues that placing BN and ReLU before weights (pre-activation) enables cleaner signal propagation in ResNets.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It claims activation functions are unnecessary in deep networks",
+        "It suggests ReLU should be replaced with sigmoid for better gradients",
+        "It recommends removing batch normalization entirely"
+      ],
+      "hint": "The paper calls the conventional approach 'post-activation' and proposes a new design — what’s different about it?"
+    },
+    {
+      "id": "q12",
+      "question": "Why does the paper state that scaling or 1x1 convolutions in skip connections lead to higher training loss?",
+      "answer": "These modifications introduce non-identity transformations that disrupt the direct signal path, making optimization harder and gradients less stable.",
+      "explanation": "Identity mappings preserve the input unchanged. Scaling or 1x1 convolutions alter the skip signal, breaking the clean path and forcing the network to learn additional transformations.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They increase computational complexity too much",
+        "They cause numerical instability in batch normalization",
+        "They are incompatible with ReLU"
+      ],
+      "hint": "The paper says 'clean information path' is key — what does altering the skip connection do to cleanliness?"
+    },
+    {
+      "id": "q13",
+      "question": "What does the paper imply about the role of residual functions F in deep networks with identity mappings?",
+      "answer": "Residual functions learn only the deviation from the identity path, not the entire mapping, making learning easier and more stable.",
+      "explanation": "By using identity skip connections, F only needs to learn a small adjustment (residual), not the full transformation — reducing optimization difficulty.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "F must be extremely complex to compensate for identity mappings",
+        "F becomes irrelevant when identity mappings are used",
+        "F should be removed to simplify the network"
+      ],
+      "hint": "The name 'residual' suggests F learns something small — what is it a residual of?"
+    },
+    {
+      "id": "q14",
+      "question": "How does the proposed ResNet architecture (Fig. 1b) improve upon the original when training a 1001-layer network?",
+      "answer": "It reduces training loss and test error significantly by enabling cleaner gradient flow via pre-activation and identity mappings.",
+      "explanation": "The proposed unit achieves 4.92% test error vs 7.61% in the original, demonstrating that pre-activation + identity mappings make training deeper networks feasible and more effective.",
+      "difficulty": "hard",
+      "type": "applied",
+      "distractors": [
+        "It reduces the number of parameters by 50%",
+        "It replaces convolution with fully connected layers",
+        "It uses a different optimizer (Adam instead of SGD)"
+      ],
+      "hint": "Look at the training curves in Figure 1 — what’s the difference in loss and error between original and proposed?"
+    },
+    {
+      "id": "q15",
+      "question": "Why does the paper argue that identity mappings prevent gradient vanishing in very deep networks?",
+      "answer": "Because the backward gradient includes a direct term (1) that does not depend on weights, ensuring gradients remain non-zero even when residual functions are small.",
+      "explanation": "Eqn. (5) shows ∂E/∂x_l contains the term ∂E/∂x_L * 1, which guarantees gradient propagation regardless of F’s magnitude — a key reason for avoiding vanishing gradients.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Identity mappings increase the magnitude of all gradients exponentially",
+        "They use a different backpropagation algorithm",
+        "They eliminate the need for gradient descent"
+      ],
+      "hint": "Look at Eqn. (5): what is the additive term that ensures gradients don’t vanish?"
+    },
+    {
+      "id": "q16",
+      "question": "What is the significance of Eqn. (4) and Eqn. (5) being additive rather than multiplicative?",
+      "answer": "Additive formulations allow signals and gradients to accumulate linearly, avoiding exponential decay or explosion common in plain networks.",
+      "explanation": "In plain networks, features are multiplicative (W1*W2*x). Here, additive composition allows gradients to flow directly via summation, improving stability in very deep networks.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Additive functions are faster to compute than multiplicative ones",
+        "Multiplicative paths are mathematically impossible in CNNs",
+        "Additive functions reduce the number of layers needed"
+      ],
+      "hint": "Compare Eqn. (4) to a plain network’s feature: x_L = W_{L-1}*...*W_0*x_0 — what’s the key mathematical difference?"
+    },
+    {
+      "id": "q17",
+      "question": "How does the paper justify using identity mappings despite potential dimension mismatches in skip connections?",
+      "answer": "The paper acknowledges that identity mapping isn’t always possible (e.g., when dimensions change) but argues that such cases are rare and do not dominate the network’s behavior.",
+      "explanation": "The paper notes that only a few units (e.g., 2 on CIFAR, 3 on ImageNet) change dimensions and uses identity mappings everywhere else — the benefit outweighs the few exceptions.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "The paper suggests dimension mismatches should be ignored entirely",
+        "Identity mappings are only used in the final layer",
+        "Dimension mismatches improve generalization"
+      ],
+      "hint": "Footnote 1 mentions a few exceptions — what does the paper say about their impact?"
+    },
+    {
+      "id": "q18",
+      "question": "What does the training curve comparison in Figure 1 suggest about the proposed ResNet unit’s impact on generalization?",
+      "answer": "The proposed unit achieves lower test error while maintaining low training loss, indicating better generalization compared to the original ResNet.",
+      "explanation": "The proposed unit has lower test error (4.92% vs 7.61%) and lower training loss — suggesting it doesn’t just fit the training data better but generalizes well to unseen data.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Test error increases because the model is overfitting",
+        "Training loss and test error are identical, indicating no improvement",
+        "The proposed unit performs worse on CIFAR-100"
+      ],
+      "hint": "Look at the solid lines (test error) — which one is lower? What does that mean for generalization?"
+    },
+    {
+      "id": "q19",
+      "question": "What broader implication does the paper draw about network depth based on its results with 1001-layer ResNets?",
+      "answer": "There is significant untapped potential in increasing network depth, and identity mappings are key to unlocking it without degradation or overfitting.",
+      "explanation": "The paper shows that 1001-layer ResNets perform better than shallower ones, suggesting depth remains a powerful axis for improvement when properly designed with identity mappings.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Network depth should be minimized to reduce computational cost",
+        "Depth beyond 100 layers provides no benefit",
+        "The results are only applicable to CIFAR, not ImageNet"
+      ],
+      "hint": "The paper’s conclusion says 'there is much room to exploit the dimension of network depth' — what enabled this?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the paper’s claim that identity mappings are more important than architectural innovations like 1x1 convolutions or gating. What evidence supports this?",
+      "answer": "The paper provides ablation studies showing identity mappings achieve lower training loss and test error than 1x1 convolutions or gating, even when these alternatives are properly tuned.",
+      "explanation": "Section 3 compares multiple skip connection types and finds identity mappings consistently outperform alternatives — suggesting that preserving the clean path is more critical than architectural complexity.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "The paper only tested identity mappings on small datasets, so the claim is weak",
+        "1x1 convolutions were shown to be superior in earlier papers",
+        "Gating mechanisms are more effective because they adaptively modulate signals"
+      ],
+      "hint": "Look at the comparison table or training curves — do any other methods outperform identity?"
+    }
+  ],
+  "paper_id": 15,
+  "title": "Identity Mappings in ResNets",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 7,
+    "hard": 7
+  }
+}

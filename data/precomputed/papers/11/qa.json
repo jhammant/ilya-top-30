@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary advantage of dilated convolutions over traditional convolutions in the context of semantic segmentation?",
+      "answer": "Dilated convolutions allow for an exponential expansion of the receptive field without reducing spatial resolution or losing coverage, enabling multi-scale contextual aggregation while preserving pixel-level detail.",
+      "explanation": "Traditional convolutions with pooling reduce resolution to capture context, but this harms dense prediction tasks like semantic segmentation that require full-resolution outputs. Dilated convolutions maintain resolution by skipping pixels in the filter application, expanding the receptive field exponentially with each layer.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "They reduce computational cost by using fewer parameters.",
+        "They automatically upsample feature maps to full resolution.",
+        "They eliminate the need for any pooling layers in the network."
+      ],
+      "hint": "Think about how dilated convolutions change the spacing between filter elements and what that does to the area each neuron can 'see'."
+    },
+    {
+      "id": "q2",
+      "question": "In the paper, what structural difference between image classification and semantic segmentation motivates the use of dilated convolutions?",
+      "answer": "Image classification requires a global prediction after downsampling, while semantic segmentation demands dense, pixel-level predictions with full-resolution outputs and multi-scale context.",
+      "explanation": "The paper highlights that traditional CNNs for classification use pooling to reduce resolution and capture global context, but this is incompatible with dense prediction tasks like semantic segmentation that need high-resolution outputs. Dilated convolutions solve this by capturing context without downsampling.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Image classification uses larger filters, while semantic segmentation requires smaller ones.",
+        "Semantic segmentation does not require convolutional layers.",
+        "Image classification relies on recurrent networks, unlike semantic segmentation."
+      ],
+      "hint": "Consider what 'dense prediction' means—every pixel must be labeled. How does downsampling interfere with that?"
+    },
+    {
+      "id": "q3",
+      "question": "What does the term 'dilated convolution' refer to in this paper, according to the authors?",
+      "answer": "A modified convolution operator that applies a filter with spaced-out parameters, not a constructed dilated filter.",
+      "explanation": "The paper clarifies that 'dilated convolution' is not about creating a larger filter (a dilated filter), but modifying the convolution operation itself to sample input at spaced intervals using a dilation factor l. This avoids unnecessary parameter growth.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "A filter that has been artificially enlarged by interpolating values.",
+        "A convolution performed on images with reduced resolution.",
+        "A type of pooling operation that skips pixels."
+      ],
+      "hint": "The authors explicitly distinguish it from 'convolution with a dilated filter'—the operation changes, not the filter."
+    },
+    {
+      "id": "q4",
+      "question": "How does the receptive field size grow with each layer when using exponentially increasing dilation factors in the proposed architecture?",
+      "answer": "The receptive field grows as (2^(i+2) - 1) x (2^(i+2) - 1), meaning it doubles in size with each layer, leading to exponential expansion.",
+      "explanation": "As shown in Equation (3) and Figure 1, using dilation factors of 1, 2, 4,... doubles the spacing each time. This causes the receptive field to expand exponentially: 3x3 → 7x7 → 15x15, etc., while keeping the filter size constant.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It grows linearly with the number of layers.",
+        "It remains constant because filter size doesn't change.",
+        "It grows quadratically based on the number of parameters."
+      ],
+      "hint": "Look at Figure 1: each layer’s receptive field is roughly double the previous one. What pattern does that follow?"
+    },
+    {
+      "id": "q5",
+      "question": "Why do the authors argue that using multiple rescaled input images for multi-scale context is not ideal?",
+      "answer": "It requires separate analyses of each scale, increasing computational cost and redundancy, whereas dilated convolutions capture multi-scale context in a single forward pass.",
+      "explanation": "The paper critiques methods like Farabet et al. (2013) that feed multiple rescaled images into the network, noting they are inefficient and redundant. Dilated convolutions achieve multi-scale context in one resolution space.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Rescaled inputs reduce accuracy due to interpolation artifacts.",
+        "They cannot be used with CNNs at all.",
+        "They require manual annotation of each scale."
+      ],
+      "hint": "Think about efficiency: does processing the same image multiple times at different scales make sense?"
+    },
+    {
+      "id": "q6",
+      "question": "What key architectural feature does the proposed context module eliminate that is common in image classification networks?",
+      "answer": "Pooling and subsampling layers, which reduce spatial resolution.",
+      "explanation": "The context module is designed as a rectangular prism of convolutional layers with no pooling, preserving full resolution—critical for dense prediction tasks like semantic segmentation where every pixel must be labeled.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Activation functions like ReLU.",
+        "Batch normalization layers.",
+        "Fully connected layers."
+      ],
+      "hint": "The paper contrasts their module with pyramid architectures—what do pyramids typically do to resolution?"
+    },
+    {
+      "id": "q7",
+      "question": "How does the use of dilated convolutions enable a simpler architecture for semantic segmentation compared to prior methods?",
+      "answer": "It removes the need for complex upsampling, multi-column architectures, or multiple input scales by capturing multi-scale context in a single resolution space with exponential receptive field growth.",
+      "explanation": "Prior methods used upsampling (e.g., deconvolution) or multiple image scales to recover context. Dilated convolutions achieve the same goal in a unified, resolution-preserving structure with fewer components.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It replaces all convolutional layers with fully connected layers.",
+        "It reduces the number of filters needed per layer.",
+        "It eliminates the need for backpropagation during training."
+      ],
+      "hint": "What did Long et al. and others do to handle context? How does dilated convolution simplify that?"
+    },
+    {
+      "id": "q8",
+      "question": "In the context of the paper, why is it problematic to directly apply image classification networks (like VGG) to semantic segmentation without modification?",
+      "answer": "They use pooling and subsampling that reduce resolution, making it difficult to generate pixel-accurate predictions required for dense tasks.",
+      "explanation": "Image classification networks downsample heavily to produce a single class label. Semantic segmentation requires every pixel’s label, so losing spatial resolution through pooling directly harms accuracy unless compensated.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They are too computationally expensive for segmentation tasks.",
+        "They do not support convolutional layers.",
+        "They require labeled bounding boxes instead of pixel labels."
+      ],
+      "hint": "Think about what happens to spatial information after multiple max-pooling layers. Can you still tell where each pixel is?"
+    },
+    {
+      "id": "q9",
+      "question": "What does the paper demonstrate about the relationship between receptive field size and parameter count in dilated convolutions?",
+      "answer": "The receptive field grows exponentially with each layer, while the number of parameters remains constant because filter size is unchanged.",
+      "explanation": "As shown in Figure 1, using 3x3 filters with dilation factors of 1, 2, 4,... increases the receptive field from 3x3 to 7x7 to 15x15—but each layer still uses only 9 parameters. This is a key efficiency advantage.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Parameter count increases exponentially with dilation factor.",
+        "Receptive field size is independent of filter size.",
+        "Dilation reduces parameters by skipping filters."
+      ],
+      "hint": "The filter is still 3x3—what changes when you dilate it? Does that add new weights?"
+    },
+    {
+      "id": "q10",
+      "question": "How does the paper address the issue of 'vestigial components' in repurposed image classification networks for semantic segmentation?",
+      "answer": "By systematically removing unnecessary components like structured prediction, multi-column architectures, and multiple datasets to isolate the core model's performance.",
+      "explanation": "The authors argue that complex augmentations obscure true performance gains. They simplify existing architectures to test the real impact of dilated convolutions, revealing that simplification improves accuracy.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "By adding more layers and filters to increase complexity.",
+        "By replacing all convolutional layers with fully connected ones.",
+        "By using only small filters to reduce computational load."
+      ],
+      "hint": "What does the paper say about overly complex systems? Do they help or hurt performance?"
+    },
+    {
+      "id": "q11",
+      "question": "What is the role of dilation factor l in Equation (2) of the paper?",
+      "answer": "It controls the spacing between filter elements, allowing the convolution to sample input at spaced intervals without changing filter size.",
+      "explanation": "The dilation factor l modifies the convolution operation by skipping (l-1) pixels between filter weights. For example, with l=2, the filter samples every other pixel, expanding its effective field without increasing parameters.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It scales the filter weights to increase their magnitude.",
+        "It determines the number of output channels per layer.",
+        "It reduces the input image size before convolution."
+      ],
+      "hint": "In Equation (2), it's s + l*t = p. What does multiplying t by l do to the spatial positions being summed?"
+    },
+    {
+      "id": "q12",
+      "question": "Why is the context module described as a 'rectangular prism' of convolutional layers?",
+      "answer": "Because it consists of stacked convolutional layers with uniform spatial dimensions and no downsampling, forming a structured, resolution-preserving module.",
+      "explanation": "Unlike pyramid architectures that shrink spatial dimensions at each level, the context module maintains constant height and width (resolution), stacking layers to build depth—hence a 'rectangular prism' shape.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "Because it has three dimensions: width, height, and depth of filters.",
+        "It refers to the 3D convolutional structure used for volumetric data.",
+        "It implies the module has a pyramid-like tapering shape."
+      ],
+      "hint": "Think about what 'no pooling or subsampling' means for the spatial dimensions across layers."
+    },
+    {
+      "id": "q13",
+      "question": "How does the paper demonstrate that dilated convolutions outperform upsampling-based methods for dense prediction?",
+      "answer": "By showing that dilated convolutions preserve fine-grained spatial information while capturing context, whereas upsampling recovers resolution but may introduce artifacts or blur details.",
+      "explanation": "The paper argues that upsampling (e.g., deconvolution) attempts to recover lost resolution but often blurs boundaries. Dilated convolutions avoid losing resolution in the first place, leading to sharper, more accurate predictions.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They are faster to train than upsampling methods.",
+        "Upsampling requires more training data to achieve similar accuracy.",
+        "Dilated convolutions are easier to visualize than upsampling layers."
+      ],
+      "hint": "What’s the fundamental difference between recovering resolution and preserving it?"
+    },
+    {
+      "id": "q14",
+      "question": "What is the significance of using 3x3 filters with exponentially increasing dilation in the proposed architecture?",
+      "answer": "It allows for large receptive fields with minimal parameters and computational overhead, enabling deep context aggregation without resolution loss.",
+      "explanation": "Using small 3x3 filters with dilation factors like 1,2,4,8,... lets the network build large receptive fields (e.g., 15x15) with only 9 parameters per layer. This balances capacity and efficiency.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It reduces the number of layers needed to achieve high accuracy.",
+        "It allows the network to learn non-local features without convolutional operations.",
+        "It enables automatic learning of dilation factors during training."
+      ],
+      "hint": "Why use small filters at all? What’s the trade-off between filter size and parameter count?"
+    },
+    {
+      "id": "q15",
+      "question": "What does the paper suggest about the necessity of multi-column architectures in semantic segmentation?",
+      "answer": "They are not necessary when using dilated convolutions, as the context module can capture multi-scale information in a single-stream architecture.",
+      "explanation": "Prior methods like Multi-Scale Context (Farabet et al.) used multiple parallel branches. The paper shows that a single, dilated convolution module can replace these complex structures while improving accuracy.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Multi-column architectures are superior because they combine diverse filter types.",
+        "They are required to handle different object scales effectively.",
+        "The paper recommends expanding multi-column systems instead of replacing them."
+      ],
+      "hint": "What does the paper say about 'simplifying adapted networks'? How does that relate to multi-column designs?"
+    },
+    {
+      "id": "q16",
+      "question": "How does the paper justify that dilated convolutions are not equivalent to the algorithm 'à trous'?",
+      "answer": "Because 'à trous' is a multi-scale signal decomposition algorithm that uses dilated convolutions as a tool, whereas dilated convolution is the operator itself used for feature extraction.",
+      "explanation": "The paper clarifies that 'à trous' uses dilated convolutions to build wavelet decompositions across scales, but their use is as a building block for feature representation—not decomposition.",
+      "difficulty": "hard",
+      "type": "conceptual",
+      "distractors": [
+        "'À trous' uses larger filters, while dilated convolutions use smaller ones.",
+        "The two terms are interchangeable in the literature.",
+        "'À trous' requires multiple passes over the image, while dilated convolutions do not."
+      ],
+      "hint": "The paper says 'the algorithm à trous applies filters at multiple scales'—how does that differ from applying one dilated convolution?"
+    },
+    {
+      "id": "q17",
+      "question": "What experimental evidence does the paper provide to support the claim that dilated convolutions improve semantic segmentation accuracy?",
+      "answer": "Plug-in experiments on Pascal VOC 2012 show consistent performance gains when the context module is added to existing architectures, even after simplifying prior complex systems.",
+      "explanation": "The paper’s key empirical claim is that adding the context module to existing models (like those from Long et al.) improves mIoU on Pascal VOC 2012, proving its effectiveness in real dense prediction tasks.",
+      "difficulty": "hard",
+      "type": "applied",
+      "distractors": [
+        "Accuracy improved only when using pre-trained ImageNet weights.",
+        "The improvement was due to increased training data size.",
+        "Performance gains were only visible on synthetic datasets."
+      ],
+      "hint": "Where did they test their module? What metric do they report to show improvement?"
+    },
+    {
+      "id": "q18",
+      "question": "Why does the paper argue that exponential receptive field growth is preferable to linear expansion in dense prediction tasks?",
+      "answer": "Exponential growth rapidly captures large-scale context without increasing depth or parameters, enabling efficient modeling of long-range dependencies crucial for semantic segmentation.",
+      "explanation": "Linear expansion would require many layers to cover large areas, increasing computational load. Exponential growth (e.g., 3→7→15) achieves broad context with fewer layers, ideal for pixel-level tasks.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Linear growth is more accurate because it preserves local details better.",
+        "Exponential growth causes information loss due to oversampling.",
+        "Linear expansion allows for better gradient flow during backpropagation."
+      ],
+      "hint": "Think about how many layers it would take to get a 100x100 receptive field with linear vs. exponential growth."
+    },
+    {
+      "id": "q19",
+      "question": "How does the use of dilated convolutions in this paper challenge traditional design principles for CNNs?",
+      "answer": "It challenges the necessity of downsampling and pooling to capture context, proposing instead that contextual aggregation can occur at full resolution through spaced convolution operations.",
+      "explanation": "Traditional CNNs rely on pooling to reduce spatial dimensions and capture context. This paper shows that with dilated convolutions, you can keep resolution high while still aggregating context—upending a core design norm.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It suggests that convolutional layers are unnecessary for context capture.",
+        "It proposes replacing all filters with fully connected layers.",
+        "It argues that deeper networks always perform worse than wider ones."
+      ],
+      "hint": "What’s the traditional belief about how context is captured? How does dilated convolution contradict that?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the paper’s claim that dilated convolutions enable a simpler, more accurate semantic segmentation architecture. What assumptions underlie this claim?",
+      "answer": "The claim assumes that multi-scale context can be captured effectively in a single resolution space without upsampling or multi-inputs, and that structural simplicity improves generalization. These are validated by controlled experiments on Pascal VOC 2012.",
+      "explanation": "The paper assumes that prior complexity (multi-column, upsampling, multi-scale inputs) was unnecessary and harmful. By removing these and replacing them with dilated convolutions, they claim simplicity boosts accuracy—supported by empirical results that isolate the module's impact.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "The claim assumes dilated convolutions work better on small images than large ones.",
+        "It assumes that human annotation is not needed for training semantic segmentation models.",
+        "The claim relies on the use of recurrent neural networks to process context."
+      ],
+      "hint": "What did they remove from existing models? Why would removing things make a model better?"
+    }
+  ],
+  "paper_id": 11,
+  "title": "Dilated Convolutions",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

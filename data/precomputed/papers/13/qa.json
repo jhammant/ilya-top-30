@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary architectural innovation of the Transformer model introduced in 'Attention Is All You Need'?",
+      "answer": "The Transformer eliminates recurrent and convolutional layers entirely, relying solely on attention mechanisms—specifically self-attention—to model dependencies between input and output sequences.",
+      "explanation": "Prior models used RNNs or CNNs as the backbone for sequence modeling. The Transformer’s key contribution is replacing these with pure attention mechanisms, enabling parallelization and improved efficiency without sacrificing performance.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It introduces a new type of convolutional layer.",
+        "It uses LSTM cells with attention gates.",
+        "It combines RNNs with attention in a novel way."
+      ],
+      "hint": "The paper’s title suggests the core idea: attention alone is sufficient."
+    },
+    {
+      "id": "q2",
+      "question": "How many identical layers are used in both the encoder and decoder stacks of the Transformer model described in the paper?",
+      "answer": "Six identical layers are used in both the encoder and decoder stacks.",
+      "explanation": "Section 3.1 explicitly states that N = 6 identical layers compose both the encoder and decoder stacks, each containing sub-layers for attention and feed-forward networks.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Four layers",
+        "Eight layers",
+        "Twelve layers"
+      ],
+      "hint": "The number is mentioned in Section 3.1 and corresponds to the architecture shown in Figure 1."
+    },
+    {
+      "id": "q3",
+      "question": "What is the purpose of the mask in the decoder’s self-attention sub-layer?",
+      "answer": "The mask prevents positions in the decoder from attending to subsequent (future) positions, ensuring auto-regressive behavior during sequence generation.",
+      "explanation": "To maintain the auto-regressive property—where predictions at position i depend only on previous outputs—the decoder uses a mask to zero out attention scores for future tokens, making the model causally aware.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To reduce computational overhead.",
+        "To prevent overfitting during training.",
+        "To ignore padding tokens."
+      ],
+      "hint": "The mask ensures the model doesn't 'cheat' by looking ahead during generation."
+    },
+    {
+      "id": "q4",
+      "question": "Which mechanism does the Transformer use to handle positional information in sequences without recurrence or convolution?",
+      "answer": "The Transformer uses a parameter-free positional encoding added to the input embeddings.",
+      "explanation": "Since there are no recurrent or convolutional layers to capture order, the authors inject positional information using fixed sine and cosine functions of different frequencies, allowing the model to learn relative positions.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Positional RNN layers",
+        "Learned token embeddings with built-in order",
+        "Convolution filters applied to position indices"
+      ],
+      "hint": "The paper introduces positional encoding as a way to replace recurrence for sequence order."
+    },
+    {
+      "id": "q5",
+      "question": "What is the role of layer normalization in the Transformer architecture?",
+      "answer": "Layer normalization stabilizes training by normalizing the inputs to each sub-layer, applied after residual connections to improve convergence and performance.",
+      "explanation": "As described in Section 3.1, layer normalization is applied after each sub-layer (attention and feed-forward) combined with residual connections to help train deeper networks more stably.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It reduces model size for deployment.",
+        "It encodes positional information.",
+        "It prevents attention from attending to padding tokens."
+      ],
+      "hint": "Layer normalization is used after the residual connection in both encoder and decoder sub-layers."
+    },
+    {
+      "id": "q6",
+      "question": "What is the main advantage of using multi-head attention over single-head attention in the Transformer?",
+      "answer": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions, capturing diverse types of dependencies.",
+      "explanation": "By using multiple attention heads, each with its own learned projection matrices, the model can focus on different parts of the sequence simultaneously—e.g., syntactic vs. semantic relationships.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It reduces the number of parameters in the model.",
+        "It speeds up inference by reducing computation.",
+        "It eliminates the need for positional encoding."
+      ],
+      "hint": "Each head learns a different 'view' of the attention weights."
+    },
+    {
+      "id": "q7",
+      "question": "How does the Transformer improve parallelization compared to RNN-based models?",
+      "answer": "The Transformer processes all positions in the input sequence simultaneously using attention, whereas RNNs process sequences step-by-step due to their sequential dependency structure.",
+      "explanation": "RNNs require computing hidden states sequentially (h_t depends on h_{t-1}), preventing parallelization. The Transformer’s attention mechanism computes dependencies in parallel, enabling efficient use of modern hardware like GPUs.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It uses smaller batch sizes to reduce memory usage.",
+        "It removes the need for backpropagation.",
+        "It reduces sequence length during training."
+      ],
+      "hint": "Think about how RNNs must compute one step before the next."
+    },
+    {
+      "id": "q8",
+      "question": "In the context of the Transformer, what does 'scaled dot-product attention' refer to?",
+      "answer": "Scaled dot-product attention computes attention scores by taking the dot product of queries and keys, then dividing by the square root of the key dimension to prevent large values from causing softmax saturation.",
+      "explanation": "As described in Section 3.2, scaled dot-product attention avoids the vanishing gradient issue caused by large dot products when key dimensions are large. Scaling ensures stable gradients during training.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "A method to scale input embeddings before attention.",
+        "An optimization technique for reducing model size.",
+        "A way to reduce the number of attention heads."
+      ],
+      "hint": "The scaling factor is √d_k, where d_k is the dimension of the keys."
+    },
+    {
+      "id": "q9",
+      "question": "Why does the paper argue that convolutional models like ByteNet and ConvS2S are less effective at capturing long-range dependencies than the Transformer?",
+      "answer": "In convolutional models, the number of operations needed to relate two positions grows with their distance (linearly or logarithmically), while the Transformer uses self-attention to relate any two positions in a constant number of operations.",
+      "explanation": "Section 2 highlights that ConvS2S and ByteNet require increasing computations over distance, making long-range dependencies harder to learn. The Transformer’s attention mechanism directly connects any two positions regardless of distance.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Convolutional models use fewer parameters.",
+        "They cannot handle variable-length sequences.",
+        "They rely too heavily on positional encoding."
+      ],
+      "hint": "Compare the computational complexity for distant positions in CNNs vs. attention."
+    },
+    {
+      "id": "q10",
+      "question": "What is the role of residual connections in the Transformer’s architecture?",
+      "answer": "Residual connections allow gradients to flow directly through layers during backpropagation, enabling training of deeper networks by mitigating the vanishing gradient problem.",
+      "explanation": "As per Section 3.1, each sub-layer’s output is LayerNorm(x + Sublayer(x)), where the residual connection adds the input back to the transformed output. This helps training deep stacks of layers without degradation.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They reduce the number of attention heads needed.",
+        "They speed up inference by caching intermediate results.",
+        "They prevent overfitting through dropout."
+      ],
+      "hint": "Think about how adding the input back helps with gradient flow in deep networks."
+    },
+    {
+      "id": "q11",
+      "question": "How does the Transformer’s encoder-decoder attention mechanism differ from self-attention in the decoder?",
+      "answer": "Encoder-decoder attention allows the decoder to attend to all encoder hidden states, while self-attention in the decoder only attends to previously generated output tokens (due to masking).",
+      "explanation": "The encoder-decoder attention module connects the decoder’s queries to the encoder’s keys and values, enabling cross-sequence dependency modeling. Decoder self-attention is masked to enforce auto-regressive generation.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Encoder-decoder attention uses a different scaling factor.",
+        "Decoder self-attention does not use positional encoding.",
+        "Encoder-decoder attention is only used during training."
+      ],
+      "hint": "One attends to the input; the other attends only to previously generated outputs."
+    },
+    {
+      "id": "q12",
+      "question": "What empirical evidence does the paper provide to support the superiority of the Transformer over prior models?",
+      "answer": "The Transformer achieved 28.4 BLEU on WMT 2014 English-to-German and 41.8 BLEU on English-to-French, outperforming all previous models—including ensembles—while training significantly faster.",
+      "explanation": "Section 1 and Section 5 report these BLEU scores, demonstrating state-of-the-art performance with lower training costs (e.g., 3.5 days on 8 GPUs vs. weeks for prior models).",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It achieved higher accuracy on image classification tasks.",
+        "It reduced model parameters by 90% compared to LSTMs.",
+        "It was the first model to use attention."
+      ],
+      "hint": "Look at the BLEU scores on WMT 2014 datasets mentioned in the abstract."
+    },
+    {
+      "id": "q13",
+      "question": "Why is the Transformer considered a general-purpose architecture beyond machine translation?",
+      "answer": "The paper demonstrates that the Transformer successfully generalizes to English constituency parsing, achieving strong results even with limited training data.",
+      "explanation": "Section 1 and Section 6 show that the Transformer’s architecture is not limited to translation; it performs well on syntactic parsing tasks, indicating its broader applicability in sequence-to-sequence and structured prediction problems.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It was the first model to use attention in parsing tasks.",
+        "Its training time is always faster than RNNs on any task.",
+        "It requires no labeled data to work."
+      ],
+      "hint": "The paper tests the model on parsing, not just translation."
+    },
+    {
+      "id": "q14",
+      "question": "What is the computational complexity of self-attention in the Transformer relative to sequence length n and dimension d?",
+      "answer": "Self-attention has O(n²·d) complexity due to computing pairwise attention scores between all n positions, which becomes expensive for long sequences.",
+      "explanation": "The paper acknowledges this limitation: attention computes scores between every pair of tokens, leading to quadratic growth in computation with sequence length. This is a known trade-off for its parallelizability.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "O(n·d) due to linear operations.",
+        "O(d²) independent of sequence length.",
+        "O(n·log n) due to hierarchical attention."
+      ],
+      "hint": "Each token attends to every other token—how many pairwise comparisons does that involve?"
+    },
+    {
+      "id": "q15",
+      "question": "How does the Transformer address the issue of limited resolution from averaging attention-weighted positions?",
+      "answer": "Multi-head attention addresses this by allowing multiple attention heads to focus on different subspaces, preserving fine-grained information that might be lost in single-head averaging.",
+      "explanation": "Section 2 explains that attention’s averaging reduces resolution; multi-head attention mitigates this by learning multiple distinct representations in parallel, each capturing different dependency patterns.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "By using larger batch sizes.",
+        "Through dropout regularization during attention computation.",
+        "By increasing the size of positional encodings."
+      ],
+      "hint": "Think about how multiple attention heads act like different 'lenses' for viewing the sequence."
+    },
+    {
+      "id": "q16",
+      "question": "What is the key difference between the attention mechanism used in prior models and the one used in the Transformer?",
+      "answer": "Prior models used attention as an auxiliary component alongside RNNs or CNNs, while the Transformer uses self-attention as the sole mechanism for computing representations.",
+      "explanation": "Section 1 and Section 2 emphasize that previous models used attention to improve RNNs/CNNs, but the Transformer is the first to eliminate them entirely and rely solely on attention mechanisms.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Prior models used attention only in the decoder.",
+        "The Transformer uses unsupervised attention.",
+        "Prior models did not use key-value pairs."
+      ],
+      "hint": "The paper claims it’s the first model to rely entirely on attention—no RNNs or CNNs."
+    },
+    {
+      "id": "q17",
+      "question": "Why are the positional encodings in the Transformer designed as fixed functions rather than learned embeddings?",
+      "answer": "Fixed positional encodings allow the model to generalize to sequence lengths not seen during training and reduce the number of trainable parameters.",
+      "explanation": "Section 3.5 explains that fixed sinusoidal encodings enable extrapolation to longer sequences than those in training, and they do not add trainable parameters—unlike learned positional embeddings.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Learned embeddings were too slow to train.",
+        "Fixed encodings improve attention scores by design.",
+        "The authors wanted to reduce model depth."
+      ],
+      "hint": "Think about why you’d want positional encodings to work on sequences longer than training data."
+    },
+    {
+      "id": "q18",
+      "question": "How does the Transformer’s architecture enable it to be more parallelizable than RNN-based models?",
+      "answer": "Because attention operates on all positions simultaneously without sequential dependencies, the entire model can leverage parallel hardware like GPUs to process full sequences at once.",
+      "explanation": "RNNs are inherently sequential: each step depends on the prior hidden state. The Transformer computes all positions in parallel using attention, making full use of modern hardware for faster training.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It uses smaller model sizes.",
+        "It reduces the number of layers needed.",
+        "It skips layer normalization for speed."
+      ],
+      "hint": "Parallelization is possible when no step depends on the previous one—what part of RNNs prevents this?"
+    },
+    {
+      "id": "q19",
+      "question": "What is the significance of the Transformer achieving state-of-the-art results with only 3.5 days of training on eight GPUs?",
+      "answer": "It demonstrates that attention-based architectures can outperform existing models with significantly lower computational cost, challenging the assumption that complex recurrent structures are necessary for high performance.",
+      "explanation": "This result in Section 1 directly contrasts with prior models requiring weeks of training. It proves that architectural innovation (pure attention) can lead to both better quality and efficiency.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It proves that GPUs are better than TPUs for training.",
+        "It means the model is smaller and easier to deploy in production.",
+        "It shows translation is an easy task compared to other NLP tasks."
+      ],
+      "hint": "Think about how training time and model quality are both improved—what does that imply about the architecture’s efficiency?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim that 'Attention Is All You Need.' What are the trade-offs and limitations implied by this assertion?",
+      "answer": "While attention enables superior performance and parallelization, it comes with quadratic computational complexity for long sequences, higher memory usage, and loss of inductive biases (e.g., locality) that CNNs/RNNs provide. The claim is powerful but context-dependent.",
+      "explanation": "The paper’s bold title reflects its breakthrough, but Section 2 and 5 acknowledge trade-offs: attention scales poorly with sequence length, lacks explicit spatial hierarchy (unlike CNNs), and requires careful scaling. The claim is valid for many tasks but not universally optimal.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "The claim is incorrect because attention cannot handle sequential data.",
+        "There are no trade-offs—attention is always superior to all other architectures.",
+        "The claim only applies to translation tasks."
+      ],
+      "hint": "Consider what the Transformer gives up—like locality or recurrence—and whether those are always beneficial."
+    }
+  ],
+  "paper_id": 13,
+  "title": "Attention Is All You Need",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "According to the paper, why is it important to keep neural network weights simple during learning?",
+      "answer": "It is important because the generalization performance of supervised neural networks improves when there is less information in the weights than in the output vectors of the training cases. Simplifying weights reduces overfitting and aligns with the Minimum Description Length (MDL) principle.",
+      "explanation": "The paper argues that overfitting occurs when models are too complex relative to the amount of training data. By minimizing information in weights, we prevent the network from memorizing noise and instead learn generalizable patterns.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To reduce computational cost during inference",
+        "To make the network faster to train",
+        "To eliminate the need for backpropagation"
+      ],
+      "hint": "Think about how information content relates to model complexity and generalization."
+    },
+    {
+      "id": "q2",
+      "question": "What is the core principle behind the approach described in the paper for simplifying neural network weights?",
+      "answer": "The Minimum Description Length (MDL) principle, which states that the best model minimizes the total cost of describing both the model (weights) and the misfits between model predictions and actual data.",
+      "explanation": "The paper applies MDL to neural networks by treating weight encoding and output error encoding as complementary costs. The optimal model balances simplicity (short weight description) with accuracy (small misfit encoding).",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "The principle of maximum likelihood estimation",
+        "The backpropagation algorithm",
+        "The law of large numbers"
+      ],
+      "hint": "Look for the term 'Minimum Description Length' in the Introduction section."
+    },
+    {
+      "id": "q3",
+      "question": "How does the paper propose to control the amount of information in neural network weights?",
+      "answer": "By adding Gaussian noise to the weights and adapting the noise level during learning to optimize the trade-off between expected squared error and information content in weights.",
+      "explanation": "The paper introduces noise as a mechanism to regularize weights. Higher noise reduces information (more uncertainty), while lower noise allows more precise weight representation. The optimal noise level balances prediction accuracy and model simplicity.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "By pruning connections randomly",
+        "By reducing the number of layers in the network",
+        "By using fixed weights throughout training"
+      ],
+      "hint": "The method involves adding noise and adjusting its magnitude during learning."
+    },
+    {
+      "id": "q4",
+      "question": "What is the role of quantization in the MDL-based weight encoding scheme described in the paper?",
+      "answer": "Quantization allows weights to be represented with finite bits by assigning discrete values, enabling the calculation of information cost via probability mass assigned to each quantized value.",
+      "explanation": "Since real-valued weights require infinite bits, the paper proposes quantizing them into bins. The information cost is then computed as -log(p), where p is the probability mass assigned to each quantized value, making it compatible with MDL.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To increase the speed of weight updates",
+        "To convert weights into binary classifiers",
+        "To eliminate the need for activation functions"
+      ],
+      "hint": "Quantization turns continuous values into discrete categories—how do we measure information for discrete events?"
+    },
+    {
+      "id": "q5",
+      "question": "Why does the paper argue that quantizing weights without considering encoding cost leads to a difficult search space?",
+      "answer": "Because the cost of quantization is non-smooth and discontinuous, making gradient-based optimization infeasible due to the lack of smooth derivatives.",
+      "explanation": "Traditional quantization assigns fixed discrete values, resulting in non-differentiable cost functions. This prevents the use of gradient descent to find optimal quantization levels, which is why the paper proposes using noise-based regularization instead.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Because quantization increases computational complexity",
+        "Because it requires more training data",
+        "Because quantized weights are less accurate"
+      ],
+      "hint": "Think about what property a function needs to have for gradient descent to work."
+    },
+    {
+      "id": "q6",
+      "question": "In the MDL framework described, what two components make up the total description cost?",
+      "answer": "The number of bits needed to describe the model (weights) and the number of bits needed to describe the misfits between predicted and actual outputs.",
+      "explanation": "The MDL principle decomposes total cost into model complexity (weight encoding) and data fit (error encoding). Minimizing their sum prevents overfitting by penalizing unnecessarily complex models.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Training time and inference latency",
+        "Number of layers and number of neurons",
+        "Learning rate and batch size"
+      ],
+      "hint": "The sender encodes both the network weights and the differences between predicted and true outputs."
+    },
+    {
+      "id": "q7",
+      "question": "How does the paper relate Gaussian noise to information content in weights?",
+      "answer": "The log probability of a quantized weight value under a Gaussian distribution is proportional to the square of the weight divided by the noise variance, enabling computation of information cost as -log(p).",
+      "explanation": "When noise is Gaussian, the probability density at a quantized value approximates height × width. The log-probability becomes -log(width) - (weight²)/(2σ²), where the second term is proportional to weight squared and inversely related to noise variance.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Gaussian noise increases information by adding randomness",
+        "Noise reduces information only if it is non-Gaussian",
+        "Information content depends on the number of weight updates"
+      ],
+      "hint": "Refer to Figure 1 and the equation relating log probability to weight magnitude and noise width."
+    },
+    {
+      "id": "q8",
+      "question": "What advantage does the paper claim for using Gaussian noise over direct quantization when applying MDL to neural networks?",
+      "answer": "Gaussian noise allows for smooth, differentiable computation of information cost, enabling efficient gradient-based optimization without Monte Carlo simulations.",
+      "explanation": "Unlike discrete quantization, which creates non-smooth cost functions, adding Gaussian noise allows exact gradient computation for both error and information terms when output units are linear—making optimization tractable.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Gaussian noise reduces training data requirements",
+        "It eliminates the need for any form of regularization",
+        "It improves convergence speed regardless of network architecture"
+      ],
+      "hint": "The paper emphasizes that the method avoids time-consuming Monte Carlo simulations—how is this possible?"
+    },
+    {
+      "id": "q9",
+      "question": "Why does the paper assume that data misfits are finely quantized and encoded separately for each output unit?",
+      "answer": "To make the information cost of encoding misfits computable and finite, using fixed-width intervals to discretize real-valued errors and applying entropy-based coding per output dimension.",
+      "explanation": "Real-number misfits have infinite information content. By quantizing them into fixed-width bins and encoding each output unit’s misfit independently, the paper enables application of Shannon coding theory to compute bit cost as -log(p).",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "To simplify the network architecture",
+        "To reduce the number of training epochs required",
+        "To make misfits easier to visualize"
+      ],
+      "hint": "The paper mentions 'finite amount of information' and 'fixed width intervals'—why are these necessary?"
+    },
+    {
+      "id": "q10",
+      "question": "How does the sender-receiver model in the paper illustrate the MDL principle for neural networks?",
+      "answer": "The sender encodes both the network weights (model description) and the discrepancies between predicted and actual outputs (data misfit), while the receiver reconstructs outputs using only weights and misfits—demonstrating that total bits sent = model cost + data fit cost.",
+      "explanation": "This metaphor captures MDL: the goal is to minimize total communication cost. The model (weights) must be simple enough, and the errors small enough—both encoded in bits—to ensure optimal generalization.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It shows how to compress training data before sending it",
+        "It describes a distributed learning protocol",
+        "It explains how to encrypt neural network weights"
+      ],
+      "hint": "Think of the sender as the trainer and the receiver as the deployed model—what must be transmitted for correct predictions?"
+    },
+    {
+      "id": "q11",
+      "question": "What is the relationship between weight quantization width and information cost in the paper’s framework?",
+      "answer": "Narrower quantization intervals increase information cost because they reduce the probability mass assigned to each value, leading to higher -log(p) values.",
+      "explanation": "Information cost = -log(probability mass). Narrower intervals mean lower probability per bin (p), so -log(p) increases. This reflects that finer quantization requires more bits to encode.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Wider intervals increase information cost because they capture more detail",
+        "Information cost is independent of quantization width",
+        "Quantization width directly determines the number of weights"
+      ],
+      "hint": "Look at Figure 1: if the bin is narrower, what happens to the probability mass under a Gaussian curve?"
+    },
+    {
+      "id": "q12",
+      "question": "Why does the paper state that 'less information in weights than in output vectors' improves generalization?",
+      "answer": "Because if the weights contain less information than the training outputs, the model cannot memorize training examples but must instead learn generalizable patterns that compress the data structure.",
+      "explanation": "If weights encoded as much information as outputs, they’d overfit. By constraining weight information below output entropy, the model is forced to find efficient representations—generalizing better to unseen data.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces the number of parameters, which always improves generalization",
+        "It ensures all outputs are identical",
+        "It makes the network linear"
+      ],
+      "hint": "Think about overfitting: what happens when a model has too much capacity relative to data?"
+    },
+    {
+      "id": "q13",
+      "question": "What does the paper suggest about weight-sharing as a method for reducing information in weights?",
+      "answer": "Weight-sharing can be effective if based on natural symmetries of the task, as it reduces redundancy by forcing identical weights across groups of connections.",
+      "explanation": "The paper cites Lang, Waibel, and Hinton (1990) and LeCun (1989) to show that sharing weights—e.g., in convolutional layers—reduces model complexity by decreasing the number of independent parameters.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It is the most effective method regardless of task structure",
+        "It eliminates all information from weights",
+        "It is incompatible with the MDL principle"
+      ],
+      "hint": "The paper mentions weight-sharing in the context of exploiting symmetries—what does that imply?"
+    },
+    {
+      "id": "q14",
+      "question": "How does the paper justify using a Gaussian distribution to model weight uncertainty for MDL purposes?",
+      "answer": "Because the log probability of a quantized Gaussian weight is analytically tractable and decomposes into a constant term plus a quadratic penalty on the weight magnitude, enabling exact gradient computation.",
+      "explanation": "The Gaussian assumption allows the information cost to be expressed as -log(quantization width) - weight²/(2σ²), which is smooth and differentiable—key for gradient-based optimization without Monte Carlo methods.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Because Gaussian noise is the most common type of noise in neural networks",
+        "Because it minimizes training time",
+        "Because Gaussian distributions are always optimal for any data"
+      ],
+      "hint": "The paper says the derivation is exact and efficient—what property of Gaussians enables this?"
+    },
+    {
+      "id": "q15",
+      "question": "Why is it critical that output units be linear for the method to compute exact derivatives efficiently?",
+      "answer": "Because linearity allows the error gradients to be computed analytically without requiring Monte Carlo sampling over weight noise, enabling exact backpropagation through the noisy weights.",
+      "explanation": "Non-linear output units would make the expected error depend on complex integrals over weight distributions. Linearity ensures that expectation and differentiation commute, allowing exact gradient computation.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Because linear outputs are easier to quantize",
+        "Because nonlinear units increase information content",
+        "Because the paper only considers binary classification"
+      ],
+      "hint": "Think about how noise propagates through nonlinear functions—why does that break exact gradients?"
+    },
+    {
+      "id": "q16",
+      "question": "How does the paper’s approach differ from traditional weight decay regularization?",
+      "answer": "While weight decay penalizes large weights directly via L2 norms, the paper's MDL approach penalizes information content in weights using probabilistic encoding cost derived from noise-induced probability mass.",
+      "explanation": "Weight decay is a heuristic penalty. The MDL approach derives the penalty from information theory: bits needed to encode weights under Gaussian noise, linking regularization to coding theory and optimal compression.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Weight decay uses Gaussian noise; MDL does not",
+        "MDL adds more parameters than weight decay",
+        "Weight decay is based on entropy, not L2 norms"
+      ],
+      "hint": "Both penalize large weights—but what is the theoretical foundation in each case?"
+    },
+    {
+      "id": "q17",
+      "question": "What does the paper imply about model selection when comparing two neural networks with identical architectures?",
+      "answer": "The network with lower total MDL cost—i.e., fewer bits to encode its weights plus its misfits—is the better model, even if it has slightly higher training error.",
+      "explanation": "MDL prioritizes model simplicity and generalization over training performance. A simpler network with slightly higher error may have lower total description cost, indicating better generalization.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "The network with lower training error is always preferred",
+        "Architecture matters more than information cost",
+        "Model selection should be based solely on validation accuracy"
+      ],
+      "hint": "MDL is about total description length—not training error alone."
+    },
+    {
+      "id": "q18",
+      "question": "How does the paper’s MDL framework provide a theoretical justification for regularization in neural networks?",
+      "answer": "It shows that regularization (via noise or quantization) corresponds to minimizing the description length of weights, which is equivalent to balancing model complexity against data fit—preventing overfitting by design.",
+      "explanation": "By framing regularization as a coding problem, the paper grounds it in information theory: overfitting occurs when model description cost exceeds data compression benefit. MDL formalizes this trade-off mathematically.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Regularization is unnecessary if you have enough data",
+        "MDL only applies to linear models",
+        "Regularization is purely a heuristic with no theoretical basis"
+      ],
+      "hint": "Think of regularization not as a trick, but as a consequence of encoding efficiency."
+    },
+    {
+      "id": "q19",
+      "question": "What is the key insight that connects information theory, neural network generalization, and model complexity in this paper?",
+      "answer": "Generalization is achieved not by reducing parameters directly, but by minimizing the information content required to describe both the model and its errors—linking compression, complexity, and predictive power.",
+      "explanation": "The paper’s breakthrough is reframing generalization as a data compression problem: the best model is not the one that fits training data perfectly, but the one that compresses it most efficiently.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Generalization is best achieved by maximizing model size",
+        "Information theory has no relevance to neural networks",
+        "Complex models always generalize better"
+      ],
+      "hint": "What do 'description length' and 'compression' have to do with predicting unseen data?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the paper’s claim that MDL provides a principled framework for neural network regularization. What is its major strength and one potential limitation?",
+      "answer": "Strength: MDL provides a theoretically grounded, information-theoretic justification for regularization that unifies model complexity and data fit under a single objective. Limitation: The assumption of Gaussian noise and fixed quantization may not capture the true distribution of optimal weights in complex architectures.",
+      "explanation": "The strength lies in its foundation in Shannon coding theory, making regularization objective and interpretable. A limitation is that real-world weight distributions may be non-Gaussian or multimodal, making the Gaussian approximation suboptimal in practice.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "MDL is superior to all other methods and has no limitations",
+        "The approach requires no training data, making it ideal for zero-shot learning",
+        "MDL increases model capacity and improves performance on all datasets"
+      ],
+      "hint": "Think about the assumptions made: Gaussian noise, fixed quantization—how realistic are they?"
+    }
+  ],
+  "paper_id": 5,
+  "title": "Keeping Neural Networks Simple (MDL)",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 7,
+    "hard": 7
+  }
+}

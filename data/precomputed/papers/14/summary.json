@@ -1,0 +1,27 @@
+{
+  "one_liner": "This paper introduces attention mechanisms in neural machine translation, allowing models to dynamically focus on relevant parts of the source sentence during translation, overcoming the bottleneck of fixed-length vector encodings.",
+  "paragraphs": [
+    "Neural machine translation (NMT) aimed to replace traditional phrase-based systems with a single neural network that learns to translate end-to-end. However, early NMT models used an encoder-decoder architecture that compressed entire source sentences into a single fixed-length vector, which struggled with long sentences due to information loss. This limitation made it difficult for the model to retain details from lengthy inputs, leading to degraded translation quality as sentence length increased.",
+    "To solve this, the authors proposed an attention mechanism that allows the decoder to softly search and weigh relevant parts of the source sentence dynamically as it generates each target word. Instead of relying on one fixed vector, the encoder now produces a sequence of vectors representing each word in the source sentence. The decoder uses these to compute context-specific attention weights, focusing on the most relevant source words for each target word prediction—without requiring explicit alignment rules or segmentation.",
+    "The proposed attention-based model achieved translation quality comparable to state-of-the-art phrase-based systems on English-to-French tasks, especially improving performance on longer sentences. Qualitative analysis showed that the learned attention alignments closely matched human intuition about word-to-word correspondences between source and target languages. This breakthrough demonstrated that attention could be learned jointly with translation, paving the way for modern transformer-based models and revolutionizing sequence-to-sequence tasks beyond machine translation."
+  ],
+  "key_takeaways": [
+    "Fixed-length encodings in early NMT models were a bottleneck for long sentences; attention solves this by allowing dynamic focus.",
+    "Attention enables the model to learn alignments between source and target words without explicit supervision.",
+    "The method improves translation quality across all sentence lengths but shows the most dramatic gains on longer sentences.",
+    "Attention weights learned by the model align intuitively with linguistic expectations, making the system more interpretable.",
+    "This work laid the foundation for modern sequence models like Transformers, which rely heavily on attention mechanisms."
+  ],
+  "eli5": "Imagine you're reading a long story in one language and trying to tell it in another. Instead of memorizing the whole story in your head before speaking, you peek back at the story bit by bit—focusing on the part that helps you say the next word. That’s what this model does: it looks at just the right words in the original sentence as it writes each word of the translation.",
+  "prerequisites": [
+    "Basic understanding of neural networks",
+    "Familiarity with recurrent neural networks (RNNs) and sequence-to-sequence models"
+  ],
+  "applications": [
+    "Machine translation systems like Google Translate and DeepL",
+    "Text summarization, speech recognition, and chatbot dialogue systems"
+  ],
+  "paper_id": 14,
+  "title": "Neural Machine Translation (Attention)",
+  "category": "Attention"
+}

@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the main problem that ResNet aims to solve in deep convolutional neural networks?",
+      "answer": "ResNet aims to solve the degradation problem, where increasing network depth leads to higher training error despite no overfitting.",
+      "explanation": "The paper shows that as networks become deeper, accuracy saturates and then degrades, which is not due to overfitting but because deeper networks become harder to optimize. ResNet addresses this by introducing residual learning to make optimization easier.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Overfitting in deep networks",
+        "Vanishing gradients due to poor initialization",
+        "Lack of computational power for deep models"
+      ],
+      "hint": "The paper mentions that deeper networks were expected to perform better but instead showed higher training error."
+    },
+    {
+      "id": "q2",
+      "question": "What is the key mathematical formulation introduced by ResNet to improve training of deep networks?",
+      "answer": "ResNet reformulates the layer output as H(x) = F(x) + x, where F(x) is the residual function to be learned and x is the identity mapping.",
+      "explanation": "Instead of learning the direct mapping H(x), ResNet learns the residual F(x) = H(x) - x. This allows the network to easily learn identity mappings by pushing F(x) toward zero, which simplifies optimization.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "H(x) = F(x) * x",
+        "H(x) = F(x) - x",
+        "H(x) = W * x + b"
+      ],
+      "hint": "The paper uses the phrase 'learning residual functions with reference to the layer inputs'."
+    },
+    {
+      "id": "q3",
+      "question": "What is the role of shortcut connections in ResNet?",
+      "answer": "Shortcut connections enable identity mappings by directly adding the input to the output of stacked layers, facilitating gradient flow and easier optimization.",
+      "explanation": "Shortcut connections skip one or more layers and add the input to the output of those layers. This allows gradients to flow directly through the network, avoiding degradation and enabling training of very deep networks.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To reduce the number of parameters in the network",
+        "To increase computational complexity for better accuracy",
+        "To replace convolutional layers entirely"
+      ],
+      "hint": "The paper states that shortcut connections perform identity mapping and add no extra parameters."
+    },
+    {
+      "id": "q4",
+      "question": "How does ResNet compare in depth to VGG networks according to the paper?",
+      "answer": "ResNet has up to 152 layers, which is 8 times deeper than VGG nets (which have around 16-19 layers), yet still has lower computational complexity.",
+      "explanation": "The abstract explicitly states that ResNet models with 152 layers are 8x deeper than VGG nets but have lower complexity, demonstrating that depth can be achieved without proportional increases in computational cost.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "ResNet has fewer layers than VGG but higher accuracy",
+        "VGG and ResNet have the same number of layers",
+        "ResNet is 8 times shallower than VGG"
+      ],
+      "hint": "Look at the abstract: '8x deeper than VGG nets but still having lower complexity'."
+    },
+    {
+      "id": "q5",
+      "question": "What dataset was used to demonstrate that ResNet achieved state-of-the-art results in 2015?",
+      "answer": "ImageNet dataset (ILSVRC 2015 classification task)",
+      "explanation": "The paper reports that ResNet achieved 3.57% top-5 error on the ImageNet test set, winning first place in ILSVRC 2015 classification. This was a major milestone in deep learning.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "CIFAR-10 only",
+        "MNIST dataset",
+        "COO dataset"
+      ],
+      "hint": "The paper mentions winning the 1st place on ILSVRC 2015 classification — this was a landmark result."
+    },
+    {
+      "id": "q6",
+      "question": "What is the significance of the training error plot in Figure 1 of the paper?",
+      "answer": "It shows that deeper plain networks (e.g., 56-layer) have higher training error than shallower ones (20-layer), indicating the degradation problem.",
+      "explanation": "Figure 1 contrasts training and test errors for plain networks. The increasing training error with depth proves degradation is not due to overfitting, but optimization difficulty — which ResNet solves.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It proves that deeper networks always overfit",
+        "It shows ResNet outperforms plain networks on test error",
+        "It demonstrates the benefits of batch normalization"
+      ],
+      "hint": "The figure compares 20-layer and 56-layer plain networks — deeper ones perform worse in training."
+    },
+    {
+      "id": "q7",
+      "question": "Why does the paper argue that adding layers should not increase training error?",
+      "answer": "Because a deeper network can always copy the weights of a shallower model and add identity mappings for extra layers, maintaining at least the same performance.",
+      "explanation": "The paper states that if a deeper network simply copies all layers from a shallower one and adds identity mappings for new layers, it should perform no worse. The fact that plain networks degrade shows optimization failures.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Because deeper networks have more parameters and thus better capacity",
+        "Because training data becomes larger with depth",
+        "Because batch normalization prevents degradation"
+      ],
+      "hint": "Think about what happens if you add layers that do nothing — why should accuracy go down?"
+    },
+    {
+      "id": "q8",
+      "question": "How does ResNet differ from traditional feedforward networks in terms of layer mapping?",
+      "answer": "Traditional networks learn H(x) directly, while ResNet learns F(x) = H(x) - x and uses H(x) = F(x) + x.",
+      "explanation": "ResNet introduces a residual learning framework where the layers learn the difference (residual) between input and desired output, rather than the full mapping. This reformulation makes learning identity mappings easier.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "ResNet uses recurrent connections instead of feedforward",
+        "Traditional networks use residual learning by default",
+        "ResNet removes all nonlinearities from layers"
+      ],
+      "hint": "The paper contrasts 'learning unreferenced functions' vs. 'learning residual functions with reference to layer inputs'."
+    },
+    {
+      "id": "q9",
+      "question": "What evidence does the paper provide to show that ResNet is easier to optimize than plain networks?",
+      "answer": "ResNet achieves lower training error on ImageNet and CIFAR-10 as depth increases, while plain networks show increasing training error.",
+      "explanation": "The paper presents empirical results showing that as depth increases, plain networks have higher training error (degradation), but ResNet maintains or improves performance. This demonstrates easier optimization.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "ResNet has fewer parameters than plain networks",
+        "Plain networks converge faster in early epochs",
+        "ResNet uses a different optimizer (Adam instead of SGD)"
+      ],
+      "hint": "Compare training error curves in Figure 1 and the corresponding ImageNet results."
+    },
+    {
+      "id": "q10",
+      "question": "What is the role of identity mapping in ResNet’s architecture?",
+      "answer": "Identity mapping allows gradients to flow directly through shortcut connections, enabling training of very deep networks without degradation.",
+      "explanation": "By adding the input directly to the output of residual blocks via identity mapping, ResNet ensures that gradients can bypass layers. This mitigates vanishing gradients and enables optimization of 100+ layer networks.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces the number of convolutional layers needed",
+        "It replaces activation functions like ReLU",
+        "It increases model complexity for better generalization"
+      ],
+      "hint": "Identity mapping is implemented via shortcut connections and adds no parameters."
+    },
+    {
+      "id": "q11",
+      "question": "Why did the authors choose to use residual learning inspired by multigrid methods in PDEs?",
+      "answer": "Because multigrid methods solve complex systems by iteratively refining residuals, and the authors saw a parallel in learning residual functions rather than direct mappings.",
+      "explanation": "Section 2 discusses how multigrid and hierarchical basis preconditioning solve problems by working on residuals between scales. The authors argue that learning residual functions is similarly more efficient.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Because multigrid methods are faster in image processing",
+        "Because they were required by the ILSVRC competition rules",
+        "Because multigrid methods use ReLU activations"
+      ],
+      "hint": "Look at Section 2: 'These methods suggest that a good reformulation or preconditioning can simplify optimization.'"
+    },
+    {
+      "id": "q12",
+      "question": "What does the paper claim about the generalization ability of ResNet beyond ImageNet?",
+      "answer": "ResNet’s deep representations generalize well to other tasks, leading to 1st-place results in COCO detection, ImageNet detection, and localization.",
+      "explanation": "The paper states that the deep representations from ResNet led to wins in multiple 2015 competitions beyond classification, including COCO detection and segmentation, proving strong generalization.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "ResNet was only designed for ImageNet and does not generalize",
+        "Generalization was worse than VGG due to overfitting",
+        "The paper only evaluated ResNet on CIFAR-10"
+      ],
+      "hint": "Check the abstract and conclusion: ResNet won multiple ILSVRC & COCO 2015 tasks."
+    },
+    {
+      "id": "q13",
+      "question": "How does the paper explain why adding more layers to a plain network increases training error?",
+      "answer": "Current optimization methods fail to find good solutions for deeper plain networks, even though better solutions (e.g., identity mappings) exist in theory.",
+      "explanation": "The paper argues that the degradation is not due to overfitting, but because optimization algorithms cannot find solutions as good as the constructed identity mapping solution for deeper networks.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "More layers cause overfitting on training data",
+        "Computational resources become insufficient",
+        "The activation functions become unstable"
+      ],
+      "hint": "Think about the difference between theoretical possibility and practical optimization failure."
+    },
+    {
+      "id": "q14",
+      "question": "What is the advantage of shortcut connections over auxiliary classifiers in earlier works?",
+      "answer": "Shortcut connections directly connect layers and add no parameters or computation, whereas auxiliary classifiers require additional loss functions and complexity.",
+      "explanation": "While earlier works used auxiliary classifiers to improve gradient flow, ResNet’s shortcut connections are lightweight (no parameters), integrated directly into the forward pass, and enable end-to-end training without extra components.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Auxiliary classifiers are more accurate than shortcut connections",
+        "Shortcut connections increase computational cost",
+        "Auxiliary classifiers add identity mappings by default"
+      ],
+      "hint": "The paper contrasts 'auxiliary classifiers' (Section 2) with 'shortcut connections' — one adds complexity, the other doesn't."
+    },
+    {
+      "id": "q15",
+      "question": "Why does the paper argue that learning residual functions is easier than learning unreferenced functions?",
+      "answer": "Because learning the difference (residual) between input and desired output is simpler, especially when identity mapping is optimal — it just requires pushing the residual to zero.",
+      "explanation": "If identity mapping is optimal, learning H(x) = x requires the network to zero out F(x). It's easier for a stack of nonlinear layers to push F(x) toward zero than to fit H(x) = x directly.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Residual functions have fewer parameters",
+        "Unreferenced functions are always non-convex",
+        "Residual learning reduces the number of layers needed"
+      ],
+      "hint": "The paper says: 'it would be easier to push the residual to zero than to fit an identity mapping by a stack of nonlinear layers.'"
+    },
+    {
+      "id": "q16",
+      "question": "How did ResNet enable 100- and 1000-layer networks on CIFAR-10 when previous networks failed?",
+      "answer": "By using residual learning with shortcut connections to mitigate degradation and enable gradient flow through deep paths.",
+      "explanation": "The paper shows that plain networks degrade even on CIFAR-10 with 56 layers, but residual networks successfully train 100 and even 1000-layer models with improved accuracy, thanks to residual learning.",
+      "difficulty": "hard",
+      "type": "applied",
+      "distractors": [
+        "By using larger batch sizes and more GPUs",
+        "By replacing convolutions with fully connected layers",
+        "By reducing the number of filters per layer"
+      ],
+      "hint": "The paper’s key contribution is enabling deep networks via residual learning — apply this to the CIFAR-10 results."
+    },
+    {
+      "id": "q17",
+      "question": "What does the success of ResNet on COCO detection suggest about its impact beyond image classification?",
+      "answer": "ResNet’s deep representations are generic and transferable, making them effective for object detection, localization, and segmentation tasks.",
+      "explanation": "The paper states that ResNet led to 1st-place results in multiple non-classification tasks, suggesting its representations are broadly useful and not limited to classification.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "ResNet was specifically designed for object detection",
+        "COCO results were due to better data preprocessing",
+        "ResNet performed worse on detection than classification"
+      ],
+      "hint": "The abstract says: 'Deep residual nets are foundations of our submissions to ILSVRC & COCO 2015 competitions... won the 1st places on detection, localization, segmentation.'"
+    },
+    {
+      "id": "q18",
+      "question": "Why is the fact that ResNet has lower computational complexity than VGG significant?",
+      "answer": "It demonstrates that deeper networks can be more accurate without proportional increases in computation, challenging the assumption that depth requires higher cost.",
+      "explanation": "Before ResNet, deeper networks were thought to be computationally prohibitive. ResNet showed that with residual learning, depth can improve accuracy while keeping complexity low — a breakthrough.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "ResNet uses less memory but more time than VGG",
+        "VGG networks have fewer parameters than ResNet",
+        "Computational complexity was not a concern in the paper"
+      ],
+      "hint": "The abstract says: '8x deeper than VGG nets but still having lower complexity.' Why is that surprising?"
+    },
+    {
+      "id": "q19",
+      "question": "What does the paper imply about the future of deep learning architectures based on ResNet’s success?",
+      "answer": "Residual learning is a generic principle applicable to other vision and non-vision problems, suggesting it could become a foundational design pattern.",
+      "explanation": "The conclusion states that residual learning is generic and expected to be applicable beyond vision. This foreshadowed its use in transformers, speech recognition, and more.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "ResNet should be abandoned in favor of recurrent models",
+        "Depth is no longer important for performance",
+        "Residual learning only works on ImageNet"
+      ],
+      "hint": "Look at the last sentence of the paper: 'This strong evidence shows that the residual learning principle is generic...'"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim that 'ResNet solved the degradation problem' — what limitations or unanswered questions remain?",
+      "answer": "While ResNet solved training degradation for deep networks, it doesn't fully explain why identity mappings are optimal or how residual learning works theoretically. The mechanism is empirical, not fully understood.",
+      "explanation": "ResNet empirically solved degradation through architecture design, but the paper doesn't provide a theoretical proof of why residual learning works. Later work explored this (e.g., information flow analysis), but the paper leaves theoretical justification open.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "ResNet completely solved all optimization problems in deep learning",
+        "The degradation problem was never real — it was a measurement artifact",
+        "ResNet made depth irrelevant for future models"
+      ],
+      "hint": "The paper says 'we provide empirical evidence' — not theoretical proof. What does that imply?"
+    }
+  ],
+  "paper_id": 10,
+  "title": "Deep Residual Learning (ResNet)",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

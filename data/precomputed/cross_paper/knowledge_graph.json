@@ -1,0 +1,453 @@
+{
+  "nodes": [
+    {
+      "id": 1,
+      "title": "The First Law of Complexodynamics",
+      "category": "Complexity Theory",
+      "difficulty": 4,
+      "path": "theory"
+    },
+    {
+      "id": 2,
+      "title": "The Unreasonable Effectiveness of RNNs",
+      "category": "RNNs",
+      "difficulty": 2,
+      "path": "foundations"
+    },
+    {
+      "id": 3,
+      "title": "Understanding LSTM Networks",
+      "category": "RNNs",
+      "difficulty": 2,
+      "path": "foundations"
+    },
+    {
+      "id": 4,
+      "title": "Recurrent Neural Network Regularization",
+      "category": "RNNs",
+      "difficulty": 3,
+      "path": "foundations"
+    },
+    {
+      "id": 5,
+      "title": "Keeping Neural Networks Simple (MDL)",
+      "category": "Information Theory",
+      "difficulty": 4,
+      "path": "theory"
+    },
+    {
+      "id": 6,
+      "title": "Pointer Networks",
+      "category": "Sequence Models",
+      "difficulty": 3,
+      "path": "transformers"
+    },
+    {
+      "id": 7,
+      "title": "ImageNet Classification (AlexNet)",
+      "category": "CNNs",
+      "difficulty": 2,
+      "path": "vision"
+    },
+    {
+      "id": 8,
+      "title": "Order Matters: Seq2Seq for Sets",
+      "category": "Sequence Models",
+      "difficulty": 3,
+      "path": "transformers"
+    },
+    {
+      "id": 9,
+      "title": "GPipe: Pipeline Parallelism",
+      "category": "Scaling",
+      "difficulty": 3,
+      "path": "transformers"
+    },
+    {
+      "id": 10,
+      "title": "Deep Residual Learning (ResNet)",
+      "category": "CNNs",
+      "difficulty": 2,
+      "path": "vision"
+    },
+    {
+      "id": 11,
+      "title": "Dilated Convolutions",
+      "category": "CNNs",
+      "difficulty": 3,
+      "path": "vision"
+    },
+    {
+      "id": 12,
+      "title": "Neural Message Passing",
+      "category": "GNNs",
+      "difficulty": 4,
+      "path": "vision"
+    },
+    {
+      "id": 13,
+      "title": "Attention Is All You Need",
+      "category": "Transformers",
+      "difficulty": 3,
+      "path": "transformers"
+    },
+    {
+      "id": 14,
+      "title": "Neural Machine Translation (Attention)",
+      "category": "Attention",
+      "difficulty": 3,
+      "path": "transformers"
+    },
+    {
+      "id": 15,
+      "title": "Identity Mappings in ResNets",
+      "category": "CNNs",
+      "difficulty": 3,
+      "path": "vision"
+    },
+    {
+      "id": 16,
+      "title": "Relational Reasoning Networks",
+      "category": "Reasoning",
+      "difficulty": 3,
+      "path": "theory"
+    },
+    {
+      "id": 17,
+      "title": "Variational Lossy Autoencoder",
+      "category": "Generative",
+      "difficulty": 4,
+      "path": "theory"
+    },
+    {
+      "id": 18,
+      "title": "Relational Recurrent Neural Networks",
+      "category": "RNNs",
+      "difficulty": 4,
+      "path": "foundations"
+    },
+    {
+      "id": 19,
+      "title": "The Coffee Automaton",
+      "category": "Complexity Theory",
+      "difficulty": 5,
+      "path": "theory"
+    },
+    {
+      "id": 20,
+      "title": "Neural Turing Machines",
+      "category": "Memory Networks",
+      "difficulty": 4,
+      "path": "theory"
+    },
+    {
+      "id": 21,
+      "title": "Deep Speech 2",
+      "category": "Speech",
+      "difficulty": 3,
+      "path": "foundations"
+    },
+    {
+      "id": 22,
+      "title": "Scaling Laws for Neural LMs",
+      "category": "Scaling",
+      "difficulty": 3,
+      "path": "transformers"
+    },
+    {
+      "id": 23,
+      "title": "MDL Principle Tutorial",
+      "category": "Information Theory",
+      "difficulty": 4,
+      "path": "theory"
+    },
+    {
+      "id": 24,
+      "title": "Machine Super Intelligence",
+      "category": "AGI",
+      "difficulty": 4,
+      "path": "theory"
+    },
+    {
+      "id": 25,
+      "title": "Kolmogorov Complexity",
+      "category": "Information Theory",
+      "difficulty": 5,
+      "path": "theory"
+    },
+    {
+      "id": 26,
+      "title": "CS231n Course",
+      "category": "CNNs",
+      "difficulty": 2,
+      "path": "vision"
+    }
+  ],
+  "edges": [
+    {
+      "source": 1,
+      "target": 19,
+      "type": "same_category",
+      "category": "Complexity Theory"
+    },
+    {
+      "source": 2,
+      "target": 3,
+      "type": "same_category",
+      "category": "RNNs"
+    },
+    {
+      "source": 2,
+      "target": 4,
+      "type": "same_category",
+      "category": "RNNs"
+    },
+    {
+      "source": 2,
+      "target": 18,
+      "type": "same_category",
+      "category": "RNNs"
+    },
+    {
+      "source": 3,
+      "target": 4,
+      "type": "same_category",
+      "category": "RNNs"
+    },
+    {
+      "source": 3,
+      "target": 18,
+      "type": "same_category",
+      "category": "RNNs"
+    },
+    {
+      "source": 4,
+      "target": 18,
+      "type": "same_category",
+      "category": "RNNs"
+    },
+    {
+      "source": 5,
+      "target": 23,
+      "type": "same_category",
+      "category": "Information Theory"
+    },
+    {
+      "source": 5,
+      "target": 25,
+      "type": "same_category",
+      "category": "Information Theory"
+    },
+    {
+      "source": 23,
+      "target": 25,
+      "type": "same_category",
+      "category": "Information Theory"
+    },
+    {
+      "source": 6,
+      "target": 8,
+      "type": "same_category",
+      "category": "Sequence Models"
+    },
+    {
+      "source": 7,
+      "target": 10,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 7,
+      "target": 11,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 7,
+      "target": 15,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 7,
+      "target": 26,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 10,
+      "target": 11,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 10,
+      "target": 15,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 10,
+      "target": 26,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 11,
+      "target": 15,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 11,
+      "target": 26,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 15,
+      "target": 26,
+      "type": "same_category",
+      "category": "CNNs"
+    },
+    {
+      "source": 9,
+      "target": 22,
+      "type": "same_category",
+      "category": "Scaling"
+    },
+    {
+      "source": 3,
+      "target": 2,
+      "type": "learning_sequence",
+      "path": "foundations"
+    },
+    {
+      "source": 2,
+      "target": 4,
+      "type": "learning_sequence",
+      "path": "foundations"
+    },
+    {
+      "source": 4,
+      "target": 18,
+      "type": "learning_sequence",
+      "path": "foundations"
+    },
+    {
+      "source": 18,
+      "target": 21,
+      "type": "learning_sequence",
+      "path": "foundations"
+    },
+    {
+      "source": 14,
+      "target": 13,
+      "type": "learning_sequence",
+      "path": "transformers"
+    },
+    {
+      "source": 13,
+      "target": 6,
+      "type": "learning_sequence",
+      "path": "transformers"
+    },
+    {
+      "source": 6,
+      "target": 8,
+      "type": "learning_sequence",
+      "path": "transformers"
+    },
+    {
+      "source": 8,
+      "target": 9,
+      "type": "learning_sequence",
+      "path": "transformers"
+    },
+    {
+      "source": 9,
+      "target": 22,
+      "type": "learning_sequence",
+      "path": "transformers"
+    },
+    {
+      "source": 26,
+      "target": 7,
+      "type": "learning_sequence",
+      "path": "vision"
+    },
+    {
+      "source": 7,
+      "target": 10,
+      "type": "learning_sequence",
+      "path": "vision"
+    },
+    {
+      "source": 10,
+      "target": 15,
+      "type": "learning_sequence",
+      "path": "vision"
+    },
+    {
+      "source": 15,
+      "target": 11,
+      "type": "learning_sequence",
+      "path": "vision"
+    },
+    {
+      "source": 11,
+      "target": 12,
+      "type": "learning_sequence",
+      "path": "vision"
+    },
+    {
+      "source": 1,
+      "target": 19,
+      "type": "learning_sequence",
+      "path": "theory"
+    },
+    {
+      "source": 19,
+      "target": 5,
+      "type": "learning_sequence",
+      "path": "theory"
+    },
+    {
+      "source": 5,
+      "target": 23,
+      "type": "learning_sequence",
+      "path": "theory"
+    },
+    {
+      "source": 23,
+      "target": 25,
+      "type": "learning_sequence",
+      "path": "theory"
+    },
+    {
+      "source": 25,
+      "target": 16,
+      "type": "learning_sequence",
+      "path": "theory"
+    },
+    {
+      "source": 16,
+      "target": 17,
+      "type": "learning_sequence",
+      "path": "theory"
+    },
+    {
+      "source": 17,
+      "target": 20,
+      "type": "learning_sequence",
+      "path": "theory"
+    },
+    {
+      "source": 20,
+      "target": 24,
+      "type": "learning_sequence",
+      "path": "theory"
+    }
+  ],
+  "generated_at": "2026-01-26T22:11:23.967348"
+}

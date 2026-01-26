@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
 import { GlobalProvider } from "@/context/GlobalContext";
+import { LearningProvider } from "@/context/LearningContext";
 import ThemeScript from "@/components/ThemeScript";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import PWARegister from "@/components/PWARegister";
+import OfflineIndicator from "@/components/OfflineIndicator";
 
 // Use Inter font with swap display for better loading
 const font = Inter({
@@ -16,6 +18,32 @@ const font = Inter({
 export const metadata: Metadata = {
   title: "Ilya's Top 30 - AI Paper Learning Platform",
   description: "Master the foundational AI papers from Ilya Sutskever's reading list",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Ilya's Top 30",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  applicationName: "Ilya's Top 30",
+  keywords: ["AI", "machine learning", "deep learning", "papers", "education", "Ilya Sutskever"],
+  authors: [{ name: "Ilya's Top 30 Team" }],
+  creator: "Ilya's Top 30",
+  publisher: "Ilya's Top 30",
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -24,17 +52,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
-        <head>
-          <ThemeScript />
-        </head>
-        <body className={font.className}>
-          <GlobalProvider>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeScript />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+      </head>
+      <body className={font.className}>
+        <GlobalProvider>
+          <LearningProvider>
             <LayoutWrapper>{children}</LayoutWrapper>
-          </GlobalProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+            <OfflineIndicator />
+          </LearningProvider>
+        </GlobalProvider>
+        <PWARegister />
+      </body>
+    </html>
   );
 }

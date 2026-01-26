@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary limitation of standard memory architectures like LSTMs that the paper identifies in relational reasoning tasks?",
+      "answer": "Standard memory architectures like LSTMs pack all information into a single hidden vector, which makes it difficult to explicitly compartmentalize memories or compute interactions between them, limiting their capacity for relational reasoning.",
+      "explanation": "The paper argues that while LSTMs can store and retrieve information, their unified hidden state hinders explicit modeling of relationships between distinct memory elements, which is critical for relational reasoning.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "LSTMs cannot handle sequential data.",
+        "LSTMs have too much memory capacity.",
+        "LSTMs are too slow to compute attention."
+      ],
+      "hint": "Think about how LSTMs represent memory—do they keep memories separate or combine them?"
+    },
+    {
+      "id": "q2",
+      "question": "What is the key innovation introduced in the Relational Memory Core (RMC)?",
+      "answer": "The RMC introduces multi-head dot product attention to enable direct interactions between memory slots at a single timestep, allowing memories to attend to and update each other.",
+      "explanation": "Unlike traditional RNNs or memory-augmented models that treat memories as isolated slots, the RMC uses attention mechanisms to let each memory slot interact with all others, enabling relational reasoning between stored representations.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "The RMC uses recurrent connections to update memory.",
+        "The RMC increases memory size by adding more slots.",
+        "The RMC replaces attention with convolutional layers."
+      ],
+      "hint": "The RMC’s innovation lies in how memories interact—not just stored, but actively related."
+    },
+    {
+      "id": "q3",
+      "question": "In the RMC, what role do queries, keys, and values play in multi-head dot product attention?",
+      "answer": "Queries represent the current memory slot’s request for information, keys identify which memories are relevant, and values contain the actual content to be aggregated based on attention weights.",
+      "explanation": "In MHDPA, each memory slot generates a query to search for related memories (keys), computes attention weights via dot products, and uses those weights to combine values from other slots—enabling content-based memory interaction.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Queries store the input, keys store outputs, and values are unused.",
+        "Keys determine the order of memory retrieval, queries compute loss, values update time steps.",
+        "Queries and keys are used for gating; values are only for input."
+      ],
+      "hint": "Think of queries as questions, keys as answers, and values as the full answer text."
+    },
+    {
+      "id": "q4",
+      "question": "How does the RMC differ from traditional attention mechanisms in Transformers?",
+      "answer": "The RMC applies multi-head dot product attention within a single timestep among memory slots, whereas Transformers typically apply attention across all previous time steps or sequences.",
+      "explanation": "While Transformers use attention to relate elements across sequence positions, RMC focuses on inter-memory interactions within the same time step—making it more suitable for relational reasoning over stored memory states.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "RMC uses attention only in the output layer.",
+        "Transformers use RMC as their core module.",
+        "RMC applies attention across time steps, not within them."
+      ],
+      "hint": "The RMC’s attention happens inside one time step, not between them."
+    },
+    {
+      "id": "q5",
+      "question": "What is the purpose of residual connections and MLPs in the RMC architecture?",
+      "answer": "Residual connections help maintain gradient flow and stabilize training, while MLPs enable non-linear transformations of the attended memory representations.",
+      "explanation": "After attention updates the memories, residual connections preserve original information and MLPs add expressiveness by learning complex transformations—both are critical for effective relational reasoning.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Residual connections are used to compress memory size.",
+        "MLPs replace the attention mechanism entirely.",
+        "Residual connections are used to reduce memory slots."
+      ],
+      "hint": "Think of residual connections as a safety net, and MLPs as the brain’s ability to think deeper after seeing something."
+    },
+    {
+      "id": "q6",
+      "question": "Why does the paper argue that relational reasoning is important in temporal domains?",
+      "answer": "Because understanding how entities (e.g., events, objects, or memory states) are connected over time allows models to perform higher-order reasoning beyond simple pattern matching.",
+      "explanation": "The paper emphasizes that relational reasoning involves comparing and contrasting entities across time—e.g., understanding that ‘A happened before B, so C is likely’—which requires modeling relationships, not just isolated states.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Relational reasoning reduces computational cost.",
+        "It helps models memorize more data faster.",
+        "It is only useful for image processing tasks."
+      ],
+      "hint": "Think about how humans reason: we don’t just remember facts, we understand how they connect."
+    },
+    {
+      "id": "q7",
+      "question": "How does the RMC address the compartmentalization problem in memory-augmented models?",
+      "answer": "By maintaining a fixed set of memory slots and enabling interactions between them via attention, the RMC allows both compartmentalization and relational reasoning to coexist.",
+      "explanation": "Traditional memory-augmented models compartmentalize memories but struggle to relate them; RMC preserves slot-based structure while adding attention-based interactions, solving both problems simultaneously.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RMC eliminates memory slots to avoid compartmentalization.",
+        "It uses a single global memory vector like LSTMs.",
+        "Compartmentalization is ignored in RMC to prioritize speed."
+      ],
+      "hint": "The RMC doesn’t throw away slots—it gives them a way to talk to each other."
+    },
+    {
+      "id": "q8",
+      "question": "In the context of this paper, why might a convolutional kernel be considered a form of relational reasoning?",
+      "answer": "Because it computes a linear combination (relation) of entities (pixels) within a local receptive field, capturing relationships between nearby elements.",
+      "explanation": "The paper notes that even simple operations like convolution can be interpreted as relational reasoning since they combine multiple inputs (pixels) to form a new representation based on their spatial relationships.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Convolutional kernels ignore relationships and treat pixels independently.",
+        "They are only used for feature extraction, not reasoning.",
+        "Convolutional kernels cannot be related to relational reasoning."
+      ],
+      "hint": "A kernel doesn’t just look at one pixel—it looks at neighbors and combines them."
+    },
+    {
+      "id": "q9",
+      "question": "What evidence does the paper provide to show that standard models struggle with relational reasoning?",
+      "answer": "The authors develop a toy task specifically designed to stress relational reasoning over sequential information, and show that standard architectures like LSTMs fail on it while RMC succeeds.",
+      "explanation": "By creating a controlled, synthetic task that requires understanding relationships between past events (e.g., ordering or comparing entities), they demonstrate a clear performance gap, exposing the limitations of existing models.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "They tested standard models on image classification tasks.",
+        "Standard models were faster, so they chose not to use them.",
+        "The paper provides no empirical evidence—only theoretical claims."
+      ],
+      "hint": "Look for the toy task mentioned in Section 2—it’s designed to expose relational reasoning failures."
+    },
+    {
+      "id": "q10",
+      "question": "How does the RMC improve performance on partially observed reinforcement learning tasks like MiniPacman?",
+      "answer": "By enabling the model to relate past observations and actions over time, RMC allows it to infer hidden states and predict future outcomes based on relational patterns in memory.",
+      "explanation": "In partially observed environments, the agent must reason about how past events relate to current state and future goals. RMC’s memory interactions help encode these relationships explicitly, improving decision-making.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "RMC increases the number of actions available to the agent.",
+        "It reduces the need for reward signals by pre-training on images.",
+        "RMC replaces the policy network with a rule-based system."
+      ],
+      "hint": "Think about how MiniPacman requires remembering where ghosts were, not just what’s visible now."
+    },
+    {
+      "id": "q11",
+      "question": "Why is the use of row-wise shared weights in the RMC important?",
+      "answer": "It ensures that each memory slot uses the same projection functions for queries, keys, and values, enabling consistent relational reasoning across all memory slots regardless of their position or content.",
+      "explanation": "Row-wise shared weights mean that the same linear transformations (Wq, Wk, Wv) are applied to every memory slot—this promotes uniform relational reasoning and allows the model to learn generalizable interaction patterns.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Shared weights reduce memory usage by eliminating projections.",
+        "They allow different slots to have unique attention rules.",
+        "Shared weights are only used in the MLP layer."
+      ],
+      "hint": "Think of it like giving every memory slot the same set of tools to analyze others."
+    },
+    {
+      "id": "q12",
+      "question": "How does the RMC’s attention mechanism reduce locality bias compared to vanilla RNNs?",
+      "answer": "By allowing each memory slot to attend to any other memory slot—not just the most recent one—it enables non-local relational reasoning across time steps, unlike vanilla RNNs which rely on sequential proximity.",
+      "explanation": "Vanilla RNNs are biased toward recent inputs due to sequential processing; RMC’s attention breaks this bias by letting any past memory influence the current one based on content relevance, not temporal order.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RMC removes temporal information entirely.",
+        "Attention increases locality by focusing on nearby slots only.",
+        "Vanilla RNNs use attention to reduce bias."
+      ],
+      "hint": "RMC doesn’t care if a memory is 5 steps back—it only cares how relevant it is now."
+    },
+    {
+      "id": "q13",
+      "question": "What is the significance of using multi-head attention in the RMC instead of single-head?",
+      "answer": "Multi-head attention allows the model to jointly attend to multiple relational patterns simultaneously, capturing diverse types of memory interactions (e.g., similarity, contrast, hierarchy).",
+      "explanation": "Each attention head can learn a different relational pattern—such as which memories are similar, conflicting, or hierarchical—enabling richer and more nuanced reasoning than a single attention function.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Multi-head increases computational cost but reduces accuracy.",
+        "It is used to reduce the number of memory slots needed.",
+        "Multi-head attention replaces residual connections."
+      ],
+      "hint": "Think of each head as a different lens—some see similarities, others see differences."
+    },
+    {
+      "id": "q14",
+      "question": "How does the RMC’s approach compare to Message Passing Neural Networks (MPNNs) in terms of relational reasoning?",
+      "answer": "While MPNNs compute relations between entities connected by edges (e.g., in graphs), RMC computes relations among memory slots without requiring predefined graph structure, making it more flexible for sequential data.",
+      "explanation": "MPNNs rely on fixed graph topologies; RMC dynamically determines which memories are related via attention, making it better suited for temporal sequences where relationships aren’t predefined.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RMC and MPNNs are identical in structure.",
+        "MPNNs outperform RMC on all sequential tasks.",
+        "RMC requires explicit graph inputs like MPNNs."
+      ],
+      "hint": "MPNNs need a map; RMC makes its own connections as it goes."
+    },
+    {
+      "id": "q15",
+      "question": "Why does the paper claim that relational reasoning is not always tied to spatial proximity?",
+      "answer": "Because relationships between entities can be abstract and non-local—e.g., two events separated by time may still have a causal or logical relationship that spatial proximity cannot capture.",
+      "explanation": "The paper contrasts local operations (like convolution) with non-local reasoning, emphasizing that relational understanding often requires connecting distant or abstract elements—something attention enables without spatial constraints.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "The paper argues that all relationships are spatial.",
+        "Non-local reasoning is impossible in neural networks.",
+        "Spatial proximity improves relational reasoning."
+      ],
+      "hint": "Think of a story: the cause might be at the beginning, and the effect at the end—no spatial link, but strong relational one."
+    },
+    {
+      "id": "q16",
+      "question": "What is the main advantage of RMC over memory-augmented neural networks with slot-based memory?",
+      "answer": "RMC enables explicit, dynamic interactions between memory slots via attention, whereas slot-based models often treat memories as isolated units with limited inter-slot communication.",
+      "explanation": "While both use fixed slots, traditional memory-augmented models lack mechanisms for slot-to-slot interaction. RMC fills this gap with attention, allowing memories to ‘talk’ and refine each other’s content.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "RMC eliminates memory slots entirely.",
+        "Memory-augmented models use attention but are faster than RMC.",
+        "RMC reduces the number of memory slots to improve efficiency."
+      ],
+      "hint": "It’s not about having more slots—it’s about letting them influence each other."
+    },
+    {
+      "id": "q17",
+      "question": "How does the RMC’s design enable it to achieve state-of-the-art results on WikiText-103 and similar language modeling tasks?",
+      "answer": "By allowing memories to relate past words and phrases dynamically via attention, the RMC captures long-range dependencies and contextual relationships that standard LSTMs or transformers miss.",
+      "explanation": "Language modeling requires understanding how words relate across sentences. RMC’s attention-based memory interactions capture these long-range semantic and syntactic relationships more effectively than sequential models.",
+      "difficulty": "hard",
+      "type": "applied",
+      "distractors": [
+        "RMC uses larger vocabularies than other models.",
+        "It reduces sequence length to improve performance.",
+        "RMC replaces language modeling with rule-based grammar."
+      ],
+      "hint": "Think about how you predict the next word—you don’t just look at the last one, but remember earlier context."
+    },
+    {
+      "id": "q18",
+      "question": "What does the paper suggest about inductive biases in neural network architectures and their impact on relational reasoning?",
+      "answer": "Inductive biases—such as those favoring locality or sequential processing—can limit relational reasoning; explicitly biasing architectures toward memory interactions improves performance on complex tasks.",
+      "explanation": "The paper argues that standard architectures have implicit biases (e.g., sequential processing in RNNs) that hinder relational reasoning. By introducing attention-based memory interactions, RMC embeds a new inductive bias that favors relational reasoning.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Inductive biases have no impact on model performance.",
+        "Relational reasoning requires removing all inductive biases.",
+        "All neural networks have the same inductive bias by default."
+      ],
+      "hint": "Inductive biases are assumptions built into the model—RMC builds one that favors relationships."
+    },
+    {
+      "id": "q19",
+      "question": "Evaluate the claim that RMC could be a general-purpose module for temporal relational reasoning. What evidence supports or challenges this claim?",
+      "answer": "The paper demonstrates RMC’s success across diverse domains—RL, program evaluation, and language modeling—which supports its generalizability. However, it lacks comparisons to all modern architectures (e.g., Transformer-XL) on every task, suggesting room for further validation.",
+      "explanation": "While results on multiple complex tasks suggest broad applicability, the paper is a preprint and doesn’t test RMC against all state-of-the-art baselines. This leaves open questions about scalability and generalization to other domains.",
+      "difficulty": "hard",
+      "type": "evaluative",
+      "distractors": [
+        "RMC is only useful for language tasks and cannot be applied to RL.",
+        "The paper proves RMC is universally superior in all domains.",
+        "No evidence is provided to support the general-purpose claim."
+      ],
+      "hint": "Look at the tasks tested—do they cover a wide range? Are there any missing comparisons?"
+    },
+    {
+      "id": "q20",
+      "question": "Critically assess the paper’s assumption that memory interactions are more important than storage/retrieval in relational reasoning. What potential weaknesses does this assumption introduce?",
+      "answer": "The paper assumes interaction is the bottleneck, but if memory storage or retrieval mechanisms are inadequate (e.g., poor encoding or capacity limits), then improving interactions alone may not help—potentially overlooking foundational memory issues.",
+      "explanation": "By focusing on interaction, the paper may neglect other critical components like memory encoding fidelity or capacity limits. If memories are poorly encoded, even perfect interactions can’t recover accurate relational reasoning.",
+      "difficulty": "hard",
+      "type": "evaluative",
+      "distractors": [
+        "Storage and retrieval are irrelevant to relational reasoning.",
+        "The paper proves storage is always sufficient in all models.",
+        "Interaction and storage are equally important, but the paper ignores both."
+      ],
+      "hint": "Can you reason about relationships if your memories are blurry or incomplete?"
+    }
+  ],
+  "paper_id": 18,
+  "title": "Relational Recurrent Neural Networks",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

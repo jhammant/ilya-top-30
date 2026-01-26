@@ -1,0 +1,255 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the main goal of the Variational Lossy Autoencoder (VLAE) paper?",
+      "answer": "The main goal is to learn global, high-level representations of data (e.g., object identity in images) while deliberately discarding irrelevant details like texture or noise. This is achieved by combining Variational Autoencoders (VAEs) with powerful autoregressive models to control what information is encoded in the latent variables, enabling lossy autoencoding where reconstruction intentionally omits fine-grained details.",
+      "related_concepts": [
+        "representation learning",
+        "lossy compression",
+        "latent variable models"
+      ],
+      "follow_up": "How does lossy encoding differ from traditional VAEs?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "Why do standard VAEs sometimes fail to use their latent variables?",
+      "answer": "Standard VAEs often fail to use latent variables when the decoder (p(x|z)) is too powerful, such as with autoregressive models like RNNs or PixelCNN. The decoder can reconstruct the data perfectly without relying on z, making the KL divergence term in the ELBO drive q(z|x) to match p(z), rendering z useless. This is known as 'posterior collapse'.",
+      "related_concepts": [
+        "posterior collapse",
+        "ELBO",
+        "decoder capacity"
+      ],
+      "follow_up": "How does VLAE prevent posterior collapse?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "What does 'lossy autoencoding' mean in the context of this paper?",
+      "answer": "Lossy autoencoding means the model intentionally discards certain types of information (e.g., texture, noise) during encoding, so the reconstruction is not exact but semantically meaningful. Unlike traditional autoencoders that aim for pixel-perfect reconstruction, VLAE learns to encode only global structure and omits irrelevant details, making it useful for downstream tasks like classification.",
+      "related_concepts": [
+        "lossy compression",
+        "semantic representation",
+        "information bottleneck"
+      ],
+      "follow_up": "Can lossy encoding be controlled for different types of data?"
+    },
+    {
+      "id": "faq4",
+      "category": "comparison",
+      "question": "How does VLAE differ from traditional VAEs?",
+      "answer": "Traditional VAEs use simple decoders (e.g., factorized Gaussians) and aim for faithful reconstruction. VLAE uses powerful autoregressive decoders (like PixelRNN/CNN) and deliberately leverages their capacity to force the latent code to capture only global structure. By design, VLAE makes the decoder so powerful that it can reconstruct details without z, forcing z to encode only high-level features — a form of controlled lossy encoding.",
+      "related_concepts": [
+        "Variational Autoencoder",
+        "autoregressive models",
+        "information bottleneck"
+      ],
+      "follow_up": "What are the trade-offs of using autoregressive decoders in VLAE?"
+    },
+    {
+      "id": "faq5",
+      "category": "comparison",
+      "question": "How does VLAE compare to other hybrid models combining VAEs and RNNs?",
+      "answer": "Previous hybrid models (e.g., Bowman et al. 2015, Serban et al. 2016) struggled with posterior collapse because autoregressive decoders absorbed all information. VLAE addresses this by *intentionally* using the autoregressive model’s power to force latent variables to encode only global structure, turning a problem into a feature. This is a principled architectural choice rather than an ad hoc fix like dropout.",
+      "related_concepts": [
+        "posterior collapse",
+        "sequence modeling",
+        "hybrid generative models"
+      ],
+      "follow_up": "Why didn’t previous works realize this could be a design principle?"
+    },
+    {
+      "id": "faq6",
+      "category": "implementation",
+      "question": "What neural architectures are used in VLAE for the encoder and decoder?",
+      "answer": "The encoder q(z|x) is typically a standard neural network (e.g., CNN for images), while the decoder p(x|z) is a powerful autoregressive model such as RNN, MADE, or PixelRNN/CNN. The key insight is that the decoder must be expressive enough to model local details without relying on z, allowing z to capture only global structure.",
+      "related_concepts": [
+        "PixelCNN",
+        "MADE",
+        "autoregressive models",
+        "CNN encoder"
+      ],
+      "follow_up": "Can any autoregressive model be used as the decoder?"
+    },
+    {
+      "id": "faq7",
+      "category": "implementation",
+      "question": "How is the variational lower bound modified in VLAE?",
+      "answer": "VLAE uses the standard VAE ELBO: L(x;θ,φ) = E_q(z|x)[log p(x|z)] - KL(q(z|x)||p(z)). The innovation lies not in modifying the objective, but in designing p(x|z) to be so powerful that it can reconstruct local details without z, thereby forcing q(z|x) to encode only global information. The KL term then regularizes z to capture only high-level features.",
+      "related_concepts": [
+        "ELBO",
+        "variational inference",
+        "KL divergence"
+      ],
+      "follow_up": "Does VLAE require any additional regularization terms?"
+    },
+    {
+      "id": "faq8",
+      "category": "implementation",
+      "question": "How do you train a VLAE model in practice?",
+      "answer": "Training follows standard VAE procedures: use reparameterization trick for continuous z, optimize the ELBO via stochastic gradient descent. The key difference is using a powerful autoregressive decoder (e.g., PixelCNN) for p(x|z), which requires careful tuning of learning rates and architecture depth to ensure it dominates reconstruction without overfitting. The encoder should be simpler than the decoder.",
+      "related_concepts": [
+        "reparameterization trick",
+        "stochastic gradient descent",
+        "autoregressive decoding"
+      ],
+      "follow_up": "What are common pitfalls in training VLAE?"
+    },
+    {
+      "id": "faq9",
+      "category": "comparison",
+      "question": "How does VLAE compare to disentanglement methods like β-VAE?",
+      "answer": "β-VAE encourages disentanglement by scaling the KL term (using β > 1), which can lead to underutilized latent space. VLAE achieves disentanglement by architectural design: forcing the decoder to capture local details, so z must encode global structure. VLAE doesn't rely on hyperparameter tuning of KL weight but instead uses model capacity as a control mechanism.",
+      "related_concepts": [
+        "disentanglement",
+        "β-VAE",
+        "information bottleneck"
+      ],
+      "follow_up": "Can VLAE and β-VAE be combined?"
+    },
+    {
+      "id": "faq10",
+      "category": "application",
+      "question": "What practical applications benefit from VLAE’s lossy representations?",
+      "answer": "VLAE is ideal for tasks where global structure matters more than fine details: object classification, scene understanding, or anomaly detection in images. For example, in medical imaging, it can encode lesion shape while ignoring scanner noise; in robotics, it can represent object pose while discarding texture variations.",
+      "related_concepts": [
+        "image classification",
+        "anomaly detection",
+        "semantic representation"
+      ],
+      "follow_up": "Can VLAE be used for non-image data?"
+    },
+    {
+      "id": "faq11",
+      "category": "application",
+      "question": "Can VLAE be used for data compression?",
+      "answer": "Yes, VLAE is inherently a lossy compression method. The latent code z captures only global structure (low bandwidth), while the autoregressive decoder reconstructs fine details from data distribution. This allows efficient storage of z and reconstruction via p(x|z), making it suitable for applications like image or audio compression where perceptual quality matters more than pixel fidelity.",
+      "related_concepts": [
+        "lossy compression",
+        "information theory",
+        "rate-distortion"
+      ],
+      "follow_up": "How does VLAE compare to JPEG or other standard codecs?"
+    },
+    {
+      "id": "faq12",
+      "category": "limitations",
+      "question": "What are the main limitations of VLAE?",
+      "answer": "VLAE requires a very powerful decoder to work well, which increases computational cost and training complexity. It also assumes that global vs. local structure can be cleanly separated — which may not hold for all data types (e.g., text or graphs). Additionally, the lossy nature means it’s unsuitable for applications requiring exact reconstruction.",
+      "related_concepts": [
+        "computational cost",
+        "architectural dependency",
+        "semantic separation"
+      ],
+      "follow_up": "Are there data types where VLAE is unlikely to work?"
+    },
+    {
+      "id": "faq13",
+      "category": "understanding",
+      "question": "What is 'bits-back coding' and how does it relate to VLAE?",
+      "answer": "Bits-back coding is an information-theoretic interpretation of VAEs where the latent code z allows compressing data x more efficiently by 'recovering' bits lost during encoding. VLAE leverages this: the autoregressive decoder can encode local details using bits from the data distribution, so z only needs to carry global information — making compression more efficient and semantically meaningful.",
+      "related_concepts": [
+        "bits-back coding",
+        "information theory",
+        "entropy coding"
+      ],
+      "follow_up": "How does bits-back explain why powerful decoders help VAEs?"
+    },
+    {
+      "id": "faq14",
+      "category": "comparison",
+      "question": "How does VLAE compare to GANs for representation learning?",
+      "answer": "GANs learn representations implicitly through adversarial training, often without explicit latent codes. VLAE provides an explicit, interpretable latent space with probabilistic guarantees via the ELBO. While GANs generate sharper images, VLAE offers better density estimation and principled control over what is encoded in z.",
+      "related_concepts": [
+        "Generative Adversarial Networks",
+        "latent space interpretability",
+        "density estimation"
+      ],
+      "follow_up": "Can VLAE generate images as well as GANs?"
+    },
+    {
+      "id": "faq15",
+      "category": "implementation",
+      "question": "Do you need to modify the ELBO for VLAE?",
+      "answer": "No, VLAE uses the standard VAE ELBO. The innovation is architectural: using a powerful autoregressive p(x|z) to force the latent variable z to encode only global structure. The ELBO remains unchanged, but its interpretation shifts: the reconstruction term becomes a proxy for local detail modeling, while z captures high-level semantics.",
+      "related_concepts": [
+        "ELBO",
+        "variational inference",
+        "architectural design"
+      ],
+      "follow_up": "Can the ELBO be modified to further control information flow?"
+    },
+    {
+      "id": "faq16",
+      "category": "application",
+      "question": "Can VLAE be applied to time-series or video data?",
+      "answer": "Yes, by using temporal autoregressive decoders (e.g., LSTM or Transformer-based) for p(x|z), VLAE can learn global representations of sequences (e.g., action type in videos) while discarding frame-level noise or minor motion details. The same principles apply: let the decoder model local temporal dynamics, force z to capture high-level semantics.",
+      "related_concepts": [
+        "temporal modeling",
+        "video representation",
+        "LSTM decoders"
+      ],
+      "follow_up": "What autoregressive models work best for video VLAE?"
+    },
+    {
+      "id": "faq17",
+      "category": "limitations",
+      "question": "Is VLAE sensitive to the choice of autoregressive decoder?",
+      "answer": "Yes. If the autoregressive model is too weak, it cannot reconstruct details without z, so z will encode noise. If it's too strong or overfits, it may ignore z entirely, leading to posterior collapse. The decoder must be powerful enough to model local structure but not so overparameterized that it memorizes data. Careful architecture design and regularization are essential.",
+      "related_concepts": [
+        "model capacity",
+        "overfitting",
+        "posterior collapse"
+      ],
+      "follow_up": "How do you choose the right autoregressive model for your data?"
+    },
+    {
+      "id": "faq18",
+      "category": "understanding",
+      "question": "Why is the term 'lossy' used in VLAE if VAEs are already probabilistic?",
+      "answer": "'Lossy' refers to intentional, controlled discarding of fine-grained information (e.g., texture) during encoding — unlike traditional VAEs, which aim for faithful reconstruction. VLAE exploits the fact that autoregressive decoders can reconstruct details without z, so z *must* encode only global structure. This makes the encoding lossy by design rather than accidental.",
+      "related_concepts": [
+        "lossy compression",
+        "semantic encoding",
+        "information filtering"
+      ],
+      "follow_up": "Is lossiness always desirable in representation learning?"
+    },
+    {
+      "id": "faq19",
+      "category": "comparison",
+      "question": "How does VLAE relate to the Information Bottleneck principle?",
+      "answer": "VLAE aligns with the Information Bottleneck (IB) principle, which seeks to maximize mutual information between input and latent code while minimizing redundancy. By forcing the decoder to capture local details, VLAE ensures z retains only information useful for global structure — effectively minimizing irrelevant mutual information with x. The KL term in ELBO acts as a proxy for IB’s compression objective.",
+      "related_concepts": [
+        "Information Bottleneck",
+        "mutual information",
+        "data compression"
+      ],
+      "follow_up": "Can VLAE be derived formally from the IB principle?"
+    },
+    {
+      "id": "faq20",
+      "category": "application",
+      "question": "How can VLAE be used for interpretability or debugging ML models?",
+      "answer": "Since VLAE encodes only global structure, its latent space is more interpretable: changes in z correspond to meaningful semantic shifts (e.g., object type, pose) rather than noise. This makes it useful for visualizing latent space trajectories, identifying misclassified samples via reconstruction gaps, or diagnosing model failures by examining what information z chose to retain.",
+      "related_concepts": [
+        "model interpretability",
+        "latent space visualization",
+        "debugging generative models"
+      ],
+      "follow_up": "Can VLAE help explain why a classifier makes certain predictions?"
+    }
+  ],
+  "paper_id": 17,
+  "title": "Variational Lossy Autoencoder",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 5,
+    "comparison": 5,
+    "implementation": 4,
+    "application": 4,
+    "limitations": 2
+  }
+}

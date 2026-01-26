@@ -1,0 +1,27 @@
+{
+  "one_liner": "This paper applies the Minimum Description Length (MDL) principle to neural networks by minimizing the information content of weights through controlled Gaussian noise, improving generalization without overfitting.",
+  "paragraphs": [
+    "Supervised neural networks often overfit when trained on limited data because complex models with too much information in their weights memorize noise rather than learning general patterns. The paper argues that to ensure good generalization, the amount of information stored in the weights must be smaller than the information contained in the training output vectors. This motivates the need to simplify weights during learning, not just by reducing network size or enforcing weight sharing, but by directly controlling the information content of weights using principles from information theory.",
+    "The authors propose a method grounded in Minimum Description Length (MDL), where the total cost is the sum of bits needed to encode the weights and the bits needed to encode prediction errors. To make this tractable, they introduce Gaussian noise into weights during training and treat the noisy weights as a distribution. By assuming quantized output errors with fixed bin widths, they derive exact gradients for both the expected squared error and the information content of noisy weights—enabling efficient optimization without Monte Carlo simulations. The key insight is that adding noise reduces weight precision, thereby reducing information, and the noise level can be adaptively tuned to balance model accuracy and simplicity.",
+    "The method achieves a principled trade-off between model fit and complexity by treating weight encoding as a communication problem: the sender encodes weights and residuals, and the receiver reconstructs targets using both. Results show that minimizing information in weights leads to better generalization, especially with small datasets. The approach also unifies several regularization techniques (like weight decay and quantization) under a single information-theoretic framework, enabling practical algorithms that can be implemented with standard backpropagation. This opens the door to adaptive noise-based regularization and novel weight encoding schemes that compress models without sacrificing performance."
+  ],
+  "key_takeaways": [
+    "Minimizing the information content of neural network weights improves generalization by preventing overfitting.",
+    "Gaussian noise added to weights provides a differentiable way to control information content, enabling gradient-based optimization.",
+    "The Minimum Description Length principle provides a theoretical foundation for balancing model complexity and data fit.",
+    "Exact gradients for information cost can be computed efficiently even with nonlinear hidden layers, as long as outputs are linear.",
+    "This approach unifies weight quantization, pruning, and regularization under a single information-theoretic framework."
+  ],
+  "eli5": "Imagine you're trying to teach a friend how to draw cats using only a few crayons. If you give them too many colors, they might copy every tiny scratch on the cat’s fur—but then they can’t draw new cats well. Instead, you want them to use just enough colors to capture the essence of a cat. This paper says: make the brain’s ‘crayons’ (the weights) as simple as possible, by adding a little fuzziness (noise), so it learns the big picture instead of memorizing every detail.",
+  "prerequisites": [
+    "Basic understanding of neural networks and backpropagation",
+    "Familiarity with information theory concepts like entropy and coding length"
+  ],
+  "applications": [
+    "Regularizing small datasets in medical imaging where labeled examples are scarce",
+    "Compressing deep learning models for deployment on edge devices with limited memory"
+  ],
+  "paper_id": 5,
+  "title": "Keeping Neural Networks Simple (MDL)",
+  "category": "Information Theory"
+}

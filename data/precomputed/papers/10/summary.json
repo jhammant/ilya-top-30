@@ -1,0 +1,27 @@
+{
+  "one_liner": "ResNet introduced residual connections to enable training of extremely deep neural networks by learning layer outputs as residuals relative to inputs, overcoming the degradation problem in deep networks.",
+  "paragraphs": [
+    "Deep neural networks were known to benefit from increased depth, but as networks grew beyond 20–30 layers, training accuracy began to degrade despite improved initialization and normalization techniques. This degradation was not due to overfitting but rather an optimization challenge: deeper networks struggled to learn effective mappings, and adding more layers led to higher training error instead of lower. This contradicted the expectation that deeper networks should perform at least as well as their shallower counterparts, since one could always copy the weights of a shallow network and add identity layers.",
+    "To solve this, ResNet proposed residual learning: instead of forcing stacked layers to learn the full underlying mapping H(x), they learned only the residual F(x) = H(x) - x, and added it back to the input via shortcut (skip) connections. This reformulation allowed gradients to flow directly through identity paths during backpropagation, making optimization much easier. The shortcut connections required no extra parameters or computation and could be implemented with standard libraries, enabling end-to-end training of networks up to 152 layers deep.",
+    "ResNet achieved groundbreaking results on ImageNet, reducing top-5 error to 3.57% with a 152-layer network—significantly outperforming VGG and winning the ILSVRC 2015 classification competition. The approach also led to first-place wins in ImageNet detection, localization, and COCO tasks for detection and segmentation. Analysis showed that residual networks trained faster and scaled better with depth than plain networks, proving that deep representations have exceptional generalization power across vision tasks. ResNet became the foundational architecture for modern CNNs and revolutionized deep learning practice."
+  ],
+  "key_takeaways": [
+    "Residual connections allow gradients to bypass layers, preventing degradation and enabling training of networks with 100+ layers.",
+    "Adding more layers to a ResNet improves performance, unlike plain networks where deeper models perform worse.",
+    "Residual learning is computationally cheap—skip connections add no parameters or FLOPs, making them easy to implement.",
+    "ResNet’s success demonstrated that depth itself is a powerful tool for representation learning when properly optimized.",
+    "The residual principle has since been adopted in nearly all state-of-the-art architectures across vision and non-vision domains."
+  ],
+  "eli5": "Imagine you're trying to draw a picture of a cat, but instead of drawing the whole thing from scratch each time, you start with your last drawing and just add small changes—like making the ears pointier or the tail curlier. ResNet does something similar: it doesn't try to draw the whole image from nothing, just adds small improvements on top of what's already there. This makes it way easier to draw super detailed pictures without getting confused.",
+  "prerequisites": [
+    "Basic understanding of convolutional neural networks (CNNs)",
+    "Familiarity with backpropagation and gradient descent"
+  ],
+  "applications": [
+    "Image classification in medical imaging systems",
+    "Object detection and segmentation in autonomous vehicles"
+  ],
+  "paper_id": 10,
+  "title": "Deep Residual Learning (ResNet)",
+  "category": "CNNs"
+}

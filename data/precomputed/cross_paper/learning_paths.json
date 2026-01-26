@@ -1,0 +1,197 @@
+{
+  "paths": {
+    "foundations": {
+      "name": "Foundations",
+      "description": "Start here! Learn RNNs, LSTMs, and the basics",
+      "papers": [
+        {
+          "id": 3,
+          "title": "Understanding LSTM Networks",
+          "difficulty": 2,
+          "time": 30
+        },
+        {
+          "id": 2,
+          "title": "The Unreasonable Effectiveness of RNNs",
+          "difficulty": 2,
+          "time": 45
+        },
+        {
+          "id": 4,
+          "title": "Recurrent Neural Network Regularization",
+          "difficulty": 3,
+          "time": 60
+        },
+        {
+          "id": 18,
+          "title": "Relational Recurrent Neural Networks",
+          "difficulty": 4,
+          "time": 60
+        },
+        {
+          "id": 21,
+          "title": "Deep Speech 2",
+          "difficulty": 3,
+          "time": 75
+        }
+      ],
+      "total_papers": 5,
+      "total_time_minutes": 270,
+      "average_difficulty": 2.8
+    },
+    "transformers": {
+      "name": "Transformers",
+      "description": "Master attention and the Transformer architecture",
+      "papers": [
+        {
+          "id": 14,
+          "title": "Neural Machine Translation (Attention)",
+          "difficulty": 3,
+          "time": 90
+        },
+        {
+          "id": 13,
+          "title": "Attention Is All You Need",
+          "difficulty": 3,
+          "time": 120
+        },
+        {
+          "id": 6,
+          "title": "Pointer Networks",
+          "difficulty": 3,
+          "time": 75
+        },
+        {
+          "id": 8,
+          "title": "Order Matters: Seq2Seq for Sets",
+          "difficulty": 3,
+          "time": 60
+        },
+        {
+          "id": 9,
+          "title": "GPipe: Pipeline Parallelism",
+          "difficulty": 3,
+          "time": 45
+        },
+        {
+          "id": 22,
+          "title": "Scaling Laws for Neural LMs",
+          "difficulty": 3,
+          "time": 90
+        }
+      ],
+      "total_papers": 6,
+      "total_time_minutes": 480,
+      "average_difficulty": 3.0
+    },
+    "vision": {
+      "name": "Computer Vision",
+      "description": "Deep dive into CNNs and visual understanding",
+      "papers": [
+        {
+          "id": 26,
+          "title": "CS231n Course",
+          "difficulty": 2,
+          "time": 1200
+        },
+        {
+          "id": 7,
+          "title": "ImageNet Classification (AlexNet)",
+          "difficulty": 2,
+          "time": 60
+        },
+        {
+          "id": 10,
+          "title": "Deep Residual Learning (ResNet)",
+          "difficulty": 2,
+          "time": 60
+        },
+        {
+          "id": 15,
+          "title": "Identity Mappings in ResNets",
+          "difficulty": 3,
+          "time": 45
+        },
+        {
+          "id": 11,
+          "title": "Dilated Convolutions",
+          "difficulty": 3,
+          "time": 45
+        },
+        {
+          "id": 12,
+          "title": "Neural Message Passing",
+          "difficulty": 4,
+          "time": 90
+        }
+      ],
+      "total_papers": 6,
+      "total_time_minutes": 1500,
+      "average_difficulty": 2.7
+    },
+    "theory": {
+      "name": "Theory & AGI",
+      "description": "Advanced theory, complexity, and AGI concepts",
+      "papers": [
+        {
+          "id": 1,
+          "title": "The First Law of Complexodynamics",
+          "difficulty": 4,
+          "time": 30
+        },
+        {
+          "id": 19,
+          "title": "The Coffee Automaton",
+          "difficulty": 5,
+          "time": 120
+        },
+        {
+          "id": 5,
+          "title": "Keeping Neural Networks Simple (MDL)",
+          "difficulty": 4,
+          "time": 90
+        },
+        {
+          "id": 23,
+          "title": "MDL Principle Tutorial",
+          "difficulty": 4,
+          "time": 180
+        },
+        {
+          "id": 25,
+          "title": "Kolmogorov Complexity",
+          "difficulty": 5,
+          "time": 600
+        },
+        {
+          "id": 16,
+          "title": "Relational Reasoning Networks",
+          "difficulty": 3,
+          "time": 60
+        },
+        {
+          "id": 17,
+          "title": "Variational Lossy Autoencoder",
+          "difficulty": 4,
+          "time": 90
+        },
+        {
+          "id": 20,
+          "title": "Neural Turing Machines",
+          "difficulty": 4,
+          "time": 90
+        },
+        {
+          "id": 24,
+          "title": "Machine Super Intelligence",
+          "difficulty": 4,
+          "time": 240
+        }
+      ],
+      "total_papers": 9,
+      "total_time_minutes": 1500,
+      "average_difficulty": 4.1
+    }
+  },
+  "generated_at": "2026-01-26T22:11:23.968357"
+}

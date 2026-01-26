@@ -1,0 +1,256 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the main contribution of the 'Attention Is All You Need' paper?",
+      "answer": "The main contribution is the Transformer architecture, which replaces recurrent and convolutional layers with self-attention mechanisms to process sequences. This allows for full parallelization during training, significantly reduces training time, and achieves state-of-the-art results on machine translation tasks without relying on RNNs or CNNs.",
+      "related_concepts": [
+        "self-attention",
+        "sequence transduction",
+        "encoder-decoder"
+      ],
+      "follow_up": "How does self-attention differ from traditional attention mechanisms used with RNNs?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "What is self-attention and how does it work?",
+      "answer": "Self-attention (or intra-attention) allows each position in a sequence to attend to all other positions to compute a contextualized representation. It computes attention scores between every pair of tokens using dot products of queries, keys, and values, then applies a softmax to weigh contributions. This enables modeling long-range dependencies without sequential processing.",
+      "related_concepts": [
+        "query",
+        "key",
+        "value",
+        "dot-product attention"
+      ],
+      "follow_up": "Why is scaling the dot product important in scaled dot-product attention?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "Why is positional encoding necessary in the Transformer?",
+      "answer": "Since the Transformer lacks recurrence or convolution, it has no inherent notion of sequence order. Positional encodings—fixed or learned sine/cosine functions—are added to input embeddings to provide information about token positions, enabling the model to understand word order without sequential processing.",
+      "related_concepts": [
+        "positional encoding",
+        "sequence order",
+        "input embedding"
+      ],
+      "follow_up": "Can learned positional embeddings be used instead of fixed ones?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "How does multi-head attention improve the model?",
+      "answer": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. Each head learns a different attention pattern, and their outputs are concatenated and linearly transformed. This increases model expressiveness and stabilizes training by capturing diverse contextual relationships.",
+      "related_concepts": [
+        "multi-head attention",
+        "attention heads",
+        "representation subspace"
+      ],
+      "follow_up": "How many attention heads are typically used in the original Transformer?"
+    },
+    {
+      "id": "faq5",
+      "category": "implementation",
+      "question": "What role do residual connections and layer normalization play in the Transformer?",
+      "answer": "Residual connections (skip connections) help mitigate vanishing gradients by allowing gradients to flow directly through layers. Layer normalization stabilizes training by normalizing activations across features within each layer. Together, they enable deep networks (6 encoder/decoder layers) to train effectively and improve convergence speed.",
+      "related_concepts": [
+        "residual connection",
+        "layer normalization",
+        "gradient flow"
+      ],
+      "follow_up": "Why not use batch normalization instead of layer normalization?"
+    },
+    {
+      "id": "faq6",
+      "category": "implementation",
+      "question": "How is the decoder prevented from attending to future tokens during training?",
+      "answer": "The decoder uses a masked self-attention mechanism where future positions are masked with -∞ before the softmax, ensuring their attention weights become zero. This enforces auto-regressive generation: each token depends only on previously generated tokens, mimicking inference-time behavior during training.",
+      "related_concepts": [
+        "masked attention",
+        "auto-regressive decoding",
+        "causal masking"
+      ],
+      "follow_up": "How does this masking affect beam search during inference?"
+    },
+    {
+      "id": "faq7",
+      "category": "comparison",
+      "question": "How does the Transformer compare to RNNs and CNNs in sequence modeling?",
+      "answer": "RNNs process sequences sequentially, limiting parallelization; CNNs capture local patterns but require many layers to model long-range dependencies. The Transformer uses self-attention to directly relate all positions in constant time, enabling full parallelization and better long-range dependency modeling. This results in faster training and higher quality outputs.",
+      "related_concepts": [
+        "RNN",
+        "CNN",
+        "sequence modeling"
+      ],
+      "follow_up": "What are the trade-offs of using attention over convolutions for local context?"
+    },
+    {
+      "id": "faq8",
+      "category": "comparison",
+      "question": "How does the Transformer differ from earlier attention-based models like Neural Turing Machines or ByteNet?",
+      "answer": "Earlier models used attention as a supplement to RNNs or CNNs. The Transformer is the first model to entirely replace recurrence and convolution with self-attention, using stacked multi-head attention for both encoding and decoding. This enables complete parallelization and eliminates sequential bottlenecks.",
+      "related_concepts": [
+        "Neural Turing Machine",
+        "ByteNet",
+        "ConvS2S"
+      ],
+      "follow_up": "What did the authors say about prior work using self-attention?"
+    },
+    {
+      "id": "faq9",
+      "category": "application",
+      "question": "Can the Transformer be used for tasks other than machine translation?",
+      "answer": "Yes. The paper demonstrates its success on English constituency parsing with both large and limited data. Since then, Transformers have become the foundation for models in NLP (BERT, GPT), computer vision (ViT), audio processing, and multimodal tasks due to their flexibility and scalability.",
+      "related_concepts": [
+        "BERT",
+        "GPT",
+        "ViT",
+        "sequence modeling"
+      ],
+      "follow_up": "What are some key downstream applications built on Transformer architecture?"
+    },
+    {
+      "id": "faq10",
+      "category": "application",
+      "question": "Why is the Transformer more parallelizable than RNNs?",
+      "answer": "RNNs compute hidden states sequentially—each step depends on the previous one. The Transformer computes all positions simultaneously using self-attention, where each token’s representation is updated based on all other tokens in parallel. This allows full batch parallelization within sequences, drastically reducing training time.",
+      "related_concepts": [
+        "parallelization",
+        "sequential computation",
+        "batching"
+      ],
+      "follow_up": "Does this parallelization help during inference as well?"
+    },
+    {
+      "id": "faq11",
+      "category": "implementation",
+      "question": "What is the purpose of the feed-forward network in each Transformer layer?",
+      "answer": "The position-wise feed-forward network applies a non-linear transformation (two linear layers with ReLU) independently to each position’s representation after attention. It adds expressiveness by modeling complex, non-linear interactions within each token's context without altering its position or relationships.",
+      "related_concepts": [
+        "feed-forward network",
+        "position-wise",
+        "non-linearity"
+      ],
+      "follow_up": "Why not use a single linear layer instead of two?"
+    },
+    {
+      "id": "faq12",
+      "category": "comparison",
+      "question": "How does the Transformer’s performance compare to ensemble models from prior work?",
+      "answer": "The original Transformer achieved 28.4 BLEU on WMT 2014 English-German, surpassing previous best results—including ensembles—by over 2 BLEU points. On English-French, it reached 41.8 BLEU as a single model, outperforming ensemble models from prior literature while using far less training time.",
+      "related_concepts": [
+        "BLEU score",
+        "ensemble models",
+        "WMT"
+      ],
+      "follow_up": "Why did the authors use single-model results instead of ensembles for comparison?"
+    },
+    {
+      "id": "faq13",
+      "category": "application",
+      "question": "What are the computational requirements for training a Transformer?",
+      "answer": "The original model was trained on 8 P100 GPUs for 3.5 days (English-French) and 12 hours (English-German). Memory usage scales with sequence length due to attention matrix size, and training requires substantial GPU memory for large vocabularies and long sequences. Modern variants use optimizations like sparse attention to reduce this.",
+      "related_concepts": [
+        "GPU training",
+        "memory usage",
+        "computational cost"
+      ],
+      "follow_up": "How have modern Transformers reduced training costs?"
+    },
+    {
+      "id": "faq14",
+      "category": "limitations",
+      "question": "What are the main limitations of the Transformer architecture?",
+      "answer": "The primary limitations include quadratic memory complexity with sequence length (O(n²)), making it expensive for very long sequences; lack of inductive bias for local structure (unlike CNNs); and difficulty modeling absolute position without positional encodings. It also requires large datasets to train effectively.",
+      "related_concepts": [
+        "memory complexity",
+        "inductive bias",
+        "positional encoding"
+      ],
+      "follow_up": "How do modern models like Longformer or Linformer address the quadratic complexity issue?"
+    },
+    {
+      "id": "faq15",
+      "category": "limitations",
+      "question": "Why does the Transformer struggle with very long sequences?",
+      "answer": "Self-attention computes a matrix of pairwise attention scores between all token pairs, leading to O(n²) memory and computational complexity. For sequences longer than a few thousand tokens, this becomes prohibitively expensive in both memory and compute time.",
+      "related_concepts": [
+        "quadratic complexity",
+        "sequence length",
+        "attention matrix"
+      ],
+      "follow_up": "Are there attention variants that scale better to long sequences?"
+    },
+    {
+      "id": "faq16",
+      "category": "understanding",
+      "question": "What is the difference between self-attention and cross-attention in the Transformer?",
+      "answer": "Self-attention operates within a single sequence (e.g., encoder input or decoder input), computing relationships between its own tokens. Cross-attention occurs in the decoder, where queries come from the decoder and keys/values come from the encoder output—allowing the decoder to attend to relevant parts of the input sequence.",
+      "related_concepts": [
+        "self-attention",
+        "cross-attention",
+        "encoder-decoder"
+      ],
+      "follow_up": "Can cross-attention be used in encoder-only models like BERT?"
+    },
+    {
+      "id": "faq17",
+      "category": "implementation",
+      "question": "How are embeddings handled in the Transformer?",
+      "answer": "Input and output tokens are first embedded into vectors of dimension d_model=512. These embeddings are then added to positional encodings before being fed into the encoder/decoder stacks. The output of the final decoder layer is projected to a vocabulary-sized vector via a linear layer and softmax for prediction.",
+      "related_concepts": [
+        "token embedding",
+        "positional encoding",
+        "vocabulary projection"
+      ],
+      "follow_up": "Why are embeddings scaled by sqrt(d_model) before adding positional encodings?"
+    },
+    {
+      "id": "faq18",
+      "category": "comparison",
+      "question": "How does the Transformer compare to early seq2seq models with attention?",
+      "answer": "Early seq2seq models used RNNs to encode input and decode output, with attention as an auxiliary mechanism to improve alignment. The Transformer removes RNNs entirely—attention becomes the sole mechanism for modeling dependencies, enabling full parallelization and eliminating sequential bottlenecks.",
+      "related_concepts": [
+        "seq2seq",
+        "attention mechanism",
+        "RNN-based models"
+      ],
+      "follow_up": "Did the original paper include ablation studies to prove attention alone is sufficient?"
+    },
+    {
+      "id": "faq19",
+      "category": "application",
+      "question": "Can Transformers be used for real-time applications like live translation?",
+      "answer": "Yes, but with caveats. While training is fast and parallelizable, inference requires sequential decoding (auto-regressive), which can be slow. Techniques like beam search and caching of key/value pairs in attention layers (e.g., KV cache) are used to accelerate inference. Modern implementations optimize this for low-latency deployment.",
+      "related_concepts": [
+        "auto-regressive decoding",
+        "KV cache",
+        "latency"
+      ],
+      "follow_up": "What techniques reduce inference latency in Transformer-based systems?"
+    },
+    {
+      "id": "faq20",
+      "category": "limitations",
+      "question": "Does the Transformer require large amounts of training data to perform well?",
+      "answer": "Yes. The original model was trained on large corpora (e.g., WMT 2014 datasets with millions of sentence pairs). Without sufficient data, the model’s capacity can lead to overfitting. Later work (e.g., BERT) introduced pre-training on massive corpora followed by fine-tuning to overcome this limitation.",
+      "related_concepts": [
+        "data efficiency",
+        "overfitting",
+        "pre-training"
+      ],
+      "follow_up": "How do techniques like pre-training and distillation help with data efficiency?"
+    }
+  ],
+  "paper_id": 13,
+  "title": "Attention Is All You Need",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 4,
+    "implementation": 5,
+    "comparison": 4,
+    "application": 4,
+    "limitations": 3
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "concepts": [
+    {
+      "name": "Relational Reasoning",
+      "definition": "The process of understanding how entities are connected and using those relationships to achieve a higher-order goal.",
+      "intuition": "Like solving a puzzle by seeing how pieces fit together, not just looking at each piece alone.",
+      "importance": "Essential for tasks requiring understanding of dependencies between elements over time, beyond simple pattern recognition.",
+      "related_concepts": [
+        "Memory Networks",
+        "Temporal Reasoning"
+      ],
+      "example": "Determining which tree is closest to a bench by comparing distances between all trees and the bench.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Memory Networks",
+      "definition": "Neural networks that augment standard architectures with external or internal memory to store and retrieve information over time.",
+      "intuition": "Like a person using a notebook to remember past events and refer back to them when making decisions.",
+      "importance": "Enables models to handle long-term dependencies in sequential data that standard RNNs struggle with.",
+      "related_concepts": [
+        "LSTMs",
+        "Relational Reasoning"
+      ],
+      "example": "An AI remembering the rules of a game from earlier turns to make better moves later.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Long Short-Term Memory (LSTM)",
+      "definition": "A type of recurrent neural network designed to learn long-term dependencies by using gating mechanisms to control information flow.",
+      "intuition": "Like a smart notebook that decides what to write down, erase, or keep based on importance.",
+      "importance": "Historically foundational for sequential modeling but lacks explicit mechanisms to relate stored memories to each other.",
+      "related_concepts": [
+        "Memory Networks",
+        "Relational Memory Core"
+      ],
+      "example": "Predicting the next word in a sentence by recalling earlier words using forget and input gates.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Memory Slots",
+      "definition": "Discrete, fixed-position memory units within a network that store individual pieces of information separately.",
+      "intuition": "Like separate drawers in a filing cabinet, each holding one document for later reference.",
+      "importance": "Allows compartmentalization of information, making it easier to manage and relate distinct pieces of data.",
+      "related_concepts": [
+        "Relational Memory Core",
+        "Memory Networks"
+      ],
+      "example": "In a dialogue system, each memory slot might store a fact about a different character in the conversation.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Multi-Head Dot Product Attention (MHDPA)",
+      "definition": "An attention mechanism that computes multiple weighted relationships between entities using parallel attention heads, each focusing on different aspects.",
+      "intuition": "Like having multiple people in a room each noticing different connections between objects, then combining their insights.",
+      "importance": "Enables rich, parallel relational reasoning by allowing each memory to interact with others in multiple ways.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Relational Memory Core"
+      ],
+      "example": "In a sentence, one head might link 'he' to 'ran', another links 'dog' to 'barked', capturing different semantic roles.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Attention Mechanism",
+      "definition": "A method that allows a model to focus on relevant parts of input or memory by assigning weights based on relevance.",
+      "intuition": "Like a spotlight in a dark room—only the highlighted parts are processed deeply.",
+      "importance": "Overcomes limitations of fixed-size hidden states by dynamically selecting important information.",
+      "related_concepts": [
+        "MHDPA",
+        "Temporal Reasoning"
+      ],
+      "example": "In machine translation, attention lets the model focus on the right source words when generating each target word.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Relational Memory Core (RMC)",
+      "definition": "A novel memory module that uses multi-head dot product attention to enable explicit interactions between stored memories within a single timestep.",
+      "intuition": "A memory system where each stored fact can 'talk' to every other fact and update itself based on those conversations.",
+      "importance": "Solves the limitation of traditional memory networks that store but don’t relate memories, enabling deeper relational reasoning.",
+      "related_concepts": [
+        "MHDPA",
+        "Memory Slots",
+        "Temporal Reasoning"
+      ],
+      "example": "In MiniPacMan, RMC lets the AI relate the position of ghosts to the last seen power pellet location to plan a route.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Temporal Relational Reasoning",
+      "definition": "The ability to understand relationships between entities or events across different points in time.",
+      "intuition": "Like remembering that your friend was late three times last week, so you now expect them to be late again.",
+      "importance": "Critical for tasks like language modeling, RL, and program evaluation where context from the past informs future decisions.",
+      "related_concepts": [
+        "Relational Reasoning",
+        "LSTM"
+      ],
+      "example": "Predicting the next sentence in a story based on how characters’ relationships evolved over previous sentences.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Self-Attention",
+      "definition": "A form of attention where each element in a sequence computes relationships with all other elements in the same sequence.",
+      "intuition": "Each word in a sentence 'looks at' every other word to understand its role, like teammates discussing the game plan.",
+      "importance": "Enables modeling of long-range dependencies without recurrence, forming the basis of Transformers.",
+      "related_concepts": [
+        "MHDPA",
+        "Attention Mechanism"
+      ],
+      "example": "In 'The cat chased the mouse', self-attention links 'cat' to 'chased' and 'mouse' even if they’re far apart.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Memory Interaction",
+      "definition": "The process by which stored memory states influence or update each other, rather than being treated as independent.",
+      "intuition": "Like friends sharing gossip—each memory updates its view based on what others are saying.",
+      "importance": "Enables models to build coherent, context-rich representations rather than isolated facts.",
+      "related_concepts": [
+        "Relational Memory Core",
+        "Temporal Relational Reasoning"
+      ],
+      "example": "In a game, remembering that the enemy hid behind a wall last turn helps predict where they might hide now.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Inductive Bias",
+      "definition": "A set of assumptions built into a model’s architecture that guides how it learns from data.",
+      "intuition": "Like giving someone a map before they explore a city—it shapes how they interpret new streets.",
+      "importance": "RMC introduces a bias toward relational reasoning, making it more effective on tasks requiring relationships over isolated facts.",
+      "related_concepts": [
+        "Relational Reasoning",
+        "LSTM"
+      ],
+      "example": "CNNs have a spatial locality bias; RMC has a relational reasoning bias.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Dot-Product Attention",
+      "definition": "A method to compute attention scores by taking the dot product between query and key vectors, scaled for stability.",
+      "intuition": "Measuring how similar a question (query) is to stored answers (keys)—the more similar, the higher the attention.",
+      "importance": "Core computation in modern attention mechanisms; efficient and scalable for large memory sets.",
+      "related_concepts": [
+        "MHDPA",
+        "Attention Mechanism"
+      ],
+      "example": "Query: 'Where is the cat?' Key: 'cat under table' → high dot product = high attention.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Row-wise Shared Projections",
+      "definition": "Linear transformations applied uniformly across all memory slots to generate queries, keys, and values for attention.",
+      "intuition": "Each memory slot uses the same set of rules to translate its content into a common language for comparison.",
+      "importance": "Ensures consistent representation across memories, enabling fair and structured interactions via attention.",
+      "related_concepts": [
+        "MHDPA",
+        "Relational Memory Core"
+      ],
+      "example": "All memories are converted into 'emotions' (queries), 'topics' (keys), and 'details' (values) using the same dictionary.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Residual Connections",
+      "definition": "Connections that add the input of a layer directly to its output, helping gradients flow and stabilizing training.",
+      "intuition": "Like keeping a copy of your original plan while making edits—you can always go back if the changes don’t work.",
+      "importance": "Prevents degradation in deep networks; critical for training RMC without vanishing gradients.",
+      "related_concepts": [
+        "MLP",
+        "Relational Memory Core"
+      ],
+      "example": "In RMC, the updated memory is added to the original memory before applying MLP—preserving useful information.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Sequence Modeling",
+      "definition": "The task of modeling and predicting sequences of data where order matters, such as text, time series, or actions.",
+      "intuition": "Like predicting the next note in a song based on all previous notes, not just the last one.",
+      "importance": "Foundation for RNNs and Transformers; RMC improves this by enhancing relational reasoning over time.",
+      "related_concepts": [
+        "LSTM",
+        "Temporal Relational Reasoning"
+      ],
+      "example": "Predicting the next word in 'The sky is...' → 'blue'.",
+      "difficulty": "beginner"
+    }
+  ],
+  "paper_id": 18,
+  "title": "Relational Recurrent Neural Networks"
+}

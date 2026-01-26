@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Entropy",
+      "definition": "A measure of disorder or uncertainty in a system, quantifying the number of microstates consistent with a given macrostate.",
+      "intuition": "Like a messy room—more ways to arrange things randomly than neatly, so entropy increases as things become more disordered.",
+      "importance": "Foundational to thermodynamics; explains why systems evolve toward equilibrium and why processes are irreversible.",
+      "related_concepts": [
+        "Boltzmann entropy",
+        "Gibbs entropy"
+      ],
+      "example": "A cup of coffee with cream poured in starts low-entropy (separated layers) and becomes high-entropy when fully mixed.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Boltzmann Entropy",
+      "definition": "The logarithm of the number of microstates corresponding to a macrostate, scaled by Boltzmann's constant.",
+      "intuition": "It’s like counting all the possible ways you can rearrange the coffee and cream molecules without changing how it looks to your eyes.",
+      "importance": "Provides an objective, macrostate-based measure of entropy independent of observer knowledge.",
+      "related_concepts": [
+        "Entropy",
+        "Coarse-graining"
+      ],
+      "example": "In the coffee cup, Boltzmann entropy increases as cream and coffee mix—more microstates become accessible.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Gibbs Entropy",
+      "definition": "The entropy of a probability distribution over microstates, calculated as the negative sum of probabilities times their log probabilities.",
+      "intuition": "It measures how uncertain you are about the exact state of a system, like guessing which card is drawn from a shuffled deck.",
+      "importance": "Connects statistical mechanics with information theory; used when we don’t know the exact microstate.",
+      "related_concepts": [
+        "Entropy",
+        "Shannon entropy"
+      ],
+      "example": "If you know the coffee-cream mixture is 50/50 but don’t know which molecule is where, Gibbs entropy quantifies that uncertainty.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Shannon Entropy",
+      "definition": "The average number of bits needed to encode the outcome of a random variable, based on its probability distribution.",
+      "intuition": "Like how many yes/no questions you’d need to guess a message—more randomness means more questions needed.",
+      "importance": "Bridges information theory with physics; forms the basis for data compression and communication limits.",
+      "related_concepts": [
+        "Gibbs entropy",
+        "Kolmogorov complexity"
+      ],
+      "example": "A string of 1000 '1's has low Shannon entropy because it can be compressed; a random string has high entropy.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Kolmogorov Complexity",
+      "definition": "The length of the shortest computer program that can generate a given string or state.",
+      "intuition": "It’s the minimal description length—how much you need to write down to perfectly recreate the system.",
+      "importance": "Provides an objective, model-independent measure of information content; used to define complexity in this paper.",
+      "related_concepts": [
+        "Shannon entropy",
+        "Apparent complexity"
+      ],
+      "example": "A perfectly mixed coffee cup has low Kolmogorov complexity (just say 'uniform mixture'); a swirling pattern has high complexity.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Coarse-graining",
+      "definition": "The process of grouping fine-grained microstates into broader macrostates based on observable properties.",
+      "intuition": "Like looking at a crowd from afar—you see 'a lot of people' instead of tracking each person’s position.",
+      "importance": "Enables definition of entropy and complexity in real-world systems where we can’t track every particle.",
+      "related_concepts": [
+        "Boltzmann entropy",
+        "Apparent complexity"
+      ],
+      "example": "In the coffee automaton, coarse-graining divides the cup into pixels—each pixel is 'cream', 'coffee', or 'mixed'.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Apparent Complexity",
+      "definition": "The Kolmogorov complexity of a coarse-grained approximation of a system's state.",
+      "intuition": "It’s the complexity you see—not the full microscopic detail, but what’s visually interesting or patterned.",
+      "importance": "Core innovation of the paper—it quantifies 'interestingness' in systems, not just disorder.",
+      "related_concepts": [
+        "Kolmogorov complexity",
+        "Coarse-graining"
+      ],
+      "example": "The swirling patterns in partially mixed coffee have high apparent complexity; uniform mixtures and pure layers do not.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Closed System",
+      "definition": "A physical system that does not exchange matter or energy with its environment.",
+      "intuition": "Like a sealed jar—you can’t add or remove anything, so everything happens inside.",
+      "importance": "Essential for applying the second law of thermodynamics and studying entropy/complexity evolution over time.",
+      "related_concepts": [
+        "Entropy",
+        "Equilibrium"
+      ],
+      "example": "The coffee cup with cream is closed—no liquid enters or leaves, only internal mixing occurs.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Equilibrium",
+      "definition": "A state in which a system’s macroscopic properties no longer change over time due to internal dynamics.",
+      "intuition": "Like water in a still pond—no more ripples, everything has settled into balance.",
+      "importance": "Entropy is maximized at equilibrium; complexity is minimized, making it the endpoint of the rise-and-fall pattern.",
+      "related_concepts": [
+        "Entropy",
+        "Apparent complexity"
+      ],
+      "example": "When coffee and cream are fully mixed into a uniform brown liquid, the system has reached equilibrium.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Rise-and-Fall of Complexity",
+      "definition": "The phenomenon where complexity in a closed system increases from low initial values, peaks at an intermediate time, and then decreases to zero as equilibrium is reached.",
+      "intuition": "Like building a sandcastle—first you arrange it (complexity rises), then the tide washes it away (complexity falls).",
+      "importance": "Challenges simplistic entropy-only views; explains why structured systems like galaxies form in an expanding universe.",
+      "related_concepts": [
+        "Apparent complexity",
+        "Entropy"
+      ],
+      "example": "The universe: low complexity at Big Bang → stars/galaxies form (peak) → heat death (low complexity again).",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Cellular Automaton",
+      "definition": "A discrete computational model consisting of a grid of cells that evolve over time according to local rules.",
+      "intuition": "Like a game of life—each cell changes based on its neighbors, creating patterns from simple rules.",
+      "importance": "Used as a tractable model to simulate physical mixing and compute apparent complexity without real-world noise.",
+      "related_concepts": [
+        "Apparent complexity",
+        "Coarse-graining"
+      ],
+      "example": "The coffee automaton uses a 2D grid where cells represent coffee, cream, or mixed states evolving via diffusion rules.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Non-interacting Particles",
+      "definition": "Particles that move independently without influencing each other’s trajectories or states.",
+      "intuition": "Like marbles rolling on a frictionless table—each moves on its own path, no collisions or interactions.",
+      "importance": "In the paper, non-interacting particles fail to generate high complexity because they don’t form patterns.",
+      "related_concepts": [
+        "Apparent complexity",
+        "Cellular automaton"
+      ],
+      "example": "If cream and coffee particles just drift randomly without bumping, the mixture becomes uniform too fast—no swirls.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Interacting Particles",
+      "definition": "Particles whose motion or state depends on the states of neighboring particles through local rules.",
+      "intuition": "Like people in a crowd—each person’s movement affects others, leading to emergent patterns like waves or clusters.",
+      "importance": "Crucial for generating high apparent complexity; enables self-organization and transient structures.",
+      "related_concepts": [
+        "Cellular automaton",
+        "Apparent complexity"
+      ],
+      "example": "In the coffee automaton, particles interact by diffusing into adjacent cells—creating swirls and filaments.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Heat Death",
+      "definition": "The theoretical final state of the universe where entropy is maximized, no energy gradients exist, and no work can be done.",
+      "intuition": "The universe becomes a cold, dark, perfectly uniform sea of particles—no stars, no life, no structure.",
+      "importance": "Represents the low-complexity endpoint predicted by thermodynamics; contrasts with early universe complexity.",
+      "related_concepts": [
+        "Entropy",
+        "Equilibrium"
+      ],
+      "example": "After all black holes evaporate and particles disperse over 10^100 years, the universe reaches heat death.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Apparent Complexity Peak Hypothesis",
+      "definition": "The conjecture that in closed systems undergoing mixing or evolution toward equilibrium, apparent complexity reaches a maximum before declining to zero.",
+      "intuition": "The 'sweet spot' of beauty or structure—too early, nothing’s happened; too late, everything’s boring.",
+      "importance": "Core hypothesis of the paper—proposing a quantitative, testable principle to explain structure formation in nature.",
+      "related_concepts": [
+        "Rise-and-Fall of Complexity",
+        "Apparent complexity"
+      ],
+      "example": "In the coffee automaton, complexity peaks when swirling patterns form—before uniformity takes over.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 19,
+  "title": "The Coffee Automaton"
+}

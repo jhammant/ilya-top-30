@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary problem that LSTM networks were designed to solve in the context of RNNs?",
+      "answer": "LSTMs were designed to solve the vanishing gradient problem that prevents traditional RNNs from learning long-term dependencies.",
+      "explanation": "Traditional RNNs suffer from vanishing gradients during backpropagation through time, making it difficult to learn dependencies over long sequences. LSTMs introduce gated structures that allow gradients to flow unchanged over long periods, enabling the network to remember information for extended durations.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To reduce computational complexity",
+        "To handle non-sequential data",
+        "To replace convolutional layers"
+      ],
+      "hint": "Think about why RNNs struggle with long sequences and what structural change LSTMs introduced to fix it."
+    },
+    {
+      "id": "q2",
+      "question": "Which component in an LSTM controls whether information is added to the cell state?",
+      "answer": "The input gate",
+      "explanation": "The input gate in an LSTM determines how much new information from the current input should be added to the cell state. It uses a sigmoid function to decide which values to update and a tanh layer to create new candidate values.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Forget gate",
+        "Output gate",
+        "Cell state"
+      ],
+      "hint": "This gate decides what new information to store in the cell state based on the current input and previous hidden state."
+    },
+    {
+      "id": "q3",
+      "question": "What is the role of the cell state in an LSTM?",
+      "answer": "The cell state acts as a conveyor belt that carries information across time steps with minimal modification, allowing long-term dependencies to be preserved.",
+      "explanation": "Unlike the hidden state, which is modified at every step and can lose information due to activation functions, the cell state is updated via additive operations (using gates), making it stable over long sequences and ideal for retaining information.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It stores the final prediction output",
+        "It controls the learning rate of the network",
+        "It replaces the hidden state entirely"
+      ],
+      "hint": "Think of it as a memory that can be read from, written to, or erased in small amounts at each step."
+    },
+    {
+      "id": "q4",
+      "question": "Which gate in an LSTM determines which parts of the cell state to forget?",
+      "answer": "The forget gate",
+      "explanation": "The forget gate uses a sigmoid function to output values between 0 and 1 for each number in the cell state. A value close to 0 means 'forget' and a value close to 1 means 'keep'. This allows the network to selectively remove irrelevant information.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Input gate",
+        "Output gate",
+        "Activation gate"
+      ],
+      "hint": "This gate decides what information from the previous cell state should be discarded before adding new information."
+    },
+    {
+      "id": "q5",
+      "question": "What does the output gate in an LSTM control?",
+      "answer": "The output gate controls which parts of the cell state are used to produce the hidden state (output) at the current time step.",
+      "explanation": "The output gate applies a sigmoid function to decide which parts of the cell state to output, then multiplies it by the tanh-transformed cell state to produce the hidden state. This allows selective output based on context.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "How much new information to add to the cell state",
+        "Which parts of the input to ignore",
+        "The learning rate for backpropagation"
+      ],
+      "hint": "This gate decides what the LSTM 'says' based on its internal memory (cell state)."
+    },
+    {
+      "id": "q6",
+      "question": "What is the function of the tanh layer in an LSTM’s input gate?",
+      "answer": "It creates a vector of new candidate values that could be added to the cell state.",
+      "explanation": "The tanh layer generates a candidate update for the cell state by applying a hyperbolic tangent function to the combined input and previous hidden state. This ensures values are bounded between -1 and 1, providing a stable range for updates.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It forgets irrelevant information",
+        "It controls the output of the LSTM",
+        "It normalizes the input data"
+      ],
+      "hint": "This layer generates potential new information to be added, not the decision of whether to add it."
+    },
+    {
+      "id": "q7",
+      "question": "In the context of LSTMs, why is the cell state updated using addition rather than multiplication?",
+      "answer": "Addition allows gradients to flow unchanged through the cell state, preventing vanishing or exploding gradients during backpropagation.",
+      "explanation": "By using addition (cell_state = forget_gate * old_cell + input_gate * candidate), the derivative of the cell state with respect to previous values remains 1 when gates are close to 1. This enables stable long-term gradient flow, unlike multiplication which compounds small values.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Multiplication is too computationally expensive",
+        "Addition simplifies the model architecture",
+        "It allows for non-linear transformations"
+      ],
+      "hint": "Think about how gradients propagate through additive vs multiplicative operations over many time steps."
+    },
+    {
+      "id": "q8",
+      "question": "How does the forget gate in an LSTM enable selective memory retention?",
+      "answer": "The forget gate outputs values between 0 and 1 for each element in the cell state, allowing the network to decide exactly how much of each stored value to retain or discard.",
+      "explanation": "By applying a sigmoid function to the input and previous hidden state, the forget gate generates a continuous range of forgetting values. This enables fine-grained control—e.g., remembering the subject of a sentence while forgetting irrelevant filler words.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It removes entire layers of the network",
+        "It resets the hidden state completely",
+        "It reduces the dimensionality of inputs"
+      ],
+      "hint": "Imagine a dial for each memory cell that can be turned from 'fully erase' to 'fully keep'."
+    },
+    {
+      "id": "q9",
+      "question": "Why is the LSTM architecture considered more suitable than a standard RNN for language modeling tasks?",
+      "answer": "LSTMs can capture long-range dependencies in text, such as subject-verb agreement across multiple sentences, due to their ability to maintain and update cell state over long sequences.",
+      "explanation": "In language modeling, context from earlier parts of a document (e.g., 'The cat...' vs. 'The cats...') affects later predictions. Standard RNNs forget this context due to vanishing gradients; LSTMs preserve it via gated cell state updates.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "LSTMs have more parameters and are faster to train",
+        "They use attention mechanisms by default",
+        "They require less training data"
+      ],
+      "hint": "Think about how a sentence like 'The dog that chased the cat, which ran up the tree...' requires remembering subject number across clauses."
+    },
+    {
+      "id": "q10",
+      "question": "If the forget gate outputs a value close to 0 for a particular cell state element, what happens to that element?",
+      "answer": "The element is nearly erased from the cell state, as it gets multiplied by a value near 0.",
+      "explanation": "The forget gate's output is element-wise multiplied with the previous cell state. A value near 0 means that specific memory component will be discarded in the updated cell state, allowing the LSTM to forget irrelevant or outdated information.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It becomes the new hidden state",
+        "It is amplified by a factor of 10",
+        "It triggers a reset of the entire network"
+      ],
+      "hint": "Think of the forget gate as a dimmer switch for each memory cell—0 means 'turn it off'."
+    },
+    {
+      "id": "q11",
+      "question": "How does the combination of input and forget gates allow LSTMs to learn when to update memory?",
+      "answer": "The input gate decides what new information to add, and the forget gate determines what old information to remove; together they allow fine-grained control over memory updates.",
+      "explanation": "The LSTM doesn't just add or remove information—it learns a balance. For example, when transitioning from 'The cat is...' to 'The cats are...', the forget gate removes singular subject memory, and the input gate adds plural context.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They compete to overwrite the cell state completely",
+        "They both output binary decisions (yes/no)",
+        "One gate controls input and the other controls output"
+      ],
+      "hint": "Think of memory update as a process of editing: delete old, add new. Both gates are needed for this."
+    },
+    {
+      "id": "q12",
+      "question": "In an LSTM, why is the hidden state passed to the next time step instead of the cell state?",
+      "answer": "The hidden state is a filtered, context-aware representation of the cell state, suitable for making predictions or feeding to subsequent layers.",
+      "explanation": "While the cell state holds long-term memory, it is not directly used for prediction. The hidden state applies output gating to the cell state, producing a refined, task-relevant representation that can be used for classification or next-step prediction.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "The cell state is too large to pass between layers",
+        "Cell state values are unbounded and unstable",
+        "Hidden state contains the model's weights"
+      ],
+      "hint": "The hidden state is what other layers see—it’s the 'output' of the LSTM unit at each time step."
+    },
+    {
+      "id": "q13",
+      "question": "What would happen if an LSTM had no forget gate?",
+      "answer": "The cell state would accumulate all past information without discarding anything, leading to potential noise accumulation and reduced performance on tasks requiring selective memory.",
+      "explanation": "Without the forget gate, LSTMs would behave like uncontrolled accumulators. Even irrelevant or outdated information (e.g., 'The cat' from 10 steps ago) would persist, making it harder to focus on relevant context.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "The network would become a standard RNN with no advantage",
+        "It would be impossible to compute gradients",
+        "The output gate would take over all memory functions"
+      ],
+      "hint": "Imagine a notebook where you never erase anything—eventually, it becomes cluttered and hard to find what’s important."
+    },
+    {
+      "id": "q14",
+      "question": "Why is the sigmoid function used in LSTM gates rather than a step function?",
+      "answer": "The sigmoid function provides differentiable, continuous values between 0 and 1, enabling gradient-based learning for fine-grained control over information flow.",
+      "explanation": "Step functions produce binary outputs (0 or 1), which are non-differentiable and prevent gradient descent from adjusting gate weights. Sigmoid allows smooth, learnable control over memory—e.g., forgetting 70% of a value instead of all or nothing.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "Sigmoid is faster to compute than step functions",
+        "Step functions cannot handle real-valued inputs",
+        "Sigmoid reduces model complexity"
+      ],
+      "hint": "Think about how gradient descent requires smooth, differentiable functions to adjust weights incrementally."
+    },
+    {
+      "id": "q15",
+      "question": "How does the LSTM architecture differ from a GRU in terms of gating structure?",
+      "answer": "LSTMs have three separate gates (forget, input, output) and a distinct cell state, while GRUs combine the forget and input gates into a single update gate and merge hidden and cell states.",
+      "explanation": "While both address vanishing gradients, GRUs simplify the LSTM by merging state representations and reducing gate count. LSTMs maintain a separate cell state for memory, offering more explicit control over information flow.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "GRUs use attention mechanisms; LSTMs do not",
+        "LSTMs are always faster to train than GRUs",
+        "GRUs have four gates while LSTMs have three"
+      ],
+      "hint": "Think of GRUs as a streamlined version of LSTMs—fewer parts, but less explicit memory separation."
+    },
+    {
+      "id": "q16",
+      "question": "Suppose an LSTM is trained to predict the next word in a sentence. What role does the output gate play when it encounters an ambiguous pronoun like 'it'?",
+      "answer": "The output gate uses the cell state (which contains context like subject gender or number) to determine which interpretation of 'it' is most appropriate.",
+      "explanation": "The output gate applies a filter to the cell state, allowing contextually relevant information (e.g., 'The cat' vs. 'The table') to influence the prediction of 'it'. This enables resolving ambiguity based on long-range dependencies.",
+      "difficulty": "hard",
+      "type": "applied",
+      "distractors": [
+        "It replaces the pronoun with a fixed token",
+        "It ignores the cell state and uses only the input word",
+        "It randomly guesses based on frequency"
+      ],
+      "hint": "Think of the output gate as a spotlight that highlights relevant parts of memory to answer the current question."
+    },
+    {
+      "id": "q17",
+      "question": "Why can't a standard RNN effectively learn dependencies between words separated by 100+ time steps, while an LSTM can?",
+      "answer": "Standard RNNs suffer from vanishing gradients over long sequences, making it impossible for early inputs to influence later outputs; LSTMs mitigate this via constant error flow through the cell state.",
+      "explanation": "In standard RNNs, gradients are multiplied repeatedly across time steps. If the derivative is less than 1, it vanishes exponentially. LSTMs use additive cell state updates (with gates) to maintain gradient flow, preserving influence from distant inputs.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "LSTMs have more hidden units",
+        "RNNs use different activation functions",
+        "LSTMs are trained with reinforcement learning"
+      ],
+      "hint": "Imagine trying to whisper a message across 100 people—each person whispers softly. The message dies out. LSTMs give each person a megaphone."
+    },
+    {
+      "id": "q18",
+      "question": "If you were to design a text summarization model using LSTMs, how would the forget gate help improve summary quality?",
+      "answer": "The forget gate can discard irrelevant details (e.g., repetitive adjectives or minor clauses) while preserving key entities and actions to form a concise summary.",
+      "explanation": "In summarization, the model must distinguish between important content and noise. The forget gate allows the LSTM to selectively remove redundant or unimportant information from memory, enabling focus on core elements like subjects, verbs, and outcomes.",
+      "difficulty": "hard",
+      "type": "applied",
+      "distractors": [
+        "It removes punctuation to shorten text",
+        "It reduces vocabulary size for faster processing",
+        "It deletes the entire hidden state to prevent overfitting"
+      ],
+      "hint": "Think of summarization as editing a draft—what do you delete? The forget gate decides."
+    },
+    {
+      "id": "q19",
+      "question": "How does the LSTM’s ability to learn when to forget, add, and output information make it more expressive than a simple RNN?",
+      "answer": "LSTMs can learn complex, context-dependent memory policies—such as remembering a subject for multiple sentences but forgetting its color after one clause—while RNNs have uniform, uncontrolled memory decay.",
+      "explanation": "Simple RNNs apply the same transformation at every step, leading to uniform forgetting. LSTMs learn gate functions that adaptively control memory based on context—enabling sophisticated temporal reasoning like human-like attention to relevance.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "LSTMs can process images better than RNNs",
+        "RNNs have higher parameter efficiency",
+        "LSTMs use convolutional layers internally"
+      ],
+      "hint": "An RNN forgets everything at the same rate. An LSTM learns: 'Forget this, keep that, say this.'"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim: 'LSTMs are no longer necessary because transformers have replaced them in all sequence tasks.'",
+      "answer": "While transformers dominate modern NLP due to parallelization and attention mechanisms, LSTMs remain useful for tasks with limited data, low computational resources, or where interpretability of memory states is critical.",
+      "explanation": "Transformers excel with large datasets and long-range attention but require significant resources. LSTMs are still used in embedded systems, real-time applications, and research on interpretability—where their gated memory provides transparent mechanisms for information flow.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "LSTMs are obsolete and should never be used",
+        "Transformers use LSTMs internally as a component",
+        "LSTMs are faster than transformers on all hardware"
+      ],
+      "hint": "Consider trade-offs: performance vs. efficiency, data size vs. interpretability."
+    }
+  ],
+  "paper_id": 3,
+  "title": "Understanding LSTM Networks",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 9,
+    "hard": 5
+  }
+}

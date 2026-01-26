@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/bundle-data.js && next build",
+    "build:static": "node scripts/bundle-data.js && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "bundle-data": "node scripts/bundle-data.js",
+    "serve": "npx serve out"
   },
   "dependencies": {
-    "@clerk/nextjs": "^6.36.6",
-    "@supabase/supabase-js": "^2.90.1",
     "clsx": "^2.1.1",
     "cytoscape": "^3.33.1",
     "framer-motion": "^12.24.0",

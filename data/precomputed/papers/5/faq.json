@@ -1,0 +1,254 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the core idea behind 'Keeping Neural Networks Simple' using Minimum Description Length (MDL)?",
+      "answer": "The core idea is that a neural network generalizes better when the weights contain less information than the output vectors of the training data. MDL suggests that the best model minimizes the total description length: the number of bits needed to encode the weights plus the number of bits needed to encode the prediction errors (data misfits). By penalizing complex weights, we avoid overfitting and encourage simpler models that generalize well.",
+      "related_concepts": [
+        "Minimum Description Length",
+        "Overfitting",
+        "Information Theory"
+      ],
+      "follow_up": "How does MDL differ from traditional regularization like L2 weight decay?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "Why does the paper argue that information in weights matters for generalization?",
+      "answer": "The paper argues that if the weights encode too much information—such as memorizing noise or idiosyncrasies in training data—the model will fail to generalize to unseen examples. By limiting the information content of weights, we force the network to learn only the essential patterns, not spurious correlations. This aligns with Occam’s Razor: simpler explanations (weight representations) are preferable.",
+      "related_concepts": [
+        "Generalization",
+        "Occam's Razor",
+        "Information Content"
+      ],
+      "follow_up": "How is 'information in weights' quantified in this paper?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "How is 'information in weights' measured in this paper?",
+      "answer": "Information is measured using Shannon entropy: the number of bits required to encode a weight given its probability distribution. The paper approximates this by modeling weights as Gaussian-distributed and quantized into bins of fixed width. The log probability of each weight’s bin gives the bit cost, which is proportional to the squared weight value under a zero-mean Gaussian.",
+      "related_concepts": [
+        "Shannon Entropy",
+        "Quantization",
+        "Gaussian Distribution"
+      ],
+      "follow_up": "Why does the paper assume Gaussian distributions for weights?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "How does adding Gaussian noise help control information in weights?",
+      "answer": "Adding Gaussian noise to weights during training effectively creates a probabilistic distribution over weight values. The variance of this noise controls the entropy: higher noise increases uncertainty (and thus information content), while lower noise reduces it. By adaptively adjusting the noise level during training, we can optimize the trade-off between prediction accuracy and weight complexity.",
+      "related_concepts": [
+        "Noise Injection",
+        "Entropy Optimization",
+        "Stochastic Gradient Descent"
+      ],
+      "follow_up": "Can this noise-based approach be implemented with modern optimizers like Adam?"
+    },
+    {
+      "id": "faq5",
+      "category": "implementation",
+      "question": "How are the derivatives of information content computed efficiently?",
+      "answer": "The paper derives exact analytical expressions for gradients of both expected squared error and information content in weights, assuming linear output units. For a Gaussian noise model with fixed quantization bins, the information cost is proportional to the sum of squared weights. This allows efficient backpropagation without Monte Carlo sampling, making it computationally feasible.",
+      "related_concepts": [
+        "Backpropagation",
+        "Analytical Gradients",
+        "Linear Output Layers"
+      ],
+      "follow_up": "What happens if the output units are non-linear?"
+    },
+    {
+      "id": "faq6",
+      "category": "implementation",
+      "question": "Is this method compatible with modern deep networks with many layers?",
+      "answer": "The paper’s derivation assumes linear output units and a single hidden layer with nonlinearities. Extending it to deep networks would require approximations, as the information cost becomes intractable without simplifying assumptions. Modern implementations might use variational inference or Bayesian neural networks to approximate MDL in deep architectures, but the original method is limited to shallow nets.",
+      "related_concepts": [
+        "Deep Learning",
+        "Variational Inference",
+        "Bayesian Neural Networks"
+      ],
+      "follow_up": "Are there modern variants of this approach used today?"
+    },
+    {
+      "id": "faq7",
+      "category": "comparison",
+      "question": "How does MDL-based weight regularization compare to L2 regularization?",
+      "answer": "Both penalize large weights, but MDL is information-theoretic: it quantifies the actual bit cost of encoding weights under a probabilistic model. L2 is a heuristic penalty on magnitude. MDL naturally adapts to the data by adjusting noise levels, while L2 uses a fixed hyperparameter. MDL also explicitly models the communication cost between sender and receiver, grounding regularization in coding theory.",
+      "related_concepts": [
+        "L2 Regularization",
+        "Bayesian Model Selection",
+        "Information Theory"
+      ],
+      "follow_up": "Does MDL provide theoretical guarantees on generalization?"
+    },
+    {
+      "id": "faq8",
+      "category": "comparison",
+      "question": "How does this approach relate to Bayesian neural networks?",
+      "answer": "This MDL method is closely related to Bayesian inference: minimizing description length corresponds to maximizing the posterior probability under a prior over weights (the Gaussian noise model). The information cost of weights acts as a log-prior, and the data misfit cost is the negative log-likelihood. Thus, MDL is equivalent to maximum a posteriori (MAP) estimation with Gaussian priors.",
+      "related_concepts": [
+        "Bayesian Inference",
+        "MAP Estimation",
+        "Prior Distributions"
+      ],
+      "follow_up": "Can MDL be extended to full Bayesian posterior sampling?"
+    },
+    {
+      "id": "faq9",
+      "category": "comparison",
+      "question": "How does this paper’s approach compare to weight pruning or quantization?",
+      "answer": "Pruning removes weights entirely, while quantization reduces precision; both reduce model size but are discrete and non-differentiable. This MDL method uses continuous noise to smoothly penalize information content, enabling gradient-based optimization. It’s a differentiable proxy for compression that avoids the combinatorial search problems of discrete methods.",
+      "related_concepts": [
+        "Weight Pruning",
+        "Quantization",
+        "Model Compression"
+      ],
+      "follow_up": "Can MDL and pruning be combined?"
+    },
+    {
+      "id": "faq10",
+      "category": "comparison",
+      "question": "How does MDL relate to the concept of ‘compression’ in deep learning?",
+      "answer": "MDL formalizes compression as a learning principle: the goal is to compress the training data into the most compact model possible. The weights are a compressed representation of patterns in the data. This aligns with modern compression-based theories like Solomonoff induction and algorithmic information theory, where learning is seen as finding efficient data encodings.",
+      "related_concepts": [
+        "Algorithmic Information Theory",
+        "Data Compression",
+        "Solomonoff Induction"
+      ],
+      "follow_up": "Is there a connection between MDL and lossless data compression algorithms?"
+    },
+    {
+      "id": "faq11",
+      "category": "application",
+      "question": "Can this method be used for model selection or architecture search?",
+      "answer": "Yes, MDL provides a principled framework for model selection: choosing the architecture that minimizes total description length. By comparing MDL scores across architectures (e.g., different layer counts or widths), you can select the simplest model that still fits the data well. This avoids manual hyperparameter tuning and provides a theoretical basis for choosing model complexity.",
+      "related_concepts": [
+        "Model Selection",
+        "Architecture Search",
+        "Occam's Razor"
+      ],
+      "follow_up": "How would you compute MDL for different architectures in practice?"
+    },
+    {
+      "id": "faq12",
+      "category": "application",
+      "question": "Is this method useful when training data is scarce?",
+      "answer": "Yes, it’s particularly valuable in low-data regimes. When training examples are few, models easily overfit by memorizing noise. MDL penalizes complex weights that rely on such idiosyncrasies, forcing the network to learn robust, generalizable features. This makes it a natural fit for few-shot learning and small-dataset applications.",
+      "related_concepts": [
+        "Few-Shot Learning",
+        "Overfitting",
+        "Data Efficiency"
+      ],
+      "follow_up": "How does MDL compare to data augmentation in low-data scenarios?"
+    },
+    {
+      "id": "faq13",
+      "category": "application",
+      "question": "Can MDL be applied to classification tasks, not just regression?",
+      "answer": "Yes, though the paper focuses on squared error (regression). For classification, you can replace squared error with negative log-likelihood of the correct class. The information cost for weights remains unchanged. This makes MDL applicable to any supervised task where you can define a likelihood model for predictions.",
+      "related_concepts": [
+        "Cross-Entropy Loss",
+        "Likelihood-Based Learning",
+        "Supervised Learning"
+      ],
+      "follow_up": "What distribution should be assumed for classification outputs?"
+    },
+    {
+      "id": "faq14",
+      "category": "limitations",
+      "question": "What are the main limitations of this MDL approach?",
+      "answer": "Key limitations include: (1) Assumes linear output units for tractable gradients; (2) Uses fixed quantization bins, which may not be optimal; (3) Gaussian noise model is a simplification—real weight distributions are more complex; (4) Computationally expensive to optimize noise levels adaptively; (5) Not directly scalable to deep networks without approximations.",
+      "related_concepts": [
+        "Approximation Errors",
+        "Scalability",
+        "Model Assumptions"
+      ],
+      "follow_up": "Are there modern methods that overcome these limitations?"
+    },
+    {
+      "id": "faq15",
+      "category": "limitations",
+      "question": "Why is quantization width important, and what if it’s chosen poorly?",
+      "answer": "Quantization width determines the granularity of weight encoding. If too narrow, many bins are needed (high bit cost); if too wide, information is lost and model accuracy suffers. Poor choice leads to suboptimal trade-offs between compression and performance. The paper assumes fixed width for tractability, but optimal quantization is data-dependent and hard to learn without additional complexity.",
+      "related_concepts": [
+        "Quantization",
+        "Discretization Error",
+        "Rate-Distortion Theory"
+      ],
+      "follow_up": "Can quantization width be learned during training?"
+    },
+    {
+      "id": "faq16",
+      "category": "limitations",
+      "question": "Does this method work well with non-Gaussian weight distributions?",
+      "answer": "The paper assumes Gaussian noise for tractability, but real neural network weights often have heavy-tailed or sparse distributions. Using Gaussian assumptions may underestimate true information content, leading to suboptimal regularization. Extensions using more flexible priors (e.g., Laplace or spike-and-slab) would be more accurate but harder to optimize.",
+      "related_concepts": [
+        "Heavy-Tailed Distributions",
+        "Sparse Coding",
+        "Non-Gaussian Priors"
+      ],
+      "follow_up": "Are there MDL variants that use non-Gaussian priors?"
+    },
+    {
+      "id": "faq17",
+      "category": "implementation",
+      "question": "How do you adapt the noise level during training?",
+      "answer": "Noise levels (variance) are adapted by optimizing the total MDL cost: sum of prediction error and information cost. Gradients with respect to noise variance are computed analytically, allowing gradient descent to adjust the noise level automatically—increasing it when weights are overfitting, decreasing it when accuracy drops too much.",
+      "related_concepts": [
+        "Hyperparameter Adaptation",
+        "Gradient-Based Optimization",
+        "Adaptive Regularization"
+      ],
+      "follow_up": "What optimization algorithm is recommended for noise adaptation?"
+    },
+    {
+      "id": "faq18",
+      "category": "understanding",
+      "question": "What does it mean to 'encode the misfit' between network output and true output?",
+      "answer": "Encoding the misfit means transmitting the difference (error) between predicted and true outputs using a code optimized for that error distribution. If errors are small, they can be encoded in few bits; if large, more bits are needed. This forces the model to minimize both prediction error and the cost of describing those errors, discouraging overfitting.",
+      "related_concepts": [
+        "Error Encoding",
+        "Rate-Distortion Theory",
+        "Data Compression"
+      ],
+      "follow_up": "How is the error distribution modeled in practice?"
+    },
+    {
+      "id": "faq19",
+      "category": "application",
+      "question": "Can MDL be used for interpretability or feature selection?",
+      "answer": "Yes. By penalizing information in weights, MDL implicitly selects features that are most necessary for prediction—weights with low information content (near zero) are less likely to be retained. This leads to sparse, interpretable representations, similar to L1 regularization but grounded in information theory rather than sparsity heuristics.",
+      "related_concepts": [
+        "Feature Selection",
+        "Interpretability",
+        "Sparsity"
+      ],
+      "follow_up": "Can MDL identify which input features are most important?"
+    },
+    {
+      "id": "faq20",
+      "category": "comparison",
+      "question": "How does this paper’s MDL approach compare to PAC-Bayes bounds?",
+      "answer": "Both provide generalization guarantees based on information content. PAC-Bayes bounds the expected risk in terms of KL divergence between prior and posterior weight distributions—identical to MDL’s information cost. In fact, MDL in this paper is a practical implementation of PAC-Bayes with Gaussian priors. The key difference: MDL focuses on coding cost, while PAC-Bayes provides probabilistic bounds.",
+      "related_concepts": [
+        "PAC-Bayes",
+        "Generalization Bounds",
+        "KL Divergence"
+      ],
+      "follow_up": "Can MDL be used to derive theoretical generalization bounds?"
+    }
+  ],
+  "paper_id": 5,
+  "title": "Keeping Neural Networks Simple (MDL)",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 4,
+    "implementation": 4,
+    "comparison": 5,
+    "application": 4,
+    "limitations": 3
+  }
+}

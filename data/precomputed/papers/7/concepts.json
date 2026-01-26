@@ -1,0 +1,201 @@
+{
+  "concepts": [
+    {
+      "name": "Convolutional Neural Network (CNN)",
+      "definition": "A type of deep neural network designed to process grid-like data such as images, using convolutional layers that apply filters to detect local patterns like edges and textures.",
+      "intuition": "Think of a CNN as a detective scanning a photo with a magnifying glass, looking for small patterns (like eyes or wheels) in every region before combining them to recognize the whole object.",
+      "importance": "CNNs are foundational for computer vision because they exploit spatial hierarchies in images, reducing parameters and enabling scalability to high-resolution data.",
+      "related_concepts": [
+        "Convolution",
+        "Feature Extraction",
+        "Deep Learning"
+      ],
+      "example": "AlexNet uses CNN layers to detect edges in early layers and complex shapes like wheels or ears in deeper layers.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Convolution Layer",
+      "definition": "A layer in a CNN that applies multiple learnable filters (kernels) to an input image to produce feature maps highlighting specific patterns.",
+      "intuition": "Imagine using different colored overlays (filters) on a photo—each one highlights something specific, like vertical lines or corners.",
+      "importance": "Convolution layers enable automatic feature detection without manual engineering, making CNNs powerful and adaptable.",
+      "related_concepts": [
+        "Filter",
+        "Feature Map",
+        "Pooling"
+      ],
+      "example": "In AlexNet, the first convolution layer detects edges and color blobs from raw pixel inputs.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Filter (Kernel)",
+      "definition": "A small matrix of weights that slides across an image to compute dot products and extract local features such as edges or textures.",
+      "intuition": "Like a stencil that only lets certain patterns through—each filter is trained to 'see' one specific visual pattern.",
+      "importance": "Filters are the core mechanism by which CNNs learn hierarchical representations from raw pixels.",
+      "related_concepts": [
+        "Convolution Layer",
+        "Feature Map",
+        "Weight Sharing"
+      ],
+      "example": "A 11x11 filter in AlexNet’s first layer scans the image to detect high-frequency patterns like corners and stripes.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Feature Map",
+      "definition": "The output of applying a filter to an input image, representing the activation levels of detected features across spatial locations.",
+      "intuition": "Think of a feature map as a heat map showing where in the image each pattern (e.g., vertical lines) appears most strongly.",
+      "importance": "Feature maps allow the network to represent complex visual patterns in a structured, spatially organized way.",
+      "related_concepts": [
+        "Convolution Layer",
+        "Filter",
+        "Pooling"
+      ],
+      "example": "After convolution, a feature map might show bright spots where the filter detected diagonal edges in the image.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Max-Pooling",
+      "definition": "A downsampling operation that selects the maximum value from small regions (e.g., 2x2 patches) of a feature map to reduce spatial dimensions and retain dominant features.",
+      "intuition": "Like taking the loudest voice in a crowd—max-pooling keeps only the strongest activation in each area, ignoring minor variations.",
+      "importance": "Reduces computational load, provides translation invariance, and helps prevent overfitting by summarizing local features.",
+      "related_concepts": [
+        "Pooling",
+        "Downsampling",
+        "Convolution Layer"
+      ],
+      "example": "After a convolution layer detects edges, max-pooling reduces the map size by keeping only the brightest edge responses.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Fully-Connected Layer",
+      "definition": "A layer where every neuron is connected to every neuron in the previous layer, typically used near the end of a network to classify features into categories.",
+      "intuition": "Like a jury that hears all the evidence (features) from earlier layers and makes a final decision on what the image is.",
+      "importance": "These layers integrate high-level features into final class predictions, acting as the decision-making component of CNNs.",
+      "related_concepts": [
+        "Neuron",
+        "Softmax",
+        "Classification"
+      ],
+      "example": "AlexNet’s final fully-connected layer outputs 1000 scores, one for each ImageNet class.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Softmax Function",
+      "definition": "A mathematical function that converts a vector of raw scores into a probability distribution over multiple classes, where all probabilities sum to 1.",
+      "intuition": "Like turning a list of confidence scores into percentages—e.g., '70% cat, 25% dog, 5% bird'—so you know the most likely class.",
+      "importance": "Enables multi-class classification by outputting interpretable probabilities, crucial for evaluating model performance.",
+      "related_concepts": [
+        "Classification",
+        "Logits",
+        "Cross-Entropy Loss"
+      ],
+      "example": "AlexNet’s final layer uses softmax to output probabilities for 1000 ImageNet classes, with the highest probability as the predicted class.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Rectified Linear Unit (ReLU)",
+      "definition": "An activation function defined as f(x) = max(0, x), which outputs the input if positive and zero otherwise.",
+      "intuition": "Like a light switch—it turns on (activates) when there’s enough signal, but stays off if the input is too weak.",
+      "importance": "ReLUs accelerate training by avoiding vanishing gradients and are computationally efficient compared to sigmoid or tanh.",
+      "related_concepts": [
+        "Nonlinearity",
+        "Gradient Descent",
+        "Neuron"
+      ],
+      "example": "In AlexNet, ReLUs replaced sigmoid units, reducing training time by 6x and enabling deeper networks.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Overfitting",
+      "definition": "A scenario where a model learns training data too well, including noise and irrelevant details, leading to poor generalization on unseen data.",
+      "intuition": "Like memorizing answers for a test instead of learning the concepts—you’ll do great on practice questions but fail the real exam.",
+      "importance": "Critical to address in large models like AlexNet, where high capacity can lead to memorization rather than learning meaningful patterns.",
+      "related_concepts": [
+        "Regularization",
+        "Dropout",
+        "Validation Set"
+      ],
+      "example": "Without dropout, AlexNet’s large model would have memorized training images instead of learning general object features.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Dropout",
+      "definition": "A regularization technique that randomly 'drops out' (sets to zero) a fraction of neurons during training to prevent co-adaptation and improve generalization.",
+      "intuition": "Like randomly removing students from a group project—this forces everyone to learn independently instead of relying on others.",
+      "importance": "Crucial for large neural networks to reduce overfitting; AlexNet demonstrated its effectiveness in image classification.",
+      "related_concepts": [
+        "Regularization",
+        "Overfitting",
+        "Neuron"
+      ],
+      "example": "AlexNet used dropout in its fully-connected layers, improving test accuracy by forcing neurons to learn robust features.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "GPU Acceleration",
+      "definition": "The use of Graphics Processing Units to perform parallel computations, significantly speeding up matrix operations in deep learning.",
+      "intuition": "Like using a thousand tiny workers instead of one person to do the same job—GPUs process thousands of pixels or neurons at once.",
+      "importance": "Enabled training large CNNs on ImageNet by accelerating convolution and backpropagation, making deep learning feasible at scale.",
+      "related_concepts": [
+        "Convolution",
+        "Training Time",
+        "Parallel Computing"
+      ],
+      "example": "AlexNet used optimized GPU code to train on 1.2M images in 5–6 days, a task that would have taken weeks on CPUs.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "ImageNet Dataset",
+      "definition": "A large-scale image dataset containing over 15 million labeled images across more than 22,000 categories, used as a benchmark for visual recognition models.",
+      "intuition": "Think of it as the world’s largest photo album with labels—each picture is tagged with what’s in it, helping machines learn to recognize real-world objects.",
+      "importance": "Provided the scale and diversity needed to train deep models like AlexNet, revolutionizing computer vision by enabling data-driven learning.",
+      "related_concepts": [
+        "ILSVRC",
+        "Labeling",
+        "Benchmark"
+      ],
+      "example": "AlexNet was trained on 1.2 million ImageNet images to classify 1000 object categories, setting a new standard for accuracy.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "ILSVRC (ImageNet Large-Scale Visual Recognition Challenge)",
+      "definition": "An annual competition evaluating algorithms on classifying images from the ImageNet dataset, using top-1 and top-5 error rates as metrics.",
+      "intuition": "Like the Olympics for computer vision—research teams compete to build the best image classifier using standardized data.",
+      "importance": "Provided a standardized benchmark that drove innovation; AlexNet’s victory in 2012 marked the start of the deep learning revolution.",
+      "related_concepts": [
+        "ImageNet",
+        "Top-1 Error Rate",
+        "Benchmark"
+      ],
+      "example": "AlexNet won ILSVRC-2012 with a top-5 error rate of 15.3%, far below the previous best of 26.2%.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Top-1 and Top-5 Error Rates",
+      "definition": "Metrics for evaluating classification models: top-1 error is the fraction of predictions where the highest-probability class is wrong; top-5 error is the fraction where the correct label isn't among the five most probable.",
+      "intuition": "Top-1 is like guessing one answer and being wrong; top-5 is like getting a multiple-choice question right if your answer is one of five options.",
+      "importance": "Standardized evaluation in ImageNet competitions; top-5 allows partial credit for similar classes, making it more realistic.",
+      "related_concepts": [
+        "Softmax",
+        "Classification Accuracy",
+        "ILSVRC"
+      ],
+      "example": "AlexNet’s top-1 error was 37.5% and top-5 was 17.0%, showing it often ranked the correct class among its top five guesses.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Deep Architecture",
+      "definition": "A neural network with multiple hidden layers (typically more than three), enabling hierarchical feature learning from raw input to abstract representations.",
+      "intuition": "Like a ladder—each step builds on the last: edges → shapes → parts → objects. Deeper ladders see more complex patterns.",
+      "importance": "AlexNet proved depth matters—removing even 1% of layers hurt performance, establishing depth as key to modern CNNs.",
+      "related_concepts": [
+        "Convolutional Layer",
+        "Feature Hierarchy",
+        "Neural Network Depth"
+      ],
+      "example": "AlexNet’s 8-layer structure (5 conv + 3 FC) enabled learning complex object parts from simple pixels.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 7,
+  "title": "ImageNet Classification (AlexNet)"
+}

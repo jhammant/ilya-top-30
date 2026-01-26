@@ -1,0 +1,187 @@
+{
+  "concepts": [
+    {
+      "name": "Recurrent Neural Network (RNN)",
+      "definition": "A type of neural network designed to process sequential data by maintaining a hidden state that captures information from previous time steps.",
+      "intuition": "Think of an RNN like a person reading a book one word at a time—each new word affects their understanding of the story, and they carry forward what they’ve learned so far.",
+      "importance": "RNNs enable modeling of temporal dependencies in sequences like text, speech, and time series, making them foundational for sequence tasks.",
+      "related_concepts": [
+        "Long Short-Term Memory",
+        "Sequence Modeling"
+      ],
+      "example": "Predicting the next word in a sentence like 'The cat sat on the...' by using previous words.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Long Short-Term Memory (LSTM)",
+      "definition": "A specialized RNN architecture with memory cells and gating mechanisms that mitigate the vanishing gradient problem, enabling learning of long-range dependencies.",
+      "intuition": "Imagine an LSTM as a smart notebook with three sliders: one to decide what to remember (input gate), what to forget (forget gate), and what to output (output gate).",
+      "importance": "LSTMs solve the problem of RNNs forgetting old information, making them the go-to choice for tasks requiring long-term memory.",
+      "related_concepts": [
+        "Recurrent Neural Network",
+        "Gating Mechanism"
+      ],
+      "example": "Using LSTM to predict the next sentence in a novel based on events from pages ago.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Dropout",
+      "definition": "A regularization technique that randomly sets a fraction of neuron outputs to zero during training to prevent co-adaptation and reduce overfitting.",
+      "intuition": "Like forcing a team to practice without their star player—everyone else must step up and learn to function independently.",
+      "importance": "Dropout improves generalization by making models robust to missing inputs, but it was historically ineffective on RNNs due to recurrent noise amplification.",
+      "related_concepts": [
+        "Regularization",
+        "Overfitting"
+      ],
+      "example": "In image classification, randomly turning off 20% of neurons during training to avoid relying on specific features.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Overfitting",
+      "definition": "When a model learns training data too well, including noise and irrelevant details, leading to poor performance on unseen data.",
+      "intuition": "Like memorizing answers for a test instead of understanding the concepts—you’ll fail when questions change.",
+      "importance": "Overfitting limits model generalization, especially problematic for large RNNs that have high capacity to memorize training data.",
+      "related_concepts": [
+        "Regularization",
+        "Model Capacity"
+      ],
+      "example": "An RNN that perfectly predicts training sentences but generates gibberish on new text.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Regularization",
+      "definition": "Techniques used to prevent overfitting by adding constraints or penalties to the learning process to improve generalization.",
+      "intuition": "Like wearing a seatbelt—it doesn’t help you drive faster, but it keeps you safe if things go wrong.",
+      "importance": "Essential for training large neural networks; without it, models memorize rather than learn patterns.",
+      "related_concepts": [
+        "Dropout",
+        "Overfitting"
+      ],
+      "example": "Using weight decay to discourage large weights in a neural network.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Recurrent Connection",
+      "definition": "A connection in an RNN that feeds the hidden state from a previous time step back into the current computation.",
+      "intuition": "Like a person carrying their mood from yesterday into today—it influences how they react now.",
+      "importance": "Enables RNNs to maintain state across time, but also makes them vulnerable to noise when applying dropout.",
+      "related_concepts": [
+        "RNN",
+        "LSTM"
+      ],
+      "example": "In an LSTM, the hidden state h_t-1 is used to compute h_t via recurrent weights.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Non-Recurrent Connection",
+      "definition": "Connections in an RNN that do not carry information across time steps, such as input-to-hidden or hidden-to-output weights.",
+      "intuition": "These are like one-time decisions—each input gets processed independently without relying on past context.",
+      "importance": "Safe to apply dropout to these because they don't propagate noise over time, preserving long-term memory.",
+      "related_concepts": [
+        "Dropout",
+        "Recurrent Connection"
+      ],
+      "example": "The weight matrix that maps an input word vector to the LSTM’s input gate.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Dropout on Recurrent Connections",
+      "definition": "The practice of applying dropout to recurrent weights or hidden states that carry information across time steps.",
+      "intuition": "It’s like randomly erasing parts of someone’s memory every time they try to recall something—confusing and disruptive.",
+      "importance": "This approach fails in RNNs because it destroys the long-term memory needed for sequence modeling.",
+      "related_concepts": [
+        "Dropout",
+        "Recurrent Connection"
+      ],
+      "example": "Applying dropout to the hidden state h_t-1 before it’s used in computing h_t causes loss of context over time.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "LSTM Gating Mechanism",
+      "definition": "A set of learned gates (input, forget, output) that control the flow of information into, out of, and within LSTM memory cells.",
+      "intuition": "Like a water system with three valves: one to open the tap (input), one to drain the tank (forget), and one to release water (output).",
+      "importance": "Enables LSTMs to selectively retain or discard information, making them effective for long-term dependencies.",
+      "related_concepts": [
+        "LSTM",
+        "Memory Cell"
+      ],
+      "example": "The forget gate decides whether to keep or discard the previous memory cell state based on new input.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Memory Cell",
+      "definition": "A dedicated unit in an LSTM that stores and updates information over time, independent of the hidden state.",
+      "intuition": "Think of it as a sticky note that doesn’t fade—it holds important notes from earlier in the conversation.",
+      "importance": "Core innovation of LSTMs; allows persistent storage of information across many time steps.",
+      "related_concepts": [
+        "LSTM",
+        "Long-Term Dependency"
+      ],
+      "example": "Remembering the subject of a sentence from 10 words ago to correctly use pronouns later.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "RNN Regularization via Targeted Dropout",
+      "definition": "A technique that applies dropout only to non-recurrent connections in LSTMs, preserving recurrent state integrity.",
+      "intuition": "Like letting someone keep their memory intact but randomly blurring their senses—so they still remember the past, but must adapt to noisy inputs.",
+      "importance": "This method enables dropout to work with LSTMs for the first time, significantly reducing overfitting without harming long-term memory.",
+      "related_concepts": [
+        "Dropout",
+        "LSTM",
+        "Regularization"
+      ],
+      "example": "Applying dropout to input-to-gate weights but not to the hidden state passed from h_t-1 to h_t.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Noise Amplification in RNNs",
+      "definition": "The phenomenon where small perturbations (like dropout noise) grow exponentially over recurrent steps, disrupting learning.",
+      "intuition": "Like whispering a message through a long line of people—each person adds a little distortion, and by the end it’s nonsense.",
+      "importance": "Explains why standard dropout fails in RNNs: noise accumulates and destroys the signal over time.",
+      "related_concepts": [
+        "Dropout",
+        "Recurrent Connection"
+      ],
+      "example": "After 20 time steps, dropout-induced noise in h_t-1 makes the final prediction completely unreliable.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Deep LSTM",
+      "definition": "An LSTM architecture with multiple stacked layers, where the output of one layer serves as input to the next.",
+      "intuition": "Like a team of specialists—each layer extracts higher-level features from the previous one’s output.",
+      "importance": "Deeper LSTMs have greater representational power but are more prone to overfitting, making regularization critical.",
+      "related_concepts": [
+        "LSTM",
+        "Model Capacity"
+      ],
+      "example": "A 3-layer LSTM where layer 1 learns letter patterns, layer 2 learns word structures, and layer 3 learns sentence semantics.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Temporal Information Flow",
+      "definition": "The path through which information propagates across time steps in a recurrent network.",
+      "intuition": "Think of it as a river flowing downstream—each drop carries information from upstream to downstream.",
+      "importance": "Understanding this flow is essential to designing regularization that doesn’t break the chain of memory.",
+      "related_concepts": [
+        "Recurrent Connection",
+        "Memory Cell"
+      ],
+      "example": "In an LSTM, the memory cell cl-1 flows through gates to become cl at time t, influencing prediction y_t+5.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Dropout-Resistant LSTM Architecture",
+      "definition": "An LSTM configuration where dropout is applied only to non-recurrent connections, enabling stable long-term memory and effective regularization.",
+      "intuition": "Like giving your brain a random blur filter on sensory input but leaving your memories untouched.",
+      "importance": "This innovation made large LSTMs practical for real-world tasks by combining high capacity with strong generalization.",
+      "related_concepts": [
+        "RNN Regularization",
+        "Targeted Dropout"
+      ],
+      "example": "Training a language model with 1000-unit LSTMs using targeted dropout, achieving state-of-the-art perplexity on Penn Treebank.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 4,
+  "title": "Recurrent Neural Network Regularization"
+}

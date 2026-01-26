@@ -1,0 +1,187 @@
+{
+  "concepts": [
+    {
+      "name": "Attention Mechanism",
+      "definition": "A method that allows a model to selectively focus on relevant parts of the input sequence when generating each output element, by computing weighted sums over input elements based on their relevance to the current query.",
+      "intuition": "Like a reader highlighting important sentences in a book while answering a question—instead of reading every word equally, the model pays more attention to what’s relevant.",
+      "importance": "Enables models to handle long-range dependencies without sequential processing, forming the core of modern sequence modeling.",
+      "related_concepts": [
+        "Self-attention",
+        "Encoder-Decoder Architecture"
+      ],
+      "example": "In machine translation, when translating 'The cat sat on the mat', the model focuses on 'cat' when generating 'chat' in French and on 'mat' when generating 'tapis'.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Self-attention",
+      "definition": "A type of attention mechanism where a sequence computes relationships between all its own elements to build a contextualized representation, without relying on external inputs.",
+      "intuition": "Imagine each word in a sentence asking all other words: 'How relevant are you to me?' Then combining answers to understand its role in the full context.",
+      "importance": "Allows modeling of dependencies between any two positions in a sequence, regardless of distance—critical for replacing RNNs and CNNs.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Multi-Head Attention"
+      ],
+      "example": "In 'The animal didn't cross the street because it was too tired', self-attention links 'it' to 'animal' to resolve pronoun reference.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Scaled Dot-Product Attention",
+      "definition": "A specific attention computation method where the similarity between a query and key is measured by their dot product, scaled by the square root of the key dimension to prevent vanishing gradients.",
+      "intuition": "Think of it as measuring how well two vectors point in the same direction—bigger dot product = more similar—but we shrink it slightly so huge vectors don’t overwhelm the system.",
+      "importance": "Efficient and differentiable way to compute attention scores; forms the basis of all attention operations in Transformers.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Multi-Head Attention"
+      ],
+      "example": "For query [1, 0] and key [0.9, 0.1], dot product is 0.9; scaled by √2 → ~0.64, used as weight to combine values.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Multi-Head Attention",
+      "definition": "An extension of attention where multiple independent attention mechanisms ('heads') run in parallel, each learning different patterns of relationships, then concatenated and linearly transformed.",
+      "intuition": "Like having multiple experts analyzing a document—each expert focuses on different aspects (syntax, semantics, entities), then combine their insights for a fuller understanding.",
+      "importance": "Allows the model to jointly attend to information from different representation subspaces, improving expressiveness and robustness.",
+      "related_concepts": [
+        "Self-attention",
+        "Scaled Dot-Product Attention"
+      ],
+      "example": "One head learns subject-verb agreement, another learns noun-pronoun links, and a third captures word order patterns—all in parallel.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Encoder-Decoder Architecture",
+      "definition": "A sequence-to-sequence framework where an encoder processes the input sequence into a contextual representation, and a decoder generates the output sequence step-by-step using that representation.",
+      "intuition": "Like summarizing a book (encoder) then writing a new story based on the summary (decoder)—the summary holds all key ideas needed for generation.",
+      "importance": "Standard structure in machine translation and sequence tasks; the Transformer adopts this but replaces RNNs with attention.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Transformer"
+      ],
+      "example": "Input: 'Hello world' → Encoder outputs context vector → Decoder generates 'Bonjour le monde'.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Positional Encoding",
+      "definition": "A method to inject information about the position of tokens in a sequence into the model, since Transformers lack recurrence or convolution to capture order.",
+      "intuition": "Like adding GPS coordinates to each word in a sentence so the model knows where it is, even though it doesn’t process words one after another.",
+      "importance": "Enables Transformers to understand sequence order without RNNs or CNNs—essential for modeling syntax and semantics.",
+      "related_concepts": [
+        "Self-attention",
+        "Transformer"
+      ],
+      "example": "The word 'dog' at position 3 gets a unique vector like [0.1, -0.2, 0.5,...] that differs from 'dog' at position 7.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Residual Connections",
+      "definition": "A technique where the input to a layer is added to its output, allowing gradients to flow directly through layers and easing training of deep networks.",
+      "intuition": "Like giving a student both their original notes and the lecture summary—combining old knowledge with new insights improves learning.",
+      "importance": "Enables training of deep Transformer stacks (6+ layers) by preventing gradient vanishing and stabilizing learning.",
+      "related_concepts": [
+        "Layer Normalization",
+        "Transformer"
+      ],
+      "example": "Output = LayerNorm(x + Sublayer(x)) — the original input x helps the model retain information even if sublayer distorts it.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Layer Normalization",
+      "definition": "A technique that normalizes the activations within each layer across features (not examples), stabilizing training by reducing internal covariate shift.",
+      "intuition": "Like adjusting the volume on each instrument in an orchestra so no one drowns out others—keeps signal levels consistent across layers.",
+      "importance": "Improves convergence speed and model stability, especially critical in deep attention-based architectures.",
+      "related_concepts": [
+        "Residual Connections",
+        "Transformer"
+      ],
+      "example": "Before feeding into next layer, all 512 values in a token’s representation are scaled to have mean=0 and std=1.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Feed-Forward Network (FFN)",
+      "definition": "A simple two-layer neural network with ReLU activation applied independently and identically to each position in the sequence, used after attention blocks.",
+      "intuition": "Like a universal translator that takes each word’s contextual embedding and re-expresses it in a richer, transformed way.",
+      "importance": "Adds non-linearity and expressive power to each position’s representation after attention has captured relationships.",
+      "related_concepts": [
+        "Transformer",
+        "Positional Encoding"
+      ],
+      "example": "Input: [0.2, 0.5, -0.1] → Linear layer → ReLU → Linear layer → Output: [0.8, -0.3, 1.2] (per position).",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Masked Self-Attention",
+      "definition": "A variant of self-attention in the decoder that prevents positions from attending to future positions, enforcing auto-regressive generation.",
+      "intuition": "Like writing a sentence one word at a time—you can only look back at words you’ve already written, not ahead.",
+      "importance": "Essential for auto-regressive sequence generation (e.g., translation, text completion); ensures causality in predictions.",
+      "related_concepts": [
+        "Self-attention",
+        "Decoder"
+      ],
+      "example": "When predicting the 3rd word in 'I love ___', masking ensures attention only sees 'I' and 'love', not future tokens.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Encoder-Decoder Attention",
+      "definition": "A cross-attention mechanism in the decoder where queries come from the decoder and keys/values come from the encoder’s output, allowing the decoder to focus on relevant input parts.",
+      "intuition": "Like a translator glancing back at the original sentence while writing each word of the translation to pick the right context.",
+      "importance": "Enables the decoder to dynamically align input and output sequences without explicit alignment models.",
+      "related_concepts": [
+        "Multi-Head Attention",
+        "Decoder"
+      ],
+      "example": "When translating 'The cat is sleeping' to 'Le chat dort', the decoder attends heavily to 'cat' when generating 'chat'.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Transformer Architecture",
+      "definition": "A neural network architecture that replaces recurrent and convolutional layers with stacked self-attention and feed-forward networks, using positional encodings to preserve sequence order.",
+      "intuition": "A fully parallelizable attention machine—every word talks to every other word at once, then refines its understanding through layers.",
+      "importance": "Revolutionized NLP by enabling faster training, better parallelization, and state-of-the-art results on sequence tasks.",
+      "related_concepts": [
+        "Self-attention",
+        "Encoder-Decoder Architecture",
+        "Multi-Head Attention"
+      ],
+      "example": "Used in BERT, GPT, T5—all major language models today are based on or derived from the Transformer.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Parallelization in Transformers",
+      "definition": "The ability to compute all positions in a sequence simultaneously during training, due to the absence of recurrence and sequential dependencies.",
+      "intuition": "Unlike reading a book page-by-page, you can read all pages at once and cross-reference them instantly.",
+      "importance": "Dramatically reduces training time, enables larger batch sizes, and scales efficiently with hardware like GPUs/TPUs.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Transformer"
+      ],
+      "example": "While an RNN processes 100 words one after another, a Transformer computes all 100 in parallel on the same GPU batch.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "BLEU Score",
+      "definition": "A metric for evaluating machine translation quality by comparing n-gram overlap between the model’s output and reference translations.",
+      "intuition": "Like a spelling and word-order checker that gives higher scores if your translation matches the reference in phrases, not just words.",
+      "importance": "Standard benchmark for translation tasks; used to prove Transformer’s superiority over RNN/CNN models in the paper.",
+      "related_concepts": [
+        "Machine Translation",
+        "Model Evaluation"
+      ],
+      "example": "Transformer achieved 28.4 BLEU on English-German, beating prior best by over 2 points—huge improvement in MT.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Sequence Transduction",
+      "definition": "The task of converting an input sequence into a different output sequence, such as machine translation or text summarization.",
+      "intuition": "Like converting a spoken sentence into written form, or English to French—same meaning, different form.",
+      "importance": "Primary task the Transformer was designed for; its success here proved generalizability to other sequence tasks.",
+      "related_concepts": [
+        "Transformer",
+        "Encoder-Decoder Architecture"
+      ],
+      "example": "Input: 'She runs fast.' → Output: 'Elle court vite.' (English to French translation).",
+      "difficulty": "beginner"
+    }
+  ],
+  "paper_id": 13,
+  "title": "Attention Is All You Need"
+}

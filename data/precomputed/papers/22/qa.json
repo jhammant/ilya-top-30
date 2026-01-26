@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "According to the paper, what are the three primary scale factors that most strongly influence language model performance?",
+      "answer": "The three primary scale factors are model size (number of non-embedding parameters N), dataset size (D), and compute used for training (C).",
+      "explanation": "The paper explicitly states that model performance depends most strongly on these three scale factors, with other architectural details like depth or width having minimal effects within reasonable limits.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Learning rate, batch size, and optimizer type",
+        "Context length, vocabulary size, and tokenization method",
+        "Number of attention heads, embedding dimension, and layer normalization"
+      ],
+      "hint": "Look for the three factors mentioned in Section 1.1 and Figure 1 that are described as having power-law relationships with performance."
+    },
+    {
+      "id": "q2",
+      "question": "What type of relationship does the paper find between model performance and scale factors like N, D, and C?",
+      "answer": "A power-law relationship.",
+      "explanation": "The paper repeatedly emphasizes that performance (measured by cross-entropy loss) follows precise power-law scaling with model size, dataset size, and compute, spanning over seven orders of magnitude.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Linear relationship",
+        "Exponential relationship",
+        "Logarithmic relationship"
+      ],
+      "hint": "The title and Section 3 are titled 'Empirical Results and Basic Power Laws' — this is a key phrase."
+    },
+    {
+      "id": "q3",
+      "question": "What does the paper mean by 'sample efficiency' in the context of neural language models?",
+      "answer": "Larger models achieve the same level of performance using fewer training samples (data points) and fewer optimization steps.",
+      "explanation": "Section 1.1 explicitly states that larger models are more sample-efficient, meaning they reach a given performance level with fewer datapoints and fewer training steps, as shown in Figures 2 and 4.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Larger models require less memory per sample",
+        "Larger models can process samples faster during inference",
+        "Smaller models generalize better to new data"
+      ],
+      "hint": "Sample efficiency refers to how much data is needed to reach a target performance — larger models need less."
+    },
+    {
+      "id": "q4",
+      "question": "What is the key insight regarding overfitting in scaling laws as described in Section 4?",
+      "answer": "Overfitting occurs predictably when model size and dataset size are not scaled proportionally, with the penalty depending on the ratio N^0.74/D.",
+      "explanation": "The paper shows that when N or D is held fixed while the other increases, performance degrades in a predictable way governed by the power-law relationship N^0.74/D, meaning 8x larger models need only ~5x more data to avoid penalties.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Overfitting is avoided by using larger batch sizes",
+        "Overfitting increases linearly with model size regardless of data",
+        "Overfitting is only a problem in small models"
+      ],
+      "hint": "Look for the power-law exponent 0.74 and how it relates N and D in Section 4."
+    },
+    {
+      "id": "q5",
+      "question": "According to the paper, what happens to training speed as model size increases?",
+      "answer": "Training curves follow predictable power-laws whose parameters are roughly independent of model size.",
+      "explanation": "Section 1.1 and Section 5 state that training curves (loss over time) follow power-laws with parameters largely independent of model size, allowing early training curves to predict final loss even for much larger models.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Training speed decreases linearly with model size",
+        "Training speed improves exponentially as model size increases",
+        "Model size has no effect on training speed"
+      ],
+      "hint": "The paper says you can extrapolate early training curves to predict final loss — this implies predictable, scalable training dynamics."
+    },
+    {
+      "id": "q6",
+      "question": "What does the paper say about the role of architectural details like network depth or width?",
+      "answer": "Architectural details such as depth vs. width have minimal effects on performance within a wide range.",
+      "explanation": "Section 1.1 explicitly states that model performance depends most strongly on scale (N, D, C), and very weakly on architectural hyperparameters like depth or width.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Depth is the most important architectural factor for performance",
+        "Width has a stronger effect than model size on loss",
+        "Architectural details are the main drivers of scaling behavior"
+      ],
+      "hint": "The paper contrasts scale factors with architectural details — the latter are described as having 'minimal effects'."
+    },
+    {
+      "id": "q7",
+      "question": "If you have a fixed compute budget, what is the optimal strategy for training according to Section 6?",
+      "answer": "Train very large models on a relatively modest amount of data and stop significantly before convergence.",
+      "explanation": "Section 6 argues that compute-efficient training maximizes performance by allocating most of the budget to increasing model size, using modest data, and early stopping — because larger models are more sample-efficient.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Use the largest possible dataset and train until convergence",
+        "Use small models with many training epochs to maximize data usage",
+        "Allocate equal compute to increasing model size, dataset, and training time"
+      ],
+      "hint": "Figure 3 illustrates that most compute should go to model size, not data or training steps — and convergence is inefficient."
+    },
+    {
+      "id": "q8",
+      "question": "How does the paper describe the relationship between data size and model size to avoid overfitting penalties?",
+      "answer": "To maintain optimal performance, when model size increases by 8x, dataset size should increase by approximately 5x.",
+      "explanation": "Based on the power-law N^0.74/D, an 8x increase in N requires a ~5x increase in D to keep the ratio constant and avoid performance penalties (since 8^0.74 ≈ 5).",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Dataset size must increase by 8x to match model size increases",
+        "Model size should be halved whenever dataset size is doubled",
+        "Dataset size has no impact on overfitting penalties"
+      ],
+      "hint": "Use the exponent 0.74: if N increases by 8x, solve for D such that (8)^0.74 / D = constant → D should increase by ~5x."
+    },
+    {
+      "id": "q9",
+      "question": "What does the paper suggest about extrapolating early training curves to predict final performance?",
+      "answer": "Early training curves can be used to reliably predict final loss because training dynamics follow predictable power-laws independent of model size.",
+      "explanation": "Section 5 states that training curves follow power-laws with parameters roughly independent of model size, meaning early behavior can be extrapolated to predict final loss even for much larger models.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Early curves are unreliable because larger models overfit more quickly",
+        "Extrapolation is only valid for small models, not large ones",
+        "Final loss cannot be predicted without full training runs"
+      ],
+      "hint": "The paper calls this 'universality of training' — the same power-law applies regardless of model size."
+    },
+    {
+      "id": "q10",
+      "question": "How does transfer performance to a new data distribution relate to training performance, according to Section 3.2.2?",
+      "answer": "Transfer performance is strongly correlated with training performance, with a roughly constant loss offset.",
+      "explanation": "The paper finds that when models are evaluated on out-of-distribution text, their performance correlates strongly with training validation loss, differing only by a consistent penalty — suggesting predictable transfer behavior.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Transfer performance is independent of training loss and depends only on data similarity",
+        "Models with lower training loss perform worse in transfer due to overfitting",
+        "Transfer performance improves exponentially with training data size"
+      ],
+      "hint": "The paper says transfer incurs a 'constant penalty' but otherwise improves in line with training performance."
+    },
+    {
+      "id": "q11",
+      "question": "What does the paper claim about the optimal batch size for training large models?",
+      "answer": "The ideal batch size is roughly a power of the loss and can be determined by measuring gradient noise scale, and it’s around 1-2 million tokens for the largest models.",
+      "explanation": "Section 5.1 states that optimal batch size scales with loss and is determined by gradient noise scale, reaching 1-2M tokens for the largest models trained in their experiments.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Batch size should be as small as possible to improve generalization",
+        "Optimal batch size is fixed at 32k tokens across all model sizes",
+        "Batch size has no effect on training efficiency or performance"
+      ],
+      "hint": "Look for the mention of gradient noise scale and the specific number 1-2 million tokens in Section 5.1."
+    },
+    {
+      "id": "q12",
+      "question": "According to the paper, how does compute scale with dataset size for optimal training?",
+      "answer": "Dataset size scales as D ∝ C^0.27 when optimizing for compute efficiency.",
+      "explanation": "Section 6 shows that to maintain optimal performance under increasing compute budgets, dataset size grows slowly as C^0.27 — meaning most compute should go to model size, not data.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Dataset size scales linearly with compute (D ∝ C)",
+        "Dataset size decreases as compute increases to avoid overfitting",
+        "Compute and dataset size are unrelated in optimal training"
+      ],
+      "hint": "Section 6 discusses the 'compute-efficient frontier' and gives the exponent 0.27 for how D scales with C."
+    },
+    {
+      "id": "q13",
+      "question": "Why does the paper argue that convergence is inefficient in large-scale training?",
+      "answer": "Because training larger models to full convergence uses excessive compute for diminishing returns; stopping early with large models achieves better performance per unit of compute.",
+      "explanation": "Section 6 explains that the optimal strategy under fixed compute is to train very large models and stop before convergence, since larger models are more sample-efficient — training them fully would waste compute on marginal gains.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Convergence is inefficient because large models never converge",
+        "Early stopping causes overfitting and reduces performance",
+        "Convergence is only inefficient for small models"
+      ],
+      "hint": "The paper contrasts 'compute-efficient training' with traditional full-convergence training — highlight the benefit of stopping early."
+    },
+    {
+      "id": "q14",
+      "question": "What does the paper suggest about the long-term behavior of scaling laws as model size and data approach infinity?",
+      "answer": "Performance follows power-laws with no observed deviation up to seven orders of magnitude, but must eventually flatten as loss approaches zero.",
+      "explanation": "Section 3 states that power-laws hold across more than seven orders of magnitude with no signs of deviation, but the authors note performance must flatten eventually as loss nears zero — implying a theoretical ceiling.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Performance continues to improve linearly without bound as scale increases",
+        "Power-laws break down after 10^6 parameters due to numerical instability",
+        "The paper claims performance plateaus at all scales"
+      ],
+      "hint": "Look for the phrase 'performance must flatten out eventually before reaching zero loss' — this implies an asymptotic limit."
+    },
+    {
+      "id": "q15",
+      "question": "How does the paper’s finding about scaling laws challenge traditional training practices?",
+      "answer": "It challenges the practice of training small models to convergence, showing that larger models trained briefly are more compute-efficient and perform better.",
+      "explanation": "Traditional methods optimize for convergence with small models; this paper shows that under fixed compute, larger models trained only partway outperform them — flipping the conventional wisdom.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It confirms that training small models longer is always better",
+        "It suggests all models should be trained with the same number of epochs",
+        "It proves that data quality matters more than scale"
+      ],
+      "hint": "Compare Figure 2 and Figure 3 — the optimal strategy is to train large models briefly, not small ones fully."
+    },
+    {
+      "id": "q16",
+      "question": "What does the paper imply about the future of language model development based on scaling laws?",
+      "answer": "Future performance gains will come primarily from increasing scale (N, D, C) rather than architectural innovation.",
+      "explanation": "The paper shows that performance scales predictably with scale factors and is insensitive to architectural details — implying future gains will be driven by scaling, not new architectures.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Architectural innovation will become more important than scaling in the future",
+        "Scaling laws only apply to Transformers and not other architectures",
+        "Performance gains will plateau once datasets reach 1TB in size"
+      ],
+      "hint": "The conclusion states that larger models will perform better and be more sample-efficient — this is a call to scale, not redesign."
+    },
+    {
+      "id": "q17",
+      "question": "How does the paper's observation about model size and sample efficiency affect data collection strategies?",
+      "answer": "It suggests that collecting extremely large datasets may be less critical than building sufficiently large models — efficiency can be achieved with modest data if the model is large enough.",
+      "explanation": "Since larger models are more sample-efficient (Section 1.1), and optimal training uses modest data relative to compute, the paper implies that data collection can be more targeted rather than maximized.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Larger datasets are always better and should be prioritized above model size",
+        "Data collection is irrelevant if models are large enough",
+        "Sample efficiency only applies to supervised learning tasks"
+      ],
+      "hint": "Think about the trade-off: if model size reduces data needs, then you can afford to use smaller datasets as long as your model is big enough."
+    },
+    {
+      "id": "q18",
+      "question": "What is the significance of the 0.74 exponent in the overfitting relationship N^0.74/D?",
+      "answer": "It quantifies the disproportionate benefit of increasing model size over dataset size — a small increase in data can offset large increases in model size.",
+      "explanation": "The exponent 0.74 means that to maintain performance, increasing N by a factor of 8 requires only ~5x more data (since 8^0.74 ≈ 5), showing model size has a stronger influence than data on performance scaling.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It indicates that model size should be kept small to avoid overfitting",
+        "The exponent is arbitrary and has no practical implication",
+        "It measures the rate of gradient descent convergence"
+      ],
+      "hint": "The exponent tells you how much data you need to keep up with model growth — it's less than 1, meaning models grow faster than data needs."
+    },
+    {
+      "id": "q19",
+      "question": "How does the paper's approach to scaling differ from traditional model development cycles?",
+      "answer": "It replaces trial-and-error hyperparameter tuning with predictive scaling laws that allow compute-optimal planning before training.",
+      "explanation": "Instead of experimenting with architectures or hyperparameters, the paper provides equations to predict performance based on N, D, C — enabling proactive allocation of resources for maximum efficiency.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It recommends more hyperparameter tuning for better performance",
+        "Traditional methods are superior because they optimize for convergence",
+        "Scaling laws apply only to small models, not large ones"
+      ],
+      "hint": "The paper says scaling laws 'allow us to determine the optimal allocation of a fixed compute budget' — this is planning, not trial-and-error."
+    },
+    {
+      "id": "q20",
+      "question": "If you were to design a compute-efficient language model training pipeline based on this paper, what three decisions would be most critical?",
+      "answer": "1. Maximize model size (N) within hardware limits; 2. Use a modest dataset sized according to D ∝ N^0.74; 3. Train until early stopping, before convergence, using large batch sizes (~1-2M tokens).",
+      "explanation": "Based on Sections 4, 5, and 6: model size should be as large as possible (not constrained by data), data sized according to N^0.74 to avoid overfitting, and training stopped early because convergence is inefficient — all supported by empirical power-laws.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Use the largest possible dataset, train to convergence with small batch sizes",
+        "Choose model architecture based on validation performance only",
+        "Use early stopping only if training loss plateaus"
+      ],
+      "hint": "Combine the three key findings: use large N, scale D with N^0.74, and stop training early — these are the pillars of compute-efficient scaling."
+    }
+  ],
+  "paper_id": 22,
+  "title": "Scaling Laws for Neural LMs",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 7,
+    "hard": 7
+  }
+}

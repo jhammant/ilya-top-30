@@ -1,0 +1,27 @@
+{
+  "one_liner": "The Transformer introduces a novel sequence transduction model based entirely on attention mechanisms, eliminating recurrent and convolutional layers to enable greater parallelization and superior performance in machine translation and other tasks.",
+  "paragraphs": [
+    "Prior to the Transformer, sequence modeling tasks like machine translation relied heavily on recurrent neural networks (RNNs) and convolutional networks, which processed sequences step-by-step, limiting parallelization and making it difficult to capture long-range dependencies efficiently. Although attention mechanisms had been used alongside these architectures to improve performance, they were never the sole mechanism. The authors sought to overcome the inherent sequential bottleneck of RNNs, which slowed training and hindered scalability, especially with longer sequences.",
+    "The Transformer replaces recurrence and convolution entirely with self-attention mechanisms, allowing each position in the sequence to directly attend to all other positions. It uses stacked layers of multi-head self-attention and position-wise feed-forward networks in both encoder and decoder components. Multi-head attention allows the model to jointly attend to information from different representation subspaces, while positional encodings inject sequence order without recurrence. The decoder uses masked self-attention to ensure autoregressive generation, and residual connections with layer normalization stabilize training.",
+    "The Transformer achieved state-of-the-art results on WMT 2014 English-to-German (28.4 BLEU) and English-to-French (41.8 BLEU) translation tasks, outperforming all previous models—including ensembles—while training in just 3.5 days on eight GPUs, a fraction of the time required by prior models. It also demonstrated strong generalization to English constituency parsing with both large and limited data. Its architecture enabled massive parallelization during training, drastically reducing computational costs and paving the way for scalable, high-performance sequence models."
+  ],
+  "key_takeaways": [
+    "Attention mechanisms alone can outperform RNNs and CNNs in sequence modeling tasks.",
+    "Multi-head attention allows the model to capture diverse types of dependencies simultaneously.",
+    "The Transformer enables full parallelization during training, drastically reducing training time.",
+    "Positional encodings replace recurrence to maintain sequence order without sequential processing.",
+    "The model’s architecture is highly scalable and generalizes well beyond machine translation."
+  ],
+  "eli5": "Imagine you’re reading a sentence and trying to understand each word by looking at every other word all at once, instead of reading one word after another. The Transformer does exactly that—it lets the computer pay attention to all parts of a sentence together, like reading the whole picture at once instead of one letter at a time.",
+  "prerequisites": [
+    "Basic understanding of neural networks",
+    "Familiarity with sequence modeling tasks like machine translation"
+  ],
+  "applications": [
+    "Machine translation systems (e.g., Google Translate)",
+    "Text summarization and generation"
+  ],
+  "paper_id": 13,
+  "title": "Attention Is All You Need",
+  "category": "Transformers"
+}

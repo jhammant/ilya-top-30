@@ -1,0 +1,254 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What are the three main factors that influence language model performance according to this paper?",
+      "answer": "The three main factors are model size (number of non-embedding parameters N), dataset size (D), and compute budget (C). The paper shows that performance, measured by cross-entropy loss, follows a power-law relationship with each of these factors when the other two are held constant.",
+      "related_concepts": [
+        "Scaling laws",
+        "cross-entropy loss",
+        "Transformer architecture"
+      ],
+      "follow_up": "How do these factors interact when all three are scaled simultaneously?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "What does it mean for performance to follow a 'power-law' relationship?",
+      "answer": "A power-law relationship means that performance (loss) changes predictably as a function of one variable raised to a constant exponent. For example, if loss scales as N^(-α), doubling model size reduces loss by a fixed factor. This implies smooth, predictable improvements without sudden plateaus over many orders of magnitude.",
+      "related_concepts": [
+        "Power-law scaling",
+        "log-log plots",
+        "empirical trends"
+      ],
+      "follow_up": "Why is a power-law useful for predicting performance beyond observed data?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "Why is model size more important than architecture details like depth or width?",
+      "answer": "The paper finds that within reasonable ranges, architectural choices such as depth vs. width have minimal impact on performance compared to the scale of model parameters, data, and compute. This suggests that increasing parameter count is a more reliable path to improved performance than fine-tuning architecture.",
+      "related_concepts": [
+        "Model capacity",
+        "architectural hyperparameters",
+        "parameter efficiency"
+      ],
+      "follow_up": "Does this mean architecture doesn't matter at all?"
+    },
+    {
+      "id": "faq4",
+      "category": "understanding",
+      "question": "What is meant by 'sample efficiency' in this context?",
+      "answer": "Sample efficiency refers to how few data samples a model needs to reach a given performance level. Larger models are more sample-efficient: they achieve the same loss with fewer training steps and fewer total data points than smaller models, because each parameter can extract more information from each example.",
+      "related_concepts": [
+        "Sample efficiency",
+        "training steps",
+        "data utilization"
+      ],
+      "follow_up": "How does sample efficiency affect real-world data collection costs?"
+    },
+    {
+      "id": "faq5",
+      "category": "understanding",
+      "question": "What is the 'infinite data limit' and why is it important?",
+      "answer": "The infinite data limit refers to the theoretical performance ceiling when dataset size approaches infinity. The paper uses empirical extrapolation to estimate this limit, showing that loss decreases predictably as data increases. This allows researchers to estimate how much more performance could be gained by collecting more data.",
+      "related_concepts": [
+        "Extrapolation",
+        "data saturation",
+        "performance ceiling"
+      ],
+      "follow_up": "Can we ever reach the infinite data limit in practice?"
+    },
+    {
+      "id": "faq6",
+      "category": "implementation",
+      "question": "How was compute (C) defined and measured in this study?",
+      "answer": "Compute C is defined as the total number of floating-point operations during training, estimated in PF-days (petaflop-days). It is calculated as the product of model parameters, training steps, and sequence length. The authors use non-embedding tokens to avoid bias from embedding layer scaling.",
+      "related_concepts": [
+        "FLOPs",
+        "training compute",
+        "non-embedding parameters"
+      ],
+      "follow_up": "Why exclude embedding parameters from the compute calculation?"
+    },
+    {
+      "id": "faq7",
+      "category": "implementation",
+      "question": "How did the authors measure and control for overfitting?",
+      "answer": "Overfitting was measured by comparing training loss to validation loss. The paper identifies a power-law relationship between overfitting penalty and the ratio N^0.74/D, showing that larger models require proportionally more data to avoid performance degradation.",
+      "related_concepts": [
+        "Overfitting",
+        "validation loss",
+        "N^0.74/D ratio"
+      ],
+      "follow_up": "Is the N^0.74/D ratio applicable to other model architectures?"
+    },
+    {
+      "id": "faq8",
+      "category": "implementation",
+      "question": "How was the optimal batch size determined?",
+      "answer": "The optimal batch size was found to scale with loss and be predictable via the gradient noise scale (MKAT18). For large models, optimal batch sizes were around 1–2 million tokens at convergence. The authors used gradient noise measurements to tune batch size without exhaustive grid search.",
+      "related_concepts": [
+        "Gradient noise scale",
+        "batch size optimization",
+        "training stability"
+      ],
+      "follow_up": "Can this batch size rule be applied to non-Transformer models?"
+    },
+    {
+      "id": "faq9",
+      "category": "comparison",
+      "question": "How does this work compare to Chinchilla or Gopher scaling laws?",
+      "answer": "This paper predates and lays the foundation for later works like Chinchilla. While Chinchilla proposed a 1:1 ratio of model size to data scaling, this paper found that compute-efficient training favors larger models with less data (D ∝ C^0.27), suggesting that early stopping and large models are more efficient than balanced scaling.",
+      "related_concepts": [
+        "Chinchilla scaling",
+        "Gopher",
+        "compute efficiency"
+      ],
+      "follow_up": "Why do later papers suggest different optimal ratios?"
+    },
+    {
+      "id": "faq10",
+      "category": "comparison",
+      "question": "How does this work relate to the neural scaling laws of Hestness et al. (2017)?",
+      "answer": "Hestness et al. studied scaling in traditional ML models (e.g., SVMs, neural nets) on small datasets and found power laws in performance. This paper extends those findings to massive Transformer models, showing that the same scaling principles hold across 7+ orders of magnitude with much larger models and data.",
+      "related_concepts": [
+        "Neural scaling laws",
+        "Hestness scaling",
+        "empirical ML"
+      ],
+      "follow_up": "Are power laws universal across all machine learning domains?"
+    },
+    {
+      "id": "faq11",
+      "category": "comparison",
+      "question": "How does this paper’s approach differ from early work on neural network scaling (e.g., LeCun, Bengio)?",
+      "answer": "Early work proposed theoretical bounds and heuristics for scaling, but lacked empirical data at large scales. This paper provides unprecedented empirical validation across seven orders of magnitude using real Transformer models and massive datasets, turning scaling into a predictive, data-driven science.",
+      "related_concepts": [
+        "Theoretical scaling",
+        "LeCun scaling",
+        "empirical validation"
+      ],
+      "follow_up": "What new tools enabled this level of empirical scaling analysis?"
+    },
+    {
+      "id": "faq12",
+      "category": "application",
+      "question": "How can this paper guide model development in practice?",
+      "answer": "Organizations should prioritize scaling model size over dataset size when compute is fixed. For optimal efficiency, train very large models on modest datasets and stop training before full convergence to maximize performance per FLOP. This reduces data collection costs and speeds up iteration.",
+      "related_concepts": [
+        "Compute efficiency",
+        "model scaling strategy",
+        "training budget"
+      ],
+      "follow_up": "What if data is extremely expensive to collect?"
+    },
+    {
+      "id": "faq13",
+      "category": "application",
+      "question": "Should I always use the largest model possible?",
+      "answer": "No. While larger models are more sample-efficient, they require more memory and longer training times per step. The paper recommends choosing model size based on compute budget and data availability, not maximum capacity. Optimal performance comes from balancing N, D, and C using the derived power laws.",
+      "related_concepts": [
+        "Resource constraints",
+        "model size trade-offs",
+        "compute budget"
+      ],
+      "follow_up": "How do hardware limitations affect optimal model size?"
+    },
+    {
+      "id": "faq14",
+      "category": "application",
+      "question": "Can these scaling laws help predict performance on new tasks?",
+      "answer": "Yes. The paper shows that transfer performance to out-of-distribution data correlates linearly with in-distribution validation loss, with a constant penalty. This allows performance on new tasks to be estimated from validation loss on the training data, enabling early prediction of generalization.",
+      "related_concepts": [
+        "Transfer learning",
+        "out-of-distribution performance",
+        "loss correlation"
+      ],
+      "follow_up": "Does this hold for radically different domains like code or biology?"
+    },
+    {
+      "id": "faq15",
+      "category": "application",
+      "question": "How do these findings impact data collection strategies?",
+      "answer": "Data collection should be optimized to match model size. Since larger models need less data per parameter for optimal performance, you can achieve high performance with smaller datasets if your model is large enough. This reduces the cost and time of data curation.",
+      "related_concepts": [
+        "Data efficiency",
+        "data-to-model ratio",
+        "curriculum learning"
+      ],
+      "follow_up": "Can synthetic data be used effectively under these scaling laws?"
+    },
+    {
+      "id": "faq16",
+      "category": "limitations",
+      "question": "Are these scaling laws applicable to non-Transformer models?",
+      "answer": "The paper focuses exclusively on Transformer architectures. While power laws may hold for other models, the specific exponents and relationships (e.g., N^0.74/D) are derived from Transformers and may not generalize without empirical validation.",
+      "related_concepts": [
+        "Transformer architecture",
+        "generalizability",
+        "architecture dependency"
+      ],
+      "follow_up": "What architectures might violate these scaling laws?"
+    },
+    {
+      "id": "faq17",
+      "category": "limitations",
+      "question": "What are the main caveats to applying these scaling laws?",
+      "answer": "Caveats include: 1) Results are based on autoregressive language modeling, not other tasks; 2) Scaling may plateau beyond current compute or data limits; 3) Overfitting estimates assume similar data distributions; 4) Results are not validated for multimodal or reinforcement learning models.",
+      "related_concepts": [
+        "Caveats",
+        "extrapolation risk",
+        "task specificity"
+      ],
+      "follow_up": "How do we know when scaling will stop working?"
+    },
+    {
+      "id": "faq18",
+      "category": "limitations",
+      "question": "Does this paper address environmental or economic costs of scaling?",
+      "answer": "No. While the paper quantifies compute efficiency in PF-days, it does not analyze energy consumption, carbon footprint, or financial cost of training large models. These are important practical limitations not covered in the study.",
+      "related_concepts": [
+        "Environmental impact",
+        "training cost",
+        "sustainability"
+      ],
+      "follow_up": "How can we make scaling laws more sustainable?"
+    },
+    {
+      "id": "faq19",
+      "category": "limitations",
+      "question": "Why does performance have to flatten out eventually?",
+      "answer": "Performance must eventually plateau because loss cannot go below the intrinsic noise or uncertainty in the data (e.g., ambiguity in language, labeling errors). Even with infinite compute and data, there is a theoretical lower bound to loss due to the irreducible entropy of natural language.",
+      "related_concepts": [
+        "Information theory",
+        "entropy limit",
+        "performance ceiling"
+      ],
+      "follow_up": "Can we estimate this irreducible loss from data alone?"
+    },
+    {
+      "id": "faq20",
+      "category": "understanding",
+      "question": "What does it mean that 'training stops significantly before convergence' for optimal efficiency?",
+      "answer": "It means that continuing to train a large model until it fully converges (i.e., loss stops decreasing) is wasteful. Instead, stopping early—before the model has fully memorized the training data—yields better performance per unit of compute because larger models learn faster and benefit more from early stopping.",
+      "related_concepts": [
+        "Early stopping",
+        "convergence",
+        "compute efficiency"
+      ],
+      "follow_up": "How do we know when to stop training optimally?"
+    }
+  ],
+  "paper_id": 22,
+  "title": "Scaling Laws for Neural LMs",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 6,
+    "implementation": 3,
+    "comparison": 3,
+    "application": 4,
+    "limitations": 4
+  }
+}

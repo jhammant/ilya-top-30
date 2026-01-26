@@ -1,0 +1,200 @@
+{
+  "concepts": [
+    {
+      "name": "Minimum Description Length (MDL) Principle",
+      "definition": "A principle in information theory that states the best model for a dataset is the one that minimizes the total description length, which is the sum of the model's complexity and the encoded length of the data given the model.",
+      "intuition": "Think of it like telling a story: the best explanation is not necessarily the most detailed, but the shortest one that still accurately describes everything important — like summarizing a book without losing key plot points.",
+      "importance": "Provides a formal, universal criterion for model selection that balances simplicity and accuracy, avoiding overfitting without requiring assumptions about underlying truth.",
+      "related_concepts": [
+        "Occam's Razor",
+        "Data Compression",
+        "Model Selection"
+      ],
+      "example": "Choosing between a simple linear model and a complex 10th-degree polynomial: MDL favors the linear model if it compresses the data just as well with fewer bits.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Data Compression as Learning",
+      "definition": "The idea that learning from data is equivalent to finding patterns (regularities) that allow the data to be represented more efficiently, i.e., compressed.",
+      "intuition": "Like using abbreviations in notes — if you notice that 'apple' appears 10 times, you write 'A=apple' once and then just use 'A'. The more patterns you find, the shorter your notes become — that’s learning.",
+      "importance": "Reframes machine learning as an information-theoretic problem, not just statistical estimation, enabling a unified view of inference and compression.",
+      "related_concepts": [
+        "MDL Principle",
+        "Kolmogorov Complexity",
+        "Regularities in Data"
+      ],
+      "example": "A sequence '0001' repeated 2500 times can be compressed to 'repeat(0001, 2500)' — the discovery of this pattern is learning.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Model Selection",
+      "definition": "The process of choosing the best model from a set of candidate models to explain observed data, balancing fit and complexity.",
+      "intuition": "Like picking a map: a very detailed map (high complexity) might show every tree, but if you're just navigating a city, a simple subway map is better — it’s not about detail, but usefulness.",
+      "importance": "Central to all statistical learning; MDL provides a principled, information-theoretic method for model selection without arbitrary penalties.",
+      "related_concepts": [
+        "MDL Principle",
+        "Overfitting",
+        "Occam's Razor"
+      ],
+      "example": "Choosing between a 3-parameter and a 10-parameter regression model to fit house prices — MDL selects the one with shortest total description.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Occam’s Razor",
+      "definition": "A philosophical principle stating that among competing hypotheses, the one with the fewest assumptions should be selected.",
+      "intuition": "If two explanations explain the same thing, choose the simpler one — like preferring a single cause for a headache (dehydration) over 10 unrelated causes.",
+      "importance": "MDL formalizes Occam’s Razor mathematically by equating simplicity with shorter descriptions, making it a quantifiable rule in machine learning.",
+      "related_concepts": [
+        "MDL Principle",
+        "Model Complexity",
+        "Data Compression"
+      ],
+      "example": "A model saying 'the sun rises because of gravity and rotation' is preferred over one invoking invisible celestial horses.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Description Length",
+      "definition": "The total number of bits required to encode both a model and the data given that model, used as a measure of goodness-of-fit plus complexity.",
+      "intuition": "Imagine sending data to a friend: you can either send the raw data (long message) or send a program that generates it (shorter if there’s pattern). Description length is the total message size.",
+      "importance": "The core metric in MDL — it quantifies 'how well you understand the data' by how efficiently you can encode it.",
+      "related_concepts": [
+        "MDL Principle",
+        "Kraft Inequality",
+        "Prefix Codes"
+      ],
+      "example": "Describing 10,000 identical bits as 'repeat(0, 10000)' takes ~20 bits; sending all 10,000 bits takes 10,000 bits — difference is description length.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Kolmogorov Complexity",
+      "definition": "The length of the shortest possible program (in a universal programming language) that outputs a given string — the ultimate measure of its information content.",
+      "intuition": "The 'true' complexity of data: how small a computer program can be that reproduces it exactly. No human-friendly model needed — just raw algorithmic simplicity.",
+      "importance": "Theoretical foundation of MDL; defines 'ideal' compression. Practical MDL approximates this ideal.",
+      "related_concepts": [
+        "MDL Principle",
+        "Data Compression",
+        "Ideal MDL"
+      ],
+      "example": "The string '010101...' repeated 100 times has low Kolmogorov complexity because a tiny program can generate it.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Ideal MDL",
+      "definition": "The theoretical version of MDL based on Kolmogorov complexity, where the best model is the one with minimal program length to encode data.",
+      "intuition": "Like finding the ultimate, perfect compression algorithm — not just any code, but the absolute shortest possible program that reproduces your data.",
+      "importance": "Provides a gold standard for MDL, though uncomputable; guides the design of practical approximations.",
+      "related_concepts": [
+        "Kolmogorov Complexity",
+        "Practical MDL",
+        "Universal Codes"
+      ],
+      "example": "In theory, if you could find the shortest program that outputs your dataset, that’s Ideal MDL — but we can’t compute it.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Practical MDL",
+      "definition": "An implementable version of the MDL principle using computable codes and statistical models to approximate Ideal MDL.",
+      "intuition": "You can’t find the perfect program, so you use a good approximation — like using ZIP files instead of inventing a new compression algorithm from scratch.",
+      "importance": "Makes MDL usable in real-world machine learning and statistics — bridges theory with application.",
+      "related_concepts": [
+        "Ideal MDL",
+        "Two-part Codes",
+        "Universal Codes"
+      ],
+      "example": "Using a Gaussian model with 2 parameters to compress data, encoding both the model and residuals using standard coding schemes.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Two-part Code",
+      "definition": "A coding scheme that encodes data in two parts: first, the model (hypothesis), then the data given the model — total length = model code + data-with-model code.",
+      "intuition": "Like writing a recipe: first describe the ingredients and steps (model), then list how to prepare each dish using that recipe (data).",
+      "importance": "Core encoding structure in crude MDL; allows explicit trade-off between model complexity and fit.",
+      "related_concepts": [
+        "Description Length",
+        "Crude MDL",
+        "Universal Codes"
+      ],
+      "example": "Encode a linear regression model (slope, intercept) in 50 bits; encode residuals using that model in 200 bits → total = 250 bits.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Kraft Inequality",
+      "definition": "A fundamental result in information theory stating that for any prefix code, the sum over all codeword lengths of 2^(-length) is ≤ 1 — linking probabilities to code lengths.",
+      "intuition": "If you assign short codes to frequent words, you can’t make all codes short — there’s a trade-off. It’s like fitting boxes into a closet: small boxes fit more, but you can’t make all boxes tiny.",
+      "importance": "Mathematical foundation for assigning code lengths from probabilities — essential to link MDL with probability theory.",
+      "related_concepts": [
+        "Prefix Codes",
+        "Codelength & Probabilities",
+        "Information Inequality"
+      ],
+      "example": "If you assign '0' to 'apple' (length 1), then no other code can start with '0', limiting how many short codes you can have.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Prefix Codes",
+      "definition": "A set of codes where no code is a prefix (initial segment) of another, allowing unambiguous decoding without separators.",
+      "intuition": "Like a phone system where no number starts with another — '5' and '51' can't both be valid, or you wouldn’t know when one ends and the next begins.",
+      "importance": "Enables efficient, unambiguous encoding crucial for MDL — ensures description length is well-defined and decodable.",
+      "related_concepts": [
+        "Kraft Inequality",
+        "Codelengths & Probabilities"
+      ],
+      "example": "Codes: '0' for A, '10' for B, '11' for C — none starts with another → can decode '01011' as A-B-C.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Universal Code",
+      "definition": "A coding scheme that performs nearly as well as the best code in a class, even without knowing the true data distribution in advance.",
+      "intuition": "A universal translator that works almost perfectly for any language — you don’t need to know if the data is English or Chinese, it adapts.",
+      "importance": "Enables MDL to handle unknown data distributions — critical for model selection without prior assumptions.",
+      "related_concepts": [
+        "Practical MDL",
+        "NML",
+        "Information Inequality"
+      ],
+      "example": "The Lempel-Ziv algorithm compresses any repetitive data without knowing its structure in advance.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Normalized Maximum Likelihood (NML)",
+      "definition": "A universal code that achieves optimal worst-case redundancy by normalizing the maximum likelihood distribution over all possible data sequences.",
+      "intuition": "Imagine betting on every possible outcome and then dividing your winnings evenly — you’re guaranteed not to lose too badly, even if the data surprises you.",
+      "importance": "Provides an optimal way to encode data under a model class — foundation of refined MDL and minimax optimality.",
+      "related_concepts": [
+        "Universal Codes",
+        "Refined MDL",
+        "Model Complexity"
+      ],
+      "example": "For a coin with unknown bias, NML assigns code lengths that minimize worst-case regret across all possible biases.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Refined MDL",
+      "definition": "An advanced version of MDL that uses universal codes like NML to encode data without splitting into two parts, providing better performance on small samples.",
+      "intuition": "Instead of writing a model then the data, you write one unified code that adapts to both — like a smart assistant who learns while listening.",
+      "importance": "Overcomes limitations of crude MDL (e.g., arbitrary model encoding) and provides statistically optimal model selection.",
+      "related_concepts": [
+        "NML",
+        "Universal Codes",
+        "Crude MDL"
+      ],
+      "example": "Selecting the best polynomial degree for regression using NML — avoids overfitting even with 10 data points.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Model Complexity",
+      "definition": "A measure of a model's flexibility or richness — the number of parameters, functional form, or entropy of its hypothesis space.",
+      "intuition": "A model with 100 parameters is more complex than one with 2 — like a Swiss Army knife vs. a spoon: more tools, but harder to carry.",
+      "importance": "MDL penalizes complexity automatically — simpler models are preferred unless extra parameters significantly improve compression.",
+      "related_concepts": [
+        "Occam’s Razor",
+        "Description Length",
+        "Overfitting"
+      ],
+      "example": "A neural network with 1 million weights is more complex than a linear model — MDL will favor the latter unless data demands complexity.",
+      "difficulty": "intermediate"
+    }
+  ],
+  "paper_id": 23,
+  "title": "MDL Principle Tutorial"
+}

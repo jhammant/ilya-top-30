@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Sequence-to-Sequence Model",
+      "definition": "A neural architecture that maps an input sequence to an output sequence using two recurrent neural networks: an encoder that processes the input and a decoder that generates the output.",
+      "intuition": "Like translating a sentence from English to French — one part reads the original, another writes the translation.",
+      "importance": "Enabled breakthroughs in machine translation and sequence generation, but limited by fixed output vocabulary size.",
+      "related_concepts": [
+        "Pointer Networks",
+        "Recurrent Neural Network"
+      ],
+      "example": "Translating 'Hello world' to 'Hola mundo' using an RNN encoder-decoder.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Recurrent Neural Network (RNN)",
+      "definition": "A type of neural network designed to process sequences by maintaining a hidden state that captures information from previous time steps.",
+      "intuition": "Like a person reading a book one word at a time, remembering what came before to understand the next sentence.",
+      "importance": "Foundation for modeling sequential data; enables handling of variable-length inputs and outputs.",
+      "related_concepts": [
+        "Sequence-to-Sequence Model",
+        "LSTM"
+      ],
+      "example": "Predicting the next word in a sentence based on prior words.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Long Short-Term Memory (LSTM)",
+      "definition": "A specialized RNN architecture with memory cells and gating mechanisms to mitigate the vanishing gradient problem and model long-range dependencies.",
+      "intuition": "Like a smart note-taker who decides what to remember, forget, or update as they listen to a lecture.",
+      "importance": "Enables stable training of RNNs on long sequences, critical for sequence-to-sequence tasks.",
+      "related_concepts": [
+        "Sequence-to-Sequence Model",
+        "Pointer Networks"
+      ],
+      "example": "Using LSTM to predict the next character in a long DNA sequence.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Attention Mechanism",
+      "definition": "A method that allows a model to dynamically focus on relevant parts of the input when generating each output element.",
+      "intuition": "Like a student highlighting important lines in a textbook while writing an essay — not reading everything equally.",
+      "importance": "Improved sequence-to-sequence models by allowing access to full input context at each decoding step.",
+      "related_concepts": [
+        "Sequence-to-Sequence Model",
+        "Pointer Networks"
+      ],
+      "example": "In machine translation, focusing on 'cat' in the input when generating 'gato' in Spanish.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Content-Based Attention",
+      "definition": "An attention mechanism that computes relevance scores between decoder states and encoder hidden states using a learned similarity function.",
+      "intuition": "Like matching your current thought (decoder state) to the most relevant memory from a list of past experiences (encoder states).",
+      "importance": "Enables context-aware decoding without fixed-size representations, forming the basis for Pointer Networks.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Pointer Networks"
+      ],
+      "example": "When translating 'The red ball', the model pays more attention to 'red' when generating the color word in target language.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Variable-Size Output Dictionary",
+      "definition": "A scenario where the number of possible output choices depends on the input length, making fixed-size vocabularies inapplicable.",
+      "intuition": "Like trying to pick a winner from a race — the number of runners changes every time, so you can't pre-list all names.",
+      "importance": "Traditional sequence-to-sequence models fail here; this is the core problem Pointer Networks solve.",
+      "related_concepts": [
+        "Sequence-to-Sequence Model",
+        "Pointer Networks"
+      ],
+      "example": "Sorting a list of 5 numbers vs. sorting 10 — the output choices (positions) change with input size.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Pointer Network (Ptr-Net)",
+      "definition": "A neural architecture that uses attention as a pointer to select elements from the input sequence as output tokens, instead of generating them from a fixed vocabulary.",
+      "intuition": "Like using a laser pointer to pick items off a shelf — the model doesn't invent new items, it just points to existing ones.",
+      "importance": "Enables learning over combinatorial problems with variable-sized output spaces, a breakthrough in neural algorithmic reasoning.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Sequence-to-Sequence Model"
+      ],
+      "example": "Given a list of 2D points, the model points to indices to output their convex hull in order.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Input-Dependent Output Dictionary",
+      "definition": "An output space whose size and content are determined by the input sequence, rather than being predefined.",
+      "intuition": "Like a menu that changes based on what ingredients are in the kitchen — you can only choose from what's available.",
+      "importance": "Fundamental to modeling combinatorial problems where output size scales with input size.",
+      "related_concepts": [
+        "Variable-Size Output Dictionary",
+        "Pointer Networks"
+      ],
+      "example": "For TSP with 8 cities, output must be a permutation of 8 indices; for 12 cities, it’s 12 — no fixed vocabulary works.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Neural Attention as Pointer",
+      "definition": "A reinterpretation of attention where the softmax distribution over encoder states directly selects input elements as outputs, rather than blending them.",
+      "intuition": "Instead of mixing ingredients to make a new dish, you pick one existing dish from the menu — no cooking needed.",
+      "importance": "Core innovation of Ptr-Net: turns attention from a blending tool into a selection mechanism.",
+      "related_concepts": [
+        "Pointer Networks",
+        "Content-Based Attention"
+      ],
+      "example": "In sorting, attention weights determine which input element to output next — not a new number, but a position in the list.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Combinatorial Optimization Problems",
+      "definition": "Problems that involve finding the best arrangement or selection from a finite set of possibilities, often with exponential search space.",
+      "intuition": "Like finding the shortest route to visit 10 cities — too many paths to check all, so you need smart heuristics.",
+      "importance": "Ptr-Net demonstrates neural networks can learn approximate solutions to these hard problems without explicit algorithms.",
+      "related_concepts": [
+        "Pointer Networks",
+        "Planar TSP"
+      ],
+      "example": "Traveling Salesman Problem: find shortest path visiting all cities once.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Planar Convex Hull",
+      "definition": "The smallest convex polygon that contains all given points in a 2D plane, with vertices being a subset of the input points.",
+      "intuition": "Imagine stretching a rubber band around nails on a board — the shape it forms is the convex hull.",
+      "importance": "One of the geometric problems Ptr-Net successfully solves, showing neural models can learn algorithmic geometry.",
+      "related_concepts": [
+        "Pointer Networks",
+        "Combinatorial Optimization Problems"
+      ],
+      "example": "Given 6 points on a map, output their convex hull as an ordered list of point indices.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Delaunay Triangulation",
+      "definition": "A triangulation of a set of points such that no point lies inside the circumcircle of any triangle — maximizing minimum angles.",
+      "intuition": "Like connecting dots on a page so no circle drawn through any three points contains another dot.",
+      "importance": "Demonstrates Ptr-Net’s ability to learn complex geometric structures from data alone.",
+      "related_concepts": [
+        "Pointer Networks",
+        "Combinatorial Optimization Problems"
+      ],
+      "example": "Input: 7 random points on a plane → Output: list of triangle vertex triplets forming Delaunay triangulation.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Planar Travelling Salesman Problem (TSP)",
+      "definition": "A combinatorial optimization problem where the goal is to find the shortest possible route visiting each of n points in a 2D plane exactly once and returning to start.",
+      "intuition": "A delivery driver trying to visit 10 locations in the most efficient order — no repeats, no wasted trips.",
+      "importance": "Ptr-Net learns near-optimal TSP solutions without hard-coded rules, challenging traditional algorithmic assumptions.",
+      "related_concepts": [
+        "Combinatorial Optimization Problems",
+        "Pointer Networks"
+      ],
+      "example": "Input: 20 city coordinates → Output: permutation of indices representing optimal tour order.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Generalization Beyond Training Length",
+      "definition": "The ability of a model to perform well on input sequences longer than those seen during training.",
+      "intuition": "A student who learned to add 5-digit numbers can correctly add 10-digit numbers without being trained on them.",
+      "importance": "Proves Ptr-Net learns a general algorithmic strategy, not just memorizing training examples.",
+      "related_concepts": [
+        "Pointer Networks",
+        "Combinatorial Optimization Problems"
+      ],
+      "example": "Trained on TSP with 5–20 cities, performs well on 50-city instances.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Data-Driven Algorithm Learning",
+      "definition": "The process of using neural networks to learn algorithmic behavior from input-output examples, without explicit programming.",
+      "intuition": "Teaching a robot to tie shoes by showing it thousands of examples — not giving it step-by-step instructions.",
+      "importance": "Breaks the paradigm that algorithms must be hand-coded; enables neural networks to discover computational procedures.",
+      "related_concepts": [
+        "Pointer Networks",
+        "Combinatorial Optimization Problems"
+      ],
+      "example": "Ptr-Net learns to compute convex hulls just by seeing pairs of point sets and their correct hull sequences.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 6,
+  "title": "Pointer Networks"
+}

@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "According to the paper, what happens to entropy in a closed coffee cup system over time?",
+      "answer": "Entropy increases monotonically over time as the coffee and cream mix, consistent with the second law of thermodynamics.",
+      "explanation": "The paper explicitly states that entropy increases monotonically as the system evolves from separated liquids to a uniform mixture, aligning with the second law of thermodynamics. This contrasts with complexity, which does not increase monotonically.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Entropy decreases as mixing occurs.",
+        "Entropy remains constant throughout the process.",
+        "Entropy peaks when the liquids are partially mixed."
+      ],
+      "hint": "Think about the second law of thermodynamics—what does it say about disorder in closed systems?"
+    },
+    {
+      "id": "q2",
+      "question": "What is the primary model system used in 'The Coffee Automaton' to study complexity?",
+      "answer": "A two-dimensional cellular automaton that simulates the mixing of coffee and cream.",
+      "explanation": "The paper introduces a 2D cellular automaton as a tractable model to simulate liquid mixing, allowing the authors to study how complexity evolves over time in a controlled, discrete system.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "A fluid dynamics simulation using Navier-Stokes equations.",
+        "A Monte Carlo simulation of particle diffusion.",
+        "A neural network trained to recognize coffee patterns."
+      ],
+      "hint": "The title gives a direct clue—what kind of system is used to simulate 'coffee' and 'cream'?"
+    },
+    {
+      "id": "q3",
+      "question": "What is the paper's proposed measure of complexity for the coffee automaton?",
+      "answer": "Apparent complexity, defined as the Kolmogorov complexity of a coarse-grained approximation of the system's state.",
+      "explanation": "The authors introduce 'apparent complexity' as a new measure, defined as the Kolmogorov complexity of a coarse-grained version of the state—filtering out fine details to capture 'interesting' structure.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Shannon entropy of the pixel distribution.",
+        "Boltzmann entropy calculated over microstates.",
+        "The number of non-uniform cells in the grid."
+      ],
+      "hint": "Look for the term 'apparent complexity'—it's defined as a form of Kolmogorov complexity applied to coarse-grained data."
+    },
+    {
+      "id": "q4",
+      "question": "Why does the paper argue that Kolmogorov complexity alone is insufficient for measuring system complexity?",
+      "answer": "Because raw Kolmogorov complexity of a microstate is high for random noise, not structured patterns—so coarse-graining is needed to capture meaningful structure.",
+      "explanation": "The paper points out that raw Kolmogorov complexity is high for random strings, which are not 'complex' in the intuitive sense. Coarse-graining filters out noise to focus on patterns that are 'interesting' or structured.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Because Kolmogorov complexity cannot be computed for cellular automata.",
+        "Because it ignores the time evolution of the system.",
+        "Because it only applies to binary strings, not physical systems."
+      ],
+      "hint": "Consider why a uniform mixture might have high Kolmogorov complexity but low perceived complexity."
+    },
+    {
+      "id": "q5",
+      "question": "What is the intuitive complexity pattern observed in the coffee cup system according to the paper?",
+      "answer": "Complexity starts low, increases during intermediate mixing stages, and then decreases as equilibrium is reached.",
+      "explanation": "The paper argues that at the beginning (separated liquids) and end (fully mixed), the system is simple to describe, but during intermediate states with intricate patterns, it becomes harder to describe—hence higher complexity.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Complexity increases steadily until equilibrium.",
+        "Complexity is highest at the beginning due to sharp boundaries.",
+        "Complexity remains constant throughout the process."
+      ],
+      "hint": "Think of a photograph: when is it hardest to describe what you see—when things are clean, messy, or in between?"
+    },
+    {
+      "id": "q6",
+      "question": "What does the paper suggest about the universe's complexity in relation to the coffee cup analogy?",
+      "answer": "The universe likely follows a similar pattern: low complexity at the Big Bang, high complexity during structure formation (stars, galaxies), and low complexity at heat death.",
+      "explanation": "The paper explicitly draws an analogy between the coffee cup and the universe, suggesting that complexity rises during structure formation and falls again in heat death—mirroring the proposed behavior.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "The universe’s complexity is constant over time.",
+        "Complexity in the universe peaks at heat death due to maximum entropy.",
+        "The Big Bang had maximum complexity because of high energy density."
+      ],
+      "hint": "Think about cosmic history: when were there stars, planets, and galaxies? When are they gone?"
+    },
+    {
+      "id": "q7",
+      "question": "How does the paper distinguish between Boltzmann entropy and apparent complexity?",
+      "answer": "Boltzmann entropy increases monotonically with disorder, while apparent complexity peaks at intermediate states due to structured patterns.",
+      "explanation": "Boltzmann entropy measures disorder based on macrostate volume and increases steadily. Apparent complexity, by contrast, captures structured patterns that emerge during mixing—thus peaking before equilibrium.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Boltzmann entropy is computed from coarse-graining, while apparent complexity uses fine-grained data.",
+        "Apparent complexity is a thermodynamic measure; Boltzmann entropy is informational.",
+        "Both measures behave identically over time."
+      ],
+      "hint": "One measure tracks disorder; the other tracks interesting structure—when is structure most apparent?"
+    },
+    {
+      "id": "q8",
+      "question": "Why does the paper claim that non-interacting particles result in low apparent complexity?",
+      "answer": "Without interactions, diffusion is uniform and patterns do not form; the coarse-grained state remains simple to describe.",
+      "explanation": "In non-interacting systems, particles diffuse homogeneously without forming intricate structures. Thus, the coarse-grained image is uniform or predictable, resulting in low Kolmogorov complexity.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "Non-interacting particles have higher entropy, reducing complexity.",
+        "Interactions increase entropy, which reduces complexity.",
+        "The automaton cannot simulate non-interacting particles."
+      ],
+      "hint": "If cream just spreads evenly without swirling or fracturing, what does the image look like? Is it easy to describe?"
+    },
+    {
+      "id": "q9",
+      "question": "What is the significance of coarse-graining in defining apparent complexity?",
+      "answer": "Coarse-graining filters out microscopic noise to focus on macroscopic patterns that are 'interesting' and compressible.",
+      "explanation": "Without coarse-graining, Kolmogorov complexity reflects random noise. Coarse-graining allows the measure to capture structured, large-scale features—like swirls in coffee—that are complex but compressible.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces computational cost by ignoring all details.",
+        "It allows the use of Shannon entropy instead of Kolmogorov complexity.",
+        "It ensures the system reaches equilibrium faster."
+      ],
+      "hint": "What does 'coarse-graining' do to fine details? Does it help or hinder identifying patterns?"
+    },
+    {
+      "id": "q10",
+      "question": "How does the paper relate Shannon entropy to apparent complexity?",
+      "answer": "Shannon entropy measures uncertainty in a distribution, while apparent complexity measures the compressibility of structured patterns—often peaking at different times.",
+      "explanation": "Shannon entropy increases monotonically with mixing, reflecting growing uncertainty. Apparent complexity measures structured information in coarse-grained states and peaks during intermediate mixing—highlighting their conceptual distinction.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They are mathematically equivalent in all cases.",
+        "Apparent complexity is just Shannon entropy applied to pixel blocks.",
+        "Shannon entropy decreases when apparent complexity increases."
+      ],
+      "hint": "One measures randomness; the other measures structured patterns that are hard to describe—when do these diverge?"
+    },
+    {
+      "id": "q11",
+      "question": "What does the paper suggest about the relationship between entropy and complexity in closed systems?",
+      "answer": "Entropy increases monotonically, but complexity can increase and then decrease—suggesting they are distinct measures.",
+      "explanation": "The paper's core contribution is showing that while entropy always rises, complexity does not—implying that complexity captures something more than disorder: namely, transient structured patterns.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Complexity and entropy are always proportional.",
+        "High complexity implies low entropy.",
+        "Entropy is a subset of complexity."
+      ],
+      "hint": "Think about the difference between 'randomness' and 'interesting structure.' Do they always go together?"
+    },
+    {
+      "id": "q12",
+      "question": "Why might the apparent complexity of a coffee cup system peak at a value comparable to its horizontal dimension?",
+      "answer": "Because the most complex patterns emerge when structures span a significant fraction of the system's size, requiring many bits to describe their irregular shapes.",
+      "explanation": "The paper observes that complexity peaks near the system's scale—suggesting that interesting structures (like swirls) are maximally complex when they fill a substantial portion of the cup without being uniform.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It is an arbitrary scaling constant chosen for computational convenience.",
+        "The dimension limits the number of possible states in the automaton.",
+        "Complexity is defined as the cup's area divided by entropy."
+      ],
+      "hint": "What kind of patterns are hardest to describe? Those that are small, large, or medium-sized?"
+    },
+    {
+      "id": "q13",
+      "question": "What is the main computational challenge in measuring apparent complexity?",
+      "answer": "Kolmogorov complexity is uncomputable, so the paper must use approximations like compression algorithms or coarse-grained encoding.",
+      "explanation": "Since Kolmogorov complexity is uncomputable in general, the paper relies on practical approximations—such as compressing coarse-grained images—to estimate apparent complexity numerically.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "The cellular automaton runs too slowly to generate enough data.",
+        "Entropy measurements require quantum-level precision.",
+        "Coarse-graining cannot be applied to discrete systems."
+      ],
+      "hint": "Can you compute the shortest program for any arbitrary string? If not, how do researchers approximate it?"
+    },
+    {
+      "id": "q14",
+      "question": "What does the paper imply about the role of interactions in generating complexity?",
+      "answer": "Interactions between particles are necessary to generate the non-uniform, structured patterns that lead to high apparent complexity.",
+      "explanation": "The paper contrasts non-interacting systems (low complexity) with interacting ones where diffusion creates swirls and filaments—demonstrating that interactions enable structure formation, which increases complexity.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Interactions reduce complexity by increasing entropy faster.",
+        "Complexity arises only from initial conditions, not interactions.",
+        "Interactions make the system more predictable."
+      ],
+      "hint": "Without swirling or mixing patterns, what does the coffee look like? What causes those swirls?"
+    },
+    {
+      "id": "q15",
+      "question": "Why does the paper argue that high entropy does not imply high complexity?",
+      "answer": "High entropy corresponds to uniform, random states that are easy to describe statistically but contain no structured information.",
+      "explanation": "A fully mixed coffee cup has high entropy (disorder) but low complexity—because its state is simple to describe as 'uniform.' Complexity requires structure, not just randomness.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "High entropy always implies high complexity due to information theory.",
+        "Entropy and complexity are the same measure under different names.",
+        "Complexity is only high when entropy is low."
+      ],
+      "hint": "Is a completely random noise image more or less 'complex' than a photo of a galaxy?"
+    },
+    {
+      "id": "q16",
+      "question": "What is the central open problem raised by the paper regarding apparent complexity?",
+      "answer": "Proving analytically that apparent complexity peaks at intermediate times in interacting systems.",
+      "explanation": "The paper presents numerical evidence but explicitly calls for an analytical proof that complexity rises and falls over time—a key theoretical challenge left open.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Proving that entropy must always increase.",
+        "Designing a better cellular automaton for coffee mixing.",
+        "Computing the exact Kolmogorov complexity of real-world coffee."
+      ],
+      "hint": "The paper says 'we give numerical evidence'—what’s the next step they say is needed?"
+    },
+    {
+      "id": "q17",
+      "question": "How might the concept of apparent complexity apply to cosmology, according to the paper?",
+      "answer": "It provides a framework to explain why the universe became complex (galaxies, stars) after the Big Bang despite increasing entropy.",
+      "explanation": "The paper uses the coffee cup as an analogy to suggest that complexity can rise in closed systems even as entropy increases—offering a possible explanation for structure formation in the early universe.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It proves that the universe must have low entropy at the Big Bang.",
+        "It shows that dark energy causes complexity to peak at 10^100 years.",
+        "It eliminates the need for inflationary cosmology."
+      ],
+      "hint": "Think about the timeline: Big Bang → stars/galaxies → heat death. Where does complexity fit?"
+    },
+    {
+      "id": "q18",
+      "question": "Why is the distinction between microstates and macrostates critical to understanding apparent complexity?",
+      "answer": "Apparent complexity depends on coarse-grained macrostates, not microstates—because only macrostates capture 'interesting' structure usable by observers.",
+      "explanation": "Microstates are too detailed and random to be 'complex' in the intuitive sense. Apparent complexity operates on macrostates—simplified representations that highlight emergent patterns relevant to observation.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "Microstates have higher Kolmogorov complexity, so they are preferred.",
+        "Macrostates are used only to compute entropy, not complexity.",
+        "The automaton cannot represent macrostates without microstate data."
+      ],
+      "hint": "What do we actually see in a coffee cup? The position of every molecule, or the swirls?"
+    },
+    {
+      "id": "q19",
+      "question": "How does the paper challenge the intuition that high entropy equals high complexity?",
+      "answer": "By demonstrating that maximum entropy states (uniform mixtures) have low apparent complexity due to lack of structure, while intermediate states have high complexity despite lower entropy.",
+      "explanation": "The paper directly contradicts the common misconception that 'more disorder = more complexity.' Instead, it shows complexity requires structured organization, which peaks before maximum entropy.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "It shows that entropy and complexity are always inversely related.",
+        "It proves that high entropy is necessary for high complexity.",
+        "It argues that complexity cannot be measured in thermodynamic systems."
+      ],
+      "hint": "Think of a scrambled egg vs. a raw egg: which has more disorder? Which is more 'complex' to describe?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the significance of 'The Coffee Automaton' in the context of complexity theory and thermodynamics.",
+      "answer": "It provides a novel, quantifiable model linking entropy increase with non-monotonic complexity, offering a bridge between information theory and physical systems—potentially explaining structure formation in the universe.",
+      "explanation": "This paper is significant because it formalizes an intuitive observation—that complexity peaks before equilibrium—using computational tools. It opens new avenues for understanding structure in closed systems, from coffee cups to cosmology.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It disproves the second law of thermodynamics.",
+        "It proves that all complex systems must have cellular automaton dynamics.",
+        "Its contributions are purely aesthetic with no theoretical impact."
+      ],
+      "hint": "What problem does this paper solve that previous work didn't? Why is it important beyond coffee?"
+    }
+  ],
+  "paper_id": 19,
+  "title": "The Coffee Automaton",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 9,
+    "hard": 5
+  }
+}

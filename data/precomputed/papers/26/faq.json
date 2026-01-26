@@ -1,0 +1,253 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the main goal of the CS231n course?",
+      "answer": "The main goal of CS231n is to teach students how to design, train, and deploy convolutional neural networks (CNNs) for visual recognition tasks such as image classification, object detection, and segmentation. The course emphasizes both theoretical understanding and practical implementation using modern deep learning frameworks like TensorFlow and PyTorch.",
+      "related_concepts": [
+        "Convolutional Neural Networks",
+        "Computer Vision",
+        "Deep Learning"
+      ],
+      "follow_up": "How does CS231n differ from general deep learning courses?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "Why are convolutional layers important in CNNs?",
+      "answer": "Convolutional layers are crucial because they exploit spatial locality in images by applying shared filters that detect local patterns like edges and textures. This reduces the number of parameters compared to fully connected layers and enables translation invariance, making CNNs highly effective for visual data.",
+      "related_concepts": [
+        "Convolution",
+        "Parameter Sharing",
+        "Translation Invariance"
+      ],
+      "follow_up": "How do convolutional layers compare to fully connected layers in terms of efficiency?"
+    },
+    {
+      "id": "faq3",
+      "category": "implementation",
+      "question": "How do you implement a CNN from scratch in Python?",
+      "answer": "To implement a CNN from scratch, you need to define layers (convolutional, pooling, fully connected), implement forward and backward passes for each layer, use a loss function like cross-entropy, and optimize with gradient descent. Libraries like NumPy can be used for matrix operations, and backpropagation must be manually coded for each layer’s gradients.",
+      "related_concepts": [
+        "Backpropagation",
+        "Gradient Descent",
+        "Layer Architecture"
+      ],
+      "follow_up": "What are common pitfalls when implementing CNNs from scratch?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "What are the key hyperparameters to tune when training a CNN?",
+      "answer": "Key hyperparameters include learning rate, batch size, number of layers, filter sizes, number of filters per layer, dropout rate, weight initialization method, and optimizer choice (e.g., Adam vs SGD with momentum). These affect convergence speed, generalization, and risk of overfitting.",
+      "related_concepts": [
+        "Hyperparameter Tuning",
+        "Overfitting",
+        "Optimization"
+      ],
+      "follow_up": "How do you choose an appropriate learning rate for CNN training?"
+    },
+    {
+      "id": "faq5",
+      "category": "comparison",
+      "question": "How do CNNs compare to traditional computer vision methods like SIFT or HOG?",
+      "answer": "CNNs automatically learn hierarchical feature representations from raw pixels, while SIFT and HOG rely on hand-crafted features designed by experts. CNNs typically outperform traditional methods in accuracy and robustness, especially with large datasets, but require more data and computational resources.",
+      "related_concepts": [
+        "SIFT",
+        "HOG",
+        "Feature Engineering"
+      ],
+      "follow_up": "Are there scenarios where traditional methods still outperform CNNs?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "How does CS231n’s approach to CNNs differ from early work like LeNet?",
+      "answer": "While LeNet introduced the foundational CNN architecture in the 1990s, CS231n builds on decades of advances including ReLU activations, dropout, batch normalization, residual connections, and modern optimizers. CS231n emphasizes scalable training on large datasets using GPUs and deep architectures like ResNet, not just small-scale recognition.",
+      "related_concepts": [
+        "LeNet",
+        "ResNet",
+        "Batch Normalization"
+      ],
+      "follow_up": "What key innovations since LeNet have most improved CNN performance?"
+    },
+    {
+      "id": "faq7",
+      "category": "application",
+      "question": "What are real-world applications of CNNs taught in CS231n?",
+      "answer": "Real-world applications include medical image analysis (tumor detection), autonomous driving (pedestrian recognition), facial recognition, satellite imagery interpretation, and content moderation. The course projects often involve building systems that classify or detect objects in real images.",
+      "related_concepts": [
+        "Medical Imaging",
+        "Autonomous Vehicles",
+        "Object Detection"
+      ],
+      "follow_up": "How do CNNs handle privacy concerns in facial recognition applications?"
+    },
+    {
+      "id": "faq8",
+      "category": "application",
+      "question": "Can CNNs be used for non-image data? If so, how?",
+      "answer": "Yes, CNNs can be applied to 1D signals (e.g., audio waveforms) and text by treating them as sequences with spatial structure. For example, 1D convolutions can detect patterns in time-series data or sentences. The key is to represent the input as a grid-like structure where local patterns are meaningful.",
+      "related_concepts": [
+        "1D Convolution",
+        "Time-Series Analysis",
+        "Text Classification"
+      ],
+      "follow_up": "How do 1D CNNs compare to RNNs for sequence modeling?"
+    },
+    {
+      "id": "faq9",
+      "category": "limitations",
+      "question": "What are the main limitations of CNNs?",
+      "answer": "CNNs require large labeled datasets, are computationally expensive to train, lack inherent understanding of spatial relationships beyond local context (e.g., they don't naturally model object parts or hierarchies), and can be brittle to adversarial perturbations. They also struggle with generalization to unseen viewpoints or lighting conditions without extensive data augmentation.",
+      "related_concepts": [
+        "Data Hunger",
+        "Adversarial Examples",
+        "Generalization"
+      ],
+      "follow_up": "How do vision transformers address some of these limitations?"
+    },
+    {
+      "id": "faq10",
+      "category": "limitations",
+      "question": "Why do CNNs sometimes fail on out-of-distribution images?",
+      "answer": "CNNs learn statistical patterns from training data and assume test data follows the same distribution. If an image has novel lighting, occlusion, or viewpoint changes not seen during training, the model lacks the inductive bias to generalize. This is known as distribution shift and remains a major challenge.",
+      "related_concepts": [
+        "Distribution Shift",
+        "Generalization",
+        "Domain Adaptation"
+      ],
+      "follow_up": "What techniques can improve CNN robustness to out-of-distribution data?"
+    },
+    {
+      "id": "faq11",
+      "category": "understanding",
+      "question": "What is the role of pooling layers in CNNs?",
+      "answer": "Pooling layers (e.g., max pooling) reduce spatial dimensions of feature maps, decreasing computational load and providing translation invariance. They also help control overfitting by summarizing local regions, though they discard precise spatial information which led to the development of alternatives like strided convolutions.",
+      "related_concepts": [
+        "Max Pooling",
+        "Spatial Downsampling",
+        "Translation Invariance"
+      ],
+      "follow_up": "Why have some modern architectures replaced pooling with strided convolutions?"
+    },
+    {
+      "id": "faq12",
+      "category": "implementation",
+      "question": "How do you prevent overfitting in CNNs?",
+      "answer": "Common techniques include dropout, data augmentation (rotations, flips, color jittering), weight decay (L2 regularization), batch normalization, early stopping, and using larger datasets. Transfer learning from pre-trained models also helps by leveraging learned features from related tasks.",
+      "related_concepts": [
+        "Dropout",
+        "Data Augmentation",
+        "Transfer Learning"
+      ],
+      "follow_up": "What’s the difference between L1 and L2 regularization in CNNs?"
+    },
+    {
+      "id": "faq13",
+      "category": "comparison",
+      "question": "How do CNNs compare to Vision Transformers (ViTs) for image recognition?",
+      "answer": "CNNs use local convolutions to extract hierarchical features, while ViTs treat images as sequences of patches and use self-attention to model global dependencies. ViTs often outperform CNNs at scale with sufficient data, but CNNs are more data-efficient and computationally cheaper for smaller tasks.",
+      "related_concepts": [
+        "Vision Transformer",
+        "Self-Attention",
+        "Transformer"
+      ],
+      "follow_up": "When should you choose a CNN over a Vision Transformer?"
+    },
+    {
+      "id": "faq14",
+      "category": "application",
+      "question": "How can CNNs be deployed in production environments?",
+      "answer": "CNNs are deployed using optimized inference engines like TensorRT, ONNX Runtime, or TensorFlow Lite. Models are quantized to reduce size and latency, pruned for efficiency, and served via APIs (e.g., Flask, FastAPI) or embedded systems. Edge devices like smartphones and IoT cameras often use quantized CNNs for real-time inference.",
+      "related_concepts": [
+        "Model Quantization",
+        "Edge AI",
+        "TensorRT"
+      ],
+      "follow_up": "What are the trade-offs between model size and inference speed in deployment?"
+    },
+    {
+      "id": "faq15",
+      "category": "implementation",
+      "question": "What is the purpose of batch normalization in CNNs?",
+      "answer": "Batch normalization normalizes layer inputs across the batch during training, reducing internal covariate shift. This allows higher learning rates, improves convergence speed, and acts as a regularizer. It’s applied before activation functions and has become standard in modern CNN architectures.",
+      "related_concepts": [
+        "Internal Covariate Shift",
+        "Normalization",
+        "Training Stability"
+      ],
+      "follow_up": "Does batch normalization work the same way during inference?"
+    },
+    {
+      "id": "faq16",
+      "category": "understanding",
+      "question": "What does 'translation invariance' mean in the context of CNNs?",
+      "answer": "Translation invariance means that a CNN can recognize an object regardless of its position in the image. This is achieved through weight sharing in convolutional filters and pooling layers, which allow features to be detected anywhere in the input space without needing separate parameters for each location.",
+      "related_concepts": [
+        "Weight Sharing",
+        "Pooling",
+        "Local Receptive Fields"
+      ],
+      "follow_up": "Can CNNs achieve perfect translation invariance?"
+    },
+    {
+      "id": "faq17",
+      "category": "limitations",
+      "question": "Why are CNNs vulnerable to adversarial attacks?",
+      "answer": "CNNs are sensitive to small, carefully crafted perturbations because they rely on high-dimensional feature spaces where tiny changes can mislead the classifier. This stems from linear behavior in high dimensions and lack of robust feature representations, making them prone to exploits like FGSM or PGD attacks.",
+      "related_concepts": [
+        "Adversarial Examples",
+        "FGSM",
+        "Robustness"
+      ],
+      "follow_up": "What methods exist to make CNNs more robust against adversarial attacks?"
+    },
+    {
+      "id": "faq18",
+      "category": "comparison",
+      "question": "How does CS231n’s curriculum compare to Andrew Ng’s Deep Learning Specialization?",
+      "answer": "CS231n focuses deeply on computer vision and CNNs with hands-on assignments in image tasks, while Ng’s specialization offers a broader overview of deep learning including RNNs, NLP, and reinforcement learning. CS231n is more technical and project-driven; Ng’s is more accessible for beginners with less math.",
+      "related_concepts": [
+        "Deep Learning Specialization",
+        "Computer Vision Curriculum"
+      ],
+      "follow_up": "Which course is better for someone interested in autonomous driving?"
+    },
+    {
+      "id": "faq19",
+      "category": "application",
+      "question": "How are CNNs used in medical imaging applications?",
+      "answer": "CNNs analyze X-rays, MRIs, and CT scans to detect abnormalities like tumors, fractures, or hemorrhages. They are trained on annotated datasets and can assist radiologists by highlighting regions of interest. Examples include Google’s DeepMind for eye disease detection and IBM Watson for oncology imaging.",
+      "related_concepts": [
+        "Medical Imaging",
+        "Radiology AI",
+        "Diagnostic Assistance"
+      ],
+      "follow_up": "What ethical concerns arise when using CNNs in healthcare?"
+    },
+    {
+      "id": "faq20",
+      "category": "implementation",
+      "question": "How do you visualize what a CNN is learning?",
+      "answer": "Techniques include visualizing filter weights, activating feature maps for specific inputs, using Grad-CAM to highlight important image regions, and generating adversarial examples. These help interpret model decisions and debug poor performance by showing which parts of the image influenced predictions.",
+      "related_concepts": [
+        "Feature Visualization",
+        "Grad-CAM",
+        "Model Interpretability"
+      ],
+      "follow_up": "Can visualization techniques help improve model performance?"
+    }
+  ],
+  "paper_id": 26,
+  "title": "CS231n Course",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 4,
+    "implementation": 5,
+    "comparison": 4,
+    "application": 4,
+    "limitations": 3
+  }
+}

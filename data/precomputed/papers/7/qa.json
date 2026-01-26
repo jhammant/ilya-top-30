@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What was the primary dataset used in AlexNet's ImageNet classification task?",
+      "answer": "ImageNet LSVRC-2010, which contained approximately 1.2 million labeled images across 1000 categories.",
+      "explanation": "The paper explicitly states that the authors trained their model on the ImageNet LSVRC-2010 dataset, which provided a large-scale benchmark for image classification with 1.2 million training images and 1000 classes.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "CIFAR-10",
+        "MNIST",
+        "Pascal VOC"
+      ],
+      "hint": "Look for the dataset mentioned in the Abstract and Section 2 that had 1.2 million images and 1000 classes."
+    },
+    {
+      "id": "q2",
+      "question": "How many layers did the AlexNet architecture contain in total?",
+      "answer": "Eight layers: five convolutional and three fully-connected.",
+      "explanation": "The paper clearly states in Section 3 that the network architecture consists of five convolutional layers followed by three fully-connected layers, totaling eight learned layers.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Six layers",
+        "Ten layers",
+        "Seven layers"
+      ],
+      "hint": "The paper mentions the total number of learned layers in Section 3 and breaks them down into convolutional and fully-connected types."
+    },
+    {
+      "id": "q3",
+      "question": "What activation function did AlexNet use to speed up training compared to traditional options?",
+      "answer": "Rectified Linear Units (ReLUs).",
+      "explanation": "The paper introduces ReLUs (f(x) = max(0,x)) as a non-saturating activation function that trains significantly faster than tanh or sigmoid units, enabling training of large networks in a reasonable time.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Sigmoid",
+        "Tanh",
+        "Softmax"
+      ],
+      "hint": "Section 3.1 is titled 'ReLU Nonlinearity' and explains how ReLUs improved training speed."
+    },
+    {
+      "id": "q4",
+      "question": "What was the input image size used by AlexNet?",
+      "answer": "256 x 256 pixels.",
+      "explanation": "The paper states that images were resized so the shorter side was 256 pixels, and then a central 256x256 patch was cropped as the input to the network.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "224 x 224",
+        "512 x 512",
+        "128 x 128"
+      ],
+      "hint": "Check Section 2: 'Therefore, we down-sampled the images to a fixed resolution of 256 x 256.'"
+    },
+    {
+      "id": "q5",
+      "question": "Which technique did AlexNet use to reduce overfitting in fully-connected layers?",
+      "answer": "Dropout.",
+      "explanation": "The paper explicitly mentions in the Abstract and Section 4 that dropout, a recently developed regularization method at the time, was employed to reduce overfitting in fully-connected layers.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Batch normalization",
+        "Weight decay",
+        "Data augmentation"
+      ],
+      "hint": "Look for the term 'dropout' in the Abstract or Section 4 — it's highlighted as a key innovation for regularization."
+    },
+    {
+      "id": "q6",
+      "question": "What was the main hardware advantage that enabled training AlexNet?",
+      "answer": "The use of highly optimized GPU implementations for 2D convolution and other operations.",
+      "explanation": "The paper emphasizes that prior CNNs were too slow for large-scale image classification, but with optimized GPU code (especially for convolution), training became feasible on two GTX 580 GPUs.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Use of TPUs",
+        "Quantization techniques",
+        "Distributed CPU clusters"
+      ],
+      "hint": "Section 1 mentions that GPUs with optimized convolution implementations made large CNN training possible."
+    },
+    {
+      "id": "q7",
+      "question": "Why did AlexNet use local response normalization (LRN) in its architecture?",
+      "answer": "To improve generalization by encouraging competition among nearby neurons for activation.",
+      "explanation": "Although not the main focus, LRN was used in AlexNet to normalize neuron responses across local channels, helping to enhance generalization by suppressing less active neurons in neighboring feature maps.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "To reduce the number of parameters",
+        "To speed up training by simplifying computations",
+        "To replace dropout regularization"
+      ],
+      "hint": "Refer to Section 3.2 — LRN is introduced as a technique for improving generalization by normalizing over local neuron responses."
+    },
+    {
+      "id": "q8",
+      "question": "How did AlexNet handle variable-resolution images from ImageNet?",
+      "answer": "By resizing the shorter side to 256 pixels and cropping a central 256x256 patch.",
+      "explanation": "The paper explains that since the network required fixed input dimensions, images were rescaled proportionally so the shorter side was 256 pixels, then a center crop was taken to ensure uniform input size.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "By padding images to 256x256 with black borders",
+        "By randomly scaling and cropping images during training",
+        "By using multiple resolutions as separate inputs"
+      ],
+      "hint": "Section 2 describes the preprocessing step — look for 'rescaled' and 'cropped out the central patch'."
+    },
+    {
+      "id": "q9",
+      "question": "What was the impact of removing any one convolutional layer from AlexNet?",
+      "answer": "It resulted in inferior performance, indicating that depth was critical to the model's success.",
+      "explanation": "The paper states in Section 1 that removing any convolutional layer — even those contributing less than 1% of parameters — led to worse performance, demonstrating the importance of depth in their architecture.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It had no noticeable effect on performance",
+        "It improved training speed significantly",
+        "It reduced overfitting but hurt accuracy"
+      ],
+      "hint": "The authors emphasize that depth matters — check the sentence about removing layers in Section 1."
+    },
+    {
+      "id": "q10",
+      "question": "Why did AlexNet use two GPUs during training?",
+      "answer": "To distribute the model across memory constraints and speed up training.",
+      "explanation": "Due to limited GPU memory, the network was split across two GPUs — one handled odd layers and another even layers. This allowed training of a model too large for a single GPU.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "To train two different models and average their outputs",
+        "To increase the number of training samples per batch",
+        "To compare performance between GPU models"
+      ],
+      "hint": "Section 3.4 mentions that the network was split across two GPUs due to memory limitations — look for 'split across two GPUs'."
+    },
+    {
+      "id": "q11",
+      "question": "What was the top-5 error rate achieved by AlexNet on ILSVRC-2012?",
+      "answer": "15.3%",
+      "explanation": "The paper reports in the Abstract and Section 6 that AlexNet achieved a top-5 test error rate of 15.3% in ILSVRC-2012, outperforming the second-place entry (26.2%).",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "17.0%",
+        "26.2%",
+        "37.5%"
+      ],
+      "hint": "Top-5 error on ILSVRC-2012 is mentioned in the Abstract — note that 37.5% and 17.0% are for ILSVRC-2010."
+    },
+    {
+      "id": "q12",
+      "question": "What was the main advantage of CNNs over standard feedforward networks for image classification, according to the paper?",
+      "answer": "CNNs make strong, mostly correct assumptions about image structure (stationarity and locality), reducing parameters and connections.",
+      "explanation": "Section 1 explains that CNNs exploit spatial stationarity and local dependencies in images, resulting in far fewer parameters than fully connected networks with equivalent layer sizes.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "CNNs require less training data",
+        "CNNs are faster to train due to simpler architecture",
+        "CNNs use fewer neurons overall"
+      ],
+      "hint": "Look at the paragraph in Section 1 that contrasts CNNs with standard feedforward networks — focus on assumptions about image properties."
+    },
+    {
+      "id": "q13",
+      "question": "Why was the use of ReLUs considered critical to AlexNet's success?",
+      "answer": "Because they enabled training of deep networks in a feasible time frame by avoiding saturation and accelerating convergence.",
+      "explanation": "The paper states that saturating activations like tanh slowed training significantly, and ReLUs allowed the model to train several times faster — essential for scaling up to 60 million parameters.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "They reduced the number of layers needed",
+        "They improved image preprocessing",
+        "They replaced convolutional layers"
+      ],
+      "hint": "Section 3.1 shows a figure demonstrating ReLUs reach training error 6x faster than tanh — this speed was essential for large-scale training."
+    },
+    {
+      "id": "q14",
+      "question": "How did AlexNet's performance compare to the previous state-of-the-art on ImageNet LSVRC-2010?",
+      "answer": "It significantly outperformed previous methods with a top-1 error rate of 37.5% versus the prior best of around 45-50%.",
+      "explanation": "The Abstract states that AlexNet achieved 37.5% top-1 error, which was 'considerably better than the previous state-of-the-art' — implying prior methods were in the 45-50% range.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It performed slightly worse but was faster to train",
+        "It matched previous results exactly",
+        "It had a lower top-5 error but higher top-1 error"
+      ],
+      "hint": "Look for 'considerably better than the previous state-of-the-art' in the Abstract — this implies a significant gap."
+    },
+    {
+      "id": "q15",
+      "question": "What is the difference between top-1 and top-5 error rates in ImageNet evaluation?",
+      "answer": "Top-1 measures if the highest-probability class is correct; top-5 measures if the true label appears in the top five predicted classes.",
+      "explanation": "Section 2 explicitly defines these metrics: top-1 error is when the model's most likely prediction is wrong; top-5 error counts an image as correct if the true label is among the five most probable predictions.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "Top-1 is for training, top-5 is for testing",
+        "Top-1 measures accuracy per class; top-5 measures total accuracy",
+        "Top-5 is the average of five different models"
+      ],
+      "hint": "The paper says: 'top-5 error rate is the fraction of test images for which the correct label is not among the five labels considered most probable.'"
+    },
+    {
+      "id": "q16",
+      "question": "What was the primary reason AlexNet used local response normalization (LRN) instead of batch normalization?",
+      "answer": "Batch normalization had not yet been introduced; LRN was the available technique for feature map normalization at the time.",
+      "explanation": "Batch normalization was introduced in 2015, after AlexNet (2012). LRN was used as an early form of normalization to improve generalization by enhancing local contrast among feature maps.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "LRN reduces computational cost compared to batch normalization",
+        "Batch normalization was not compatible with GPU implementations",
+        "LRN performed better in experiments"
+      ],
+      "hint": "Consider the timeline — batch normalization was published after AlexNet. LRN was a contemporary technique."
+    },
+    {
+      "id": "q17",
+      "question": "Why did the authors emphasize that their model's size was limited by GPU memory and training time?",
+      "answer": "To highlight that future improvements would come from better hardware and larger datasets, not architectural innovation alone.",
+      "explanation": "The paper concludes that the network’s size is constrained by GPU memory and training duration, implying scalability was limited by infrastructure — a prediction that proved true with subsequent advances.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "They wanted to downplay the model's complexity",
+        "The model was too simple and needed expansion",
+        "Memory constraints were not a real issue"
+      ],
+      "hint": "The final paragraph says results can be improved by waiting for faster GPUs and bigger datasets — suggesting hardware was the bottleneck."
+    },
+    {
+      "id": "q18",
+      "question": "How did AlexNet's architecture differ from traditional CNNs in terms of layer structure?",
+      "answer": "It used deeper architectures with five convolutional layers and three fully-connected layers, more than typical at the time.",
+      "explanation": "Before AlexNet, CNNs were typically shallow. This paper demonstrated that stacking five convolutional layers with three dense layers improved performance significantly, setting a new depth standard.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It used recurrent layers instead of convolutional ones",
+        "It had fewer layers but larger kernels",
+        "It eliminated pooling layers entirely"
+      ],
+      "hint": "The paper claims depth was critical — look for mentions of removing layers leading to inferior performance."
+    },
+    {
+      "id": "q19",
+      "question": "What was the significance of AlexNet's public release of its GPU-optimized code?",
+      "answer": "It enabled widespread replication and advancement of deep CNN research, catalyzing the deep learning revolution.",
+      "explanation": "The paper states they made their optimized GPU implementation publicly available, which lowered barriers to entry and allowed other researchers to reproduce and build upon their results.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It was a marketing tactic to promote their university",
+        "The code was only useful for ImageNet and not transferable",
+        "It helped them win a patent on CNN architecture"
+      ],
+      "hint": "Look at footnote 1 in the paper — they made their code publicly available, which was rare and influential."
+    },
+    {
+      "id": "q20",
+      "question": "How did AlexNet's success impact the field of computer vision and deep learning?",
+      "answer": "It demonstrated that deep CNNs could outperform traditional methods by a large margin, sparking widespread adoption of deep learning in computer vision.",
+      "explanation": "AlexNet's dramatic reduction in error rates on ImageNet (from ~26% to 15.3% top-5) proved deep CNNs were superior, leading to the dominance of deep learning in vision tasks and influencing all subsequent architectures like VGG, ResNet, etc.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It proved that traditional feature engineering was still superior",
+        "It led to the abandonment of neural networks in favor of SVMs",
+        "It had no long-term impact beyond ImageNet competitions"
+      ],
+      "hint": "Consider the context: AlexNet won ILSVRC-2012 by a large margin — this event is widely seen as the beginning of the deep learning era."
+    }
+  ],
+  "paper_id": 7,
+  "title": "ImageNet Classification (AlexNet)",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 9,
+    "hard": 5
+  }
+}

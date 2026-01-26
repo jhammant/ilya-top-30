@@ -1,6 +1,17 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
+  // Enable static export for PWA
+  output: "export",
+
+  // Trailing slashes for static hosting
+  trailingSlash: true,
+
+  // Disable image optimization for static export
+  images: {
+    unoptimized: true,
+  },
+
   // Move dev indicator to bottom-right corner
   devIndicators: {
     position: "bottom-right",

@@ -272,3 +272,9 @@ celerybeat.pid
 *.wav
 *.ogg
 !demo/*.mp4
+
+# Generated data (bundled during build)
+web/public/data/precomputed/
+
+# iOS app (separate project)
+ilya-top-30-ios/

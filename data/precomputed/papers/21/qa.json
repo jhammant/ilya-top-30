@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary advantage of Deep Speech 2's end-to-end approach compared to traditional ASR pipelines?",
+      "answer": "Deep Speech 2 replaces multiple hand-engineered components (like feature extraction, acoustic models, and language models) with a single neural network, enabling better generalization across languages, accents, and noisy environments.",
+      "explanation": "Traditional ASR systems rely on complex, modular pipelines that are difficult to adapt across languages. Deep Speech 2’s end-to-end architecture uses deep learning to map audio directly to text, reducing the need for manual feature engineering and improving cross-lingual adaptability.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It uses fewer computational resources than traditional systems.",
+        "It requires no training data to function.",
+        "It only works for English speech recognition."
+      ],
+      "hint": "Think about how traditional ASR systems are built with separate modules for different tasks."
+    },
+    {
+      "id": "q2",
+      "question": "Which loss function is used in Deep Speech 2 to predict speech transcriptions from audio?",
+      "answer": "Connectionist Temporal Classification (CTC)",
+      "explanation": "The paper explicitly states that Deep Speech 2 uses the Connectionist Temporal Classification (CTC) loss function to align variable-length audio inputs with fixed-length text outputs, which is essential for end-to-end speech recognition.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Cross-entropy loss",
+        "Mean squared error",
+        "Hinge loss"
+      ],
+      "hint": "This loss function is specifically designed for sequence-to-sequence tasks where input and output lengths differ."
+    },
+    {
+      "id": "q3",
+      "question": "How much training data was used for the English version of Deep Speech 2?",
+      "answer": "11,940 hours of speech",
+      "explanation": "The paper clearly states that the English system was trained on 11,940 hours of speech data, which is significantly larger than typical datasets used in prior systems.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "5,000 hours",
+        "8,200 hours",
+        "15,000 hours"
+      ],
+      "hint": "The paper mentions the scale of data as a key factor in improving performance over previous versions."
+    },
+    {
+      "id": "q4",
+      "question": "What is the main purpose of Batch Dispatch in Deep Speech 2?",
+      "answer": "To enable low-latency, cost-effective deployment of the model in an online production setting by efficiently batching user requests on GPUs.",
+      "explanation": "Batch Dispatch is introduced as a technique to serve users at scale with low latency by grouping multiple inference requests into batches for GPU processing, reducing overhead and operational cost.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To accelerate training by parallelizing data loading.",
+        "To reduce the size of the neural network model.",
+        "To improve audio preprocessing speed."
+      ],
+      "hint": "Think about how real-time speech systems handle multiple user requests efficiently."
+    },
+    {
+      "id": "q5",
+      "question": "What key HPC technique enabled Deep Speech 2 to achieve a 7x speedup over its predecessor?",
+      "answer": "Synchronous SGD with optimized inter-GPU communication and custom memory allocation.",
+      "explanation": "The paper highlights synchronous SGD, fast CTC implementation on GPU, custom memory allocator, and optimized all-reduce communication as HPC techniques that collectively contributed to the 7x speedup.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Asynchronous parameter servers",
+        "Use of CPUs instead of GPUs",
+        "Reducing model size for faster training"
+      ],
+      "hint": "The paper contrasts their approach with previous methods that used asynchronous updates."
+    },
+    {
+      "id": "q6",
+      "question": "Which two languages were the primary focus of Deep Speech 2’s evaluation?",
+      "answer": "English and Mandarin Chinese",
+      "explanation": "The paper’s title and abstract explicitly state that Deep Speech 2 was evaluated on English and Mandarin Chinese, two linguistically distinct languages, to demonstrate cross-lingual capability.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Spanish and French",
+        "Japanese and Korean",
+        "German and Russian"
+      ],
+      "hint": "The paper emphasizes its ability to handle two vastly different languages with minimal modification."
+    },
+    {
+      "id": "q7",
+      "question": "Why does Deep Speech 2 use Batch Normalization in its recurrent neural networks?",
+      "answer": "To stabilize and accelerate training by normalizing layer inputs, which helps mitigate vanishing gradients in deep RNNs.",
+      "explanation": "The paper mentions applying BatchNorm to RNNs as part of its architectural investigation, noting that it improves training stability and convergence speed in deep recurrent architectures.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "To reduce the number of parameters in the model.",
+        "To compress audio signals before input.",
+        "To improve audio noise filtering."
+      ],
+      "hint": "Batch Normalization is commonly used to make training deep networks more stable by normalizing activations."
+    },
+    {
+      "id": "q8",
+      "question": "What performance benchmark did Deep Speech 2 achieve that demonstrated its competitiveness with humans?",
+      "answer": "It outperformed or matched the transcription accuracy of human workers on several standard speech recognition benchmarks.",
+      "explanation": "The paper claims that Deep Speech 2’s accuracy on multiple public benchmarks was competitive with or exceeded human workers from Amazon Mechanical Turk, highlighting its human-level performance.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It reduced transcription time by 50% compared to humans.",
+        "It could transcribe speech in real-time without any latency.",
+        "It was able to recognize 100 languages with high accuracy."
+      ],
+      "hint": "The paper compares its results to human workers, not other ASR systems alone."
+    },
+    {
+      "id": "q9",
+      "question": "How did Deep Speech 2 reduce training time from weeks to days?",
+      "answer": "By using synchronous SGD across 8–16 GPUs with optimized communication and memory allocation, achieving ~50 teraFLOP/s on 16 GPUs.",
+      "explanation": "The paper details how synchronous SGD, custom all-reduce implementations, and GPU-optimized CTC loss enabled training on 16 GPUs at ~50 teraFLOP/s, reducing training from weeks to just 3–5 days.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "By using smaller models and less data.",
+        "By switching from GPUs to TPUs.",
+        "By reducing the number of training epochs."
+      ],
+      "hint": "The speedup came from parallelization and system-level optimizations, not model simplification."
+    },
+    {
+      "id": "q10",
+      "question": "What challenge in traditional ASR systems does Deep Speech 2 overcome by using an end-to-end architecture?",
+      "answer": "The difficulty of developing and tuning multiple interdependent components for each new language or environment.",
+      "explanation": "Traditional ASR pipelines require extensive engineering of feature extractors, acoustic models, and language models. Deep Speech 2’s end-to-end model eliminates this complexity by learning directly from audio to text.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "The high cost of collecting audio data.",
+        "The lack of publicly available datasets.",
+        "The inability to process real-time speech."
+      ],
+      "hint": "Think about why building an ASR system for a new language used to take so long."
+    },
+    {
+      "id": "q11",
+      "question": "Why does the paper argue that Deep Speech 2 better mimics human speech recognition than traditional systems?",
+      "answer": "Because it learns general speech understanding from raw audio without task-specific engineering, similar to how humans learn languages during childhood.",
+      "explanation": "The paper draws a parallel between human speech acquisition—where children learn to recognize speech robustly without task-specific tuning—and Deep Speech 2’s ability to generalize across accents, noise, and languages with minimal modification.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It uses the same neural network architecture as the human brain.",
+        "It can understand semantics and context like humans do.",
+        "It was trained exclusively on child speech data."
+      ],
+      "hint": "Humans don't need separate systems for different accents or environments—how does Deep Speech 2 achieve similar flexibility?"
+    },
+    {
+      "id": "q12",
+      "question": "What role did data synthesis play in Deep Speech 2’s training process?",
+      "answer": "It was used to augment the training dataset, increasing diversity and robustness without requiring additional real-world recordings.",
+      "explanation": "The paper mentions data synthesis as a technique to expand training data, helping the model generalize better across noise conditions and accents by artificially generating variations of existing samples.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It was used to replace human transcribers entirely.",
+        "It was used to reduce model size during training.",
+        "It was used only for testing purposes."
+      ],
+      "hint": "Data synthesis is often used to create variations of existing data—what benefit does that provide for speech recognition?"
+    },
+    {
+      "id": "q13",
+      "question": "What is the significance of using synchronous SGD over asynchronous parameter servers in Deep Speech 2?",
+      "answer": "Synchronous SGD is easier to debug and converges faster under the same level of data parallelism, enabling more efficient model exploration.",
+      "explanation": "The paper explicitly states that synchronous SGD was chosen because it simplifies debugging and leads to faster convergence compared to asynchronous methods, which is critical for rapid iteration in model development.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It requires less GPU memory.",
+        "It reduces the need for large training datasets.",
+        "It is compatible with CPU-only training."
+      ],
+      "hint": "Why might researchers prefer synchronous updates even if they are slower in theory?"
+    },
+    {
+      "id": "q14",
+      "question": "What architectural components were combined in Deep Speech 2’s neural network design?",
+      "answer": "Convolutional filters, recurrent layers, and nonlinearities, with Batch Normalization applied to RNNs.",
+      "explanation": "The paper describes models composed of convolutional filters (for local feature extraction), recurrent layers (to capture temporal dependencies), nonlinearities, and BatchNorm applied to RNNs for training stability.",
+      "difficulty": "medium",
+      "type": "conceptual",
+      "distractors": [
+        "Transformers, attention mechanisms, and feedforward layers.",
+        "Support vector machines and decision trees.",
+        "Hidden Markov Models and Gaussian Mixture Models."
+      ],
+      "hint": "Think about the combination of spatial (CNN) and temporal (RNN) processing in speech."
+    },
+    {
+      "id": "q15",
+      "question": "How does Deep Speech 2 address the challenge of deploying large neural networks in production?",
+      "answer": "By identifying high-accuracy, deployable architectures and using Batch Dispatch to batch user requests efficiently on GPUs.",
+      "explanation": "The paper highlights that large models are expensive to evaluate per inference, so they identified compact yet accurate architectures and implemented Batch Dispatch for low-latency, scalable serving.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "By compressing models into text-based rules.",
+        "By using smaller models with reduced accuracy.",
+        "By relying on cloud-based human transcription services."
+      ],
+      "hint": "Deployment requires balancing accuracy and speed—how did they achieve both?"
+    },
+    {
+      "id": "q16",
+      "question": "What does Deep Speech 2 demonstrate about the scalability of end-to-end speech recognition systems?",
+      "answer": "That large-scale training with HPC techniques enables significant performance gains and faster iteration cycles, making high-accuracy systems feasible for real-world use.",
+      "explanation": "The paper shows that combining large datasets, massive models, and HPC-optimized training allows rapid iteration and performance improvements unattainable with traditional methods.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "That end-to-end systems are only scalable in English.",
+        "That scalability requires sacrificing accuracy for speed.",
+        "That training scale has no impact on real-world performance."
+      ],
+      "hint": "Consider how the 7x speedup and 3–5 day training times enabled new possibilities."
+    },
+    {
+      "id": "q17",
+      "question": "Why is the ability to recognize both English and Mandarin in a single system significant?",
+      "answer": "It demonstrates that end-to-end models can generalize across linguistically diverse languages without major architecture changes, unlike traditional ASR systems.",
+      "explanation": "English and Mandarin differ significantly in phonology, tone, and structure. Achieving high accuracy on both with minimal modifications proves the system’s language-agnostic learning capability.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It proves that Mandarin is easier to recognize than English.",
+        "It shows that all languages can be recognized using the same acoustic features.",
+        "It eliminates the need for any language-specific data."
+      ],
+      "hint": "What makes English and Mandarin particularly challenging to handle with the same system?"
+    },
+    {
+      "id": "q18",
+      "question": "How does Deep Speech 2’s approach challenge the traditional view of ASR system development?",
+      "answer": "It shows that end-to-end learning can replace decades of hand-engineered components, reducing development time and enabling rapid adaptation to new languages.",
+      "explanation": "Traditional ASR relied on domain-specific engineering. Deep Speech 2 demonstrates that with sufficient data and compute, a single neural network can outperform engineered pipelines, shifting development paradigms.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "It proves that acoustic modeling is obsolete.",
+        "It eliminates the need for any form of evaluation.",
+        "It relies entirely on unsupervised learning."
+      ],
+      "hint": "Think about how long it used to take to build a new ASR system—and what Deep Speech 2 changed."
+    },
+    {
+      "id": "q19",
+      "question": "What trade-offs were addressed in Deep Speech 2’s model design between accuracy and deployability?",
+      "answer": "The system identified high-accuracy architectures that were also efficient enough for low-latency deployment, balancing performance with real-time serving requirements.",
+      "explanation": "The paper emphasizes that while larger models achieved higher accuracy, they were impractical for production. Through model exploration, they found architectures that retained high accuracy while being deployable in online settings.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "They prioritized speed over accuracy, reducing model size significantly.",
+        "They used separate models for training and deployment.",
+        "They accepted high latency to maintain accuracy."
+      ],
+      "hint": "High accuracy often conflicts with low latency—how did they resolve this?"
+    },
+    {
+      "id": "q20",
+      "question": "What broader implication does Deep Speech 2 have for the future of speech recognition systems?",
+      "answer": "It suggests that a single, scalable end-to-end system can replace multiple specialized ASR systems and serve as a unified platform for speech recognition across languages and environments.",
+      "explanation": "By achieving human-level performance in two very different languages with one system, Deep Speech 2 demonstrates the feasibility of a universal speech recognition engine that adapts without re-engineering.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It proves that human transcribers will soon be obsolete.",
+        "It shows that all languages require identical preprocessing pipelines.",
+        "It indicates that ASR systems will only work in controlled environments."
+      ],
+      "hint": "What does it mean for the future if one system can handle both English and Mandarin with equal accuracy?"
+    }
+  ],
+  "paper_id": 21,
+  "title": "Deep Speech 2",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 9,
+    "hard": 5
+  }
+}

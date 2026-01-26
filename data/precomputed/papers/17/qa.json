@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary goal of representation learning as described in the paper?",
+      "answer": "The primary goal is to identify and disentangle the underlying causal factors of data, such as global structure (e.g., object identity) while discarding irrelevant details like texture or noise.",
+      "explanation": "The paper emphasizes that representation learning aims to expose meaningful, high-level features (like object identity) and suppress low-level variations (like texture), enabling better downstream tasks such as classification.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "To maximize the computational speed of neural networks",
+        "To reduce the dimensionality of data without regard to semantic meaning",
+        "To generate photorealistic images from random noise"
+      ],
+      "hint": "Think about what aspects of an image are considered important versus distracting in the context of object recognition."
+    },
+    {
+      "id": "q2",
+      "question": "What is the key limitation of standard VAEs in achieving lossy autoencoding as discussed in the paper?",
+      "answer": "Standard VAEs do not guarantee autoencoding because powerful decoders can ignore the latent code and reconstruct data directly from the input, rendering the latent representation unused.",
+      "explanation": "The paper explains that if the decoder (e.g., an RNN) is too powerful, it can model the data distribution independently of the latent variables, making the encoder redundant and defeating the purpose of learning a meaningful representation.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "VAEs cannot handle high-dimensional data efficiently.",
+        "The KL divergence term is always too large to allow reconstruction.",
+        "Latent variables in VAEs are deterministic and cannot capture uncertainty."
+      ],
+      "hint": "Consider what happens when the decoder is overly expressive — does it still need the latent code?"
+    },
+    {
+      "id": "q3",
+      "question": "What architectural component does the paper propose to control what information is encoded in the latent code?",
+      "answer": "The paper proposes combining VAE with neural autoregressive models (e.g., RNN, MADE, PixelRNN/CNN) as both the prior p(z) and decoding distribution p(x|z), enabling control over information flow.",
+      "explanation": "By using autoregressive models for both prior and decoder, the model can be designed to force the latent code to capture only global structure by making local details (like texture) explorable through autoregressive dependencies.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Using convolutional layers in the encoder only.",
+        "Adding dropout to the latent layer randomly.",
+        "Replacing the decoder with a fully connected network."
+      ],
+      "hint": "The paper suggests using autoregressive models not just for decoding, but also to define the prior — why might this help control information?"
+    },
+    {
+      "id": "q4",
+      "question": "Why do standard VAEs often fail to learn meaningful representations in sequence modeling tasks?",
+      "answer": "Because powerful autoregressive decoders can explain the data without using the latent variables, leading to posterior collapse where q(z|x) ≈ p(z).",
+      "explanation": "As noted in the paper, prior attempts showed that when the decoder is too expressive (e.g., RNNs), it ignores z and reconstructs data from past observations, causing the latent code to be unused — a phenomenon called posterior collapse.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Because the ELBO is not a valid lower bound for log-likelihood.",
+        "Due to insufficient training data in sequence tasks.",
+        "Because autoregressive models cannot be combined with VAEs."
+      ],
+      "hint": "Think about what happens when the decoder is so good it doesn’t need any latent variables to reconstruct."
+    },
+    {
+      "id": "q5",
+      "question": "What does the term 'lossy autoencoding' mean in the context of this paper?",
+      "answer": "Lossy autoencoding means intentionally discarding irrelevant details (like texture or noise) in the latent representation, so that reconstruction focuses only on global structure.",
+      "explanation": "The paper distinguishes this from standard autoencoders that aim for perfect reconstruction; here, the goal is to encode only semantically meaningful global features and lose fine-grained details.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Using compression algorithms to reduce file size before encoding.",
+        "Encoding data with high fidelity and then applying noise for robustness.",
+        "Automatically deleting pixels from the input image."
+      ],
+      "hint": "It's not about losing data randomly — it’s about intentionally removing noise and texture to focus on content."
+    },
+    {
+      "id": "q6",
+      "question": "What is the main advantage of using autoregressive models as p(x|z) in the proposed VAE?",
+      "answer": "It allows the model to capture complex dependencies in the data while leaving global structure to be encoded in the latent variable z.",
+      "explanation": "Autoregressive models can model local details (e.g., pixel dependencies) efficiently, so the latent variable z is freed to encode only global properties like object identity — enabling lossy encoding.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "It reduces the computational cost of training significantly.",
+        "It eliminates the need for an encoder network.",
+        "It guarantees perfect reconstruction of all input pixels."
+      ],
+      "hint": "If the decoder can model fine details, what does that leave for the latent code to encode?"
+    },
+    {
+      "id": "q7",
+      "question": "How does the paper explain the relationship between autoregressive models and VAEs in terms of representation learning?",
+      "answer": "Autoregressive models are powerful density estimators but lack latent variables for interpretable representations, while VAEs have latent structure but weak decoders; combining them achieves both goals.",
+      "explanation": "The paper argues that autoregressive models (like PixelRNN) are excellent at modeling data distribution but have no latent variables, whereas VAEs have latent structure but often underperform in density estimation. Their hybrid solves both issues.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Autoregressive models are better at representation learning because they use more layers.",
+        "VAEs and autoregressive models are mathematically equivalent in all cases.",
+        "Autoregressive models cannot be used with VAEs due to incompatible architectures."
+      ],
+      "hint": "What does each model do well? What does each lack? How can they complement each other?"
+    },
+    {
+      "id": "q8",
+      "question": "Why is the KL divergence term in VAEs described as a regularizer, and how does it relate to lossy encoding?",
+      "answer": "The KL term regularizes the encoder by penalizing deviations from the prior, forcing it to discard information that isn't captured by p(z), which enables lossy encoding when the prior is designed to capture only global structure.",
+      "explanation": "By choosing a simple prior p(z) (e.g., isotropic Gaussian), the KL term encourages q(z|x) to encode only information that aligns with global structure, discarding texture or noise — making the autoencoding process inherently lossy.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It penalizes the decoder for overfitting to training data.",
+        "It reduces computational complexity during inference.",
+        "It ensures the latent code is always continuous."
+      ],
+      "hint": "Think of KL divergence as a constraint: what happens if the prior only allows global features?"
+    },
+    {
+      "id": "q9",
+      "question": "What is the significance of 'bits-back coding' in the context of this paper’s approach?",
+      "answer": "Bits-back coding illustrates that more powerful decoders increase the expressiveness of the generative model, but without control mechanisms, they cause latent variables to be unused — motivating the need for structured priors.",
+      "explanation": "Bits-back coding shows that powerful decoders can compress data efficiently even without latent variables, which undermines the purpose of VAEs. The paper uses this insight to justify why explicit control over information flow is needed.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It is a method to encode images in fewer bits without losing visual quality.",
+        "It refers to a technique for accelerating VAE training using GPU parallelization.",
+        "It is an optimization trick for minimizing reconstruction error."
+      ],
+      "hint": "Bits-back coding relates to how much information is 'stored' in the decoder vs. latent code — what does this imply about latent variable usage?"
+    },
+    {
+      "id": "q10",
+      "question": "How does the proposed VLAE model differ from traditional VAEs in terms of information routing?",
+      "answer": "VLAE uses autoregressive models for both the prior p(z) and decoder p(x|z), allowing information to be explicitly partitioned: global structure flows into z, while local details are handled autoregressively.",
+      "explanation": "Unlike traditional VAEs where p(z) is usually fixed and simple, VLAE makes p(z) autoregressive to encode global structure. Then p(x|z) uses autoregression for local details — forcing z to capture only high-level features.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It replaces the encoder with a transformer architecture.",
+        "It removes the decoder entirely and relies only on autoregressive priors.",
+        "It uses deterministic autoencoders instead of stochastic ones."
+      ],
+      "hint": "Think about where the information goes — does it go into z or into the autoregressive dependencies? How can you control that?"
+    },
+    {
+      "id": "q11",
+      "question": "Why does weakening the autoregressive decoder (e.g., via dropout) help in standard VAEs, according to the paper?",
+      "answer": "Weakening the decoder forces it to rely on the latent code because it lacks sufficient capacity to model complex data distributions alone, encouraging use of z.",
+      "explanation": "Bowman et al. (2015) observed that when the decoder is too strong, it ignores z; by reducing its capacity (e.g., dropout), the model must use latent variables to reconstruct data, which is why weakening helps — but it's ad hoc.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "It reduces overfitting and improves generalization to unseen data.",
+        "It speeds up training by reducing the number of parameters.",
+        "It increases the entropy of the latent distribution."
+      ],
+      "hint": "If you make a decoder worse, what does it have to rely on more? How does this relate to the latent code?"
+    },
+    {
+      "id": "q12",
+      "question": "What does the paper suggest about the disconnect between likelihood and representation quality in VAEs?",
+      "answer": "High log-likelihood does not guarantee good representations — a pure autoregressive model can achieve the same likelihood as a VAE but lacks interpretable latent variables.",
+      "explanation": "The paper emphasizes that likelihood is a poor proxy for representation quality: autoregressive models can match VAE log-likelihoods but have no latent variables, meaning they lack disentangled representations.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "Log-likelihood is the only valid metric for evaluating representation quality.",
+        "VAEs always achieve higher likelihoods than autoregressive models.",
+        "Representation learning is independent of generative modeling."
+      ],
+      "hint": "Can two models have identical likelihoods but very different structures? What does that imply about what we're optimizing?"
+    },
+    {
+      "id": "q13",
+      "question": "How does the VLAE model enable control over what information is stored in the latent code?",
+      "answer": "By designing the autoregressive prior p(z) to capture global structure and using autoregressive decoding for local details, the model forces z to encode only high-level features.",
+      "explanation": "The key innovation is that p(z) itself is autoregressive, so it can be designed to depend on global image properties (e.g., object class), while p(x|z) handles local texture — making the latent code intentionally lossy and semantically meaningful.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "By increasing the dimensionality of z to store more details.",
+        "By using adversarial training to force specific latent features.",
+        "By adding a reconstruction loss penalty on texture pixels."
+      ],
+      "hint": "If the prior p(z) is autoregressive, what kind of structure can it encode? How does that influence what z learns?"
+    },
+    {
+      "id": "q14",
+      "question": "What evidence does the paper provide to support the effectiveness of VLAE?",
+      "answer": "VLAE achieves state-of-the-art log-likelihood results on MNIST, OMNIGLOT, and Caltech-101 Silhouettes while also enabling interpretable global representations.",
+      "explanation": "The paper reports improved density estimation performance over standard VAEs and autoregressive models, showing that combining both architectures improves modeling without sacrificing representation quality.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "VLAE outperforms GANs in image generation quality on CIFAR-10.",
+        "VLAE achieves zero reconstruction error across all datasets.",
+        "The model was tested only on text data, not images."
+      ],
+      "hint": "Look at the results section — which datasets showed improvement, and what metrics were used?"
+    },
+    {
+      "id": "q15",
+      "question": "Why is the structure of p(z) critical in VLAE, and how does it differ from standard VAEs?",
+      "answer": "In VLAE, p(z) is an autoregressive model (e.g., RNN), allowing it to encode structured global information, whereas standard VAEs use simple fixed priors like isotropic Gaussians.",
+      "explanation": "By making the prior autoregressive, VLAE ensures that z encodes meaningful global structure rather than random noise. Standard VAEs assume p(z) is simple, which doesn’t guide what z should represent.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "p(z) in VLAE is replaced with a deterministic function to improve stability.",
+        "VLAE uses the same p(z) as standard VAEs but with larger latent dimensions.",
+        "p(z) is removed entirely in VLAE to reduce complexity."
+      ],
+      "hint": "In standard VAEs, p(z) is often just N(0,I). What if you make it more structured? What could that encode?"
+    },
+    {
+      "id": "q16",
+      "question": "What does the paper suggest about the role of the encoder q(z|x) in VLAE compared to standard VAEs?",
+      "answer": "The encoder’s role is simplified because the autoregressive prior p(z) already encodes global structure, so q(z|x) mainly needs to match this structured prior rather than learn representations from scratch.",
+      "explanation": "Since p(z) is autoregressive and designed to capture global features, q(z|x) doesn’t need to discover structure — it just needs to approximate p(z), making the model more stable and focused on global representation.",
+      "difficulty": "hard",
+      "type": "analytical",
+      "distractors": [
+        "The encoder is removed in VLAE to reduce computational cost.",
+        "The encoder becomes more complex to handle both local and global information.",
+        "q(z|x) is replaced with a random sampling process."
+      ],
+      "hint": "If the prior already knows what global structure looks like, does the encoder still need to learn it?"
+    },
+    {
+      "id": "q17",
+      "question": "How does the VLAE framework address the 'ill-posedness' of representation learning via generative modeling?",
+      "answer": "By explicitly designing the architecture to partition global and local information between latent variables and autoregressive components, it imposes structure that disentangles causal factors.",
+      "explanation": "The paper argues generative modeling is ill-posed because many models can fit the data. VLAE solves this by architectural design: forcing global structure into z and local details into autoregressive dependencies, making representations unique and interpretable.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It uses labeled data to supervise latent representations.",
+        "It relies on human annotations to define what constitutes global structure.",
+        "It eliminates the need for latent variables entirely."
+      ],
+      "hint": "How do you make an ill-posed problem well-defined? By adding constraints — what constraint does VLAE add?"
+    },
+    {
+      "id": "q18",
+      "question": "Why is the combination of autoregressive priors and decoders in VLAE considered a principled solution rather than an ad hoc fix?",
+      "answer": "Because it systematically exploits the information-theoretic property that autoregressive models can model local dependencies, allowing latent variables to be reserved for global structure — a deliberate design choice grounded in information flow.",
+      "explanation": "Unlike dropout or weakening decoders (ad hoc), VLAE uses autoregressive models as priors to encode global structure, and decoders for local details — a principled partitioning based on the nature of each component’s strength.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "It is principled because it uses the same model for both prior and likelihood.",
+        "It follows from a mathematical theorem that guarantees representation quality.",
+        "It was derived by randomly sampling model architectures."
+      ],
+      "hint": "What’s the difference between a random fix (like dropout) and an architecture designed around information flow?"
+    },
+    {
+      "id": "q19",
+      "question": "What does the paper imply about the future of representation learning models based on VLAE’s approach?",
+      "answer": "Future models should explicitly design information flow between latent variables and deterministic components to control what representations are learned, rather than relying on implicit regularization.",
+      "explanation": "VLAE demonstrates that representation quality can be improved by architectural control over information partitioning — suggesting a new paradigm where model structure is designed to match the desired representation goals.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Representation learning should abandon latent variable models entirely.",
+        "Future work should focus solely on increasing model size and data volume.",
+        "All future models must use RNNs for both prior and decoder."
+      ],
+      "hint": "VLAE doesn’t just improve performance — it introduces a new principle. What is that principle?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate the claim that VLAE achieves both powerful density estimation and interpretable representations — is this claim supported by evidence in the paper?",
+      "answer": "Yes, the paper supports it with state-of-the-art log-likelihood results on multiple datasets (MNIST, OMNIGLOT, Caltech-101) and qualitative analysis showing that latent codes capture global structure like object identity while discarding texture.",
+      "explanation": "The paper presents quantitative density estimation results proving competitive performance and includes qualitative examples (e.g., image reconstructions) where latent variables encode object identity, not texture — supporting both claims simultaneously.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "No, the paper only shows improved density estimation but no evidence of interpretable representations.",
+        "Yes, but only on synthetic datasets — real-world data was not tested.",
+        "The claim is unsupported because autoregressive models alone can already achieve both."
+      ],
+      "hint": "Look for evidence in the results: are there numbers? Are there visualizations of what z encodes?"
+    }
+  ],
+  "paper_id": 17,
+  "title": "Variational Lossy Autoencoder",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 8,
+    "hard": 6
+  }
+}

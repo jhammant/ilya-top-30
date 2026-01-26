@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Recurrent Neural Network (RNN)",
+      "definition": "A type of neural network designed to process sequential data by maintaining a hidden state that captures information from previous time steps.",
+      "intuition": "Think of an RNN like a person reading a sentence word by word—each new word updates their understanding based on what came before.",
+      "importance": "RNNs enable modeling of temporal dependencies in sequences, forming the foundation for many sequence-based AI applications.",
+      "related_concepts": [
+        "Sequence Modeling",
+        "Hidden State"
+      ],
+      "example": "Predicting the next word in a sentence like 'The cat sat on the...' → 'mat'.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Hidden State",
+      "definition": "The internal memory of an RNN at each time step, which encodes information about the sequence seen so far.",
+      "intuition": "Like a person’s short-term memory while listening to a story—the hidden state holds what's relevant from earlier parts of the conversation.",
+      "importance": "It allows RNNs to carry context across time steps, enabling them to make decisions based on history.",
+      "related_concepts": [
+        "RNN",
+        "Temporal Dependencies"
+      ],
+      "example": "In a text generator, the hidden state remembers that the previous word was 'blue' to help predict 'sky'.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Temporal Dependencies",
+      "definition": "Relationships between elements in a sequence where the value at one time step depends on previous values.",
+      "intuition": "Like baking a cake—adding sugar before flour matters; the order of steps creates dependencies.",
+      "importance": "RNNs excel at capturing these dependencies, making them suitable for tasks like speech recognition and time-series prediction.",
+      "related_concepts": [
+        "RNN",
+        "Sequence Modeling"
+      ],
+      "example": "In stock prices, today’s price often depends on yesterday's trend and news from the past week.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Sequence Modeling",
+      "definition": "The task of learning patterns and generating predictions from ordered data sequences over time.",
+      "intuition": "It’s like learning the rhythm of a song—each note depends on the ones before it.",
+      "importance": "Essential for applications like language modeling, video analysis, and DNA sequence prediction.",
+      "related_concepts": [
+        "RNN",
+        "Temporal Dependencies"
+      ],
+      "example": "Autocomplete in smartphones predicts the next word based on what you’ve typed so far.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Unrolling in Time",
+      "definition": "The process of transforming a recurrent network into a feedforward network by expanding it over time steps for training.",
+      "intuition": "Imagine unwinding a spring into a straight line—each loop becomes a layer in the unrolled network.",
+      "importance": "Enables backpropagation through time (BPTT) to train RNNs by treating time as additional dimensions.",
+      "related_concepts": [
+        "Backpropagation Through Time",
+        "RNN"
+      ],
+      "example": "Training an RNN to predict the 5th word in a sentence requires unrolling it through all 4 previous steps.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Backpropagation Through Time (BPTT)",
+      "definition": "An extension of backpropagation that computes gradients for RNNs by unrolling the network over time and applying standard backpropagation.",
+      "intuition": "Like rewinding a video to see how each frame affected the final scene, then adjusting each frame’s contribution.",
+      "importance": "Makes it possible to train RNNs by computing how each past input influenced the final output.",
+      "related_concepts": [
+        "Unrolling in Time",
+        "Gradient Descent"
+      ],
+      "example": "When an RNN mispredicts the last word in a sentence, BPTT calculates how much each prior word contributed to that error.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Vanishing Gradient Problem",
+      "definition": "A phenomenon where gradients become exponentially small as they are backpropagated through many time steps, making it hard to learn long-range dependencies.",
+      "intuition": "Like whispering a message across a long line of people—the farther it goes, the quieter and less clear it becomes.",
+      "importance": "Limits RNNs' ability to remember information from distant past steps, a key reason for the rise of LSTMs and GRUs.",
+      "related_concepts": [
+        "BPTT",
+        "RNN"
+      ],
+      "example": "An RNN trying to predict the subject of a sentence may forget it if the subject appears 50 words earlier.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Exploding Gradient Problem",
+      "definition": "A phenomenon where gradients grow exponentially large during backpropagation, causing unstable training and parameter updates.",
+      "intuition": "Like shouting too loudly in a canyon—the echo gets louder and louder until it’s uncontrollable.",
+      "importance": "Can cause training to diverge or become numerically unstable, requiring gradient clipping for control.",
+      "related_concepts": [
+        "BPTT",
+        "Vanishing Gradient Problem"
+      ],
+      "example": "During training, weights jump wildly due to large gradients, causing the model’s predictions to become erratic.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Gradient Clipping",
+      "definition": "A technique to prevent exploding gradients by capping the magnitude of gradient updates during training.",
+      "intuition": "Like putting a limit on how fast a car can accelerate to avoid crashing.",
+      "importance": "Stabilizes training of RNNs and other deep networks by preventing destructive parameter updates.",
+      "related_concepts": [
+        "Exploding Gradient Problem",
+        "BPTT"
+      ],
+      "example": "If the gradient norm exceeds 5.0, it’s scaled down proportionally to keep updates reasonable.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Character-Level Language Modeling",
+      "definition": "A type of language model that predicts the next character in a sequence rather than words or subwords.",
+      "intuition": "Like predicting the next letter in a word as you type—'h-e-l-l-' → 'o'.",
+      "importance": "Demonstrates RNNs’ flexibility in learning complex patterns from raw data without predefined vocabulary.",
+      "related_concepts": [
+        "Sequence Modeling",
+        "RNN"
+      ],
+      "example": "Training an RNN to generate Shakespearean text by predicting one character at a time from raw input.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Long Short-Term Memory (LSTM)",
+      "definition": "A type of RNN with specialized gates to control the flow of information, designed to mitigate vanishing gradients and capture long-range dependencies.",
+      "intuition": "Think of an LSTM as a smart notebook with three controls: forget (erase old notes), input (add new notes), and output (read relevant notes).",
+      "importance": "Revolutionized sequence modeling by enabling RNNs to remember information over long sequences.",
+      "related_concepts": [
+        "RNN",
+        "Vanishing Gradient Problem"
+      ],
+      "example": "An LSTM can remember the subject of a paragraph from 100 sentences ago to correctly use pronouns like 'he' or 'she'.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Gated Recurrent Unit (GRU)",
+      "definition": "A simplified variant of LSTM with two gates (reset and update) that combines hidden state and cell state into one, reducing complexity.",
+      "intuition": "Like an LSTM with fewer buttons—same functionality but simpler to train and faster to compute.",
+      "importance": "Offers competitive performance with fewer parameters, making it efficient for real-time applications.",
+      "related_concepts": [
+        "LSTM",
+        "RNN"
+      ],
+      "example": "GRUs are used in voice assistants to process speech streams efficiently without sacrificing accuracy.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Sequence-to-Sequence (Seq2Seq) Models",
+      "definition": "A neural architecture that maps an input sequence to an output sequence using an encoder-decoder structure, often powered by RNNs.",
+      "intuition": "Like translating a sentence: the encoder reads and summarizes the source, then the decoder generates the target.",
+      "importance": "Enabled breakthroughs in machine translation, summarization, and chatbots by modeling input-output sequence mappings.",
+      "related_concepts": [
+        "RNN",
+        "LSTM"
+      ],
+      "example": "Google Translate uses Seq2Seq to convert 'Hello, how are you?' → 'Hola, ¿cómo estás?'",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Attention Mechanism",
+      "definition": "A method that allows a model to dynamically focus on different parts of the input sequence when generating each output element.",
+      "intuition": "Like reading a book and highlighting the most relevant paragraph when answering a question about it.",
+      "importance": "Overcame limitations of fixed-size hidden states in Seq2Seq models, leading to state-of-the-art performance in NLP.",
+      "related_concepts": [
+        "Seq2Seq",
+        "LSTM"
+      ],
+      "example": "In translation, when generating 'cat', the model focuses on 'the cat' in the source sentence rather than unrelated words.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Transformer Architecture",
+      "definition": "A neural network architecture that relies entirely on attention mechanisms, replacing recurrence with parallelizable self-attention layers.",
+      "intuition": "Instead of reading a sentence word-by-word, the model looks at all words simultaneously and decides which ones matter most.",
+      "importance": "Replaced RNNs as the dominant architecture in NLP due to superior parallelization, scalability, and performance.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Seq2Seq"
+      ],
+      "example": "BERT and GPT models are based on transformers, powering modern chatbots and language understanding systems.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 2,
+  "title": "The Unreasonable Effectiveness of RNNs"
+}

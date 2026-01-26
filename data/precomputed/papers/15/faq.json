@@ -1,0 +1,254 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the main contribution of the paper 'Identity Mappings in ResNets'?",
+      "answer": "The paper demonstrates that using identity mappings for both skip connections and activation functions (by moving Batch Normalization and ReLU to pre-activation) enables direct signal propagation through deep ResNets. This improves training stability and generalization, enabling the successful training of extremely deep networks (e.g., 1001-layer on CIFAR, 200-layer on ImageNet) with lower training loss and better test accuracy.",
+      "related_concepts": [
+        "Residual Networks",
+        "Skip Connections",
+        "Pre-activation"
+      ],
+      "follow_up": "How does pre-activation differ from the original post-activation design in ResNets?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "Why are identity skip connections important in ResNets?",
+      "answer": "Identity skip connections allow the input to a residual unit to be directly added to its output, enabling the network to learn residual functions rather than direct mappings. This helps mitigate vanishing gradients by providing a clear path for gradient flow during backpropagation, especially in very deep networks where traditional architectures struggle to train.",
+      "related_concepts": [
+        "Vanishing Gradients",
+        "Residual Learning",
+        "Skip Connections"
+      ],
+      "follow_up": "What happens if you replace identity skip connections with 1x1 convolutions?"
+    },
+    {
+      "id": "faq3",
+      "category": "understanding",
+      "question": "What does 'pre-activation' mean in the context of this paper?",
+      "answer": "Pre-activation refers to applying Batch Normalization (BN) and ReLU before the weight layers (e.g., convolutions), rather than after. This ensures that the activation function and normalization are applied to the input of each layer, making it easier for gradients to flow directly through identity skip connections without being distorted by nonlinearities.",
+      "related_concepts": [
+        "Batch Normalization",
+        "ReLU",
+        "Activation Functions"
+      ],
+      "follow_up": "Why is pre-activation critical for enabling identity mappings in the backward pass?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "How do you implement the proposed ResNet unit with identity mappings?",
+      "answer": "To implement the proposed residual unit, apply Batch Normalization and ReLU before each weight layer (pre-activation). The skip connection directly adds the input to the output of the residual branch. For example: Input → BN → ReLU → Conv → BN → ReLU → Conv → Add (skip connection) → Output. This contrasts with the original ResNet where BN and ReLU come after convolution.",
+      "related_concepts": [
+        "Residual Unit",
+        "Pre-activation ResNet",
+        "BatchNorm"
+      ],
+      "follow_up": "Can you use pre-activation in all layers, including the first convolution?"
+    },
+    {
+      "id": "faq5",
+      "category": "implementation",
+      "question": "Does the proposed architecture require changes to the optimizer or learning rate schedule?",
+      "answer": "The paper does not explicitly require changes to optimizers, but the improved training stability allows for more consistent convergence. In practice, a slightly higher learning rate or reduced weight decay may be used due to better gradient flow. However, standard optimizers like SGD with momentum still work well.",
+      "related_concepts": [
+        "SGD",
+        "Learning Rate Scheduling",
+        "Training Stability"
+      ],
+      "follow_up": "Are there any recommended hyperparameter tweaks for training 1001-layer ResNets?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "How does this paper improve upon the original ResNet [1]?",
+      "answer": "The original ResNet used post-activation (ReLU and BN after convolutions), which disrupted the identity path during backpropagation. This paper introduces pre-activation and confirms that identity mappings in both forward and backward passes lead to smoother gradient flow, enabling deeper networks (1001 layers vs. 110 in original) to train more easily and achieve lower error rates on CIFAR-10/100 and ImageNet.",
+      "related_concepts": [
+        "ResNet v1",
+        "Deep Network Training",
+        "Architecture Design"
+      ],
+      "follow_up": "What are the key architectural differences between ResNet v1 and ResNet v2?"
+    },
+    {
+      "id": "faq7",
+      "category": "comparison",
+      "question": "How does this work relate to DenseNets or other skip-connected architectures?",
+      "answer": "While DenseNets connect every layer to all subsequent layers, this paper focuses on preserving identity paths in residual blocks with single-skip connections. The key insight is that even a single direct path (identity mapping) is sufficient for stable training if properly designed. DenseNets benefit from dense connectivity, but this work shows that minimal, clean identity paths can be more efficient and effective for extreme depth.",
+      "related_concepts": [
+        "DenseNet",
+        "Skip Connection Variants",
+        "Network Connectivity"
+      ],
+      "follow_up": "Can identity mappings be combined with DenseNet-style connections?"
+    },
+    {
+      "id": "faq8",
+      "category": "comparison",
+      "question": "How does this paper compare to Highway Networks or Dense Connections?",
+      "answer": "Highway Networks use learnable gating mechanisms to control information flow, while DenseNets concatenate features. This paper argues that simple identity mappings with pre-activation are more effective and simpler than gating or concatenation for deep residual networks, achieving better performance with fewer parameters and less complexity.",
+      "related_concepts": [
+        "Highway Networks",
+        "Dense Connections",
+        "Information Flow"
+      ],
+      "follow_up": "Why are learnable gates less effective than identity mappings in deep networks?"
+    },
+    {
+      "id": "faq9",
+      "category": "application",
+      "question": "Can the proposed identity mapping design be applied to other architectures like Vision Transformers?",
+      "answer": "Yes, the principle of preserving direct signal paths via identity mappings has been widely adopted in modern architectures including Vision Transformers (ViTs), where residual connections with pre-LayerNorm are now standard. The core idea—keeping clean paths for gradient flow—is universally beneficial in deep networks beyond CNNs.",
+      "related_concepts": [
+        "Vision Transformer",
+        "Residual Connections",
+        "LayerNorm"
+      ],
+      "follow_up": "Are there examples of ViT architectures that use pre-activation like this paper?"
+    },
+    {
+      "id": "faq10",
+      "category": "application",
+      "question": "Is the proposed ResNet unit suitable for mobile or edge deployment?",
+      "answer": "Yes, the proposed architecture is compatible with edge deployment. While it adds BN and ReLU before convolutions (slightly increasing computation), the improved training stability allows for smaller, more efficient networks to achieve competitive accuracy. The structure remains lightweight and is already used in many modern mobile-optimized models like MobileNetV3.",
+      "related_concepts": [
+        "Mobile Networks",
+        "Efficient CNNs",
+        "Model Compression"
+      ],
+      "follow_up": "Does pre-activation increase inference latency compared to original ResNet?"
+    },
+    {
+      "id": "faq11",
+      "category": "application",
+      "question": "What tasks besides image classification benefit from identity mappings in ResNets?",
+      "answer": "Identity mappings with pre-activation have been successfully applied to object detection (e.g., Faster R-CNN), semantic segmentation, and video recognition. Any task requiring deep feature extraction benefits from the improved gradient flow and training stability offered by this design.",
+      "related_concepts": [
+        "Object Detection",
+        "Semantic Segmentation",
+        "Video Recognition"
+      ],
+      "follow_up": "Can this design improve performance in low-data regimes?"
+    },
+    {
+      "id": "faq12",
+      "category": "limitations",
+      "question": "Are there scenarios where identity mappings might not work well?",
+      "answer": "Identity mappings assume the input and output have the same dimension. If spatial downsampling or channel expansion is needed (e.g., between stages), a 1x1 convolution must be used in the skip path, breaking identity. In such cases, the benefit is reduced but still present if only a few such projections are used.",
+      "related_concepts": [
+        "Dimension Mismatch",
+        "Downsampling",
+        "Projection Shortcut"
+      ],
+      "follow_up": "How does the paper handle dimension changes in ResNet stages?"
+    },
+    {
+      "id": "faq13",
+      "category": "limitations",
+      "question": "Does this method eliminate vanishing gradients entirely?",
+      "answer": "No, it significantly mitigates but does not fully eliminate vanishing gradients. In extremely deep networks (>1000 layers), other factors like weight initialization and data distribution still play a role. However, identity mappings ensure that gradients have a direct path to propagate even when residual functions are near zero.",
+      "related_concepts": [
+        "Vanishing Gradients",
+        "Gradient Flow",
+        "Deep Network Stability"
+      ],
+      "follow_up": "What other techniques complement identity mappings for ultra-deep networks?"
+    },
+    {
+      "id": "faq14",
+      "category": "implementation",
+      "question": "How do you handle batch normalization in the proposed design?",
+      "answer": "In the proposed design, BN is applied before each convolutional layer (pre-activation), not after. This ensures that the input to each weight layer is normalized and activated before being processed, preserving the identity path. This contrasts with original ResNet where BN follows convolution.",
+      "related_concepts": [
+        "Batch Normalization",
+        "Pre-activation",
+        "Normalization Layers"
+      ],
+      "follow_up": "Should BN be applied before or after ReLU in pre-activation?"
+    },
+    {
+      "id": "faq15",
+      "category": "understanding",
+      "question": "What is the mathematical intuition behind Eqn. (4) and (5) in the paper?",
+      "answer": "Eqn. (4) shows that the output of any deeper layer is the sum of the initial input and all residual functions along the path. Eqn. (5) shows that gradients are decomposed into a direct identity component and a residual component. This ensures that even if the residual function learns zero, the gradient still flows directly back—preventing vanishing gradients.",
+      "related_concepts": [
+        "Chain Rule",
+        "Gradient Flow",
+        "Residual Function"
+      ],
+      "follow_up": "How does Eqn. (5) explain why gradients don't vanish even with small weights?"
+    },
+    {
+      "id": "faq16",
+      "category": "comparison",
+      "question": "Why did the original ResNet use post-activation if it’s suboptimal?",
+      "answer": "The original ResNet used post-activation because it followed the conventional design of CNNs at the time (e.g., VGG), where activation and normalization were applied after convolution. The paper's insight was that this design disrupts the identity path, and moving BN/ReLU before convolution preserves it without changing model capacity.",
+      "related_concepts": [
+        "CNN Design History",
+        "VGG Architecture",
+        "Conventional Wisdom"
+      ],
+      "follow_up": "Was post-activation widely adopted before this paper?"
+    },
+    {
+      "id": "faq17",
+      "category": "application",
+      "question": "Can identity mappings be used in recurrent or sequential models?",
+      "answer": "Yes, the principle has been adapted to RNNs and Transformers via residual connections with layer normalization (e.g., Transformer's pre-LN design). While not identical due to different architectures, the core idea—ensuring direct paths for gradients—is universally applicable in deep sequential models.",
+      "related_concepts": [
+        "Transformer",
+        "RNN",
+        "Layer Normalization"
+      ],
+      "follow_up": "How does pre-LN in Transformers relate to pre-activation in ResNets?"
+    },
+    {
+      "id": "faq18",
+      "category": "implementation",
+      "question": "How do you implement the 1001-layer ResNet described in the paper?",
+      "answer": "To implement a 1001-layer ResNet, stack 334 residual units with pre-activation (BN → ReLU → Conv) in groups of 16, 32, and 48 for each stage (corresponding to 3x3 convolutions), with downsampling via 1x1 convolutions in stage transitions. Use identity skip connections without projection except where dimensions change.",
+      "related_concepts": [
+        "Deep ResNet",
+        "Layer Stacking",
+        "CIFAR-10"
+      ],
+      "follow_up": "What are the exact layer configurations for each stage in ResNet-1001?"
+    },
+    {
+      "id": "faq19",
+      "category": "limitations",
+      "question": "Does the proposed architecture increase memory usage during training?",
+      "answer": "Yes, because pre-activation requires storing intermediate activations before each convolution (BN/ReLU outputs), memory usage increases slightly compared to post-activation. However, this trade-off is justified by improved convergence and the ability to train much deeper networks.",
+      "related_concepts": [
+        "Memory Efficiency",
+        "Activation Storage",
+        "Training Memory"
+      ],
+      "follow_up": "Are there memory-saving techniques compatible with pre-activation?"
+    },
+    {
+      "id": "faq20",
+      "category": "understanding",
+      "question": "Why does the paper claim that identity mappings improve generalization?",
+      "answer": "Identity mappings reduce optimization difficulty, allowing the network to explore a wider solution space without getting stuck in poor local minima. Smoother loss landscapes lead to better convergence and less overfitting, especially in very deep networks where traditional architectures tend to memorize training data.",
+      "related_concepts": [
+        "Generalization",
+        "Optimization Landscape",
+        "Overfitting"
+      ],
+      "follow_up": "Is there empirical evidence that identity mappings reduce overfitting on ImageNet?"
+    }
+  ],
+  "paper_id": 15,
+  "title": "Identity Mappings in ResNets",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 5,
+    "implementation": 4,
+    "comparison": 4,
+    "application": 4,
+    "limitations": 3
+  }
+}

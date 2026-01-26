@@ -1,0 +1,254 @@
+{
+  "faqs": [
+    {
+      "id": "faq1",
+      "category": "understanding",
+      "question": "What is the main problem that ResNet solves?",
+      "answer": "ResNet addresses the degradation problem in deep neural networks, where increasing network depth leads to higher training error despite better model capacity. This is not due to overfitting but because deeper networks become harder to optimize using standard training methods. ResNet solves this by introducing residual connections that allow layers to learn residual mappings (H(x) = F(x) + x) instead of direct mappings, making optimization much more stable and effective.",
+      "related_concepts": [
+        "degradation problem",
+        "vanishing gradients",
+        "identity mapping"
+      ],
+      "follow_up": "How does residual learning differ from traditional feedforward networks?"
+    },
+    {
+      "id": "faq2",
+      "category": "understanding",
+      "question": "What is a residual block and how does it work?",
+      "answer": "A residual block consists of stacked layers (e.g., two or three convolutional layers) that learn a residual function F(x), and a shortcut (or skip) connection that adds the input x directly to the output. The final output is H(x) = F(x) + x. This allows gradients to flow directly through the shortcut during backpropagation, bypassing the stacked layers and mitigating vanishing gradients. If the optimal function is identity, F(x) simply learns to output zero.",
+      "related_concepts": [
+        "skip connection",
+        "identity mapping",
+        "residual learning"
+      ],
+      "follow_up": "Why is adding the input directly better than concatenating it?"
+    },
+    {
+      "id": "faq3",
+      "category": "implementation",
+      "question": "Do residual connections add computational cost or parameters?",
+      "answer": "No, identity shortcut connections in ResNet add neither extra parameters nor significant computational overhead. The addition operation (F(x) + x) is element-wise and requires no learnable weights. When dimensions don’t match, a lightweight linear projection (1x1 convolution) is used for the shortcut to align dimensions — this adds minimal parameters and computation.",
+      "related_concepts": [
+        "skip connection",
+        "dimension matching",
+        "1x1 convolution"
+      ],
+      "follow_up": "How do you handle dimension mismatches in residual blocks?"
+    },
+    {
+      "id": "faq4",
+      "category": "implementation",
+      "question": "How do you implement a residual block in practice?",
+      "answer": "In practice, a residual block is implemented by defining two branches: the main path (stacked convolutional layers with ReLU and batch normalization) and a shortcut branch. The output is the sum of both branches. If input and output dimensions differ, a 1x1 convolution with stride is applied to the shortcut to match dimensions. Frameworks like PyTorch or TensorFlow make this easy with functional APIs (e.g., x + F(x)).",
+      "related_concepts": [
+        "batch normalization",
+        "ReLU",
+        "1x1 convolution"
+      ],
+      "follow_up": "Can residual blocks be used in recurrent networks?"
+    },
+    {
+      "id": "faq5",
+      "category": "comparison",
+      "question": "How does ResNet compare to VGG networks?",
+      "answer": "ResNet achieves significantly better performance than VGG with much greater depth (e.g., 152-layer ResNet vs. 19-layer VGG) while having lower computational complexity due to fewer parameters per layer and efficient residual design. VGG suffers from degradation at depth, whereas ResNet maintains low training error and improves accuracy with more layers.",
+      "related_concepts": [
+        "VGG",
+        "network depth",
+        "computational complexity"
+      ],
+      "follow_up": "Why didn’t VGG use residual connections if they were so effective?"
+    },
+    {
+      "id": "faq6",
+      "category": "comparison",
+      "question": "How does ResNet differ from Highway Networks?",
+      "answer": "Highway Networks use learnable gating mechanisms to control information flow between layers, requiring additional parameters and complex computations. ResNet uses simple identity shortcuts with no gates or learnable parameters, making it simpler to train and more scalable. ResNet’s design proved more effective empirically, especially at extreme depths.",
+      "related_concepts": [
+        "Highway Networks",
+        "gating mechanisms",
+        "information flow"
+      ],
+      "follow_up": "Are there modern variants that combine both residual and highway ideas?"
+    },
+    {
+      "id": "faq7",
+      "category": "comparison",
+      "question": "What is the relationship between ResNet and DenseNet?",
+      "answer": "Both use skip connections, but they differ fundamentally. ResNet adds the input to the output (H(x) = F(x) + x), while DenseNet concatenates all preceding feature maps. This makes DenseNet more parameter-efficient but increases memory usage and computational load. ResNet’s additive design is simpler, faster to train, and scales better to very deep networks.",
+      "related_concepts": [
+        "DenseNet",
+        "feature reuse",
+        "memory efficiency"
+      ],
+      "follow_up": "When would you choose DenseNet over ResNet?"
+    },
+    {
+      "id": "faq8",
+      "category": "application",
+      "question": "Can ResNet be used for tasks other than image classification?",
+      "answer": "Yes, ResNet’s architecture is highly generalizable. It was successfully applied to object detection, image localization, semantic segmentation, and even non-vision tasks. Its stable gradient flow makes it ideal for any task requiring deep representations, including medical imaging, video analysis, and natural language processing when adapted appropriately.",
+      "related_concepts": [
+        "object detection",
+        "semantic segmentation",
+        "generalization"
+      ],
+      "follow_up": "How is ResNet adapted for semantic segmentation?"
+    },
+    {
+      "id": "faq9",
+      "category": "application",
+      "question": "Why was ResNet so successful in the ILSVRC 2015 competition?",
+      "answer": "ResNet achieved a 3.57% top-5 error on ImageNet test set, outperforming all previous models due to its ability to train extremely deep networks (up to 152 layers) without degradation. This enabled richer feature hierarchies and superior generalization. Its ensemble versions further improved performance, securing first place in multiple ILSVRC tasks including detection and localization.",
+      "related_concepts": [
+        "ILSVRC",
+        "ensemble models",
+        "image classification"
+      ],
+      "follow_up": "How did ensembling ResNets improve performance?"
+    },
+    {
+      "id": "faq10",
+      "category": "application",
+      "question": "Is ResNet still relevant today, or has it been replaced?",
+      "answer": "ResNet remains highly relevant as a foundational architecture. While newer models like Vision Transformers (ViT) and ConvNeXt have emerged, ResNet variants are still widely used due to their efficiency, interpretability, and strong performance on small-to-medium datasets. Many modern architectures (e.g., EfficientNet, ResNeXt) are direct descendants of ResNet.",
+      "related_concepts": [
+        "Vision Transformers",
+        "ConvNeXt",
+        "EfficientNet"
+      ],
+      "follow_up": "What are some modern improvements built on ResNet?"
+    },
+    {
+      "id": "faq11",
+      "category": "implementation",
+      "question": "Do you need batch normalization in ResNet?",
+      "answer": "Yes, batch normalization is critical in standard ResNet implementations. It stabilizes training by normalizing layer inputs and allows deeper networks to converge faster. The original ResNet paper uses batch norm before each convolution, followed by ReLU. Without it, training deep residual networks becomes unstable due to internal covariate shift.",
+      "related_concepts": [
+        "batch normalization",
+        "internal covariate shift",
+        "training stability"
+      ],
+      "follow_up": "Can you replace batch normalization with LayerNorm in ResNet?"
+    },
+    {
+      "id": "faq12",
+      "category": "understanding",
+      "question": "Why does adding more layers not increase training error in ResNet?",
+      "answer": "Because residual learning allows the network to learn a residual function F(x) = H(x) - x. If deeper layers are unnecessary, they can learn to output F(x) ≈ 0, effectively preserving the identity mapping of shallower networks. This makes optimization tractable even at extreme depths — unlike plain networks where deeper layers force the model to approximate complex, unreferenced mappings.",
+      "related_concepts": [
+        "identity mapping",
+        "optimization landscape",
+        "residual function"
+      ],
+      "follow_up": "Can residual learning be thought of as a form of ensemble?"
+    },
+    {
+      "id": "faq13",
+      "category": "limitations",
+      "question": "What are the limitations of ResNet?",
+      "answer": "ResNet’s main limitations include: 1) High memory usage in very deep variants (e.g., ResNet-152); 2) Computational cost increases with depth; 3) Not inherently suited for sequential data without modification; 4) Performance gains plateau beyond certain depths (e.g., >200 layers); and 5) Requires careful hyperparameter tuning for very deep models.",
+      "related_concepts": [
+        "memory efficiency",
+        "computational cost",
+        "depth saturation"
+      ],
+      "follow_up": "Are there alternatives that reduce memory usage while keeping depth?"
+    },
+    {
+      "id": "faq14",
+      "category": "implementation",
+      "question": "Can you use ResNet with small datasets like CIFAR-10?",
+      "answer": "Yes, ResNet was originally tested on CIFAR-10 with 100 and 1000 layers, demonstrating its scalability. Even on small datasets, residual connections help prevent degradation and improve accuracy over plain networks. However, very deep ResNets (e.g., 100+ layers) may overfit without data augmentation or regularization techniques like dropout or weight decay.",
+      "related_concepts": [
+        "CIFAR-10",
+        "overfitting",
+        "data augmentation"
+      ],
+      "follow_up": "How do you prevent overfitting in deep ResNets on small datasets?"
+    },
+    {
+      "id": "faq15",
+      "category": "comparison",
+      "question": "How does ResNet compare to early skip connections in MLPs?",
+      "answer": "Early MLPs used linear skip connections from input to output for gradient flow, but they lacked non-linear depth and weren’t designed for convolutional features. ResNet extends this idea to deep CNNs with non-linear residual functions and multi-layer stacks, making it applicable to high-dimensional visual data and achieving unprecedented depth.",
+      "related_concepts": [
+        "MLP",
+        "linear skip connections",
+        "convolutional networks"
+      ],
+      "follow_up": "Why didn’t early skip connections lead to deep CNNs earlier?"
+    },
+    {
+      "id": "faq16",
+      "category": "understanding",
+      "question": "What is the intuition behind learning residual functions?",
+      "answer": "The intuition is that it’s easier to learn small refinements (residuals) than full transformations. For example, if a layer is already close to optimal, learning F(x) ≈ 0 is simpler than relearning the entire mapping. This reduces optimization difficulty, especially in deep networks where small adjustments are more stable than large reparameterizations.",
+      "related_concepts": [
+        "optimization landscape",
+        "gradient stability",
+        "refinement learning"
+      ],
+      "follow_up": "Is this similar to how humans learn incrementally?"
+    },
+    {
+      "id": "faq17",
+      "category": "application",
+      "question": "How do you use ResNet in transfer learning?",
+      "answer": "ResNet is widely used in transfer learning by taking pre-trained weights (e.g., on ImageNet) and replacing the final classification layer for a new task. The deep layers capture rich feature representations that generalize well across domains. Fine-tuning the last few layers or using feature extraction with a linear classifier are common strategies.",
+      "related_concepts": [
+        "transfer learning",
+        "feature extraction",
+        "fine-tuning"
+      ],
+      "follow_up": "Which layers should you freeze in ResNet for transfer learning?"
+    },
+    {
+      "id": "faq18",
+      "category": "implementation",
+      "question": "What are common mistakes when implementing ResNet?",
+      "answer": "Common mistakes include: forgetting to match dimensions in skip connections (leading to shape errors), omitting batch normalization, applying ReLU before adding the residual (should be after), incorrectly placing downsampling in the shortcut vs. main path, and using too many layers without sufficient regularization on small datasets.",
+      "related_concepts": [
+        "dimension mismatch",
+        "batch normalization",
+        "ReLU placement"
+      ],
+      "follow_up": "Where should downsampling be applied in residual blocks?"
+    },
+    {
+      "id": "faq19",
+      "category": "limitations",
+      "question": "Does ResNet solve the vanishing gradient problem completely?",
+      "answer": "ResNet dramatically mitigates vanishing gradients via identity shortcuts, enabling training of networks with 100+ layers. However, it doesn’t eliminate all gradient issues — very deep variants (>200 layers) may still suffer from reduced signal-to-noise ratios or unstable gradients in early layers. Techniques like layer normalization or better initialization are sometimes added for further stability.",
+      "related_concepts": [
+        "vanishing gradients",
+        "gradient flow",
+        "depth saturation"
+      ],
+      "follow_up": "What other techniques help with gradient stability in deep networks?"
+    },
+    {
+      "id": "faq20",
+      "category": "understanding",
+      "question": "Why is the residual learning framework considered a breakthrough?",
+      "answer": "ResNet was groundbreaking because it proved that depth could be exploited without degradation, overturning the belief that deeper networks always perform worse. It enabled unprecedented depth (152+ layers) with better accuracy, lower complexity than VGG, and state-of-the-art results across multiple vision tasks. Its simplicity, effectiveness, and scalability made it the new standard for CNNs.",
+      "related_concepts": [
+        "deep learning",
+        "CNN evolution",
+        "ILSVRC 2015"
+      ],
+      "follow_up": "What impact did ResNet have on subsequent AI research?"
+    }
+  ],
+  "paper_id": 10,
+  "title": "Deep Residual Learning (ResNet)",
+  "total_faqs": 20,
+  "category_stats": {
+    "understanding": 5,
+    "implementation": 5,
+    "comparison": 4,
+    "application": 4,
+    "limitations": 2
+  }
+}

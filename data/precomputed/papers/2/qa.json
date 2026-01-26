@@ -1,0 +1,292 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What type of neural network did Andrej Karpathy demonstrate can generate realistic text, music, and code despite its simplicity?",
+      "answer": "Recurrent Neural Networks (RNNs)",
+      "explanation": "Karpathy's paper highlights that even simple RNNs, when trained on large datasets, can generate highly coherent and realistic sequences such as text, music, and code—demonstrating their surprising effectiveness.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Convolutional Neural Networks",
+        "Transformers",
+        "Feedforward Neural Networks"
+      ],
+      "hint": "The paper’s title directly names the network type that surprised researchers with its performance on sequential tasks."
+    },
+    {
+      "id": "q2",
+      "question": "What is the main reason Karpathy calls RNNs 'unreasonably effective'?",
+      "answer": "RNNs achieve surprisingly high-quality results on complex sequential tasks despite their simple architecture and lack of explicit rules.",
+      "explanation": "Karpathy argues that RNNs, though simple in structure and trained only with gradient descent, generate human-like outputs (e.g., Shakespearean text) without being programmed with grammar or syntax rules.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "RNNs are faster than other networks.",
+        "RNNs require less data than other models.",
+        "RNNs are the most accurate for image classification."
+      ],
+      "hint": "Think about why a simple model without explicit rules could generate something as complex as poetry."
+    },
+    {
+      "id": "q3",
+      "question": "Which of the following is NOT one of the examples Karpathy used to demonstrate RNN effectiveness?",
+      "answer": "Image classification on CIFAR-10",
+      "explanation": "Karpathy demonstrated RNNs generating Shakespearean text, Linux source code, and mathematical expressions—not image classification tasks, which are better suited for CNNs.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Generating Shakespeare-style text",
+        "Producing valid Linux C code",
+        "Creating plausible mathematical expressions"
+      ],
+      "hint": "The examples focus on sequence generation, not visual pattern recognition."
+    },
+    {
+      "id": "q4",
+      "question": "What is the primary mechanism that allows RNNs to process sequences?",
+      "answer": "Hidden state that carries information from one time step to the next",
+      "explanation": "RNNs maintain a hidden state that acts as memory, allowing them to capture dependencies across time steps—this is the core mechanism enabling sequence modeling.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Attention weights between layers",
+        "Convolutional filters scanning input",
+        "Pooling layers reducing dimensionality"
+      ],
+      "hint": "Think about how an RNN remembers what happened before—what part of the network stores that information?"
+    },
+    {
+      "id": "q5",
+      "question": "What training method did Karpathy use to train his RNNs for text generation?",
+      "answer": "Backpropagation through time (BPTT)",
+      "explanation": "Karpathy used BPTT, an extension of backpropagation that unrolls the RNN across time steps to compute gradients for sequence learning.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "Genetic algorithms",
+        "Q-learning",
+        "Principal Component Analysis"
+      ],
+      "hint": "This is the standard method for training RNNs by propagating error backward across time steps."
+    },
+    {
+      "id": "q6",
+      "question": "Which of the following best describes Karpathy’s conclusion about RNNs in his paper?",
+      "answer": "RNNs are surprisingly powerful for sequence generation tasks despite their simplicity and lack of explicit structure.",
+      "explanation": "Karpathy’s central thesis is that RNNs, though simple and unstructured in design, can produce remarkably human-like outputs without being explicitly programmed with rules.",
+      "difficulty": "easy",
+      "type": "conceptual",
+      "distractors": [
+        "RNNs are obsolete and should be replaced by transformers.",
+        "RNNs work well only on small datasets.",
+        "RNNs are the best model for all types of machine learning tasks."
+      ],
+      "hint": "The title says 'unreasonable effectiveness'—what does that imply about their performance versus complexity?"
+    },
+    {
+      "id": "q7",
+      "question": "When Karpathy generated Shakespearean text with an RNN, what did the model learn without being explicitly told?",
+      "answer": "Patterns of grammar, punctuation, and stylistic structure",
+      "explanation": "The RNN learned to mimic Shakespeare’s syntax, rhythm, and word choice by observing patterns in the input text—demonstrating emergent linguistic structure from raw data.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "The exact plot of every Shakespeare play",
+        "Elizabethan English vocabulary from a dictionary",
+        "Authorship attribution rules"
+      ],
+      "hint": "The model didn't know Shakespeare’s rules—it learned them from examples."
+    },
+    {
+      "id": "q8",
+      "question": "Why does Karpathy argue that RNNs can generate valid C code despite not being programmed with syntax rules?",
+      "answer": "The RNN learns statistical patterns of code structure from large datasets, capturing indentation, function calls, and variable usage implicitly.",
+      "explanation": "By training on thousands of lines of Linux kernel code, the RNN learned to predict valid next tokens based on context—mimicking real code structure without explicit parsing rules.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "It was pre-trained on a C compiler’s syntax tree.",
+        "The model used formal grammar rules provided by the programmer.",
+        "C code is too simple for an RNN to need explicit rules."
+      ],
+      "hint": "Think about how humans learn language—through exposure, not rulebooks."
+    },
+    {
+      "id": "q9",
+      "question": "What limitation of RNNs does Karpathy acknowledge in his paper?",
+      "answer": "RNNs struggle with long-term dependencies due to vanishing gradients.",
+      "explanation": "Karpathy notes that while RNNs are effective for short-to-medium sequences, they have difficulty remembering information over very long sequences due to gradient vanishing during training.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNNs are too slow to train on GPUs.",
+        "RNNs cannot handle discrete data like text.",
+        "RNNs require labeled data for every time step."
+      ],
+      "hint": "The paper mentions a problem with memory over long sequences—what gradient issue causes this?"
+    },
+    {
+      "id": "q10",
+      "question": "What does Karpathy mean when he says the RNN 'learns to be a poet'?",
+      "answer": "The model internalizes stylistic patterns and emotional tone from training data, generating output that mimics human creativity.",
+      "explanation": "Karpathy uses poetic language to describe how RNNs capture not just syntax but also rhythm, metaphor, and tone—suggesting emergent creativity from statistical learning.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "The RNN was trained using poetry-specific loss functions.",
+        "It was given a list of poetic devices to replicate.",
+        "The model has consciousness and intention."
+      ],
+      "hint": "Creativity here is emergent—not programmed. What does the model learn from examples?"
+    },
+    {
+      "id": "q11",
+      "question": "How does Karpathy demonstrate that RNNs are learning structure rather than memorizing?",
+      "answer": "By generating novel sequences not present in the training data that still follow realistic patterns.",
+      "explanation": "The generated text and code are not exact copies—they’re new combinations that adhere to the structure of the domain, indicating learning of underlying rules.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "The RNN was tested on the exact same training samples.",
+        "All outputs were manually curated to appear realistic.",
+        "The model used a lookup table of phrases from the training data."
+      ],
+      "hint": "If it were memorizing, you’d see repeated phrases. What do you observe instead?"
+    },
+    {
+      "id": "q12",
+      "question": "What is the significance of Karpathy’s RNN generating math expressions like 'sin(x) + cos(y)'?",
+      "answer": "It shows that RNNs can learn abstract symbolic relationships from raw character sequences.",
+      "explanation": "The model learned to generate valid mathematical expressions by recognizing patterns in operator precedence, variable usage, and function syntax—all from raw text input.",
+      "difficulty": "medium",
+      "type": "applied",
+      "distractors": [
+        "The model was given a math parser as part of its architecture.",
+        "Math expressions are trivial and don’t require learning.",
+        "The RNN was trained on a database of equations with labels."
+      ],
+      "hint": "Think about how symbols like '+' and 'sin' are arranged—they follow rules, but the model wasn’t told them."
+    },
+    {
+      "id": "q13",
+      "question": "Why does Karpathy suggest RNNs are more 'human-like' than traditional rule-based systems?",
+      "answer": "RNNs learn from examples and adapt to patterns, similar to how humans acquire language and skills through exposure.",
+      "explanation": "Unlike rule-based systems that require explicit programming, RNNs learn implicitly from data—mirroring human learning through experience rather than instruction.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNNs have emotions and intuition.",
+        "Rule-based systems are faster than RNNs.",
+        "Humans also use backpropagation to learn."
+      ],
+      "hint": "Compare how a child learns language versus how a computer program is written."
+    },
+    {
+      "id": "q14",
+      "question": "What does Karpathy imply about the future of AI when he says RNNs are 'unreasonably effective'?",
+      "answer": "Simple, data-driven models may be more powerful than complex hand-engineered systems in many domains.",
+      "explanation": "Karpathy suggests that we may not need complex architectures or expert-designed features—simple models trained on enough data can outperform traditional approaches.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "All AI research should stop and only use RNNs.",
+        "Hand-engineered features are always superior.",
+        "RNNs will replace all other neural network types permanently."
+      ],
+      "hint": "The word 'unreasonable' implies surprise—why would simplicity be so powerful?"
+    },
+    {
+      "id": "q15",
+      "question": "How does Karpathy’s work challenge the assumption that AI needs explicit programming for complex tasks?",
+      "answer": "It shows that RNNs can learn to perform complex sequence generation without any hand-coded rules or symbolic logic.",
+      "explanation": "Traditional AI required explicit grammars and logic trees—Karpathy’s RNNs learned structure purely from data, challenging the need for human-designed rules.",
+      "difficulty": "medium",
+      "type": "analytical",
+      "distractors": [
+        "RNNs still require hand-coded grammars for output validation.",
+        "The paper proves AI must always be rule-based to be useful.",
+        "Karpathy used a hybrid system with symbolic components."
+      ],
+      "hint": "What was the traditional belief about AI and rules? How did RNNs break that?"
+    },
+    {
+      "id": "q16",
+      "question": "What insight does Karpathy draw from the RNN’s ability to generate code with correct indentation?",
+      "answer": "Hierarchical structure in code can be learned implicitly from raw character sequences.",
+      "explanation": "Indentation reflects nesting and scope—complex hierarchical structures that the RNN captured without being explicitly taught about blocks or scopes.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Indentation is too simple to require learning.",
+        "The model used a parser to enforce indentation rules.",
+        "All code has the same indentation pattern."
+      ],
+      "hint": "Indentation isn’t random—it reflects logic structure. How could a model learn that just from text?"
+    },
+    {
+      "id": "q17",
+      "question": "Why might Karpathy’s RNN-generated Shakespeare be more impressive than a rule-based system generating poetry?",
+      "answer": "Because it captures subtle stylistic elements like rhythm, archaic diction, and emotional tone without predefined templates.",
+      "explanation": "Rule-based systems can follow grammar but fail to mimic voice and nuance—RNNs learned these subtleties statistically from examples, producing authentic-sounding verse.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Rule-based systems are faster and more accurate.",
+        "Shakespeare’s work is too simple for RNNs to learn.",
+        "RNNs require human annotation of poetic devices."
+      ],
+      "hint": "Think about what makes Shakespeare’s style unique—not just grammar, but tone and rhythm."
+    },
+    {
+      "id": "q18",
+      "question": "What does the success of RNNs in generating code suggest about programming as a form of language?",
+      "answer": "Programming languages, like human languages, follow statistical patterns that can be learned from data without formal semantics.",
+      "explanation": "Karpathy’s results imply that code is not just logic—it’s a structured language with syntax, idioms, and style, learnable through pattern recognition.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Programming languages are purely logical and cannot be learned statistically.",
+        "Code generation requires a compiler to validate output.",
+        "Only humans can understand the meaning of code."
+      ],
+      "hint": "If a model can generate valid C code, what does that say about how we view code—as rules or as patterns?"
+    },
+    {
+      "id": "q19",
+      "question": "How does Karpathy’s paper anticipate the rise of large language models (LLMs)?",
+      "answer": "It demonstrates that simple RNNs on large datasets can produce human-like outputs, foreshadowing the power of scale and data-driven learning in later LLMs.",
+      "explanation": "Karpathy’s work showed that raw data + simple architecture = surprising results—a core principle behind modern LLMs like GPT, which scale RNN-like architectures with massive data and compute.",
+      "difficulty": "hard",
+      "type": "synthesis",
+      "distractors": [
+        "Karpathy explicitly designed RNNs to become LLMs.",
+        "LLMs are based on completely different architectures with no relation to RNNs.",
+        "The paper argued against using large datasets for training."
+      ],
+      "hint": "Think about what changed between Karpathy’s RNN and GPT—was it the architecture or the scale?"
+    },
+    {
+      "id": "q20",
+      "question": "Evaluate Karpathy’s claim that 'RNNs are unreasonably effective' in light of modern transformer models. Is the claim still valid?",
+      "answer": "Yes, because even though transformers are more powerful, Karpathy’s claim highlights the surprising capability of simple architectures to learn complex patterns from data—an insight foundational to modern AI.",
+      "explanation": "Transformers surpassed RNNs in performance, but Karpathy’s point was not about superiority of architecture—it was about the unexpected power of simple, data-driven models to generate complex outputs. This insight remains valid and influential.",
+      "difficulty": "hard",
+      "type": "evaluation",
+      "distractors": [
+        "No, because transformers are clearly superior and make RNNs obsolete.",
+        "The claim is false—RNNs perform poorly on all modern benchmarks.",
+        "Karpathy’s work was only a curiosity and has no relevance today."
+      ],
+      "hint": "Think about the broader lesson: Is it about RNNs specifically—or about the power of data-driven learning?"
+    }
+  ],
+  "paper_id": 2,
+  "title": "The Unreasonable Effectiveness of RNNs",
+  "total_questions": 20,
+  "stats": {
+    "easy": 6,
+    "medium": 9,
+    "hard": 5
+  }
+}

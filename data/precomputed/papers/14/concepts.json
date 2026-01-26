@@ -1,0 +1,186 @@
+{
+  "concepts": [
+    {
+      "name": "Neural Machine Translation (NMT)",
+      "definition": "A machine translation approach that uses a single neural network to directly model the probability of translating a source sentence into a target sentence, replacing traditional rule-based or statistical methods.",
+      "intuition": "Think of NMT as a bilingual student who learns to translate by reading thousands of paired sentences, gradually improving without needing explicit grammar rules.",
+      "importance": "It simplifies translation systems by unifying components into one end-to-end model, enabling better learning of complex language patterns.",
+      "related_concepts": [
+        "Encoder-Decoder Architecture",
+        "Sequence-to-Sequence Learning"
+      ],
+      "example": "Translating 'I love cats' from English to French as 'J'aime les chats' using one neural network.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Encoder-Decoder Architecture",
+      "definition": "A neural network structure consisting of an encoder that compresses input data into a context vector and a decoder that generates output from that vector.",
+      "intuition": "Like summarizing a book into one sentence (encoder) and then rewriting the whole story from that summary (decoder).",
+      "importance": "It forms the foundational framework for sequence-to-sequence tasks like translation, summarization, and speech recognition.",
+      "related_concepts": [
+        "Neural Machine Translation",
+        "Fixed-Length Vector"
+      ],
+      "example": "An RNN reads 'The cat is sleeping' and outputs a vector; another RNN uses that vector to generate 'Le chat dort'.",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Fixed-Length Vector",
+      "definition": "A single, static-size vector representation of an entire input sequence, used as the sole communication channel between encoder and decoder.",
+      "intuition": "Trying to fit an entire library into a single sticky note — you lose details as the book gets longer.",
+      "importance": "It creates a bottleneck for long sentences, limiting translation quality because too much information is compressed into one vector.",
+      "related_concepts": [
+        "Encoder-Decoder Architecture",
+        "Attention Mechanism"
+      ],
+      "example": "Encoding 'The quick brown fox jumps over the lazy dog' into a 512-dimensional vector, losing nuances of word order or emphasis.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Recurrent Neural Network (RNN)",
+      "definition": "A type of neural network designed to process sequential data by maintaining a hidden state that captures information from previous time steps.",
+      "intuition": "Like reading a sentence word by word, remembering each word to understand the next — your brain keeps a running summary.",
+      "importance": "RNNs enabled early NMT models to handle variable-length inputs, but suffer from vanishing gradients and poor long-range dependency capture.",
+      "related_concepts": [
+        "Encoder-Decoder Architecture",
+        "LSTM"
+      ],
+      "example": "An RNN reads 'I went to the store' one word at a time, updating its hidden state after each word.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Long Short-Term Memory (LSTM)",
+      "definition": "An advanced RNN variant with memory cells and gates that selectively retain or forget information over long sequences.",
+      "intuition": "Like a smart notetaker who remembers important details and ignores distractions during a long lecture.",
+      "importance": "LSTMs improved RNN performance on translation by mitigating vanishing gradients, enabling better modeling of long sentences.",
+      "related_concepts": [
+        "Recurrent Neural Network",
+        "Encoder-Decoder Architecture"
+      ],
+      "example": "An LSTM remembers 'cat' from the start of a sentence to correctly translate 'The cat that I saw yesterday is sleeping'.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Sequence-to-Sequence Learning",
+      "definition": "A machine learning paradigm where an input sequence (e.g., source sentence) is mapped to an output sequence (e.g., translation).",
+      "intuition": "Like converting a melody played on piano into sheet music — same information, different format.",
+      "importance": "It provides the general framework for tasks like translation, summarization, and chatbots, where input and output are both sequences.",
+      "related_concepts": [
+        "Neural Machine Translation",
+        "Encoder-Decoder Architecture"
+      ],
+      "example": "Input: 'Hello world' → Output: 'Bonjour le monde'",
+      "difficulty": "beginner"
+    },
+    {
+      "name": "Conditional Probability in Translation",
+      "definition": "The probability of a target sentence y given a source sentence x, formalized as p(y|x), which NMT models aim to maximize.",
+      "intuition": "What’s the most likely way to say this in French, given that I said 'I need coffee' in English?",
+      "importance": "It defines the objective of translation: not just matching words, but choosing the most probable and natural output.",
+      "related_concepts": [
+        "Neural Machine Translation",
+        "Maximum Likelihood Estimation"
+      ],
+      "example": "For 'She runs fast', p('Elle court vite') > p('Elle va rapidement') — the model picks the more natural translation.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Joint Training",
+      "definition": "Training all components of a model (e.g., encoder and decoder) together to optimize a single objective function, rather than separately.",
+      "intuition": "Teaching a translator and their assistant to work as a team — they learn from each other’s mistakes in real time.",
+      "importance": "Allows the model to adapt encoder representations to decoder needs, improving overall translation quality.",
+      "related_concepts": [
+        "Neural Machine Translation",
+        "Encoder-Decoder Architecture"
+      ],
+      "example": "The encoder learns to highlight 'cat' in 'The cat is sleeping' because the decoder needs that word to generate 'le chat'.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Alignment in Translation",
+      "definition": "The correspondence between words or phrases in the source sentence and their translations in the target sentence.",
+      "intuition": "Like drawing dotted lines between words in English and their French equivalents when learning a new language.",
+      "importance": "Explicit alignment helps models know which part of the source to focus on when generating each target word.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Soft Alignment"
+      ],
+      "example": "In 'I love cats', alignment links 'I'→'Je', 'love'→'aime', 'cats'→'les chats'.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Soft Alignment",
+      "definition": "A differentiable, weighted combination of source elements used to inform each target word prediction, without hard segmentation.",
+      "intuition": "Instead of pointing at one word, you give attention scores like 70% to 'cat', 20% to 'sleeping', and 10% to 'the' — a smooth blend.",
+      "importance": "Enables the model to focus flexibly on relevant parts of long sentences without rigid boundaries, improving accuracy and generalization.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Fixed-Length Vector"
+      ],
+      "example": "When translating 'The cat that I saw yesterday is sleeping', the model assigns higher weights to 'cat' and 'sleeping' for the target word 'dort'.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Attention Mechanism",
+      "definition": "A method that allows a decoder to dynamically weigh and select relevant parts of the encoder’s hidden states when generating each output word.",
+      "intuition": "Like a spotlight that moves across the source sentence as you translate — focusing on different words at each step.",
+      "importance": "It overcomes the fixed-length vector bottleneck, enabling translation of long sentences and improving performance significantly.",
+      "related_concepts": [
+        "Soft Alignment",
+        "Encoder-Decoder Architecture"
+      ],
+      "example": "While translating 'The cat is sleeping on the mat', attention focuses on 'sleeping' when generating 'dort', then shifts to 'mat' for 'tapis'.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Context Vector (in Attention)",
+      "definition": "A weighted sum of encoder hidden states, computed using attention weights, used as input to the decoder for predicting each target word.",
+      "intuition": "Each time you write a new word in translation, you peek at the source sentence and pick only what’s relevant right now — that’s your context.",
+      "importance": "It replaces the single fixed vector with a dynamic, word-specific summary of the source, enabling long-range dependencies.",
+      "related_concepts": [
+        "Soft Alignment",
+        "Attention Mechanism"
+      ],
+      "example": "For target word 'dort', context vector = 0.8×h_cat + 0.15×h_sleeping + 0.05×h_the — weighted by attention scores.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Bottleneck in Encoder-Decoder Models",
+      "definition": "The limitation caused by forcing all information from a source sentence into a single fixed-length vector, degrading performance on long inputs.",
+      "intuition": "Trying to fit a whole movie into one screenshot — you lose plot details, especially if the movie is long.",
+      "importance": "This bottleneck motivated the invention of attention, which removed this constraint and revolutionized sequence modeling.",
+      "related_concepts": [
+        "Fixed-Length Vector",
+        "Attention Mechanism"
+      ],
+      "example": "An encoder-decoder model performs poorly on sentences longer than 30 words because critical information gets lost in compression.",
+      "difficulty": "intermediate"
+    },
+    {
+      "name": "Joint Learning to Align and Translate",
+      "definition": "A training paradigm where alignment (which source words relate to which target words) and translation are learned simultaneously in one model.",
+      "intuition": "Learning to translate by naturally noticing which words go together — like learning a language by immersion, not memorizing rules.",
+      "importance": "It eliminates the need for separate alignment tools and enables end-to-end optimization, leading to more accurate and fluent translations.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Soft Alignment"
+      ],
+      "example": "The model learns that 'quickly' in English often maps to 'rapidement' in French without being told — it discovers the pattern automatically.",
+      "difficulty": "advanced"
+    },
+    {
+      "name": "Soft Alignment Visualization",
+      "definition": "The graphical representation of attention weights showing which source words influenced each generated target word.",
+      "intuition": "A heatmap where bright spots show which source words the model 'looked at' when translating each target word.",
+      "importance": "It provides interpretability, proving the model learns linguistically meaningful alignments without explicit supervision.",
+      "related_concepts": [
+        "Attention Mechanism",
+        "Soft Alignment"
+      ],
+      "example": "A heatmap shows high attention on 'cat' when generating 'chat', and on 'sleeping' when generating 'dort' — visually validating the translation logic.",
+      "difficulty": "advanced"
+    }
+  ],
+  "paper_id": 14,
+  "title": "Neural Machine Translation (Attention)"
+}
