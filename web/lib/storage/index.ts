@@ -359,3 +359,21 @@ export const bookmarksDB = {
     return all.filter((b) => b.paperId === paperId);
   },
 };
+
+// Reset all data
+export async function resetAllData(): Promise<void> {
+  const db = await openDB();
+  const storeNames = Object.values(STORES);
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(storeNames, "readwrite");
+
+    transaction.onerror = () => reject(transaction.error);
+    transaction.oncomplete = () => resolve();
+
+    for (const storeName of storeNames) {
+      const store = transaction.objectStore(storeName);
+      store.clear();
+    }
+  });
+}
