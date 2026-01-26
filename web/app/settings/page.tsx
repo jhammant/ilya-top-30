@@ -308,14 +308,13 @@ export default function SettingsPage() {
               learning materials are pre-generated and bundled with the app.
             </p>
             <p className="text-sm text-slate-500">
-              Built on{" "}
               <a
-                href="https://github.com/HKUDS/DeepTutor"
+                href="https://github.com/jhammant/ilya-top-30"
                 className="text-blue-500 hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                DeepTutor
+                View on GitHub
               </a>
             </p>
           </div>

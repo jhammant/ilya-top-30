@@ -566,9 +566,8 @@ export default function WelcomePage() {
               <Link href="/share" className="hover:text-white transition-colors">Share</Link>
             </div>
             <div className="text-sm text-slate-500">
-              Built with{" "}
-              <a href="https://github.com/HKUDS/DeepTutor" className="text-blue-400 hover:underline">
-                DeepTutor
+              <a href="https://github.com/jhammant/ilya-top-30" className="text-blue-400 hover:underline">
+                View on GitHub
               </a>
             </div>
           </div>
