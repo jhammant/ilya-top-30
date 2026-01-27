@@ -16,12 +16,15 @@ import { useLearning } from "@/context/LearningContext";
 import { XPBar, StreakCounter } from "@/components/gamification";
 import { PAPERS } from "@/lib/static-data/papers";
 
+type QuizMode = "dueReviews" | "quickQuiz" | "paper";
+
 function QuizContent() {
   const searchParams = useSearchParams();
   const paperId = searchParams.get("paper")
     ? parseInt(searchParams.get("paper")!)
     : null;
   const { reviewsDueToday } = useLearning();
+  const [mode, setMode] = useState<QuizMode>(paperId ? "paper" : "dueReviews");
 
   const paper = paperId ? PAPERS.find((p) => p.id === paperId) : null;
 
@@ -57,7 +60,14 @@ function QuizContent() {
       {/* Quiz Mode Selector (when no paper specified) */}
       {!paper && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <button className="p-4 bg-white dark:bg-slate-800 rounded-2xl border-2 border-indigo-500 text-left">
+          <button
+            onClick={() => setMode("dueReviews")}
+            className={`p-4 bg-white dark:bg-slate-800 rounded-2xl border-2 text-left transition-colors ${
+              mode === "dueReviews"
+                ? "border-indigo-500"
+                : "border-transparent hover:border-slate-300 dark:hover:border-slate-600"
+            }`}
+          >
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center">
                 <Brain className="w-5 h-5 text-indigo-500" />
@@ -96,7 +106,14 @@ function QuizContent() {
             </p>
           </Link>
 
-          <button className="p-4 bg-white dark:bg-slate-800 rounded-2xl border-2 border-transparent hover:border-slate-300 dark:hover:border-slate-600 text-left transition-colors">
+          <button
+            onClick={() => setMode("quickQuiz")}
+            className={`p-4 bg-white dark:bg-slate-800 rounded-2xl border-2 text-left transition-colors ${
+              mode === "quickQuiz"
+                ? "border-amber-500"
+                : "border-transparent hover:border-slate-300 dark:hover:border-slate-600"
+            }`}
+          >
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
                 <Zap className="w-5 h-5 text-amber-500" />
@@ -116,7 +133,7 @@ function QuizContent() {
       )}
 
       {/* Quiz Component */}
-      <SpacedRepetition paperId={paperId || undefined} />
+      <SpacedRepetition paperId={paperId || undefined} mode={mode} />
 
       {/* Paper Info (when paper specified) */}
       {paper && (

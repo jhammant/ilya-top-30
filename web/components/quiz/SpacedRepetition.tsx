@@ -15,11 +15,24 @@ import { getPaperQA, type QAPair } from "@/lib/static-data";
 import QuizCard from "./QuizCard";
 import { ProgressRing } from "@/components/gamification";
 
+type QuizMode = "dueReviews" | "quickQuiz" | "paper";
+
 interface SpacedRepetitionProps {
   paperId?: number;
+  mode?: QuizMode;
 }
 
-export default function SpacedRepetition({ paperId }: SpacedRepetitionProps) {
+// Helper to shuffle array
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+export default function SpacedRepetition({ paperId, mode = "dueReviews" }: SpacedRepetitionProps) {
   const { dueReviews, scheduleReview, reviewsDueToday } = useLearning();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [questions, setQuestions] = useState<QAPair[]>([]);
@@ -31,15 +44,33 @@ export default function SpacedRepetition({ paperId }: SpacedRepetitionProps) {
     async function loadQuestions() {
       setLoading(true);
 
-      // If paperId is provided, load that paper's questions
-      // Otherwise, load questions from due reviews
-      if (paperId) {
+      if (mode === "paper" && paperId) {
+        // Load specific paper's questions
         const qaData = await getPaperQA(paperId);
         if (qaData) {
-          setQuestions(qaData.questions.slice(0, 10)); // Limit to 10 questions
+          setQuestions(shuffleArray(qaData.questions).slice(0, 10)); // Limit to 10 questions
         }
+      } else if (mode === "quickQuiz") {
+        // Quick Quiz: Load random questions from all papers
+        const allQuestions: QAPair[] = [];
+
+        // Load questions from all 30 papers
+        for (let pid = 1; pid <= 30; pid++) {
+          try {
+            const qaData = await getPaperQA(pid);
+            if (qaData && qaData.questions) {
+              allQuestions.push(...qaData.questions);
+            }
+          } catch (e) {
+            // Paper might not have questions yet, skip it
+          }
+        }
+
+        // Shuffle and pick 15 random questions
+        const shuffled = shuffleArray(allQuestions);
+        setQuestions(shuffled.slice(0, 15));
       } else {
-        // Load questions based on due reviews
+        // Due Reviews mode: Load questions based on due reviews
         const questionsToLoad: QAPair[] = [];
         const paperIds = [...new Set(dueReviews.map((r) => r.paperId))];
 
@@ -63,7 +94,7 @@ export default function SpacedRepetition({ paperId }: SpacedRepetitionProps) {
     }
 
     loadQuestions();
-  }, [paperId, dueReviews]);
+  }, [paperId, mode, dueReviews]);
 
   const handleAnswer = async (correct: boolean, quality: number) => {
     const currentQuestion = questions[currentIndex];
