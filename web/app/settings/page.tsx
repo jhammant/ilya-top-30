@@ -92,23 +92,23 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen pb-20">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-6 sm:mb-8">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 mb-4"
+          className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 mb-3 sm:mb-4 -ml-1 p-1"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Dashboard
+          <span className="text-sm sm:text-base">Back to Dashboard</span>
         </Link>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Settings</h1>
-        <p className="text-slate-500 dark:text-slate-400 mt-1">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Settings</h1>
+        <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 mt-1">
           Manage your learning data and understand how it's stored
         </p>
       </div>
 
-      <div className="max-w-2xl space-y-6">
+      <div className="max-w-2xl space-y-4 sm:space-y-6">
         {/* How Data is Stored */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
               <HardDrive className="w-6 h-6 text-blue-600 dark:text-blue-400" />
@@ -172,7 +172,7 @@ export default function SettingsPage() {
 
         {/* Current Stats */}
         {stats && (
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Your Current Data</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <div className="p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg text-center">
@@ -216,7 +216,7 @@ export default function SettingsPage() {
         )}
 
         {/* Reset Progress */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-red-200 dark:border-red-900/50">
+        <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-red-200 dark:border-red-900/50">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
               <Trash2 className="w-6 h-6 text-red-600 dark:text-red-400" />
@@ -296,7 +296,7 @@ export default function SettingsPage() {
         </div>
 
         {/* About Section */}
-        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700">
+        <div className="bg-white dark:bg-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-700">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">About This App</h2>
           <div className="space-y-3 text-slate-600 dark:text-slate-300">
             <p>

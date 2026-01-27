@@ -26,21 +26,21 @@ function QuizContent() {
   const paper = paperId ? PAPERS.find((p) => p.id === paperId) : null;
 
   return (
-    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+    <div className="min-h-screen py-4 sm:py-8 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+        <div className="flex items-center gap-3 sm:gap-4">
           <Link
             href="/"
-            className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="p-2 -ml-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-500" />
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
               {paper ? paper.title : "Quiz & Review"}
             </h1>
-            <p className="text-slate-500">
+            <p className="text-sm sm:text-base text-slate-500">
               {paper
                 ? "Test your knowledge of this paper"
                 : "Practice with spaced repetition"}
