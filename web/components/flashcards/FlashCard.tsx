@@ -51,7 +51,7 @@ export default function FlashCard({
     <div className="w-full max-w-2xl mx-auto">
       {/* Card container with flip animation */}
       <div
-        className="relative w-full aspect-[4/3] cursor-pointer perspective-1000"
+        className="relative w-full min-h-[320px] md:min-h-[400px] cursor-pointer perspective-1000"
         onClick={handleFlip}
       >
         <div
@@ -61,9 +61,9 @@ export default function FlashCard({
         >
           {/* Front of card (Question) */}
           <div className="absolute inset-0 w-full h-full backface-hidden">
-            <div className="w-full h-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 flex flex-col">
+            <div className="w-full h-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 md:p-8 flex flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 flex-shrink-0">
                 <span className="text-sm text-slate-500 dark:text-slate-400 font-medium">
                   Question
                 </span>
@@ -72,9 +72,9 @@ export default function FlashCard({
                 </span>
               </div>
 
-              {/* Question */}
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-xl md:text-2xl text-slate-900 dark:text-white text-center leading-relaxed">
+              {/* Question - scrollable */}
+              <div className="flex-1 flex items-center justify-center overflow-y-auto">
+                <p className="text-lg md:text-2xl text-slate-900 dark:text-white text-center leading-relaxed">
                   {question}
                 </p>
               </div>
@@ -86,7 +86,7 @@ export default function FlashCard({
                     e.stopPropagation();
                     setShowHint(true);
                   }}
-                  className="flex items-center gap-2 text-sm text-blue-500 hover:text-blue-600 mx-auto mt-4"
+                  className="flex items-center gap-2 text-sm text-blue-500 hover:text-blue-600 mx-auto mt-4 flex-shrink-0"
                 >
                   <Lightbulb className="w-4 h-4" />
                   Show Hint
@@ -95,13 +95,13 @@ export default function FlashCard({
 
               {/* Hint display */}
               {showHint && hint && (
-                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-center">
+                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-center flex-shrink-0">
                   <p className="text-sm text-blue-700 dark:text-blue-300">{hint}</p>
                 </div>
               )}
 
               {/* Flip indicator */}
-              <div className="flex items-center justify-center gap-2 mt-4 text-sm text-slate-400">
+              <div className="flex items-center justify-center gap-2 mt-4 text-sm text-slate-400 flex-shrink-0">
                 <RotateCcw className="w-4 h-4" />
                 <span>Click to reveal answer</span>
               </div>
@@ -110,23 +110,23 @@ export default function FlashCard({
 
           {/* Back of card (Answer) */}
           <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180">
-            <div className="w-full h-full bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl shadow-xl p-8 flex flex-col text-white">
+            <div className="w-full h-full bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl shadow-xl p-6 md:p-8 flex flex-col text-white">
               {/* Header */}
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-4 flex-shrink-0">
                 <span className="text-sm text-blue-200 font-medium">Answer</span>
                 <span className={`text-xs font-bold uppercase px-2 py-1 rounded bg-white/20`}>
                   {difficulty}
                 </span>
               </div>
 
-              {/* Answer */}
-              <div className="flex-1 flex items-center justify-center">
-                <p className="text-lg md:text-xl text-center leading-relaxed">{answer}</p>
+              {/* Answer - scrollable */}
+              <div className="flex-1 flex items-center justify-center overflow-y-auto">
+                <p className="text-base md:text-xl text-center leading-relaxed">{answer}</p>
               </div>
 
               {/* Explanation toggle */}
               {explanation && (
-                <div className="mt-4">
+                <div className="mt-4 flex-shrink-0">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -138,7 +138,7 @@ export default function FlashCard({
                     {showExplanation ? "Hide" : "Show"} Explanation
                   </button>
                   {showExplanation && (
-                    <div className="mt-3 p-3 bg-white/10 rounded-lg">
+                    <div className="mt-3 p-3 bg-white/10 rounded-lg max-h-32 overflow-y-auto">
                       <p className="text-sm text-blue-100">{explanation}</p>
                     </div>
                   )}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   CheckCircle2,
@@ -28,10 +28,12 @@ export default function QuizCard({
   const [showHint, setShowHint] = useState(false);
   const [revealed, setRevealed] = useState(false);
 
-  // Shuffle answers
-  const allAnswers = [question.answer, ...question.distractors].sort(
-    () => Math.random() - 0.5
-  );
+  // Shuffle answers only once per question (memoized to prevent reshuffling on re-render)
+  const allAnswers = useMemo(() => {
+    return [question.answer, ...question.distractors].sort(
+      () => Math.random() - 0.5
+    );
+  }, [question.id, question.answer]);
 
   const handleSelect = (answer: string) => {
     if (revealed) return;

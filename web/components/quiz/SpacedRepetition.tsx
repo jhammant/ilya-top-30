@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
   Brain,
   Calendar,
   Clock,
   ArrowRight,
+  ArrowLeft,
   CheckCircle2,
   RefreshCw,
 } from "lucide-react";
@@ -185,7 +187,7 @@ export default function SpacedRepetition({ paperId, mode = "dueReviews" }: Space
           You answered {stats.correct} of {stats.total} questions correctly.
         </p>
 
-        <div className="flex justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
           <button
             onClick={resetSession}
             className="flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
@@ -193,10 +195,20 @@ export default function SpacedRepetition({ paperId, mode = "dueReviews" }: Space
             <RefreshCw className="w-4 h-4" />
             Review Again
           </button>
-          <button className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-colors">
+          <Link
+            href="/papers"
+            className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-colors"
+          >
             Continue Learning
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </Link>
+          <Link
+            href="/quiz"
+            className="flex items-center gap-2 px-6 py-3 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl font-medium hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600 transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Quiz
+          </Link>
         </div>
       </motion.div>
     );

@@ -348,7 +348,7 @@ function FlashcardsContent() {
           <p className="text-slate-500 mb-6">
             Best streak: {sessionStats.maxStreak} cards
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-3">
             <button
               onClick={restartSession}
               className="flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-medium"
@@ -361,6 +361,13 @@ function FlashcardsContent() {
               className="px-6 py-3 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium hover:bg-slate-300 dark:hover:bg-slate-600"
             >
               Back to Paper
+            </Link>
+            <Link
+              href="/flashcards"
+              className="flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl font-medium hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              All Flashcards
             </Link>
           </div>
         </div>
