@@ -19,7 +19,7 @@ openai>=1.30.0
 perplexityai>=0.1.0
 dashscope>=1.14.0
 aiohttp>=3.9.4
-httpx>=0.27.0
+httpx>=0.28.1
 urllib3>=2.2.1
 
 # ============================================
