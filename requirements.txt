@@ -45,7 +45,7 @@ raganything>=0.1.0
 # ============================================
 # Academic and research tools
 # ============================================
-arxiv>=2.0.0
+arxiv>=4.0.1
 
 # ============================================
 # Scientific computing (optional, for code execution)
